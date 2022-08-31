@@ -17,8 +17,3 @@ export const Logo = styled.div`
 
   margin: 0 auto;
 `;
-export const OptionBox = styled.div``;
-export const Option = styled.img`
-  width: 100px;
-  height: 50px;
-`;

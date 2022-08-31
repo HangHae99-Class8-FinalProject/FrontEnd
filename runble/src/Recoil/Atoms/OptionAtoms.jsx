@@ -3,7 +3,11 @@ export const NavState = atom({
   key: "NavState",
   default: false
 });
-export const ChangeImgState = atom({
-  key: "ChangeImgState",
+export const ImgState = atom({
+  key: "ImgState",
   default: false
+});
+export const PreviewImg = atom({
+  key: "PreviewImg",
+  default: null
 });

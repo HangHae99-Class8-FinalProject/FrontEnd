@@ -24,11 +24,16 @@ export const StyleShow = styled.div`
 export const StyleButton = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   height: 50px;
   text-align: center;
   align-items: center;
   position: fixed;
   bottom: 0;
   background-color: azure;
+`;
+export const OptionsBox = styled.div``;
+export const Options = styled.img`
+  width: 100px;
+  height: 50px;
 `;

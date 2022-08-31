@@ -1,38 +1,46 @@
 import React, { useState } from "react";
 // import { StyleProfile } from "./style";
-import { useRecoilState } from "recoil";
-import { ChangeImgState } from "../../../Recoil/Atoms/OptionAtoms";
-import S3upload from "react-aws-s3";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  ImgState,
+  NavState,
+  PreviewImg
+} from "../../../Recoil/Atoms/OptionAtoms";
+import { useQuery } from "react-query";
+import axios from "axios";
+
 const Userprofile = () => {
-  const [image, Setimage] = useState(null);
-  const [changeimage, SetChageimage] = useRecoilState(ChangeImgState);
-  const onChangeImg = e => {
-    const imageFile = e.target.files[0];
-    const imageUrl = URL.createObjectURL(imageFile);
-    Setimage(imageUrl);
-    SetChageimage(true);
-  };
+  // const { data, isLoading, error } = useQuery(["profile"], () =>
+  //   axios.get(`http://localhost:3001/posts`)
+  // );
+
+  const [Show, SetShow] = useRecoilState(NavState);
+  const [profile, Setprofile] = useRecoilState(ImgState);
+  const previewChange = useRecoilValue(PreviewImg);
+
   return (
     <div>
       <div>
-        <label htmlFor="input-file">
-          업로드
-          {!image ? (
-            <img
-              style={{ width: "80px", height: "80px" }}
-              src="/img/userprofile.png"
-            ></img>
-          ) : (
-            <img style={{ width: "100px", height: "100px" }} src={image}></img>
-          )}
-        </label>
-        <input
-          style={{ display: "none" }}
-          onChange={onChangeImg}
-          id="input-file"
-          type="file"
-          accept="image/*"
-        ></input>
+        {!previewChange ? (
+          <img
+            onClick={() => {
+              Setprofile(true);
+              SetShow(prev => !prev);
+            }}
+            style={{ width: "80px", height: "80px" }}
+            src="/img/userprofile.png"
+          ></img>
+        ) : (
+          <img
+            onClick={() => {
+              Setprofile(true);
+              SetShow(prev => !prev);
+            }}
+            style={{ width: "80px", height: "80px" }}
+            src={previewChange}
+          ></img>
+        )}
+
         <div>런닝 못참지</div>
       </div>
     </div>
