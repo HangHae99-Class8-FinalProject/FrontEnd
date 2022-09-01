@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 import {
   StyleNav,
@@ -11,27 +11,30 @@ import {
 
 import {
   NavState,
-  ImgState,
-  PreviewImg
+  PreviewImg,
+  NavStates
 } from "../../../Recoil/Atoms/OptionAtoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useMutation } from "react-query";
 import S3upload from "react-aws-s3";
 import axios from "axios";
-import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 const Nav = () => {
+  const { state } = useLocation();
+  console.log(state);
+  const navigate = useNavigate();
   const [Show, SetShow] = useRecoilState(NavState);
-  const [profile, Setprofile] = useRecoilState(ImgState);
   const [preview, SetPreview] = useRecoilState(PreviewImg);
-  const profileImg = useRecoilValue(ImgState);
+  const [naveState, SetnaveState] = useRecoilState(NavStates);
+  const navEvent = useRecoilValue(NavStates);
   const imgVal = useRef(null);
   const [submit, Setsubmit] = useState({
     profile: ""
   });
 
   const { mutate, isLoading, error, isSuccess } = useMutation(submit => {
-    return axios.post("http://localhost:3001/posts", submit);
+    return axios.post("http://localhost:3001/profile", submit);
   });
 
   const submitImg = () => {
@@ -80,64 +83,102 @@ const Nav = () => {
     <>
       <StyleNav>
         <StyleShowBackgroud Show={Show}></StyleShowBackgroud>
-        {profileImg ? (
-          <StyleShow Show={Show}>
-            <p
-              onClick={() => {
-                SetPreview(`/img/userprofile.png`);
-              }}
-            >
-              기본이미지로변경하기
-            </p>
-            <div>
-              <label htmlFor="inputFile">앨범에서 사진선택하기</label>
-              <input
-                style={{ display: "none" }}
-                onChange={onChangeImg}
-                id="inputFile"
-                type="file"
-                accept="image/*"
-                ref={imgVal}
-              ></input>
-            </div>
-          </StyleShow>
-        ) : (
-          <StyleShow Show={Show}>
-            <p
-              onClick={() => {
-                logoutConfirm();
-              }}
-            >
-              로그아웃
-            </p>
-            <p
-              onClick={() => {
-                outConfirm();
-              }}
-            >
-              회원탈퇴
-            </p>
-            <p>약관보기</p>
-          </StyleShow>
-        )}
+
+        {
+          {
+            option: (
+              <StyleShow Show={Show}>
+                <p
+                  onClick={() => {
+                    logoutConfirm();
+                  }}
+                >
+                  로그아웃
+                </p>
+                <p
+                  onClick={() => {
+                    outConfirm();
+                  }}
+                >
+                  회원탈퇴
+                </p>
+                <p>약관보기</p>
+              </StyleShow>
+            ),
+            img: (
+              <StyleShow Show={Show}>
+                <p
+                  onClick={() => {
+                    SetPreview(`/img/userprofile.png`);
+                  }}
+                >
+                  기본이미지로변경하기
+                </p>
+                <div>
+                  <label htmlFor="inputFile">앨범에서 사진선택하기</label>
+                  <input
+                    style={{ display: "none" }}
+                    onChange={onChangeImg}
+                    id="inputFile"
+                    type="file"
+                    accept="image/*"
+                    ref={imgVal}
+                  ></input>
+                </div>
+              </StyleShow>
+            ),
+            put: (
+              <StyleShow Show={Show}>
+                <p>수정하기</p>
+                <p>삭제하기</p>
+              </StyleShow>
+            )
+          }[navEvent]
+        }
 
         <StyleButton>
-          <div>게시글</div>
-          <div>검색</div>
-          <div>기록하기</div>
-          <OptionsBox
+          <div
             onClick={() => {
-              SetShow(prev => !prev);
-              Setprofile(false);
+              navigate("/feed", { state: true });
             }}
           >
-            <Options
-              style={{ width: "40px", height: "40px" }}
-              src="/img/option.png"
-            ></Options>
-          </OptionsBox>
-
-          {/* <div>마이페이지</div> */}
+            게시글
+          </div>
+          <div
+            onClick={() => {
+              navigate("/search");
+            }}
+          >
+            검색
+          </div>
+          <div
+            onClick={() => {
+              navigate("/record");
+            }}
+          >
+            기록하기
+          </div>
+          {state ? (
+            <div
+              onClick={() => {
+                navigate("/user");
+              }}
+            >
+              마이페이지
+            </div>
+          ) : (
+            <OptionsBox
+              onClick={() => {
+                SetShow(prev => !prev);
+                SetnaveState("option");
+              }}
+            >
+              <Options
+                style={{ width: "40px", height: "40px" }}
+                src="/img/option.png"
+              ></Options>
+            </OptionsBox>
+          )}
         </StyleButton>
       </StyleNav>
     </>

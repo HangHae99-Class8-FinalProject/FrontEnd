@@ -1,30 +1,26 @@
 import React, { useState } from "react";
-// import { StyleProfile } from "./style";
+import { StyleUserWrap } from "./style";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
-  ImgState,
   NavState,
-  PreviewImg
+  PreviewImg,
+  NavStates
 } from "../../../Recoil/Atoms/OptionAtoms";
 import { useQuery } from "react-query";
 import axios from "axios";
 
 const Userprofile = () => {
-  // const { data, isLoading, error } = useQuery(["profile"], () =>
-  //   axios.get(`http://localhost:3001/posts`)
-  // );
-
   const [Show, SetShow] = useRecoilState(NavState);
-  const [profile, Setprofile] = useRecoilState(ImgState);
+  const [navState, SetnavState] = useRecoilState(NavStates);
   const previewChange = useRecoilValue(PreviewImg);
 
   return (
-    <div>
+    <StyleUserWrap>
       <div>
         {!previewChange ? (
           <img
             onClick={() => {
-              Setprofile(true);
+              SetnavState("img");
               SetShow(prev => !prev);
             }}
             style={{ width: "80px", height: "80px" }}
@@ -33,7 +29,7 @@ const Userprofile = () => {
         ) : (
           <img
             onClick={() => {
-              Setprofile(true);
+              SetnavState("img");
               SetShow(prev => !prev);
             }}
             style={{ width: "80px", height: "80px" }}
@@ -43,7 +39,7 @@ const Userprofile = () => {
 
         <div>런닝 못참지</div>
       </div>
-    </div>
+    </StyleUserWrap>
   );
 };
 export default Userprofile;

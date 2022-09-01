@@ -13,7 +13,6 @@ const Layout = ({ children }) => {
       SetisShow(false);
     }
   };
-  console.log(isShow);
   return (
     <StyleLayout isShow={isShow} onClick={showOutImg}>
       <Header></Header>
