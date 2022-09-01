@@ -45,9 +45,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-jsx-a11y", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:6.6.1"],\
             ["eslint-plugin-react", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:7.31.1"],\
             ["eslint-plugin-react-hooks", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:4.6.0"],\
+            ["geolocation-distance-between", "npm:0.1.0"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:18.2.0"],\
             ["react-is", "npm:18.2.0"],\
+            ["react-kakao-maps-sdk", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:1.1.3"],\
             ["react-query", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:3.39.2"],\
             ["react-router-dom", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:6.3.0"],\
             ["react-scripts", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:5.0.1"],\
@@ -9317,6 +9319,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["geolocation-distance-between", [\
+        ["npm:0.1.0", {\
+          "packageLocation": "./.yarn/cache/geolocation-distance-between-npm-0.1.0-b3b93d2ccd-fdec114a08.zip/node_modules/geolocation-distance-between/",\
+          "packageDependencies": [\
+            ["geolocation-distance-between", "npm:0.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["get-caller-file", [\
         ["npm:2.0.5", {\
           "packageLocation": "./.yarn/cache/get-caller-file-npm-2.0.5-80e8a86305-b9769a836d.zip/node_modules/get-caller-file/",\
@@ -11354,6 +11365,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jsx-ast-utils", "npm:3.3.3"],\
             ["array-includes", "npm:3.1.5"],\
             ["object.assign", "npm:4.1.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["kakao.maps.d.ts", [\
+        ["npm:0.1.33", {\
+          "packageLocation": "./.yarn/cache/kakao.maps.d.ts-npm-0.1.33-58a98ec649-50908b7ff8.zip/node_modules/kakao.maps.d.ts/",\
+          "packageDependencies": [\
+            ["kakao.maps.d.ts", "npm:0.1.33"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -14729,6 +14749,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["react-kakao-maps-sdk", [\
+        ["npm:1.1.3", {\
+          "packageLocation": "./.yarn/cache/react-kakao-maps-sdk-npm-1.1.3-644f0c1116-b8bcdb561b.zip/node_modules/react-kakao-maps-sdk/",\
+          "packageDependencies": [\
+            ["react-kakao-maps-sdk", "npm:1.1.3"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:1.1.3", {\
+          "packageLocation": "./.yarn/__virtual__/react-kakao-maps-sdk-virtual-8fb9a21f1a/0/cache/react-kakao-maps-sdk-npm-1.1.3-644f0c1116-b8bcdb561b.zip/node_modules/react-kakao-maps-sdk/",\
+          "packageDependencies": [\
+            ["react-kakao-maps-sdk", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:1.1.3"],\
+            ["@types/react", null],\
+            ["@types/react-dom", null],\
+            ["kakao.maps.d.ts", "npm:0.1.33"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["react-query", [\
         ["npm:3.39.2", {\
           "packageLocation": "./.yarn/cache/react-query-npm-3.39.2-8b9894ce38-83b199e66a.zip/node_modules/react-query/",\
@@ -15344,9 +15391,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-jsx-a11y", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:6.6.1"],\
             ["eslint-plugin-react", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:7.31.1"],\
             ["eslint-plugin-react-hooks", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:4.6.0"],\
+            ["geolocation-distance-between", "npm:0.1.0"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:18.2.0"],\
             ["react-is", "npm:18.2.0"],\
+            ["react-kakao-maps-sdk", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:1.1.3"],\
             ["react-query", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:3.39.2"],\
             ["react-router-dom", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:6.3.0"],\
             ["react-scripts", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:5.0.1"],\

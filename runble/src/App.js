@@ -3,6 +3,7 @@ import Router from "./Router/Router";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import GlobalStyle from "./GlobalStyle";
+import { RecoilRoot } from "recoil";
 
 const queryClient = new QueryClient();
 
@@ -11,7 +12,9 @@ function App() {
     <>
       <GlobalStyle />
       <QueryClientProvider client={queryClient}>
-        <Router />
+        <RecoilRoot>
+          <Router />
+        </RecoilRoot>
         <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       </QueryClientProvider>
     </>
