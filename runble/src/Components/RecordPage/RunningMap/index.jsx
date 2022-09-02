@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Map, MapMarker, Polyline } from "react-kakao-maps-sdk";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { runData } from "../../Recoil/Atoms/RunData";
-import useInterval from "../../hooks/useInterval";
+import { runData } from "../../../Recoil/Atoms/RunData";
+import useInterval from "../../../hooks/useInterval";
 import { getDistanceBetween } from "geolocation-distance-between";
+import { useNavigate } from "react-router-dom";
 
-const KakaoMap = ({ stopInterval, endRun }) => {
+const RunningMap = ({ stopInterval, endRun }) => {
   const [distance, setDistance] = useState(0);
+
+  const navigate = useNavigate();
+
   const [path, setPath] = useRecoilState(runData);
   const runLog = useRecoilValue(runData);
   console.log(runLog);
@@ -95,10 +99,14 @@ const KakaoMap = ({ stopInterval, endRun }) => {
     if (endRun) {
       setPath(prev => ({
         ...prev,
-        distance: distance
+        distance: distance,
+        isFinish: true
       }));
     }
-  }, [endRun]);
+    if (runLog.isFinish) {
+      navigate("/post", { state: { runLog: path } });
+    }
+  }, [endRun, runLog.isFinish]);
 
   //로딩 화면
   if (!state.isLoading) {
@@ -130,4 +138,4 @@ const KakaoMap = ({ stopInterval, endRun }) => {
   );
 };
 
-export default KakaoMap;
+export default RunningMap;

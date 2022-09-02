@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import useInterval from "../../hooks/useInterval";
-import { runData } from "../../Recoil/Atoms/RunData";
+import useInterval from "../../../hooks/useInterval";
+import { runData } from "../../../Recoil/Atoms/RunData";
 import { useRecoilState } from "recoil";
 
 const RunTimer = ({ stopInterval, endRun }) => {

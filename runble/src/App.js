@@ -11,12 +11,12 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <QueryClientProvider client={queryClient}>
-        <RecoilRoot>
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
           <Router />
-        </RecoilRoot>
-        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-      </QueryClientProvider>
+          <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+        </QueryClientProvider>
+      </RecoilRoot>
     </>
   );
 }
