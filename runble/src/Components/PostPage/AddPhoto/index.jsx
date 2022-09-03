@@ -1,41 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import S3upload from "react-aws-s3";
 import imageCompression from "browser-image-compression";
 
+import { postData } from "../../../Recoil/Atoms/PostData";
+import { useRecoilState } from "recoil";
+
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
-const AddPhoto = () => {
+const AddPhoto = ({ merge }) => {
   const [uploadImages, setUploadImages] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
+  const [post, setPost] = useRecoilState(postData);
+  const [upLoading, setUpLoading] = useState(false);
+  const imgRef = useRef();
 
   const config = {
+    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
     bucketName: process.env.REACT_APP_BUCKET_NAME,
-    region: process.env.REACT_APP_REGION,
-    accessKeyId: process.env.REACT_APP_ACCESS_ID,
-    secretAccessKey: process.env.REACT_APP_ACCESS_KEY
+    region: process.env.REACT_APP_REGION
   };
 
   // 이미지 업로드 로직
-  const onSubmitImg = e => {
+  const onSubmitImg = async () => {
     const arr = [];
-    if (e.target.files.length > 0) {
+    console.log(imgRef.current.files);
+    const length = imgRef.current.files.length;
+    if (length > 0) {
       const ReactS3Client = new S3upload(config);
-      const legth = e.target.files.length;
-      for (let i = 0; i < legth; i++) {
-        ReactS3Client.uploadFile(e.target.files[i], e.targe.files[i].name)
+      for (let i = 0; i < length; i++) {
+        await ReactS3Client.uploadFile(
+          imgRef.current.files[i],
+          imgRef.current.files[i].name
+        )
           .then(data => {
             arr.push(data.location);
+            console.log("arr:", arr);
             setUploadImages([...arr]);
           })
           .catch(error => console.error(error));
       }
+      setUpLoading(true);
     }
   };
 
-  const onChangeImg = async e => {
-    const imgArray = e.target.files;
-    console.log(imgArray.length);
+  const onChangeImg = async () => {
+    const imgArray = imgRef.current.files;
     let imgUrls = [...previewImages];
     const options = {
       maxSizeMB: 1,
@@ -45,9 +56,7 @@ const AddPhoto = () => {
     try {
       for (let i = 0; i < imgArray.length; i++) {
         const comporessedFile = await imageCompression(imgArray[i], options);
-        console.log(comporessedFile);
         const imgUrl = URL.createObjectURL(comporessedFile);
-        console.log(imgUrl);
         imgUrls.push(imgUrl);
       }
     } catch (error) {
@@ -60,25 +69,37 @@ const AddPhoto = () => {
     setPreviewImages(previewImages.filter((_, index) => index !== idx));
   };
 
-  console.log(previewImages);
+  useEffect(() => {
+    if (merge) {
+      onSubmitImg();
+    }
+  }, [merge]);
+
+  useEffect(() => {
+    if (upLoading) {
+      setPost(prev => ({
+        ...prev,
+        image: uploadImages,
+        isCompleted: true
+      }));
+    }
+  }, [upLoading]);
 
   return (
     <PhotoWrap>
       {previewImages &&
         previewImages.map((img, idx) => {
           return (
-            <>
-              <PreviewImges
-                key={idx}
-                src={img}
-                alt="첨부한 이미지"
-                onClick={() => deletePhoto(idx)}
-              />
-            </>
+            <PreviewImges
+              key={idx}
+              src={img}
+              alt="첨부한 이미지"
+              onClick={() => deletePhoto(idx)}
+            />
           );
         })}
-      <AddButton onSubmit={onSubmitImg}>
-        <input type="file" multiple onChange={onChangeImg} />+
+      <AddButton>
+        <input ref={imgRef} type="file" multiple onChange={onChangeImg} />+
       </AddButton>
     </PhotoWrap>
   );

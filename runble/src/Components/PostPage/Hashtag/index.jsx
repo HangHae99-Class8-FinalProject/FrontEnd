@@ -2,10 +2,14 @@ import React, { useState, useCallback, useEffect } from "react";
 import "./styles.css";
 import useInput from "../../../hooks/useInput";
 
-const Hashtag = () => {
+import { useRecoilState } from "recoil";
+import { postData } from "../../../Recoil/Atoms/PostData";
+
+const Hashtag = ({ merge }) => {
   const [hashtag, onChangeHashtag, setHashtag] = useInput("");
   const [hashArr, setHashArr] = useState([]);
   const [stop, setStop] = useState(false);
+  const [post, setPost] = useRecoilState(postData);
 
   useEffect(() => {
     hashArr.length >= 3 ? setStop(true) : setStop(false);
@@ -34,6 +38,15 @@ const Hashtag = () => {
     },
     [hashtag, hashArr]
   );
+
+  useEffect(() => {
+    if (merge) {
+      setPost(prev => ({
+        ...prev,
+        hashtag: hashArr
+      }));
+    }
+  }, [merge]);
 
   return (
     <div className="hashDivrap">

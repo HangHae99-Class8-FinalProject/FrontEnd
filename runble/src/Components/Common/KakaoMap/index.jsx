@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Map, Polyline } from "react-kakao-maps-sdk";
 
 const KakaoMap = ({ path }) => {
