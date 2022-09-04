@@ -6,31 +6,24 @@ import {
   StyleFrofileBox,
   StyleFrofile,
   StylePath,
-  StyleRecord,
-  StyleImg
+  StyleRecord
 } from "./style";
-import { useAddTodoMutation } from "../../../Hooks/useLikecheck";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
 import axios from "axios";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper";
-import "swiper/css";
-import "swiper/css/pagination";
-const fetchLikeList = async pageParam => {
-  const res = await axios.post(
+const fetchUserList = async pageParam => {
+  const res = await axios.get(
     `http://54.167.169.43/api/post/likeorder/${pageParam}`,
     1
   );
   const { Post, isLast } = res.data;
   return { Post, nextPage: pageParam + 1, isLast };
 };
-const LikeList = () => {
-  const { mutate } = useAddTodoMutation();
+const UserList = () => {
   const { ref, inView } = useInView();
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    "like",
-    ({ pageParam = 1 }) => fetchLikeList(pageParam),
+    "user",
+    ({ pageParam = 1 }) => fetchUserList(pageParam),
     {
       getNextPageParam: lastPage =>
         !lastPage.isLast ? lastPage.nextPage : undefined
@@ -51,7 +44,7 @@ const LikeList = () => {
                 <div>
                   <StyleFrofileBox>
                     <StyleFrofile>
-                      <div>프로필사진좋아요순</div>
+                      <div>프로필사진유저페이지</div>
                       <span>닉네임</span>
                     </StyleFrofile>
                     <div style={{ display: "flex" }}>
@@ -67,43 +60,14 @@ const LikeList = () => {
                     </div>
                   </StyleFrofileBox>
                   <StyleRecord>
-                    <div>거리:{posts.distance}</div>
+                    <div>거리:4km</div>
                     <div>시간:30분</div>
                   </StyleRecord>
-                  <StylePath>
-                    <Swiper
-                      style={{ height: "200px" }}
-                      pagination={{
-                        dynamicBullets: true
-                      }}
-                      modules={[Pagination]}
-                    >
-                      <SwiperSlide>
-                        <StyleImg src="https://www.walkerhillstory.com/wp-content/uploads/2020/09/2-1.jpg"></StyleImg>
-                      </SwiperSlide>
-                      <SwiperSlide>Slide 2</SwiperSlide>
-                      <SwiperSlide>Slide 3</SwiperSlide>
-                      <SwiperSlide>Slide 4</SwiperSlide>
-                      <SwiperSlide>Slide 5</SwiperSlide>
-                      <SwiperSlide>Slide 6</SwiperSlide>
-                      <SwiperSlide>Slide 7</SwiperSlide>
-                      <SwiperSlide>Slide 8</SwiperSlide>
-                      <SwiperSlide>Slide 9</SwiperSlide>
-                    </Swiper>
-                  </StylePath>
+                  <StylePath>거리사진</StylePath>
                   <div>
-                    <div style={{ display: "flex" }}>
-                      {posts.hashtag.map((hash, idx) => (
-                        <p key={idx}>#{hash}</p>
-                      ))}
-                    </div>
-                    <p
-                      onClick={() => {
-                        mutate(posts.postId);
-                      }}
-                    >
-                      좋아요 {posts.like}개
-                    </p>
+                    <p>컨텐트</p>
+                    <p>#달리기</p>
+                    <p>좋아요1개</p>
                     <p>댓글1개모두보기</p>
                   </div>
                 </div>
@@ -116,4 +80,4 @@ const LikeList = () => {
     </>
   );
 };
-export default LikeList;
+export default UserList;

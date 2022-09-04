@@ -5,11 +5,18 @@ import {
   StyleFrofileBox,
   StyleFrofile,
   StylePath,
-  StyleRecord
+  StyleRecord,
+  StyleImg
 } from "./style";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
 import { useRecoilState } from "recoil";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper";
+import "swiper/css";
+import "swiper/css/pagination";
+
+import { useAddTodoMutation } from "../../../Hooks/useLikecheck";
 import axios from "axios";
 const fetchPostList = async pageParam => {
   const res = await axios.post(
@@ -20,6 +27,7 @@ const fetchPostList = async pageParam => {
   return { Post, nextPage: pageParam + 1, isLast };
 };
 const MainList = () => {
+  const { mutate } = useAddTodoMutation();
   const { ref, inView } = useInView();
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
     "posts",
@@ -34,48 +42,82 @@ const MainList = () => {
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
+  console.log(data);
   return (
     <>
       <div>
         {data?.pages.map((page, index) => (
-          <div key={index}>
-            {page.Post.map(posts => {
-              return (
-                <StyleFeed>
-                  <div>
-                    <StyleFrofileBox>
-                      <StyleFrofile>
-                        <div>프로필사진</div>
-                        <span>닉네임</span>
-                      </StyleFrofile>
-                      <div style={{ display: "flex" }}>
-                        <span>조회수:1</span>
-                        <div
-                          onClick={() => {
-                            SetShow(prev => !prev);
-                            SetnaveState("put");
-                          }}
-                        >
-                          ...
-                        </div>
+          <React.Fragment key={index}>
+            {page.Post.map((posts, index) => (
+              <StyleFeed key={index}>
+                <div>
+                  <StyleFrofileBox>
+                    <StyleFrofile>
+                      <div>프로필사진</div>
+                      <span>닉네임</span>
+                    </StyleFrofile>
+                    <div style={{ display: "flex" }}>
+                      <span>조회수:{posts.view}</span>
+                      <div
+                        onClick={() => {
+                          SetShow(prev => !prev);
+                          SetnaveState("put");
+                        }}
+                      >
+                        ...
                       </div>
-                    </StyleFrofileBox>
-                    <StyleRecord>
-                      <div>거리:4km</div>
-                      <div>시간:30분</div>
-                    </StyleRecord>
-                    <StylePath>거리사진</StylePath>
-                    <div>
-                      <p>컨텐트</p>
-                      <p>#달리기</p>
-                      <p>좋아요1개</p>
-                      <p>댓글1개모두보기</p>
                     </div>
+                  </StyleFrofileBox>
+                  <StyleRecord>
+                    <div>거리:{posts.distance}km</div>
+                    <div>시간:30분</div>
+                  </StyleRecord>
+                  <StylePath>
+                    <Swiper
+                      style={{ height: "200px" }}
+                      pagination={{
+                        dynamicBullets: true
+                      }}
+                      modules={[Pagination]}
+                    >
+                      <SwiperSlide>
+                        <StyleImg src="https://www.walkerhillstory.com/wp-content/uploads/2020/09/2-1.jpg"></StyleImg>
+                      </SwiperSlide>
+                      <SwiperSlide>Slide 2</SwiperSlide>
+                      <SwiperSlide>Slide 3</SwiperSlide>
+                      <SwiperSlide>Slide 4</SwiperSlide>
+                      <SwiperSlide>Slide 5</SwiperSlide>
+                      <SwiperSlide>Slide 6</SwiperSlide>
+                      <SwiperSlide>Slide 7</SwiperSlide>
+                      <SwiperSlide>Slide 8</SwiperSlide>
+                      <SwiperSlide>Slide 9</SwiperSlide>
+                    </Swiper>
+                  </StylePath>
+                  <div>
+                    <p>{posts.content}</p>
+                    <div style={{ display: "flex" }}>
+                      {posts.hashtag.map((hash, idx) => (
+                        <p key={idx}>#{hash}</p>
+                      ))}
+                    </div>
+                    <div
+                      onClick={() => {
+                        mutate(posts.postId);
+                      }}
+                    >
+                      {posts.likeDone ? (
+                        <span>좋아요완료</span>
+                      ) : (
+                        <span>좋아요눌러주세요</span>
+                      )}{" "}
+                      {posts.like}개
+                    </div>
+                    <p>댓글1개모두보기</p>
                   </div>
-                </StyleFeed>
-              );
-            })}
-          </div>
+                </div>
+              </StyleFeed>
+            ))}
+          </React.Fragment>
         ))}
       </div>
       {isFetchingNextPage ? <span>로딩중입니다</span> : <div ref={ref}></div>}
