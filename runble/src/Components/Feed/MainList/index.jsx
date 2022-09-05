@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NavState, NavStates } from "../../../Recoil/Atoms/OptionAtoms";
 import {
   StyleFeed,

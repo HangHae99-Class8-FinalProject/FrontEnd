@@ -9,7 +9,7 @@ const UserPage = () => {
   return (
     <Layout>
       <Userprofile></Userprofile>
-      {/* <Progress></Progress> */}
+      <Progress></Progress>
       <Goal></Goal>
       {/* <FeedList></FeedList> */}
     </Layout>
