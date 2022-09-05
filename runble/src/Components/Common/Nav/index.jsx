@@ -12,7 +12,8 @@ import {
 import {
   NavState,
   PreviewImg,
-  NavStates
+  NavStates,
+  NavPostData
 } from "../../../Recoil/Atoms/OptionAtoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useMutation, useQueryClient } from "react-query";
@@ -20,14 +21,17 @@ import S3upload from "react-aws-s3";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import imageCompression from "browser-image-compression";
+import { useAddTodoMutation } from "../../../Hooks/useDeletePost";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 const Nav = () => {
+  const { mutate } = useAddTodoMutation();
   const { state } = useLocation();
   const navigate = useNavigate();
   const [Show, SetShow] = useRecoilState(NavState);
   const [preview, SetPreview] = useRecoilState(PreviewImg);
   const [naveState, SetnaveState] = useRecoilState(NavStates);
   const navEvent = useRecoilValue(NavStates);
+  const postData = useRecoilValue(NavPostData);
   const imgVal = useRef(null);
   const [submit, Setsubmit] = useState({
     profile: ""
@@ -38,9 +42,9 @@ const Nav = () => {
     useWebWorker: true
   };
 
-  const { mutate, isLoading, error, isSuccess } = useMutation(submit => {
-    return axios.post("http://localhost:3001/profile", submit);
-  });
+  // const { mutate, isLoading, error, isSuccess } = useMutation(submit => {
+  //   return axios.post("http://localhost:3001/profile", submit);
+  // });
 
   const submitImg = async () => {
     let file = imgVal.current.files[0];
@@ -59,7 +63,7 @@ const Nav = () => {
       if (data.status === 204) {
         let imgUrl = data.location;
         const newimg = { ...submit, profile: imgUrl };
-        mutate(newimg);
+        // mutate(newimg);
       } else {
         window.alert("사진 업로드에 오류가 있어요! 관리자에게 문의해주세요.");
       }
@@ -82,6 +86,13 @@ const Nav = () => {
   const outConfirm = () => {
     if (confirm("회원탈퇴하시겠습니까")) {
       return;
+    } else {
+      return;
+    }
+  };
+  const DeleteConfirm = () => {
+    if (confirm("정말삭제하시겠습니까?")) {
+      return mutate(postData.postId);
     } else {
       return;
     }
@@ -136,8 +147,22 @@ const Nav = () => {
             ),
             put: (
               <StyleShow Show={Show}>
-                <p>수정하기</p>
-                <p>삭제하기</p>
+                <p
+                  onClick={() => {
+                    navigate(`/post/${postData.postId}`, {
+                      state: { data: postData }
+                    });
+                  }}
+                >
+                  수정하기
+                </p>
+                <p
+                  onClick={() => {
+                    DeleteConfirm();
+                  }}
+                >
+                  삭제하기
+                </p>
               </StyleShow>
             )
           }[navEvent]

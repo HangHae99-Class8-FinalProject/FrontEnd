@@ -11,4 +11,5 @@ export const StyleProgress = styled.div`
 `;
 export const StyleProgressBox = styled.div`
   height: 100px;
+  display: block;
 `;

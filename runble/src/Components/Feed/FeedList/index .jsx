@@ -17,8 +17,8 @@ const UserfeedList = () => {
             }}
           >
             최신
-          </span>{" "}
-          /{" "}
+          </span>
+          /
           <span
             onClick={() => {
               SetFilter(true);

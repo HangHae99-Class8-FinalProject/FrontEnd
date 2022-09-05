@@ -8,6 +8,7 @@ import {
   StyleRecord,
   StyleImg
 } from "./style";
+import { NavPostData } from "../../../Recoil/Atoms/OptionAtoms";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
 import { useRecoilState } from "recoil";
@@ -21,12 +22,15 @@ import axios from "axios";
 const fetchPostList = async pageParam => {
   const res = await axios.post(
     `http://54.167.169.43/api/post/scroll/${pageParam}`,
-    1
+    {
+      userId: 1
+    }
   );
   const { Post, isLast } = res.data;
   return { Post, nextPage: pageParam + 1, isLast };
 };
 const MainList = () => {
+  const [postData, SetPostData] = useRecoilState(NavPostData);
   const { mutate } = useAddTodoMutation();
   const { ref, inView } = useInView();
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
@@ -48,7 +52,7 @@ const MainList = () => {
       <div>
         {data?.pages.map((page, index) => (
           <React.Fragment key={index}>
-            {page.Post.map((posts, index) => (
+            {page?.Post.map((posts, index) => (
               <StyleFeed key={index}>
                 <div>
                   <StyleFrofileBox>
@@ -57,11 +61,14 @@ const MainList = () => {
                       <span>닉네임</span>
                     </StyleFrofile>
                     <div style={{ display: "flex" }}>
-                      <span>조회수:{posts.view}</span>
+                      <div>
+                        조회수:<span>{posts.view}</span>
+                      </div>
                       <div
                         onClick={() => {
                           SetShow(prev => !prev);
                           SetnaveState("put");
+                          SetPostData(posts);
                         }}
                       >
                         ...

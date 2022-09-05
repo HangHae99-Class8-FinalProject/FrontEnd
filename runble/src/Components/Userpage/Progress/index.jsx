@@ -11,15 +11,29 @@ const Progress = () => {
   return (
     <StyleProgress>
       목표를 설정해주세요
-      <CircularProgressbar
+      <CircularProgressbarWithChildren
         value={percentage}
         text={`${percentage}%`}
         strokeWidth={5}
-        styles={buildStyles({
-          textColor: "red",
-          pathColor: "turquoise",
-          trailColor: "gold"
-        })}
+        styles={{
+          root: { height: "100px" },
+          path: {
+            stroke: "#4fce84",
+            strokeLinecap: "butt",
+            transition: "stroke-dashoffset 0.5s ease 0s"
+          },
+
+          trail: {
+            stroke: "#d7d7d7"
+          },
+          text: {
+            fill: "#333333",
+            fontSize: "18px"
+          },
+          background: {
+            fill: "#3e98c7"
+          }
+        }}
       />
     </StyleProgress>
   );
