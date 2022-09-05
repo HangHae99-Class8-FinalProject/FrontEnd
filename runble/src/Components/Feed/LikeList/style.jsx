@@ -1,12 +1,4 @@
 import styled from "styled-components";
-export const StyleFeedWrap = styled.div`
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0 30px;
-  & > div {
-    float: right;
-  }
-`;
 export const StyleFeed = styled.div`
   width: 100%;
   flex-direction: column;
@@ -32,4 +24,9 @@ export const StyleRecord = styled.div`
 export const StylePath = styled.div`
   height: 200px;
   background-color: azure;
+`;
+export const StyleImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
