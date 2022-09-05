@@ -2,14 +2,14 @@ import React from "react";
 import Layout from "../Components/Common/Layout";
 import Userprofile from "../Components/Userpage/Userprofile";
 import Progress from "../Components/Userpage/Progress";
-import FeedList from "../Components/Feed/FeedList/index ";
+import Userfeed from "../Components/Feed/index ";
 
 const UserPage = () => {
   return (
     <Layout>
       <Userprofile></Userprofile>
       <Progress></Progress>
-      <FeedList></FeedList>
+      <Userfeed></Userfeed>
     </Layout>
   );
 };

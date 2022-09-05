@@ -1,11 +1,11 @@
 import React from "react";
 import Layout from "../Components/Common/Layout";
-import UserfeedList from "../Components/Feed/FeedList/index ";
+import Userfeed from "../Components/Feed/index ";
 
 const Feed = () => {
   return (
     <Layout>
-      <UserfeedList></UserfeedList>
+      <Userfeed></Userfeed>
     </Layout>
   );
 };

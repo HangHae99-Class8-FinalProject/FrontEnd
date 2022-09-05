@@ -6,9 +6,4 @@ export const StyleProgress = styled.div`
   box-sizing: border-box;
   margin-top: 50px;
   margin: 30px 30px;
-  display: flex;
-  flex-direction: column;
-`;
-export const StyleProgressBox = styled.div`
-  height: 100px;
 `;

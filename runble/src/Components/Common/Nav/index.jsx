@@ -15,14 +15,14 @@ import {
   NavStates
 } from "../../../Recoil/Atoms/OptionAtoms";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 import S3upload from "react-aws-s3";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
-import imageCompression from "browser-image-compression";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 const Nav = () => {
   const { state } = useLocation();
+  console.log(state);
   const navigate = useNavigate();
   const [Show, SetShow] = useRecoilState(NavState);
   const [preview, SetPreview] = useRecoilState(PreviewImg);
@@ -32,21 +32,14 @@ const Nav = () => {
   const [submit, Setsubmit] = useState({
     profile: ""
   });
-  const options = {
-    maxSizeMB: 1,
-    maxWidthOrHeight: 1920,
-    useWebWorker: true
-  };
 
   const { mutate, isLoading, error, isSuccess } = useMutation(submit => {
     return axios.post("http://localhost:3001/profile", submit);
   });
 
-  const submitImg = async () => {
+  const submitImg = () => {
     let file = imgVal.current.files[0];
     let newFileName = imgVal.current.files[0].name;
-    const compressedFile = await imageCompression(file, options);
-    console.log(compressedFile.size / 1024 / 1024);
 
     const config = {
       accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
@@ -55,7 +48,7 @@ const Nav = () => {
       region: process.env.REACT_APP_REGION
     };
     const ReactS3Client = new S3upload(config);
-    ReactS3Client.uploadFile(compressedFile, newFileName).then(async data => {
+    ReactS3Client.uploadFile(file, newFileName).then(async data => {
       if (data.status === 204) {
         let imgUrl = data.location;
         const newimg = { ...submit, profile: imgUrl };
@@ -73,14 +66,14 @@ const Nav = () => {
   };
 
   const logoutConfirm = () => {
-    if (confirm("로그아웃하시겠습니까")) {
+    if (window.confirm("로그아웃하시겠습니까")) {
       return;
     } else {
       return;
     }
   };
   const outConfirm = () => {
-    if (confirm("회원탈퇴하시겠습니까")) {
+    if (window.confirm("회원탈퇴하시겠습니까")) {
       return;
     } else {
       return;

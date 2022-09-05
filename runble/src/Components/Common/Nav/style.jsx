@@ -5,7 +5,6 @@ export const StyleNav = styled.div`
   bottom: 0;
   flex-direction: column;
   display: flex;
-  z-index: 999;
 `;
 export const StyleShowBackgroud = styled.div`
   background-color: rgba(102, 100, 100, 0.3);
