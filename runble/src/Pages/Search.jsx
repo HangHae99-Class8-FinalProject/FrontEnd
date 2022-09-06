@@ -4,7 +4,7 @@ import styled from "styled-components";
 import RelatedBar from "../Components/SearchPage/RelatedBar";
 import SearchedHashTag from "../Components/SearchPage/SearchedHasTag";
 import SearchedUser from "../Components/SearchPage/SearchedUser";
-import useInput from "../hooks/useInput";
+import useInput from "../Hooks/useInput";
 
 const Search = () => {
   const [searchTag, onChangeSearchTag] = useInput("");
