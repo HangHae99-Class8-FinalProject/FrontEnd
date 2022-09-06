@@ -1,32 +1,40 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import styled from "styled-components";
 
 function ProfileUpload() {
     // useState 훅을 이용하여 Image element의 src의 상태를 변경시켜준다.
    const [fileUrl, setFileUrl] = useState(null);
+   const fileUpload =useRef(null)
   
    //인풋이 onChange 될 때
    const chgPreview = (e) => {
    //현재 이미지 파일
-   const imageFile = e.targe.files[0];
+   const imageFile = e.target.files[0];
    //선택한 이미지 파일의 url
    const imageUrl = URL.createObjectURL(imageFile);
 
-   setFileUrl(imageFile)
+   setFileUrl(imageUrl)
    }
 
  return(
     <>
-      <label for="imgFIle">
+      <form>
+      <label htmlFor="imgFile">
          {
             !fileUrl ?
             <Grid>
-               
+               <DefaultImg src={`${process.env.PUBLIC_URL}/img/userprofile.png`}/>
             </Grid>:
+               
                <Image src={fileUrl}/>
-
+            
          }
       </label>
+            <FileBox type="file" accept="image/*" name="profile_Img" ref={fileUpload} onChange={chgPreview} id="imgFile"/>
+            <NicInput/>
+         <JoinBtn >JOIN US</JoinBtn>
+            
+       </form>
     </>
  )
 }
@@ -41,10 +49,31 @@ const Grid = styled.div`
    border-radius: "44px";
    padding: "15% 30%";
 `
-const Image = styled.img`
-   width: 374px;
-   height: 236px;
-   margin: 3% auto";
-`
+const DefaultImg = styled.img`
+   width:200px;
+   display: block;
+  margin:0 auto;`
 
+const Image = styled.img`
+   width: 200px;
+   height: 236px;
+   display: block;
+  margin:0 auto;
+`
+const FileBox = styled.input`
+display: none;
+`
+const NicInput = styled.input`
+  display: block;
+  margin:0 auto;
+`
+const JoinBtn = styled.div`
+   width: 100%;
+   height:100px;
+   color: white;
+   font-size: 80px;
+   background-color:black;
+   text-align: center;
+   margin-top:200px;
+`
 
