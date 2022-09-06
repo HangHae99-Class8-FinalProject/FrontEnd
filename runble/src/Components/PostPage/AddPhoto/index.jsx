@@ -8,12 +8,14 @@ import { useRecoilState } from "recoil";
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
-const AddPhoto = ({ merge }) => {
+const AddPhoto = ({ merge, prevImg }) => {
   const [uploadImages, setUploadImages] = useState([]);
-  const [previewImages, setPreviewImages] = useState([]);
+  const [previewImages, setPreviewImages] = useState(prevImg || []);
   const [post, setPost] = useRecoilState(postData);
   const [upLoading, setUpLoading] = useState(false);
   const imgRef = useRef();
+
+  console.log(uploadImages);
 
   const config = {
     accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
@@ -24,7 +26,7 @@ const AddPhoto = ({ merge }) => {
 
   // 이미지 업로드 로직
   const onSubmitImg = async () => {
-    const arr = [];
+    const arr = prevImg || [];
     console.log(imgRef.current.files);
     const length = imgRef.current.files.length;
     if (length > 0) {

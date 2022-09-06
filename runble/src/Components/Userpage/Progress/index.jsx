@@ -6,26 +6,19 @@ import {
   CircularProgressbarWithChildren
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import moment from "moment";
+const weekOfMonth = m => m.week() - moment(m).startOf("month").week() + 1;
+const nowDate = moment().utc(true);
+const goalDate = nowDate.format("MM월 ") + weekOfMonth(nowDate) + "주차"; // 현재 날짜
 
 const Progress = () => {
   const percentage = 50;
-  const today = new Date();
-  const year = today.getFullYear(); // 년
-  const month = today.getMonth(); // 월
-  const day = today.getDate(); // 일
-  const sevenDay = new Date(year, month, day + 7);
-  const todayDate = today.toLocaleDateString();
-  const sevenDate = sevenDay.toLocaleDateString();
-  // console.log(today.toLocaleDateString());
-  // console.log(sevenDay.toLocaleDateString());
+
   return (
     <StyleWrap>
       <StyleGoal>
         <h3>이번주목표도</h3>
-        <div>
-          <span>{todayDate}</span>
-          <span>{sevenDate}</span>
-        </div>
+        <span>{goalDate}</span>
       </StyleGoal>
       <StyleProgress>
         <span>??km</span>

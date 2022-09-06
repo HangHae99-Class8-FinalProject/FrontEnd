@@ -8,6 +8,7 @@ import {
   StyleRecord,
   StyleImg
 } from "./style";
+import KakaoMap from "../../Common/KakaoMap/index";
 import { NavPostData } from "../../../Recoil/Atoms/OptionAtoms";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
@@ -38,7 +39,8 @@ const MainList = () => {
     ({ pageParam = 1 }) => fetchPostList(pageParam),
     {
       getNextPageParam: lastPage =>
-        !lastPage.isLast ? lastPage.nextPage : undefined
+        !lastPage.isLast ? lastPage.nextPage : undefined,
+      refetchOnWindowFocus: false
     }
   );
   const [show, setShow] = useRecoilState(NavState);
@@ -46,7 +48,7 @@ const MainList = () => {
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
-  console.log(data);
+
   return (
     <>
       <div>
@@ -62,7 +64,7 @@ const MainList = () => {
                     </StyleFrofile>
                     <div style={{ display: "flex" }}>
                       <div>
-                        조회수:<span>{posts.view}</span>
+                        조회수:<span>{posts?.view}</span>
                       </div>
                       <div
                         onClick={() => {
@@ -76,7 +78,7 @@ const MainList = () => {
                     </div>
                   </StyleFrofileBox>
                   <StyleRecord>
-                    <div>거리:{posts.distance}km</div>
+                    <div>거리:{posts?.distance}km</div>
                     <div>시간:30분</div>
                   </StyleRecord>
                   <StylePath>
@@ -88,9 +90,9 @@ const MainList = () => {
                       modules={[Pagination]}
                     >
                       <SwiperSlide>
-                        <StyleImg src="https://www.walkerhillstory.com/wp-content/uploads/2020/09/2-1.jpg"></StyleImg>
+                        <KakaoMap path={posts.path}></KakaoMap>
                       </SwiperSlide>
-                      <SwiperSlide>Slide 2</SwiperSlide>
+                      <SwiperSlide></SwiperSlide>
                       <SwiperSlide>Slide 3</SwiperSlide>
                       <SwiperSlide>Slide 4</SwiperSlide>
                       <SwiperSlide>Slide 5</SwiperSlide>
@@ -101,9 +103,9 @@ const MainList = () => {
                     </Swiper>
                   </StylePath>
                   <div>
-                    <p>{posts.content}</p>
+                    <p>{posts?.content}</p>
                     <div style={{ display: "flex" }}>
-                      {posts.hashtag.map((hash, idx) => (
+                      {posts?.hashtag.map((hash, idx) => (
                         <p key={idx}>#{hash}</p>
                       ))}
                     </div>

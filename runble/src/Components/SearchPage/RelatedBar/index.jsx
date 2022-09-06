@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { instance } from "../../../Utils/Instance";
 import { useQuery } from "react-query";
 import useQueryDebounce from "../../../Utils/useQueryDebounce";

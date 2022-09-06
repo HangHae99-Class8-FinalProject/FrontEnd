@@ -11,8 +11,8 @@ import { useRecoilState } from "recoil";
 import useInput from "../../../Hooks/useInput";
 import { postData } from "../../../Recoil/Atoms/PostData";
 
-const AddContent = ({ merge }) => {
-  const [content, onChangeContent] = useInput("");
+const AddContent = ({ merge, prevContent }) => {
+  const [content, onChangeContent] = useInput(prevContent || "");
   const [showWrite, setShowWrite] = useState(false);
   const [post, setPost] = useRecoilState(postData);
   const textRef = useRef(null);
