@@ -37,6 +37,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/react", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:13.3.0"],\
             ["@testing-library/user-event", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:13.5.0"],\
             ["axios", "npm:0.27.2"],\
+            ["browser-image-compression", "npm:2.0.0"],\
+            ["buffer", "npm:6.0.3"],\
             ["dotenv", "npm:16.0.2"],\
             ["eslint", "npm:8.23.0"],\
             ["eslint-config-airbnb", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:19.0.4"],\
@@ -45,9 +47,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-jsx-a11y", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:6.6.1"],\
             ["eslint-plugin-react", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:7.31.1"],\
             ["eslint-plugin-react-hooks", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:4.6.0"],\
+            ["geolocation-distance-between", "npm:0.1.0"],\
             ["react", "npm:18.2.0"],\
+            ["react-aws-s3", "npm:1.5.0"],\
             ["react-dom", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:18.2.0"],\
             ["react-is", "npm:18.2.0"],\
+            ["react-kakao-maps-sdk", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:1.1.3"],\
             ["react-query", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:3.39.2"],\
             ["react-router-dom", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:6.3.0"],\
             ["react-scripts", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:5.0.1"],\
@@ -5465,6 +5470,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["any-base", [\
+        ["npm:1.1.0", {\
+          "packageLocation": "./.yarn/cache/any-base-npm-1.1.0-1f3e797fba-c1fd040de5.zip/node_modules/any-base/",\
+          "packageDependencies": [\
+            ["any-base", "npm:1.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["anymatch", [\
         ["npm:3.1.2", {\
           "packageLocation": "./.yarn/cache/anymatch-npm-3.1.2-1d5471acfa-985163db22.zip/node_modules/anymatch/",\
@@ -6085,6 +6099,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["base64-js", [\
+        ["npm:1.5.1", {\
+          "packageLocation": "./.yarn/cache/base64-js-npm-1.5.1-b2f7275641-669632eb37.zip/node_modules/base64-js/",\
+          "packageDependencies": [\
+            ["base64-js", "npm:1.5.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["batch", [\
         ["npm:0.6.1", {\
           "packageLocation": "./.yarn/cache/batch-npm-0.6.1-70e2e81169-61f9934c73.zip/node_modules/batch/",\
@@ -6232,6 +6255,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["browser-image-compression", [\
+        ["npm:2.0.0", {\
+          "packageLocation": "./.yarn/cache/browser-image-compression-npm-2.0.0-d41d5989f6-c95b3ad5d6.zip/node_modules/browser-image-compression/",\
+          "packageDependencies": [\
+            ["browser-image-compression", "npm:2.0.0"],\
+            ["uzip", "npm:0.20201231.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["browser-process-hrtime", [\
         ["npm:1.0.0", {\
           "packageLocation": "./.yarn/cache/browser-process-hrtime-npm-1.0.0-db700805c2-e30f868cdb.zip/node_modules/browser-process-hrtime/",\
@@ -6260,6 +6293,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["bser", "npm:2.1.1"],\
             ["node-int64", "npm:0.4.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["buffer", [\
+        ["npm:6.0.3", {\
+          "packageLocation": "./.yarn/cache/buffer-npm-6.0.3-cd90dfedfe-5ad23293d9.zip/node_modules/buffer/",\
+          "packageDependencies": [\
+            ["buffer", "npm:6.0.3"],\
+            ["base64-js", "npm:1.5.1"],\
+            ["ieee754", "npm:1.2.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -6892,6 +6936,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["path-key", "npm:3.1.1"],\
             ["shebang-command", "npm:2.0.0"],\
             ["which", "npm:2.0.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["crypto-js", [\
+        ["npm:3.3.0", {\
+          "packageLocation": "./.yarn/cache/crypto-js-npm-3.3.0-5b307000b5-193923143a.zip/node_modules/crypto-js/",\
+          "packageDependencies": [\
+            ["crypto-js", "npm:3.3.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -9317,6 +9370,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["geolocation-distance-between", [\
+        ["npm:0.1.0", {\
+          "packageLocation": "./.yarn/cache/geolocation-distance-between-npm-0.1.0-b3b93d2ccd-fdec114a08.zip/node_modules/geolocation-distance-between/",\
+          "packageDependencies": [\
+            ["geolocation-distance-between", "npm:0.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["get-caller-file", [\
         ["npm:2.0.5", {\
           "packageLocation": "./.yarn/cache/get-caller-file-npm-2.0.5-80e8a86305-b9769a836d.zip/node_modules/get-caller-file/",\
@@ -9943,6 +10005,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["identity-obj-proxy", "npm:3.0.0"],\
             ["harmony-reflect", "npm:1.6.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["ieee754", [\
+        ["npm:1.2.1", {\
+          "packageLocation": "./.yarn/cache/ieee754-npm-1.2.1-fb63b3caeb-5144c0c981.zip/node_modules/ieee754/",\
+          "packageDependencies": [\
+            ["ieee754", "npm:1.2.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -11354,6 +11425,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jsx-ast-utils", "npm:3.3.3"],\
             ["array-includes", "npm:3.1.5"],\
             ["object.assign", "npm:4.1.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["kakao.maps.d.ts", [\
+        ["npm:0.1.33", {\
+          "packageLocation": "./.yarn/cache/kakao.maps.d.ts-npm-0.1.33-58a98ec649-50908b7ff8.zip/node_modules/kakao.maps.d.ts/",\
+          "packageDependencies": [\
+            ["kakao.maps.d.ts", "npm:0.1.33"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -14623,6 +14703,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["react-aws-s3", [\
+        ["npm:1.5.0", {\
+          "packageLocation": "./.yarn/cache/react-aws-s3-npm-1.5.0-d3bd49906d-964102c935.zip/node_modules/react-aws-s3/",\
+          "packageDependencies": [\
+            ["react-aws-s3", "npm:1.5.0"],\
+            ["crypto-js", "npm:3.3.0"],\
+            ["short-uuid", "npm:3.1.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["react-dev-utils", [\
         ["npm:12.0.1", {\
           "packageLocation": "./.yarn/cache/react-dev-utils-npm-12.0.1-83ba06e3ee-2c6917e47f.zip/node_modules/react-dev-utils/",\
@@ -14725,6 +14816,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/react-is-npm-18.2.0-0cc5edb910-e72d0ba81b.zip/node_modules/react-is/",\
           "packageDependencies": [\
             ["react-is", "npm:18.2.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["react-kakao-maps-sdk", [\
+        ["npm:1.1.3", {\
+          "packageLocation": "./.yarn/cache/react-kakao-maps-sdk-npm-1.1.3-644f0c1116-b8bcdb561b.zip/node_modules/react-kakao-maps-sdk/",\
+          "packageDependencies": [\
+            ["react-kakao-maps-sdk", "npm:1.1.3"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:1.1.3", {\
+          "packageLocation": "./.yarn/__virtual__/react-kakao-maps-sdk-virtual-8fb9a21f1a/0/cache/react-kakao-maps-sdk-npm-1.1.3-644f0c1116-b8bcdb561b.zip/node_modules/react-kakao-maps-sdk/",\
+          "packageDependencies": [\
+            ["react-kakao-maps-sdk", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:1.1.3"],\
+            ["@types/react", null],\
+            ["@types/react-dom", null],\
+            ["kakao.maps.d.ts", "npm:0.1.33"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -15336,6 +15454,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/react", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:13.3.0"],\
             ["@testing-library/user-event", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:13.5.0"],\
             ["axios", "npm:0.27.2"],\
+            ["browser-image-compression", "npm:2.0.0"],\
+            ["buffer", "npm:6.0.3"],\
             ["dotenv", "npm:16.0.2"],\
             ["eslint", "npm:8.23.0"],\
             ["eslint-config-airbnb", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:19.0.4"],\
@@ -15344,9 +15464,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-jsx-a11y", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:6.6.1"],\
             ["eslint-plugin-react", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:7.31.1"],\
             ["eslint-plugin-react-hooks", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:4.6.0"],\
+            ["geolocation-distance-between", "npm:0.1.0"],\
             ["react", "npm:18.2.0"],\
+            ["react-aws-s3", "npm:1.5.0"],\
             ["react-dom", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:18.2.0"],\
             ["react-is", "npm:18.2.0"],\
+            ["react-kakao-maps-sdk", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:1.1.3"],\
             ["react-query", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:3.39.2"],\
             ["react-router-dom", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:6.3.0"],\
             ["react-scripts", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:5.0.1"],\
@@ -15685,6 +15808,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/shell-quote-npm-1.7.3-76a78a6d77-aca58e73a3.zip/node_modules/shell-quote/",\
           "packageDependencies": [\
             ["shell-quote", "npm:1.7.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["short-uuid", [\
+        ["npm:3.1.1", {\
+          "packageLocation": "./.yarn/cache/short-uuid-npm-3.1.1-dbc3479bb5-bdda2dd0ae.zip/node_modules/short-uuid/",\
+          "packageDependencies": [\
+            ["short-uuid", "npm:3.1.1"],\
+            ["any-base", "npm:1.1.0"],\
+            ["uuid", "npm:3.4.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -16946,10 +17080,26 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["uuid", [\
+        ["npm:3.4.0", {\
+          "packageLocation": "./.yarn/cache/uuid-npm-3.4.0-4fd8ef88ad-58de2feed6.zip/node_modules/uuid/",\
+          "packageDependencies": [\
+            ["uuid", "npm:3.4.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:8.3.2", {\
           "packageLocation": "./.yarn/cache/uuid-npm-8.3.2-eca0baba53-5575a8a75c.zip/node_modules/uuid/",\
           "packageDependencies": [\
             ["uuid", "npm:8.3.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["uzip", [\
+        ["npm:0.20201231.0", {\
+          "packageLocation": "./.yarn/cache/uzip-npm-0.20201231.0-122f770c6a-34253f4c3d.zip/node_modules/uzip/",\
+          "packageDependencies": [\
+            ["uzip", "npm:0.20201231.0"]\
           ],\
           "linkType": "HARD"\
         }]\

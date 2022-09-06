@@ -1,0 +1,50 @@
+.hashDivrap {
+  color: rgb(52, 58, 64);
+  font-size: 13px;
+  display: flex;
+  flex-wrap: wrap;
+  letter-spacing: -0.6px;
+  color: #444241;
+  margin-right: 6px;
+}
+.HashWrapOuter {
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 8px;
+  gap: 6px;
+}
+
+.HashWrapInner {
+  background: #353434;
+  padding: 3px 6px;
+  border-radius: 8px;
+  min-width: 63px;
+  height: 21px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.HashInput {
+  display: inline-flex;
+  outline: none;
+  cursor: text;
+  border: none;
+  background: #353434;
+  padding: 3px 6px;
+  border-radius: 8px;
+  width: 63px;
+  height: 21px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
+  margin-left: 6px;
+}

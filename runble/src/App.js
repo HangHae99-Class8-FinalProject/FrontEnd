@@ -10,6 +10,7 @@ import {
   useRecoilValue
 } from "recoil";
 import GlobalStyle from "./GlobalStyle";
+import { RecoilRoot } from "recoil";
 
 const queryClient = new QueryClient();
 
