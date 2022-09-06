@@ -2,12 +2,12 @@ import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 
 import RelatedBar from "../Components/SearchPage/RelatedBar";
-import { debounce } from "../Utils/debounce";
 import SearchedHashTag from "../Components/SearchPage/SearchedHasTag";
 import SearchedUser from "../Components/SearchPage/SearchedUser";
+import useInput from "../hooks/useInput";
 
 const Search = () => {
-  const [searchTag, setSearchTag] = useState("");
+  const [searchTag, onChangeSearchTag] = useInput("");
   const [showRelatedBar, setShowRelatedBar] = useState(false);
   const [selectedTab, setSelectedTab] = useState("유저");
 
@@ -26,13 +26,6 @@ const Search = () => {
   const onClickHashTag = useCallback(() => {
     setSelectedTab("태그");
   }, []);
-
-  const onChangeSearchTag = useCallback(
-    e => {
-      debounce(setSearchTag(e.target.value), 1000);
-    },
-    [searchTag]
-  );
 
   return (
     <>

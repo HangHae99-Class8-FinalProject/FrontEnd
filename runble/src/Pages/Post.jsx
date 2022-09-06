@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from "react";
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { useMutation } from "react-query";
 
@@ -12,21 +12,37 @@ import AddContent from "../Components/PostPage/AddContent";
 import { instance } from "../Utils/Instance";
 
 // http://54.167.169.43
-const Post = () => {
+const Post = ({ props }) => {
   const [merge, setMerge] = useState(false);
   const [post, setPost] = useRecoilState(postData);
   const [showModal, setShowModal] = useState(false);
 
+  const { id: postId } = useParams();
+
   console.log("post:", post);
 
   const location = useLocation();
-  const { runLog } = location.state;
+  const runLog = props || location.state.runLog;
   const Time = runLog.time;
 
   const addPosts = async () => {
-    const { data } = await instance.post("http://54.167.169.43/api/post", post);
-    return console.log(data);
+    if (!props) {
+      const { data } = await instance.post(
+        "http://54.167.169.43/api/post",
+        post
+      );
+      console.log(data);
+      return data;
+    } else {
+      const { data } = await instance.put(
+        `http://54.167.169.43/api/post/${postId}`,
+        post
+      );
+      console.log(data);
+      return data;
+    }
   };
+
   const onFrinish = useCallback(() => {
     setShowModal(true);
   }, []);
