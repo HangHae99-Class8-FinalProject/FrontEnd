@@ -150,7 +150,7 @@ const Nav = () => {
                 <p
                   onClick={() => {
                     navigate(`/post/${postData.postId}`, {
-                      state: { data: postData }
+                      state: { runLog: postData }
                     });
                   }}
                 >

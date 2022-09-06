@@ -2,15 +2,8 @@ import React from "react";
 import Router from "./Router/Router";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import {
-  RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue
-} from "recoil";
-import GlobalStyle from "./GlobalStyle";
 import { RecoilRoot } from "recoil";
+import GlobalStyle from "./GlobalStyle";
 
 const queryClient = new QueryClient();
 
