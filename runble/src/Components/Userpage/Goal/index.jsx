@@ -3,18 +3,18 @@ import { useAddGoalMutation } from "../../../Hooks/useGoal";
 import { StyleGoal, StyleModal, StyleInput } from "./style";
 const Goal = () => {
   const { mutate } = useAddGoalMutation();
-  const [modal, Setmodal] = useState(false);
-  const [goal, Setgoal] = useState({
+  const [modal, setModal] = useState(false);
+  const [goal, setGoal] = useState({
     goal: ""
   });
   const onChangeHandeler = e => {
     const { name, value } = e.target;
-    Setgoal({ ...goal, [name]: value });
+    setGoal({ ...goal, [name]: value });
   };
 
   const onSubmitHandeler = () => {
     // mutate(goal);
-    Setgoal({
+    setGoal({
       goal: ""
     });
   };
@@ -22,7 +22,7 @@ const Goal = () => {
     <>
       <StyleGoal
         onClick={() => {
-          Setmodal(true);
+          setModal(true);
         }}
       >
         목표설정해주세요
@@ -42,7 +42,7 @@ const Goal = () => {
           <div>
             <button
               onClick={() => {
-                Setmodal(false);
+                setModal(false);
               }}
             >
               취소

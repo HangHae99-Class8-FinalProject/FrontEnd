@@ -10,8 +10,8 @@ import { useQuery } from "react-query";
 import axios from "axios";
 
 const Userprofile = () => {
-  const [Show, SetShow] = useRecoilState(NavState);
-  const [navState, SetnavState] = useRecoilState(NavStates);
+  const [show, setShow] = useRecoilState(NavState);
+  const [navState, setNavState] = useRecoilState(NavStates);
   const previewChange = useRecoilValue(PreviewImg);
 
   return (
@@ -20,8 +20,8 @@ const Userprofile = () => {
         {!previewChange ? (
           <img
             onClick={() => {
-              SetnavState("img");
-              SetShow(prev => !prev);
+              setNavState("img");
+              setShow(prev => !prev);
             }}
             style={{ width: "80px", height: "80px" }}
             src="/img/userprofile.png"
@@ -29,8 +29,8 @@ const Userprofile = () => {
         ) : (
           <img
             onClick={() => {
-              SetnavState("img");
-              SetShow(prev => !prev);
+              setNavState("img");
+              setShow(prev => !prev);
             }}
             style={{ width: "80px", height: "80px" }}
             src={previewChange}

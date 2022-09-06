@@ -29,8 +29,8 @@ const UserList = () => {
         !lastPage.isLast ? lastPage.nextPage : undefined
     }
   );
-  const [Show, SetShow] = useRecoilState(NavState);
-  const [naveState, SetnaveState] = useRecoilState(NavStates);
+  const [show, setShow] = useRecoilState(NavState);
+  const [navState, setNavState] = useRecoilState(NavStates);
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
@@ -51,8 +51,8 @@ const UserList = () => {
                       <span>조회수:1</span>
                       <div
                         onClick={() => {
-                          SetShow(prev => !prev);
-                          SetnaveState("put");
+                          setShow(prev => !prev);
+                          setNavState("put");
                         }}
                       >
                         ...

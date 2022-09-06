@@ -36,8 +36,8 @@ const LikeList = () => {
         !lastPage.isLast ? lastPage.nextPage : undefined
     }
   );
-  const [Show, SetShow] = useRecoilState(NavState);
-  const [naveState, SetnaveState] = useRecoilState(NavStates);
+  const [show, setShow] = useRecoilState(NavState);
+  const [naveState, setnaveState] = useRecoilState(NavStates);
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
@@ -58,8 +58,8 @@ const LikeList = () => {
                       <span>조회수:1</span>
                       <div
                         onClick={() => {
-                          SetShow(prev => !prev);
-                          SetnaveState("put");
+                          setShow(prev => !prev);
+                          setnaveState("put");
                         }}
                       >
                         ...

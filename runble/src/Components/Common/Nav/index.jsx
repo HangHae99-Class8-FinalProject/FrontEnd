@@ -27,13 +27,13 @@ const Nav = () => {
   const { mutate } = useAddTodoMutation();
   const { state } = useLocation();
   const navigate = useNavigate();
-  const [Show, SetShow] = useRecoilState(NavState);
-  const [preview, SetPreview] = useRecoilState(PreviewImg);
-  const [naveState, SetnaveState] = useRecoilState(NavStates);
+  const [show, setShow] = useRecoilState(NavState);
+  const [preview, setPreview] = useRecoilState(PreviewImg);
+  const [naveState, setNaveState] = useRecoilState(NavStates);
   const navEvent = useRecoilValue(NavStates);
   const postData = useRecoilValue(NavPostData);
   const imgVal = useRef(null);
-  const [submit, Setsubmit] = useState({
+  const [submit, setSubmit] = useState({
     profile: ""
   });
   const options = {
@@ -72,7 +72,7 @@ const Nav = () => {
   const onChangeImg = e => {
     const imageFile = e.target.files[0];
     const imageUrl = URL.createObjectURL(imageFile);
-    SetPreview(imageUrl);
+    setPreview(imageUrl);
     submitImg();
   };
 
@@ -100,12 +100,12 @@ const Nav = () => {
   return (
     <>
       <StyleNav>
-        <StyleShowBackgroud Show={Show}></StyleShowBackgroud>
+        <StyleShowBackgroud Show={show}></StyleShowBackgroud>
 
         {
           {
             option: (
-              <StyleShow Show={Show}>
+              <StyleShow Show={show}>
                 <p
                   onClick={() => {
                     logoutConfirm();
@@ -124,10 +124,10 @@ const Nav = () => {
               </StyleShow>
             ),
             img: (
-              <StyleShow Show={Show}>
+              <StyleShow Show={show}>
                 <p
                   onClick={() => {
-                    SetPreview(`/img/userprofile.png`);
+                    setPreview(`/img/userprofile.png`);
                   }}
                 >
                   기본이미지로변경하기
@@ -146,7 +146,7 @@ const Nav = () => {
               </StyleShow>
             ),
             put: (
-              <StyleShow Show={Show}>
+              <StyleShow Show={show}>
                 <p
                   onClick={() => {
                     navigate(`/post/${postData.postId}`, {
@@ -201,8 +201,8 @@ const Nav = () => {
           ) : (
             <OptionsBox
               onClick={() => {
-                SetShow(prev => !prev);
-                SetnaveState("option");
+                setShow(prev => !prev);
+                setNaveState("option");
               }}
             >
               <Options

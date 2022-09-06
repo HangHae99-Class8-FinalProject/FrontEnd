@@ -30,7 +30,7 @@ const fetchPostList = async pageParam => {
   return { Post, nextPage: pageParam + 1, isLast };
 };
 const MainList = () => {
-  const [postData, SetPostData] = useRecoilState(NavPostData);
+  const [postData, setPostData] = useRecoilState(NavPostData);
   const { mutate } = useAddTodoMutation();
   const { ref, inView } = useInView();
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
@@ -41,8 +41,8 @@ const MainList = () => {
         !lastPage.isLast ? lastPage.nextPage : undefined
     }
   );
-  const [Show, SetShow] = useRecoilState(NavState);
-  const [naveState, SetnaveState] = useRecoilState(NavStates);
+  const [show, setShow] = useRecoilState(NavState);
+  const [naveState, setnaveState] = useRecoilState(NavStates);
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
@@ -66,9 +66,9 @@ const MainList = () => {
                       </div>
                       <div
                         onClick={() => {
-                          SetShow(prev => !prev);
-                          SetnaveState("put");
-                          SetPostData(posts);
+                          setShow(prev => !prev);
+                          setnaveState("put");
+                          setPostData(posts);
                         }}
                       >
                         ...
