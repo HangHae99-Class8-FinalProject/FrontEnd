@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Map, MapMarker, Polyline } from "react-kakao-maps-sdk";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { runData } from "../../../Recoil/Atoms/RunData";
-import useInterval from "../../../hooks/useInterval";
+import useInterval from "../../../Hooks/useInterval";
 import { getDistanceBetween } from "geolocation-distance-between";
 import { useNavigate } from "react-router-dom";
 

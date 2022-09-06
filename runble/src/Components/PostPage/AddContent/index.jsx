@@ -8,7 +8,7 @@ import React, {
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 
-import useInput from "../../../hooks/useInput";
+import useInput from "../../../Hooks/useInput";
 import { postData } from "../../../Recoil/Atoms/PostData";
 
 const AddContent = ({ merge }) => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import useInterval from "../../../hooks/useInterval";
+import useInterval from "../../../Hooks/useInterval";
 import { runData } from "../../../Recoil/Atoms/RunData";
 import { useRecoilState } from "recoil";
 

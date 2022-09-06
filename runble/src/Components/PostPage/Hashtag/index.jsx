@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import "./styles.css";
-import useInput from "../../../hooks/useInput";
+import useInput from "../../../Hooks/useInput";
 
 import { useRecoilState } from "recoil";
 import { postData } from "../../../Recoil/Atoms/PostData";

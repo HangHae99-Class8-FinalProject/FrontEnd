@@ -1,14 +1,12 @@
 import { useMutation, UseMutationResult, useQueryClient } from "react-query";
-import axios from "axios";
-const userProfile = async postId => {
+import { instance } from "../Utils/Instance";
+const deletePost = async postId => {
   console.log(postId);
-  return await axios.put(`http://54.167.169.43/api/user/setgoal`, {
-    userId: 1
-  });
+  return await instance.delete(`http://54.167.169.43/api/post/${postId}`);
 };
-export const useUserProfileMutation = () => {
+export const useAddTodoMutation = () => {
   const queryClient = useQueryClient();
-  return useMutation(userProfile, {
+  return useMutation(deletePost, {
     onSuccess: data => {
       queryClient.invalidateQueries("posts");
       queryClient.invalidateQueries("like");
