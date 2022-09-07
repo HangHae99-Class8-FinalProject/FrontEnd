@@ -1,11 +1,32 @@
 import React from "react";
+import { instance } from "../../../Utils/Instance";
+import { useQuery } from "react-query";
 
-const SearchedUser = ({ users }) => {
+const SearchedUser = ({ searhValue }) => {
+  console.log(searhValue);
+  const getSearchUser = async () => {
+    const { data } = await instance.get(
+      `http://54.167.169.43/api/user/search?nickname=${searhValue}`
+    );
+    return data;
+  };
+
+  const { data } = useQuery("searchUser", getSearchUser, {
+    enabled: !!searhValue
+  });
+
+  console.log("user:", data);
   return (
     <>
-      {users?.map(user => {
-        return <div>{user}</div>;
+      {data?.map(user => {
+        return (
+          <>
+            <img src={user.profile} />
+            <div>{user.nickname}</div>
+          </>
+        );
       })}
+      <div>유저검색</div>
     </>
   );
 };
