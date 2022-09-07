@@ -23,10 +23,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import imageCompression from "browser-image-compression";
 import { useDeletePost } from "../../../Hooks/useDeletePost";
 window.Buffer = window.Buffer || require("buffer").Buffer;
-const Nav = () => {
+const Nav = ({ feed }) => {
   const { mutate } = useDeletePost();
-  const { state } = useLocation();
-  console.log(state);
   const navigate = useNavigate();
   const [show, setShow] = useRecoilState(NavState);
   const [preview, setPreview] = useRecoilState(PreviewImg);
@@ -172,7 +170,7 @@ const Nav = () => {
         <StyleButton>
           <div
             onClick={() => {
-              navigate("/feed", { state: true });
+              navigate("/feed");
             }}
           >
             게시글
@@ -191,7 +189,7 @@ const Nav = () => {
           >
             기록하기
           </div>
-          {state ? (
+          {feed ? (
             <div
               onClick={() => {
                 navigate("/user");

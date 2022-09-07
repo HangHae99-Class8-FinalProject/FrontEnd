@@ -7,7 +7,7 @@ import Goal from "../Components/Userpage/Goal";
 
 const UserPage = () => {
   return (
-    <Layout>
+    <Layout feed={false}>
       <Userprofile></Userprofile>
       <Progress></Progress>
       <Goal></Goal>

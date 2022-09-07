@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { NavState, NavStates } from "../../../Recoil/Atoms/OptionAtoms";
+import { StyleUserListWrap } from "./style";
 import PostBox from "../../Common/PostBox";
 import { useParams } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
@@ -35,7 +36,7 @@ const UserList = () => {
     if (inView) fetchNextPage();
   }, [inView]);
   return (
-    <>
+    <StyleUserListWrap>
       <div>
         {data?.pages.map((page, index) => (
           <React.Fragment key={index}>
@@ -46,7 +47,7 @@ const UserList = () => {
         ))}
       </div>
       {isFetchingNextPage ? <span>로딩중입니다</span> : <div ref={ref}></div>}
-    </>
+    </StyleUserListWrap>
   );
 };
 export default UserList;

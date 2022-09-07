@@ -6,7 +6,7 @@ import { useRecoilState } from "recoil";
 import { NavState } from "../../../Recoil/Atoms/OptionAtoms";
 import { useState } from "react";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, feed }) => {
   const [isShow, setIsShow] = useRecoilState(NavState);
   const showOutImg = () => {
     if (isShow) {
@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
     <StyleLayout isShow={isShow} onClick={showOutImg}>
       <Header></Header>
       {children}
-      <Nav></Nav>
+      <Nav feed={feed}></Nav>
     </StyleLayout>
   );
 };
