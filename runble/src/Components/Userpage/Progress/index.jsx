@@ -6,50 +6,47 @@ import {
   CircularProgressbarWithChildren
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import moment from "moment";
+const weekOfMonth = m => m.week() - moment(m).startOf("month").week() + 1;
+const nowDate = moment().utc(true);
+const goalDate = nowDate.format("MM월 ") + weekOfMonth(nowDate) + "주차"; // 현재 날짜
 
 const Progress = () => {
   const percentage = 50;
-  const today = new Date();
-  const year = today.getFullYear(); // 년
-  const month = today.getMonth(); // 월
-  const day = today.getDate(); // 일
-  const sevenDay = new Date(year, month, day + 7);
-  const todayDate = today.toLocaleDateString();
-  const sevenDate = sevenDay.toLocaleDateString();
-  // console.log(today.toLocaleDateString());
-  // console.log(sevenDay.toLocaleDateString());
+
   return (
     <StyleWrap>
       <StyleGoal>
-        <h3>이번주목표도</h3>
-        <div>
-          <span>{todayDate}</span>
-          <span>{sevenDate}</span>
-        </div>
+        <span>목표 달성도 </span>
       </StyleGoal>
       <StyleProgress>
-        <span>??km</span>
-        <CircularProgressbarWithChildren
-          value={percentage}
-          text={`${percentage}%`}
-          strokeWidth={10}
-          styles={{
-            root: { height: "150px" },
-            path: {
-              stroke: "#4fce84",
-              strokeLinecap: "butt",
-              transition: "stroke-dashoffset 0.5s ease 0s"
-            },
+        <div>
+          <span>{goalDate}</span>
+        </div>
+        <div style={{ margin: "30px 0" }}>
+          <div>10km</div>
+          <CircularProgressbarWithChildren
+            value={percentage}
+            text={`${percentage}%`}
+            strokeWidth={10}
+            styles={{
+              root: { height: "150px" },
+              path: {
+                stroke: "#4fce84",
+                strokeLinecap: "butt",
+                transition: "stroke-dashoffset 0.5s ease 0s"
+              },
 
-            trail: {
-              stroke: "#d7d7d7"
-            },
-            text: {
-              fill: "#333333",
-              fontSize: "18px"
-            }
-          }}
-        />
+              trail: {
+                stroke: "#d7d7d7"
+              },
+              text: {
+                fill: "#333333",
+                fontSize: "18px"
+              }
+            }}
+          />
+        </div>
       </StyleProgress>
     </StyleWrap>
   );

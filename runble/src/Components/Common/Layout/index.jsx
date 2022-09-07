@@ -7,10 +7,10 @@ import { NavState } from "../../../Recoil/Atoms/OptionAtoms";
 import { useState } from "react";
 
 const Layout = ({ children }) => {
-  const [isShow, SetisShow] = useRecoilState(NavState);
+  const [isShow, setIsShow] = useRecoilState(NavState);
   const showOutImg = () => {
     if (isShow) {
-      SetisShow(false);
+      setIsShow(false);
     }
   };
   return (

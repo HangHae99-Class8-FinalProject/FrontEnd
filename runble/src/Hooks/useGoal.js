@@ -1,16 +1,15 @@
 import { useMutation, UseMutationResult, useQueryClient } from "react-query";
-import axios from "axios";
-const deletePost = async postId => {
+import { instance } from "../Utils/Instance";
+const postGoal = async postId => {
   console.log(postId);
-  return await axios.delete(`http://54.167.169.43/api/post/${postId}`);
+  return await instance.put(`http://54.167.169.43/api/user/setgoal`, {
+    userId: 1
+  });
 };
-
-export const useAddTodoMutation = () => {
+export const useGoal = () => {
   const queryClient = useQueryClient();
-  return useMutation(deletePost, {
+  return useMutation(postGoal, {
     onSuccess: data => {
-      queryClient.invalidateQueries("posts");
-      queryClient.invalidateQueries("like");
       console.log(data); // mutation 이 성공하면 response를 받을 수 있다.
     },
     onError: error => {

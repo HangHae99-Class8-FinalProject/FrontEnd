@@ -19,9 +19,12 @@ export const StyleProgress = styled.div`
   box-sizing: border-box;
   margin-top: 50px;
   margin: 10px 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  & > div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 export const StyleProgressBox = styled.div`
   height: 100px;

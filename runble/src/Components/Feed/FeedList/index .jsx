@@ -5,7 +5,7 @@ import LikeList from "../LikeList/index";
 import MainList from "../MainList/index";
 import { useState } from "react";
 const UserfeedList = () => {
-  const [filter, SetFilter] = useState(false);
+  const [filter, setFilter] = useState(false);
   const { state } = useLocation();
   return (
     <StyleFeedWrap>
@@ -13,7 +13,7 @@ const UserfeedList = () => {
         <StyleFilter>
           <span
             onClick={() => {
-              SetFilter(false);
+              setFilter(false);
             }}
           >
             최신
@@ -21,7 +21,7 @@ const UserfeedList = () => {
           /
           <span
             onClick={() => {
-              SetFilter(true);
+              setFilter(true);
             }}
           >
             인기
