@@ -1,6 +1,8 @@
 import React from "react";
-import { instance } from "../../../Utils/Instance";
 import { useQuery } from "react-query";
+
+import { instance } from "../../../Utils/Instance";
+import PostBox from "../../Common/PostBox";
 
 const SearchedHashTag = ({ searhValue }) => {
   console.log("searchValue:", searhValue);
@@ -19,10 +21,9 @@ const SearchedHashTag = ({ searhValue }) => {
 
   return (
     <>
-      {/* {data?.map(list => {
-        return <div>{list}</div>;
-      })} */}
-      <div>태그</div>
+      {data?.Post.map(list => {
+        return <PostBox posts={list} />;
+      })}
     </>
   );
 };
