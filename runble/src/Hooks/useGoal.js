@@ -6,7 +6,7 @@ const postGoal = async postId => {
     userId: 1
   });
 };
-export const useAddGoalMutation = () => {
+export const useGoal = () => {
   const queryClient = useQueryClient();
   return useMutation(postGoal, {
     onSuccess: data => {

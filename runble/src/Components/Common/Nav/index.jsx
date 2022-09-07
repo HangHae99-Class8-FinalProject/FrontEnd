@@ -21,11 +21,12 @@ import S3upload from "react-aws-s3";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import imageCompression from "browser-image-compression";
-import { useAddTodoMutation } from "../../../Hooks/useDeletePost";
+import { useDeletePost } from "../../../Hooks/useDeletePost";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 const Nav = () => {
-  const { mutate } = useAddTodoMutation();
+  const { mutate } = useDeletePost();
   const { state } = useLocation();
+  console.log(state);
   const navigate = useNavigate();
   const [show, setShow] = useRecoilState(NavState);
   const [preview, setPreview] = useRecoilState(PreviewImg);

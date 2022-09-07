@@ -1,24 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { NavState, NavStates } from "../../../Recoil/Atoms/OptionAtoms";
-import {
-  StyleFeed,
-  StyleFrofileBox,
-  StyleFrofile,
-  StylePath,
-  StyleRecord,
-  StyleImg
-} from "./style";
-import KakaoMap from "../../Common/KakaoMap/index";
+
 import { NavPostData } from "../../../Recoil/Atoms/OptionAtoms";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
 import { useRecoilState } from "recoil";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper";
-import "swiper/css";
-import "swiper/css/pagination";
+import PostBox from "../../Common/PostBox";
 
-import { useAddTodoMutation } from "../../../Hooks/useLikecheck";
 import axios from "axios";
 const fetchPostList = async pageParam => {
   const res = await axios.post(
@@ -32,7 +20,7 @@ const fetchPostList = async pageParam => {
 };
 const MainList = () => {
   const [postData, setPostData] = useRecoilState(NavPostData);
-  const { mutate } = useAddTodoMutation();
+
   const { ref, inView } = useInView();
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
     "posts",
@@ -55,76 +43,7 @@ const MainList = () => {
         {data?.pages.map((page, index) => (
           <React.Fragment key={index}>
             {page?.Post.map((posts, index) => (
-              <StyleFeed key={index}>
-                <div>
-                  <StyleFrofileBox>
-                    <StyleFrofile>
-                      <div>프로필사진</div>
-                      <span>닉네임</span>
-                    </StyleFrofile>
-                    <div style={{ display: "flex" }}>
-                      <div>
-                        조회수:<span>{posts?.view}</span>
-                      </div>
-                      <div
-                        onClick={() => {
-                          setShow(prev => !prev);
-                          setnaveState("put");
-                          setPostData(posts);
-                        }}
-                      >
-                        ...
-                      </div>
-                    </div>
-                  </StyleFrofileBox>
-                  <StyleRecord>
-                    <div>거리:{posts?.distance}km</div>
-                    <div>시간:30분</div>
-                  </StyleRecord>
-                  <StylePath>
-                    <Swiper
-                      style={{ height: "200px" }}
-                      pagination={{
-                        dynamicBullets: true
-                      }}
-                      modules={[Pagination]}
-                    >
-                      <SwiperSlide>
-                        <KakaoMap path={posts.path}></KakaoMap>
-                      </SwiperSlide>
-                      <SwiperSlide></SwiperSlide>
-                      <SwiperSlide>Slide 3</SwiperSlide>
-                      <SwiperSlide>Slide 4</SwiperSlide>
-                      <SwiperSlide>Slide 5</SwiperSlide>
-                      <SwiperSlide>Slide 6</SwiperSlide>
-                      <SwiperSlide>Slide 7</SwiperSlide>
-                      <SwiperSlide>Slide 8</SwiperSlide>
-                      <SwiperSlide>Slide 9</SwiperSlide>
-                    </Swiper>
-                  </StylePath>
-                  <div>
-                    <p>{posts?.content}</p>
-                    <div style={{ display: "flex" }}>
-                      {posts?.hashtag.map((hash, idx) => (
-                        <p key={idx}>#{hash}</p>
-                      ))}
-                    </div>
-                    <div
-                      onClick={() => {
-                        mutate(posts.postId);
-                      }}
-                    >
-                      {posts.likeDone ? (
-                        <span>좋아요완료</span>
-                      ) : (
-                        <span>좋아요눌러주세요</span>
-                      )}{" "}
-                      {posts.like}개
-                    </div>
-                    <p>댓글1개모두보기</p>
-                  </div>
-                </div>
-              </StyleFeed>
+              <PostBox key={index} posts={posts} index={index}></PostBox>
             ))}
           </React.Fragment>
         ))}

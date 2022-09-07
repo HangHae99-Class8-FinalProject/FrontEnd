@@ -17,32 +17,36 @@ const Progress = () => {
   return (
     <StyleWrap>
       <StyleGoal>
-        <h3>이번주목표도</h3>
-        <span>{goalDate}</span>
+        <span>목표 달성도 </span>
       </StyleGoal>
       <StyleProgress>
-        <span>??km</span>
-        <CircularProgressbarWithChildren
-          value={percentage}
-          text={`${percentage}%`}
-          strokeWidth={10}
-          styles={{
-            root: { height: "150px" },
-            path: {
-              stroke: "#4fce84",
-              strokeLinecap: "butt",
-              transition: "stroke-dashoffset 0.5s ease 0s"
-            },
+        <div>
+          <span>{goalDate}</span>
+        </div>
+        <div style={{ margin: "30px 0" }}>
+          <div>10km</div>
+          <CircularProgressbarWithChildren
+            value={percentage}
+            text={`${percentage}%`}
+            strokeWidth={10}
+            styles={{
+              root: { height: "150px" },
+              path: {
+                stroke: "#4fce84",
+                strokeLinecap: "butt",
+                transition: "stroke-dashoffset 0.5s ease 0s"
+              },
 
-            trail: {
-              stroke: "#d7d7d7"
-            },
-            text: {
-              fill: "#333333",
-              fontSize: "18px"
-            }
-          }}
-        />
+              trail: {
+                stroke: "#d7d7d7"
+              },
+              text: {
+                fill: "#333333",
+                fontSize: "18px"
+              }
+            }}
+          />
+        </div>
       </StyleProgress>
     </StyleWrap>
   );

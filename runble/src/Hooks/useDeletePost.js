@@ -4,7 +4,7 @@ const deletePost = async postId => {
   console.log(postId);
   return await instance.delete(`http://54.167.169.43/api/post/${postId}`);
 };
-export const useAddTodoMutation = () => {
+export const useDeletePost = () => {
   const queryClient = useQueryClient();
   return useMutation(deletePost, {
     onSuccess: data => {

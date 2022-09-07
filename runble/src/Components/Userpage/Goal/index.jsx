@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useAddGoalMutation } from "../../../Hooks/useGoal";
+import { useGoal } from "../../../Hooks/useGoal";
 import { StyleGoal, StyleModal, StyleInput } from "./style";
 const Goal = () => {
-  const { mutate } = useAddGoalMutation();
+  const { mutate } = useGoal();
   const [modal, setModal] = useState(false);
   const [goal, setGoal] = useState({
     goal: ""

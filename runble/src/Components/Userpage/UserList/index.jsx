@@ -1,28 +1,36 @@
 import React, { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { NavState, NavStates } from "../../../Recoil/Atoms/OptionAtoms";
+import PostBox from "../../Common/PostBox";
+import { useParams } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
 import axios from "axios";
 
-import PostBox from "../../Common/PostBox";
-const fetchLikeList = async pageParam => {
+const fetchUserList = async (pageParam, id) => {
   const res = await axios.post(
-    `http://54.167.169.43/api/post/likeorder/${pageParam}`,
-    1
+    `http://54.167.169.43/api/user/post/${id}/${pageParam}`,
+    {
+      userId: 1
+    }
   );
   const { Post, isLast } = res.data;
   return { Post, nextPage: pageParam + 1, isLast };
 };
-const LikeList = () => {
+const UserList = () => {
+  const { id } = useParams();
   const { ref, inView } = useInView();
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    "like",
-    ({ pageParam = 1 }) => fetchLikeList(pageParam),
+    "user",
+    ({ pageParam = 1 }) => fetchUserList(pageParam, id),
     {
       getNextPageParam: lastPage =>
         !lastPage.isLast ? lastPage.nextPage : undefined
     }
   );
 
+  const [show, setShow] = useRecoilState(NavState);
+  const [navState, setNavState] = useRecoilState(NavStates);
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
@@ -41,4 +49,4 @@ const LikeList = () => {
     </>
   );
 };
-export default LikeList;
+export default UserList;

@@ -6,7 +6,7 @@ const postGood = async postId => {
     userId: 1
   });
 };
-export const useAddTodoMutation = () => {
+export const useLikeCheck = () => {
   const queryClient = useQueryClient();
   return useMutation(postGood, {
     onSuccess: data => {

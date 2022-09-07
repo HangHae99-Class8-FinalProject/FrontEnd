@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "../Components/Common/Layout";
 import Userprofile from "../Components/Userpage/Userprofile";
 import Progress from "../Components/Userpage/Progress";
-import FeedList from "../Components/Feed/FeedList/index ";
+import UserList from "../Components/Userpage/UserList";
 import Goal from "../Components/Userpage/Goal";
 
 const UserPage = () => {
@@ -11,7 +11,7 @@ const UserPage = () => {
       <Userprofile></Userprofile>
       <Progress></Progress>
       <Goal></Goal>
-      {/* <FeedList></FeedList> */}
+      <UserList></UserList>
     </Layout>
   );
 };
