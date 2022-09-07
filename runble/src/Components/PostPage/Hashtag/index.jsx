@@ -25,7 +25,7 @@ const Hashtag = ({ merge, prevHashtag }) => {
 
   const submitTagItem = () => {
     let updatedTagList = [...hashArr];
-    updatedTagList.push("#" + hashtag);
+    updatedTagList.push(hashtag);
     setHashArr(updatedTagList);
     setHashtag("");
   };
@@ -33,7 +33,7 @@ const Hashtag = ({ merge, prevHashtag }) => {
   const deleteTagItem = e => {
     const deleteTagItem = e.target.innerText;
     const filteredTagList = hashArr.filter(
-      tagItem => tagItem !== deleteTagItem
+      tagItem => "#" + tagItem !== deleteTagItem
     );
     setHashArr(filteredTagList);
   };
@@ -53,7 +53,7 @@ const Hashtag = ({ merge, prevHashtag }) => {
         {hashArr.map((hash, idx) => {
           return (
             <div className="HashWrapInner" value={hash} onClick={deleteTagItem}>
-              {hash}
+              {"#" + hash}
             </div>
           );
         })}

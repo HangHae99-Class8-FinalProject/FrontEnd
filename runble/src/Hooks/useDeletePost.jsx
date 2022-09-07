@@ -4,6 +4,7 @@ const deletePost = async postId => {
   console.log(postId);
   return await axios.delete(`http://54.167.169.43/api/post/${postId}`);
 };
+
 export const useAddTodoMutation = () => {
   const queryClient = useQueryClient();
   return useMutation(deletePost, {

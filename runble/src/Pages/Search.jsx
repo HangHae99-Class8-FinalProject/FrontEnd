@@ -8,8 +8,9 @@ import useInput from "../Hooks/useInput";
 
 const Search = () => {
   const [searchTag, onChangeSearchTag] = useInput("");
+  const [searhValue, setSearchValue] = useState("");
   const [showRelatedBar, setShowRelatedBar] = useState(false);
-  const [selectedTab, setSelectedTab] = useState("유저");
+  const [selectedTab, setSelectedTab] = useState("태그");
 
   const onShowRelatedBar = useCallback(() => {
     setShowRelatedBar(true);
@@ -27,25 +28,46 @@ const Search = () => {
     setSelectedTab("태그");
   }, []);
 
+  const onSubmitSearch = useCallback(
+    e => {
+      e.preventDefault();
+      setSearchValue(searchTag);
+      setShowRelatedBar(false);
+    },
+    [searchTag]
+  );
+
   return (
     <>
-      <SearchTerm
-        type="text"
-        value={searchTag}
-        placeholder="검색어를 입력해주세요"
-        onClick={onShowRelatedBar}
-        onChange={onChangeSearchTag}
-      />
+      <form onSubmit={onSubmitSearch}>
+        <SearchTerm
+          type="text"
+          value={searchTag}
+          placeholder="검색어를 입력해주세요"
+          onClick={onShowRelatedBar}
+          onChange={onChangeSearchTag}
+        />
+      </form>
       <CloseButton onClick={onCloseRelatedBar}>&times;</CloseButton>
       {showRelatedBar && searchTag && <RelatedBar searchTag={searchTag} />}
       {!showRelatedBar && (
         <TapWrap>
-          <TapButton onClick={onClickUser}>유저</TapButton>
-          <TapButton onClick={onClickHashTag}>태그</TapButton>
+          <TapButton
+            onClick={onClickUser}
+            style={{ border: selectedTab === "유저" && "none" }}
+          >
+            유저
+          </TapButton>
+          <TapButton
+            onClick={onClickHashTag}
+            style={{ border: selectedTab === "태그" && "none" }}
+          >
+            태그
+          </TapButton>
         </TapWrap>
       )}
-      {selectedTab === "유저" && <SearchedUser />}
-      {selectedTab === "태그" && <SearchedHashTag />}
+      {selectedTab === "유저" && <SearchedUser searhValue={searhValue} />}
+      {selectedTab === "태그" && <SearchedHashTag searhValue={searhValue} />}
     </>
   );
 };
@@ -89,7 +111,4 @@ const TapButton = styled.button`
   justify-content: center;
   align-items: center;
   border-bottom: 4px solid #353434;
-  &:focus {
-    font-weight: bold;
-  }
 `;

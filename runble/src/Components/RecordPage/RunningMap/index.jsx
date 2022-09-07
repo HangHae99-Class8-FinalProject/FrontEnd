@@ -3,7 +3,7 @@ import { Map, MapMarker, Polyline } from "react-kakao-maps-sdk";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { runData } from "../../../Recoil/Atoms/RunData";
 import useInterval from "../../../Hooks/useInterval";
-import { getDistanceBetween } from "geolocation-distance-between";
+import calcDistance from "../../../Utils/clacDistnace";
 import { useNavigate } from "react-router-dom";
 
 const RunningMap = ({ stopInterval, endRun }) => {
@@ -24,43 +24,30 @@ const RunningMap = ({ stopInterval, endRun }) => {
     isLoading: false
   });
 
-  // 이동 거리 구하기
-  let polylinePath = path.path;
-  const calcDistance = () => {
-    let distanceBetween = 0;
-    if (1 < polylinePath.length) {
-      for (let i = 0; i < polylinePath.length; i++) {
-        if (path.path.length - 1 === i) {
-          distanceBetween += getDistanceBetween(
-            { latitude: polylinePath[i]?.lat, longitude: polylinePath[i]?.lng },
-            { latitude: polylinePath[i]?.lat, longitude: polylinePath[i]?.lng }
-          );
-        } else {
-          distanceBetween += getDistanceBetween(
-            { latitude: polylinePath[i]?.lat, longitude: polylinePath[i]?.lng },
-            {
-              latitude: polylinePath[i + 1]?.lat,
-              longitude: polylinePath[i + 1]?.lng
-            }
-          );
-        }
-      }
-    }
-    setDistance(distanceBetween);
-  };
-
   //사용자 첫 위 가져오기
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        setState({
-          center: {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          },
-          isLoading: true
-        });
-      });
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          setState({
+            center: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            },
+            isLoading: true
+          });
+        },
+        error => {
+          console.log(error);
+        },
+        { enableHighAccuracy: true }
+      );
+    } else {
+      setState(prev => ({
+        ...prev,
+        errMsg: "현재 위치를 표시할 수 없어요.",
+        isLoading: false
+      }));
     }
   }, []);
 
@@ -68,20 +55,26 @@ const RunningMap = ({ stopInterval, endRun }) => {
   useInterval(
     () => {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-          setState(prev => ({
-            ...prev,
-            center: {
-              lat: position.coords.latitude, // 위도
-              lng: position.coords.longitude // 경도
-            },
-            isLoading: true
-          }));
-          setPath(prev => ({
-            ...prev,
-            path: prev.path.concat(state.center)
-          }));
-        });
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            setState(prev => ({
+              ...prev,
+              center: {
+                lat: position.coords.latitude, // 위도
+                lng: position.coords.longitude // 경도
+              },
+              isLoading: true
+            }));
+            setPath(prev => ({
+              ...prev,
+              path: prev.path.concat(state.center)
+            }));
+          },
+          error => {
+            console.log(error);
+          },
+          { enableHighAccuracy: true, timeout: 4000 }
+        );
       } else {
         setState(prev => ({
           ...prev,
@@ -89,7 +82,8 @@ const RunningMap = ({ stopInterval, endRun }) => {
           isLoading: false
         }));
       }
-      calcDistance();
+      //이동거리구하기
+      setDistance(calcDistance(path));
     },
     stopInterval ? null : 5000
   );
