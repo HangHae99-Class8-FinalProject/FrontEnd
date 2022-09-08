@@ -41,7 +41,8 @@ export const StyleHashBox = styled.div`
   justify-content: space-between;
 `;
 
-export const StyleHash = styled.span`
+export const StyleHash = styled.div`
+  width: 100%;
   height: 25px;
   background-color: #353434;
   color: white;
@@ -49,5 +50,7 @@ export const StyleHash = styled.span`
   text-align: center;
   justify-content: center;
   align-items: center;
-  font-size: 15px;
+  & > span {
+    font-size: 12px;
+  }
 `;

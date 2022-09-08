@@ -10,6 +10,11 @@ export const StyleGoal = styled.div`
   flex-direction: column;
   background-color: rgba(53, 52, 52, 1);
 `;
+export const StyleGoalButton = styled.button`
+  background-color: rgba(240, 56, 0, 1);
+  color: #ffffff;
+`;
+
 export const StyleModal = styled.div`
   height: 200px;
   position: absolute;

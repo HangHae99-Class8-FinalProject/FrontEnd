@@ -30,6 +30,27 @@ const PostBox = ({ posts, index }) => {
   const [naveState, setnaveState] = useRecoilState(NavStates);
   const [postData, setPostData] = useRecoilState(NavPostData);
   const { mutate } = useLikeCheck();
+
+  function displayedAt(createdAt) {
+    const today = new Date(createdAt);
+    const milliSeconds = new Date() - new Date(createdAt);
+    // console.log(milliSeconds);
+    const seconds = milliSeconds / 1000;
+    // console.log(seconds);
+    if (seconds < 60) return `방금 전`;
+    const minutes = seconds / 60;
+    // console.log(minutes);
+    if (minutes < 60) return `${Math.floor(minutes)}분 전`;
+    const hours = minutes / 60;
+
+    if (hours < 24) return `${Math.floor(hours)}시간 전`;
+    const days = hours / 24;
+    console.log(days);
+    if (days < 2) return `${Math.floor(days)}일 전`;
+    if (days >= 2) return;
+    `${today.getMonth() + 1 + "월" + today.getDate() + "일"}`;
+  }
+
   return (
     <StyleFeed key={index}>
       <div>
@@ -87,7 +108,9 @@ const PostBox = ({ posts, index }) => {
           <StyleHashBox>
             <div style={{ display: "flex" }}>
               {posts?.hashtag.map((hash, idx) => (
-                <StyleHash key={idx}>#{hash}</StyleHash>
+                <StyleHash key={idx}>
+                  <span>#{hash}</span>
+                </StyleHash>
               ))}
             </div>
             <div
@@ -106,6 +129,7 @@ const PostBox = ({ posts, index }) => {
             댓글1개<span>모두보기</span>
           </p>
         </div>
+        {displayedAt(posts.createdAt)}
       </div>
     </StyleFeed>
   );
