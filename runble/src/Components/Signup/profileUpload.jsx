@@ -1,10 +1,14 @@
 import { useRef, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 function ProfileUpload() {
     // useState 훅을 이용하여 Image element의 src의 상태를 변경시켜준다.
    const [fileUrl, setFileUrl] = useState(null);
    const fileUpload =useRef(null)
+
+   const location = useLocation();
+   const navigate = useNavigate();
   
    //인풋이 onChange 될 때
    const chgPreview = (e) => {
@@ -16,9 +20,33 @@ function ProfileUpload() {
    setFileUrl(imageUrl)
    }
 
+   
+
+   // form 전송
+   const joinForm = (e) =>{
+      
+      //인가코드 가져오기
+      const CODE = location.search.split('=')[1];
+      console.log(CODE)
+      const IP = ""
+  
+      //백엔드에 인가코드 보내고 JWT 토큰 받아오기
+      // useEffect(()=>{
+      //     fetch(`http://${IP}/users/kakao/redirect?code=${CODE}`, {
+      //         method : 'GET' ,
+      //     })
+      //     .then(res => res.json())
+      //     .then(data=>{
+       //           console.log(data)
+      //         localStorage.setItem('token', data.token);
+      //         navigate('/signup')
+      //     })
+      // })
+   }
+  
  return(
     <>
-      <form>
+      <form onSubmit={joinForm}>
       <label htmlFor="imgFile">
          {
             !fileUrl ?
@@ -31,7 +59,7 @@ function ProfileUpload() {
          }
       </label>
             <FileBox type="file" accept="image/*" name="profile_Img" ref={fileUpload} onChange={chgPreview} id="imgFile"/>
-            <NicInput/>
+            <NicInput name="profile_Nic"/>
          <JoinBtn >JOIN US</JoinBtn>
             
        </form>
@@ -52,13 +80,13 @@ const Grid = styled.div`
 const DefaultImg = styled.img`
    width:200px;
    display: block;
-  margin:0 auto;`
+  margin:100px auto;`
 
 const Image = styled.img`
    width: 200px;
    height: 236px;
    display: block;
-  margin:0 auto;
+  margin:100px auto;
 `
 const FileBox = styled.input`
 display: none;
@@ -74,6 +102,6 @@ const JoinBtn = styled.div`
    font-size: 80px;
    background-color:black;
    text-align: center;
-   margin-top:200px;
+   margin-top:450px;
 `
 
