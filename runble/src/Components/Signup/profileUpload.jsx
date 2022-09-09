@@ -20,15 +20,15 @@ function ProfileUpload() {
    setFileUrl(imageUrl)
    }
 
-   
+   const CODE = location.search.split('=')[1];
+   console.log(CODE)
+   const IP = ""
 
    // form 전송
    const joinForm = (e) =>{
       
       //인가코드 가져오기
-      const CODE = location.search.split('=')[1];
-      console.log(CODE)
-      const IP = ""
+    
   
       //백엔드에 인가코드 보내고 JWT 토큰 받아오기
       // useEffect(()=>{

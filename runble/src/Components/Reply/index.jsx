@@ -2,47 +2,23 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { QueryClient, useMutation, useQuery } from 'react-query';
-import { instance } from "../../Utils/Instance";
+
 import styled from "styled-components"
 import ReplyComponent from "./replyComponent"
 import {addReplyData} from "../../Hooks/useReply"
-import uuid from "react-uuid"
-
-
-
-const getReply = async () =>{
-    return await instance.get('http://localhost:8000/Comment');
-};
 
 const ReplyCom = () => {
     const [replyValue,setReplyValue]= useState('');
-    
-    const onSuccess = () => {
-        console.log('perform side effect after data fetching');
-      };
-    
-      const onError = () => {
-        console.log('perform side effect after encountering error');
-      };
+    const [commentIdCnt, setCommentIdCnt] = useState(1);
 
-      const { isLoading, data, isError, error, isFetching, refetch } = useQuery(
-        'GET_REPLY',
-        getReply,
-        {
-          onSuccess,
-          onError,
-        },
-      );
-
-      console.log(data?.data)
     
-   const {mutate} = addReplyData();
 
+const {mutate} = addReplyData();
    const handleAddreply = (e)=>{
     e.preventDefault();
+    setCommentIdCnt(commentIdCnt+1)
     const initalState =  {
-        "id":0,
-        "commentId": uuid(),
+        "commentId": commentIdCnt,
         "nickname" : "기린",
         "profile":"",
         "comment" : replyValue,
@@ -50,8 +26,8 @@ const ReplyCom = () => {
       }
     mutate(initalState);
     setReplyValue('')
-
    }
+
     return(
         <>
             <Wrap>
@@ -64,17 +40,7 @@ const ReplyCom = () => {
                     <button onClick={handleAddreply}>댓글추가</button>
 
                     <ReplyArea>
-                    {
-                            data?.data.map((reply)=>{
-                                return(
-                                
-                                    <ReplyWrap key={reply.commentId}>
-                                        <ReplyComponent reply={reply}/>
-                                    </ReplyWrap>
-                                    
-                                )
-                            })
-                        }
+                        <ReplyComponent/>
                     </ReplyArea>
          
             </Wrap>
@@ -101,8 +67,4 @@ const Detail = styled.div`
 
 const ReplyArea = styled.div`
       margin: 20px;
-`
-
-const ReplyWrap = styled.div`
-      margin: 10px;
 `

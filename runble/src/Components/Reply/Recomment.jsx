@@ -4,6 +4,8 @@ import { useState } from "react";
 import Lion from "./lion.png"
 import styled from "styled-components"
 
+
+
 function Recomment ({replyCount,id}) {
     console.log(id)
     const onSuccess = () => {
@@ -18,7 +20,6 @@ function Recomment ({replyCount,id}) {
     const getrecommentReply = async () =>{
         return await instance.get('http://localhost:8001/Recomment');
     };
-
     const { isLoading, data, isError, error, isFetching, refetch } = useQuery(
         'GET_RECOMMENT',
         getrecommentReply,
@@ -28,15 +29,13 @@ function Recomment ({replyCount,id}) {
         },
       );
 
-      console.log(data?.data)
+      console.log(data?.data[0].commentId)
       const [display,setDisplay] = useState(false)
-      
     return(
         <>
             <button onClick={()=>{
                 setDisplay(!display)
             }}>답글{replyCount}개 보기</button>
-            <button>삭제</button>
             {
                 display && 
                 <ReplyBox>
