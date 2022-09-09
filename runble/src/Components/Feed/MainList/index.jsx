@@ -6,6 +6,7 @@ import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
 import { useRecoilState } from "recoil";
 import PostBox from "../../Common/PostBox";
+import useInfinityScroll from "../../../Hooks/useInfinityScroll";
 
 import axios from "axios";
 const fetchPostList = async pageParam => {
@@ -22,15 +23,21 @@ const MainList = () => {
   const [postData, setPostData] = useRecoilState(NavPostData);
 
   const { ref, inView } = useInView();
-  const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+  // const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+  //   "posts",
+  //   ({ pageParam = 1 }) => fetchPostList(pageParam),
+  //   {
+  //     getNextPageParam: lastPage =>
+  //       !lastPage.isLast ? lastPage.nextPage : undefined,
+  //     refetchOnWindowFocus: false
+  //   }
+  // );
+
+  const [data, status, fetchNextPage, isFetchingNextPage] = useInfinityScroll(
     "posts",
-    ({ pageParam = 1 }) => fetchPostList(pageParam),
-    {
-      getNextPageParam: lastPage =>
-        !lastPage.isLast ? lastPage.nextPage : undefined,
-      refetchOnWindowFocus: false
-    }
+    fetchPostList
   );
+
   const [show, setShow] = useRecoilState(NavState);
   const [naveState, setnaveState] = useRecoilState(NavStates);
   useEffect(() => {

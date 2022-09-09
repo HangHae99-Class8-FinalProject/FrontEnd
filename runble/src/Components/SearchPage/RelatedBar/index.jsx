@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { instance } from "../../../Utils/Instance";
 import { useQuery } from "react-query";
 import useQueryDebounce from "../../../Hooks/useQueryDebounce";
 
-const RelatedBar = ({ searchTag }) => {
+const RelatedBar = ({
+  searchTag,
+  setSearchTag,
+  setSearchValue,
+  onCloseRelatedBar
+}) => {
   const debounceSearch = useQueryDebounce(searchTag, 500);
 
   const getRelated = async () => {
@@ -17,10 +22,20 @@ const RelatedBar = ({ searchTag }) => {
     enabled: !!debounceSearch
   });
 
+  const onChangeSearch = list => {
+    setSearchTag(list);
+    setSearchValue(list);
+    onCloseRelatedBar();
+  };
+
   return (
     <>
-      {related?.map(list => {
-        return <div>{list}</div>;
+      {related?.map((list, idx) => {
+        return (
+          <div onClick={() => onChangeSearch(list)} key={idx}>
+            {list}
+          </div>
+        );
       })}
     </>
   );
