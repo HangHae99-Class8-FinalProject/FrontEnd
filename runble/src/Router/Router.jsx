@@ -9,7 +9,7 @@ import Reply from "../Pages/Reply";
 import Search from "../Pages/Search";
 import SignUp from "../Pages/SignUp";
 import UserPage from "../Pages/UserPage";
-import ProfileSignup from "../Components/Signup/profileSignup"
+import ProfileSignup from "../Components/Signup/profileSignup";
 
 const Router = () => {
   return (
