@@ -1,6 +1,4 @@
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import React,{ useState ,useEffect} from "react";
 import {useLocation, useNavigate} from "react-router-dom"
 import {REST_API_KEY,REDIRECT_URI} from "../Login/oauth"
 import axios from 'axios';
@@ -30,15 +28,9 @@ function ProfileSignup (){
 
       return res;
     }
-
     useEffect(()=>{
       kakaoLoign();
     },[])
-
-
-
-
-    
     return (
          <>
            로그인로딩중

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components"
 import Lion from "./lion.png"
-import { QueryClient, useMutation, useQuery,useQueryClient } from 'react-query';
+import { useMutation, useQuery,useQueryClient } from 'react-query';
 import Recomment from "./Recomment"
 import {delReply} from "../../Hooks/useReply"
 import { instance } from "../../Utils/Instance";
@@ -12,8 +12,6 @@ const getReply = async () =>{
      return await instance.get('http://localhost:8000/Comment');
     //return await instance.get('http://54.167.169.43/api/comment/1')
 };
-
-
 
 
 function ReplyComponent () {

@@ -7,7 +7,6 @@ const Login = () => {
   return (
     <LoginLayout>
       <KakaoLogin/>
-      {/* <NaverLogin/> */}
     </LoginLayout>
   )
 };

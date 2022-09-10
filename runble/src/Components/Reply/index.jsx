@@ -1,8 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import { useEffect } from "react";
-import { QueryClient, useMutation, useQuery } from 'react-query';
-
 import styled from "styled-components"
 import ReplyComponent from "./replyComponent"
 import {addReplyData} from "../../Hooks/useReply"
@@ -10,8 +7,6 @@ import {addReplyData} from "../../Hooks/useReply"
 const ReplyCom = () => {
     const [replyValue,setReplyValue]= useState('');
     const [commentIdCnt, setCommentIdCnt] = useState(1);
-
-    
 
 const {mutate} = addReplyData();
    const handleAddreply = (e)=>{

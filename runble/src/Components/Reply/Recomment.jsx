@@ -1,5 +1,5 @@
 import { instance } from "../../Utils/Instance";
-import { QueryClient, useMutation, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 import { useState } from "react";
 import Lion from "./lion.png"
 import styled from "styled-components"

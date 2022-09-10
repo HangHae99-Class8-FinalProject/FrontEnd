@@ -1,4 +1,3 @@
-import axios from "axios"
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
 import { instance } from "../Utils/Instance";
 

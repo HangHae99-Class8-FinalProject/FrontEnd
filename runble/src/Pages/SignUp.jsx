@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import ProfileSignup from "../Components/Signup/profileSignup"
 import ProfileUpload from "../Components/Signup/profileUpload"
 import {useLocation, useNavigate} from "react-router-dom"
 import { useEffect } from "react";
@@ -13,7 +12,6 @@ const SignUp = () => {
     return(
         <SignupLayout>
             <ProfileUpload/>
-            {/* <ProfileSignup/>   */}
         </SignupLayout>
     )
 };
