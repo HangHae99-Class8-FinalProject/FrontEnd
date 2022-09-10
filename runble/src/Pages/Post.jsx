@@ -40,35 +40,37 @@ const Post = () => {
     }
   };
 
-  const onFinish = useCallback(() => {
+  const onShowModal = useCallback(() => {
     setShowModal(true);
-    setMerge(true);
   }, []);
 
-  const cancelMerge = useCallback(() => {
-    setMerge(false);
+  const onCloseModal = useCallback(() => {
+    setShowModal(false);
   }, []);
+
+  const onClickSubmit = useCallback(() => {
+    setPost(prev => ({
+      ...prev,
+      distance: runLog.distance,
+      path: runLog.path,
+      time: Time,
+      isLoading: true
+    }));
+    setMerge(true);
+  }, [merge, post]);
 
   useEffect(() => {
-    if (merge) {
-      setPost(prev => ({
-        ...prev,
-        distance: runLog.distance,
-        path: runLog.path,
-        time: Time
-      }));
-    }
-  }, [merge]);
-  const onClickSubmit = useCallback(() => {
-    if (post.isCompleted && merge) {
+    if (!post.isLoading && merge) {
+      console.log("요청함");
       addPosts();
     }
-  }, [merge, post]);
+  }, [post, merge]);
 
   console.log(post);
 
   return (
     <>
+      {post.isLoading && <div>업로드중...</div>}
       <div>
         {Time.hour} :{Time.minute} :{Time.second}
       </div>
@@ -79,11 +81,11 @@ const Post = () => {
       <AddPhoto merge={merge} prevImg={runLog.image} />
       <Hashtag merge={merge} prevHashtag={runLog.hashtag} />
       <AddContent merge={merge} prevContent={runLog.content} />
-      <button onClick={onFinish}>{postId ? "수정하기" : "작성하기"}</button>
+      <button onClick={onShowModal}>{postId ? "수정하기" : "작성하기"}</button>
       {showModal && (
         <div>
           {postId ? "수정하시겠어요?" : "작성하시겠어요?"}
-          <button onClick={cancelMerge}>취소</button>
+          <button onClick={onCloseModal}>취소</button>
           <button onClick={onClickSubmit}>확인</button>
         </div>
       )}

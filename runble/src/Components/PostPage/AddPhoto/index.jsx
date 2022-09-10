@@ -9,12 +9,10 @@ import { useRecoilState } from "recoil";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const AddPhoto = ({ merge, prevImg }) => {
-  const [uploadImages, setUploadImages] = useState([]);
   const [previewImages, setPreviewImages] = useState(prevImg || []);
+  const [uploadImages, setUploadImages] = useState(prevImg || []);
   const [post, setPost] = useRecoilState(postData);
-  const [upLoading, setUpLoading] = useState(false);
   const imgRef = useRef();
-
   console.log(uploadImages);
 
   const config = {
@@ -26,10 +24,8 @@ const AddPhoto = ({ merge, prevImg }) => {
 
   // 이미지 업로드 로직
   const onSubmitImg = async () => {
-    const arr = prevImg || [];
-    console.log(imgRef.current.files);
     const length = imgRef.current.files.length;
-    if (length > 0) {
+    if (length > uploadImages) {
       const ReactS3Client = new S3upload(config);
       for (let i = 0; i < length; i++) {
         await ReactS3Client.uploadFile(
@@ -37,14 +33,16 @@ const AddPhoto = ({ merge, prevImg }) => {
           imgRef.current.files[i].name
         )
           .then(data => {
-            arr.push(data.location);
-            console.log("arr:", arr);
-            setUploadImages([...arr]);
+            uploadImages.push(data.location);
           })
           .catch(error => console.error(error));
       }
-      setUpLoading(true);
     }
+    setPost(prev => ({
+      ...prev,
+      image: uploadImages,
+      isLoading: false
+    }));
   };
 
   const onChangeImg = async () => {
@@ -69,6 +67,14 @@ const AddPhoto = ({ merge, prevImg }) => {
 
   const deletePhoto = idx => {
     setPreviewImages(previewImages.filter((_, index) => index !== idx));
+    setUploadImages(uploadImages?.filter((_, index) => index !== idx));
+    const dataTranster = new DataTransfer();
+    Array.from(imgRef.current.files)
+      .filter((_, index) => index !== idx)
+      .forEach(file => {
+        dataTranster.items.add(file);
+      });
+    imgRef.current.files = dataTranster.files;
   };
 
   useEffect(() => {
@@ -76,16 +82,6 @@ const AddPhoto = ({ merge, prevImg }) => {
       onSubmitImg();
     }
   }, [merge]);
-
-  useEffect(() => {
-    if (upLoading) {
-      setPost(prev => ({
-        ...prev,
-        image: uploadImages,
-        isCompleted: true
-      }));
-    }
-  }, [upLoading]);
 
   return (
     <PhotoWrap>

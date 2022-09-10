@@ -5,9 +5,11 @@ import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
 import { useRecoilState } from "recoil";
 import PostBox from "../../Common/PostBox";
-import { instance } from "../../../Utils/Instance";
+import useInfinityScroll from "../../../Hooks/useInfinityScroll";
+
+import axios from "axios";
 const fetchPostList = async pageParam => {
-  const res = await instance.post(
+  const res = await axios.post(
     `http://54.167.169.43/api/post/scroll/${pageParam}`,
     {
       userId: 1
@@ -20,15 +22,21 @@ const MainList = () => {
   const [postData, setPostData] = useRecoilState(NavPostData);
 
   const { ref, inView } = useInView();
-  const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+  // const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+  //   "posts",
+  //   ({ pageParam = 1 }) => fetchPostList(pageParam),
+  //   {
+  //     getNextPageParam: lastPage =>
+  //       !lastPage.isLast ? lastPage.nextPage : undefined,
+  //     refetchOnWindowFocus: false
+  //   }
+  // );
+
+  const [data, status, fetchNextPage, isFetchingNextPage] = useInfinityScroll(
     "posts",
-    ({ pageParam = 1 }) => fetchPostList(pageParam),
-    {
-      getNextPageParam: lastPage =>
-        !lastPage.isLast ? lastPage.nextPage : undefined,
-      refetchOnWindowFocus: false
-    }
+    fetchPostList
   );
+
   const [show, setShow] = useRecoilState(NavState);
   const [naveState, setnaveState] = useRecoilState(NavStates);
   useEffect(() => {

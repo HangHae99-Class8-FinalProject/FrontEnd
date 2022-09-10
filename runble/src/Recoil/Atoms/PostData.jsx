@@ -10,6 +10,7 @@ export const postData = atom({
     hashtag: [],
     time: {},
     userId: 2,
-    isCompleted: false
+    nickname: "test",
+    isLoading: false
   }
 });

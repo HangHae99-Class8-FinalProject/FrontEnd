@@ -49,6 +49,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-react-hooks", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:4.6.0"],\
             ["geolocation-distance-between", "npm:0.1.0"],\
             ["json-server", "npm:0.17.0"],\
+            ["moment", "npm:2.29.4"],\
             ["react", "npm:18.2.0"],\
             ["react-aws-s3", "npm:1.5.0"],\
             ["react-circular-progressbar", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:2.1.0"],\
@@ -12605,6 +12606,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["moment", [\
+        ["npm:2.29.4", {\
+          "packageLocation": "./.yarn/cache/moment-npm-2.29.4-902943305d-0ec3f9c2bc.zip/node_modules/moment/",\
+          "packageDependencies": [\
+            ["moment", "npm:2.29.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["morgan", [\
         ["npm:1.10.0", {\
           "packageLocation": "./.yarn/cache/morgan-npm-1.10.0-a0da109b6b-fb41e226ab.zip/node_modules/morgan/",\
@@ -16226,6 +16236,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-react-hooks", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:4.6.0"],\
             ["geolocation-distance-between", "npm:0.1.0"],\
             ["json-server", "npm:0.17.0"],\
+            ["moment", "npm:2.29.4"],\
             ["react", "npm:18.2.0"],\
             ["react-aws-s3", "npm:1.5.0"],\
             ["react-circular-progressbar", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:2.1.0"],\
