@@ -21,7 +21,6 @@ import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import { useLikeCheck } from "../../../Hooks/useLikecheck";
-
 const PostBox = ({ posts, index }) => {
   const navigate = useNavigate();
   const [show, setShow] = useRecoilState(NavState);
