@@ -3,7 +3,7 @@ import { Map, MapMarker, Polyline } from "react-kakao-maps-sdk";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { runData } from "../../../Recoil/Atoms/RunData";
 import useInterval from "../../../Hooks/useInterval";
-import calcDistance from "../../../Utils/clacDistnace";
+import calcDistance from "../../../Utils/ClacDistnace";
 import { useNavigate } from "react-router-dom";
 
 const RunningMap = ({ stopInterval, endRun }) => {
@@ -117,6 +117,8 @@ const RunningMap = ({ stopInterval, endRun }) => {
           height: "50vh"
         }}
         level={1}
+        zoomable={false}
+        draggable={false}
       >
         {state.isLoading && <MapMarker position={state.center} />}
         <Polyline

@@ -5,9 +5,10 @@ import RelatedBar from "../Components/SearchPage/RelatedBar";
 import SearchedHashTag from "../Components/SearchPage/SearchedHasTag";
 import SearchedUser from "../Components/SearchPage/SearchedUser";
 import useInput from "../Hooks/useInput";
+import Nav from "../Components/Common/Nav";
 
 const Search = () => {
-  const [searchTag, onChangeSearchTag] = useInput("");
+  const [searchTag, onChangeSearchTag, setSearchTag] = useInput("");
   const [searhValue, setSearchValue] = useState("");
   const [showRelatedBar, setShowRelatedBar] = useState(false);
   const [selectedTab, setSelectedTab] = useState("태그");
@@ -49,7 +50,14 @@ const Search = () => {
         />
       </form>
       <CloseButton onClick={onCloseRelatedBar}>&times;</CloseButton>
-      {showRelatedBar && searchTag && <RelatedBar searchTag={searchTag} />}
+      {showRelatedBar && searchTag && (
+        <RelatedBar
+          searchTag={searchTag}
+          setSearchTag={setSearchTag}
+          setSearchValue={setSearchValue}
+          onCloseRelatedBar={onCloseRelatedBar}
+        />
+      )}
       {!showRelatedBar && (
         <TapWrap>
           <TapButton
@@ -68,6 +76,7 @@ const Search = () => {
       )}
       {selectedTab === "유저" && <SearchedUser searhValue={searhValue} />}
       {selectedTab === "태그" && <SearchedHashTag searhValue={searhValue} />}
+      <Nav />
     </>
   );
 };
