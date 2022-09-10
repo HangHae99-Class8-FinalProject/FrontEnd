@@ -1,49 +1,40 @@
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import {useLocation, useNavigate} from "react-router-dom"
-import {REST_API_KEY,REDIRECT_URI} from "../Login/oauth"
-import axios from 'axios';
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-function ProfileSignup (){
+import axios from "axios";
 
-    const location = useLocation();
-    const navigate = useNavigate();
+const ProfileSignup = () => {
+  const navigate = useNavigate();
 
-    //카카오 토큰 가져오기 및 저장
-  
-    const kakaoLoign = async()=>{
-        const code = new URL(window.location.href).searchParams.get('code')
-      const res = await axios.get(`http://54.167.169.43/api/kakao/callback?code=${code}}`).then((res)=>{
-        console.log(res.data)
-        
-        const token = res.data.token
-
-        if(token){
-           window.localStorage.setItem('token' ,token)
-           navigate('/user')
-        }else{
-          navigate('/signup',{state:res})
+  const kakaoLoign = async () => {
+    const code = new URL(window.location.href).searchParams.get("code");
+    const res = await axios
+      .get(`http://54.167.169.43/api/kakao/callback?code=${code}}`)
+      .then(res => {
+        console.log(res.data);
+        const token = res.data.token;
+        if (token) {
+          window.localStorage.setItem("token", token);
+          window.localStorage.setItem("userData", res.data);
+          navigate(`/user/${res.data.nickname}}`);
+        } else {
+          navigate("/signup", {
+            state: {
+              email: res.data.email,
+              image: res.data.image,
+              nickname: res.data.nickname
+            }
+          });
         }
-        
       });
+    return res;
+  };
 
-      return res;
-    }
+  useEffect(() => {
+    kakaoLoign();
+  }, []);
 
-    useEffect(()=>{
-      kakaoLoign();
-    },[])
+  return <>로그인로딩중</>;
+};
 
-
-
-
-    
-    return (
-         <>
-           로그인로딩중
-         </>   
-    )
-}
-
-export default ProfileSignup
+export default ProfileSignup;

@@ -26,7 +26,7 @@ const Router = () => {
         <Route path="/search" element={<Search />} />
         <Route path="/api/kakao/callback" element={<ProfileSignup />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/user/:id" element={<UserPage />} />
+        <Route path="/user/:nickname" element={<UserPage />} />
       </Routes>
     </BrowserRouter>
   );

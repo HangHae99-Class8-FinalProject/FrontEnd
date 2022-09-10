@@ -38,7 +38,6 @@ const AddPhoto = ({ merge, prevImg }) => {
           .catch(error => console.error(error));
       }
     }
-    console.log(uploadImages);
     setPost(prev => ({
       ...prev,
       image: uploadImages,
