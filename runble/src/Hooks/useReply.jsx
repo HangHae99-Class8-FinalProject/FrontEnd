@@ -11,7 +11,7 @@ import { instance } from "../Utils/Instance";
 export const delReply = async (commentId) =>{
     console.log(commentId)
     const response = await instance.delete(`http://localhost:8000/Comment/${commentId}`);
-    return response.data;
+    return commentId ;
 }
 
 export const editReply = async (reply) =>{
@@ -23,7 +23,7 @@ export const editReply = async (reply) =>{
       comment:reply.comment,
       recommentCount:reply.recommentCount
     })
-    return  reply;
+    return  reply.comment;
 }
 
 
@@ -39,28 +39,17 @@ export const addReplyData = () =>{
 // 
 
 
-export const delReplyData = () =>{
-    const queryClient = useQueryClient();
+// export const delReplyData = () =>{
+//     const queryClient = useQueryClient();
 
-    return useMutation(delReply,{
-        onSuccess: (commentId) =>{
-            console.log(commentId)
-            console.log('삭제성공')
-            queryClient.invalidateQueries('GET_REPLY')
-        },
-        onError: (error) => {
-            console.log(error);
-          },
-    });
-}
-
-export const editReplyData = () =>{
-    const queryClient = useQueryClient();
-
-    return useMutation(editReply,{
-        onSuccess: (reply) =>{
-            console.log(reply)
-            queryClient.invalidateQueries('GET_REPLY')
-        }
-    });
-}
+//     return useMutation(delReply,{
+//         onSuccess: (commentId) =>{
+//             console.log(commentId)
+//             console.log('삭제성공')
+//             queryClient.invalidateQueries('GET_REPLY')
+//         },
+//         onError: (error) => {
+//             console.log(error);
+//           },
+//     });
+// }

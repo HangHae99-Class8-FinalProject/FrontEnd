@@ -3,7 +3,7 @@ import styled from "styled-components"
 import Lion from "./lion.png"
 import { QueryClient, useMutation, useQuery,useQueryClient } from 'react-query';
 import Recomment from "./Recomment"
-import {delReplyData} from "../../Hooks/useReply"
+import {delReply} from "../../Hooks/useReply"
 import { instance } from "../../Utils/Instance";
  import {editReply} from "../../Hooks/useReply"
 
@@ -35,6 +35,17 @@ function ReplyComponent () {
           onError,
         },
       );
+
+
+    //   const delReplyData = useMutation((commentId)=>delReply(commentId),{
+    //     onSuccess: (commentId) => {
+    //         console.log(commentId);
+    //         queryClient.invalidateQueries("GET_REPLY")
+    //     },
+    //     onError: (error) => {
+    //         console.log(error);
+    //       },
+    //   })
 
   
          //댓글 삭제 버튼

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -20,33 +20,11 @@ function ProfileUpload() {
    setFileUrl(imageUrl)
    }
 
-   const CODE = location.search.split('=')[1];
-   console.log(CODE)
-   const IP = ""
-
-   // form 전송
-   const joinForm = (e) =>{
-      
-      //인가코드 가져오기
-    
-  
-      //백엔드에 인가코드 보내고 JWT 토큰 받아오기
-      // useEffect(()=>{
-      //     fetch(`http://${IP}/users/kakao/redirect?code=${CODE}`, {
-      //         method : 'GET' ,
-      //     })
-      //     .then(res => res.json())
-      //     .then(data=>{
-       //           console.log(data)
-      //         localStorage.setItem('token', data.token);
-      //         navigate('/signup')
-      //     })
-      // })
-   }
+   
   
  return(
     <>
-      <form onSubmit={joinForm}>
+      <form >
       <label htmlFor="imgFile">
          {
             !fileUrl ?
