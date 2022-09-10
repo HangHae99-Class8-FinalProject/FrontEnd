@@ -9,7 +9,7 @@ import Reply from "../Pages/Reply";
 import Search from "../Pages/Search";
 import SignUp from "../Pages/SignUp";
 import UserPage from "../Pages/UserPage";
-import ProfileSignup from "../Components/Signup/getUserinfo"
+import ProfileSignup from "../Components/Signup/profileSignup"
 
 const Router = () => {
   return (
@@ -24,7 +24,7 @@ const Router = () => {
         <Route path="/search" element={<Search />} />
         <Route path="/signup" element={<SignUp/>} />
         <Route path="/user" element={<UserPage />} />
-        <Route path="/auth" element={<ProfileSignup />} />
+        <Route path="/api/kakao/callback" element={<ProfileSignup />} />
       </Routes>
     </BrowserRouter>
   );

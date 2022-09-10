@@ -1,15 +1,19 @@
 import styled from "styled-components"
-import ProfileSignup from "../Components/Signup/getUserinfo"
+import ProfileSignup from "../Components/Signup/profileSignup"
 import ProfileUpload from "../Components/Signup/profileUpload"
 import {useLocation, useNavigate} from "react-router-dom"
 import { useEffect } from "react";
 
 const SignUp = () => {
+
+    const location = useLocation();
+    const res = location.state;
+    console.log(res)
    
     return(
         <SignupLayout>
             <ProfileUpload/>
-            <ProfileSignup/>  
+            {/* <ProfileSignup/>   */}
         </SignupLayout>
     )
 };
