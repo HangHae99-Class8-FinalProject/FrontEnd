@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useQuery } from "react-query";
 import { useInView } from "react-intersection-observer";
 
 import { instance } from "../../../Utils/Instance";
