@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { NavState, NavStates } from "../../../Recoil/Atoms/OptionAtoms";
-
 import { NavPostData } from "../../../Recoil/Atoms/OptionAtoms";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
 import { useRecoilState } from "recoil";
 import PostBox from "../../Common/PostBox";
-
-import axios from "axios";
+import { instance } from "../../../Utils/Instance";
 const fetchPostList = async pageParam => {
-  const res = await axios.post(
+  const res = await instance.post(
     `http://54.167.169.43/api/post/scroll/${pageParam}`,
     {
       userId: 1

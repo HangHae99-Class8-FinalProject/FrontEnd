@@ -21,10 +21,10 @@ const Router = () => {
         <Route path="/post/:id" element={<Post />} />
         <Route path="/post" element={<Post />} />
         <Route path="/record" element={<Record />} />
-        <Route path="/reply" element={<Reply />} />
+        <Route path="/reply/:id" element={<Reply />} />
         <Route path="/search" element={<Search />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/user/:id" element={<UserPage />} />
+        <Route path="/user/:ninkname" element={<UserPage />} />
       </Routes>
     </BrowserRouter>
   );
