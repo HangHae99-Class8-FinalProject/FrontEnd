@@ -25,6 +25,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { useLikeCheck } from "../../../Hooks/useLikeCheck";
 const PostBox = ({ posts, index }) => {
+  const accessToken = localStorage.getItem("userData");
+  const parseData = JSON.parse(accessToken);
+  const nickname = parseData.nickname;
   const navigate = useNavigate();
   const [show, setShow] = useRecoilState(NavState);
   const [navState, setNaveState] = useRecoilState(NavStates);
@@ -50,15 +53,17 @@ const PostBox = ({ posts, index }) => {
             <div>
               조회수:<span>{posts?.view}</span>
             </div>
-            <div
-              onClick={() => {
-                setShow(prev => !prev);
-                setNaveState("put");
-                setPostData(posts);
-              }}
-            >
-              ...
-            </div>
+            {nickname === posts.nickname ? (
+              <div
+                onClick={() => {
+                  setShow(prev => !prev);
+                  setNaveState("put");
+                  setPostData(posts);
+                }}
+              >
+                ...
+              </div>
+            ) : null}
           </div>
         </StyleFrofileBox>
         <StyleRecord>

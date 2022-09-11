@@ -2,36 +2,32 @@ import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { NavState, NavStates } from "../../../Recoil/Atoms/OptionAtoms";
 import { StyleUserListWrap } from "./style";
+import useInfinityScroll from "../../../Hooks/useInfinityScroll";
 import PostBox from "../../Common/PostBox";
 import { useParams } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
-import axios from "axios";
+import { instance } from "../../../Utils/Instance";
 
-const fetchUserList = async (pageParam, id) => {
-  const res = await axios.post(
-    `http://54.167.169.43/api/user/post/${id}/${pageParam}`,
-    {
-      userId: 1
-    }
-  );
-  const { Post, isLast } = res.data;
-  return { Post, nextPage: pageParam + 1, isLast };
-};
 const UserList = () => {
-  const { id } = useParams();
+  // const { ninkname } = useParams();
   const { ref, inView } = useInView();
-  const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+  const accessToken = localStorage.getItem("userData");
+  const parseData = JSON.parse(accessToken);
+  const nickname = parseData.nickname;
+  const fetchUserList = async pageParam => {
+    console.log(nickname);
+    const { data } = await instance.get(
+      `http://54.167.169.43/api/user/post/${nickname}/${pageParam}`
+    );
+    return data;
+  };
+  const [data, status, fetchNextPage, isFetchingNextPage] = useInfinityScroll(
     "user",
-    ({ pageParam = 1 }) => fetchUserList(pageParam, id),
-    {
-      getNextPageParam: lastPage =>
-        !lastPage.isLast ? lastPage.nextPage : undefined
-    }
+    fetchUserList,
+    nickname
   );
 
-  const [show, setShow] = useRecoilState(NavState);
-  const [navState, setNavState] = useRecoilState(NavStates);
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);

@@ -1,26 +1,22 @@
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
-import axios from "axios";
-
+import { instance } from "../../../Utils/Instance";
+import useInfinityScroll from "../../../Hooks/useInfinityScroll";
 import PostBox from "../../Common/PostBox";
-const fetchLikeList = async pageParam => {
-  const res = await axios.post(
-    `http://54.167.169.43/api/post/likeorder/${pageParam}`,
-    1
-  );
-  const { Post, isLast } = res.data;
-  return { Post, nextPage: pageParam + 1, isLast };
-};
+
 const LikeList = () => {
+  const fetchLikeList = async pageParam => {
+    const { data } = await instance.get(
+      `http://54.167.169.43/api/post/likeorder/${pageParam}`
+    );
+
+    return data;
+  };
   const { ref, inView } = useInView();
-  const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+  const [data, status, fetchNextPage, isFetchingNextPage] = useInfinityScroll(
     "like",
-    ({ pageParam = 1 }) => fetchLikeList(pageParam),
-    {
-      getNextPageParam: lastPage =>
-        !lastPage.isLast ? lastPage.nextPage : undefined
-    }
+    fetchLikeList
   );
 
   useEffect(() => {

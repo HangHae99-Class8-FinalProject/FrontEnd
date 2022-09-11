@@ -11,13 +11,14 @@ const ProfileSignup = () => {
     const res = await axios
       .get(`http://54.167.169.43/api/kakao/callback?code=${code}}`)
       .then(res => {
-        console.log(res.data);
         const token = res.data.token;
         if (token) {
+          console.log(res.data);
           window.localStorage.setItem("token", token);
-          window.localStorage.setItem("userData", res.data);
-          navigate(`/user/${res.data.nickname}}`);
+          window.localStorage.setItem("userData", JSON.stringify(res.data));
+          navigate(`/user/${res.data.nickname}`);
         } else {
+          console.log(res.data);
           navigate("/signup", {
             state: {
               email: res.data.email,

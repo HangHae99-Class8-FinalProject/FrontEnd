@@ -6,6 +6,7 @@ import {
   CircularProgressbarWithChildren
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { useProgress } from "../../../Hooks/useProgress";
 import moment from "moment";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -16,7 +17,10 @@ const weekOfMonth = m => m.week() - moment(m).startOf("month").week() + 1;
 const nowDate = moment().utc(true);
 const goalDate = nowDate.format("MM월 ") + weekOfMonth(nowDate) + "주차"; // 현재 날짜
 
-const Progress = () => {
+const Progress = ({ parseData }) => {
+  const userId = parseData.userId;
+  const { status, data, error, isFetching } = useProgress(userId);
+  console.log(data);
   const percentage = 50;
 
   return (

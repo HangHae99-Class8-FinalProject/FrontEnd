@@ -7,7 +7,6 @@ import PostBox from "../../Common/PostBox";
 
 const SearchedHashTag = ({ searhValue }) => {
   const [ref, inView] = useInView();
-
   console.log("searchValue:", searhValue);
   const getSearchHashTag = async pageParam => {
     const { data } = await instance.get(

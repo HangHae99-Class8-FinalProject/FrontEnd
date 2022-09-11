@@ -6,10 +6,13 @@ import UserList from "../Components/Userpage/UserList";
 import Goal from "../Components/Userpage/Goal";
 
 const UserPage = () => {
+  const accessToken = localStorage.getItem("userData");
+  const parseData = JSON.parse(accessToken);
+  const nickname = parseData.nickname;
   return (
     <Layout feed={false}>
-      <Userprofile></Userprofile>
-      <Progress></Progress>
+      <Userprofile nickname={nickname}></Userprofile>
+      <Progress parseData={parseData}></Progress>
       <Goal></Goal>
       <UserList></UserList>
     </Layout>

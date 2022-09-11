@@ -9,7 +9,7 @@ import {
 import { useQuery } from "react-query";
 import axios from "axios";
 
-const Userprofile = () => {
+const Userprofile = ({ nickname }) => {
   const [show, setShow] = useRecoilState(NavState);
   const [navState, setNavState] = useRecoilState(NavStates);
   const previewChange = useRecoilValue(PreviewImg);
@@ -37,7 +37,7 @@ const Userprofile = () => {
           ></img>
         )}
 
-        <div>런닝 못참지</div>
+        <div>{nickname}</div>
       </div>
     </StyleUserWrap>
   );

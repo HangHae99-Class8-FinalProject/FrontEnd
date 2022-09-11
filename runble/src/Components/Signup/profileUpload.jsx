@@ -2,8 +2,10 @@ import React, { useRef, useState } from "react";
 import { instance } from "../../Utils/Instance";
 import styled from "styled-components";
 import useInput from "../../Hooks/useInput";
+import { useNavigate } from "react-router-dom";
 
 function ProfileUpload({ userData }) {
+  const navigate = useNavigate();
   // useState 훅을 이용하여 Image element의 src의 상태를 변경시켜준다.
   const [nickName, onChangeNickName] = useInput("");
   const [fileUrl, setFileUrl] = useState(null);
@@ -19,12 +21,19 @@ function ProfileUpload({ userData }) {
     setFileUrl(imageUrl);
   };
 
-  const onSubmitProfile = () => {
-    instance.post("http://54.167.169.43/api/user/signup", {
-      email: userData.email,
-      nickname: nickName || userData.nickname,
-      image: userData.image
-    });
+  const onSubmitProfile = async () => {
+    instance
+      .post("http://54.167.169.43/api/user/signup", {
+        email: userData.email,
+        nickname: nickName || userData.nickname,
+        image: userData.image
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   return (

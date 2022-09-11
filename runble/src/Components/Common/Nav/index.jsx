@@ -18,7 +18,7 @@ import {
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useMutation, useQueryClient } from "react-query";
 import S3upload from "react-aws-s3";
-import axios from "axios";
+import { instance } from "../../../Utils/Instance";
 import { useNavigate, useLocation } from "react-router-dom";
 import imageCompression from "browser-image-compression";
 import { useDeletePost } from "../../../Hooks/useDeletePost";
@@ -44,7 +44,9 @@ const Nav = ({ feed }) => {
   // const { mutate, isLoading, error, isSuccess } = useMutation(submit => {
   //   return axios.post("http://localhost:3001/profile", submit);
   // });
-
+  const accessToken = localStorage.getItem("userData");
+  const parseData = JSON.parse(accessToken);
+  const nickname = parseData.nickname;
   const submitImg = async () => {
     let file = imgVal.current.files[0];
     let newFileName = imgVal.current.files[0].name;
@@ -77,14 +79,17 @@ const Nav = ({ feed }) => {
 
   const logoutConfirm = () => {
     if (confirm("로그아웃하시겠습니까")) {
-      return;
+      return localStorage.clear(), navigate("/");
     } else {
       return;
     }
   };
   const outConfirm = () => {
     if (confirm("회원탈퇴하시겠습니까")) {
-      return;
+      return (
+        instance.delete("http://54.167.169.43/api/user"),
+        alert("회원탈퇴되었습니다")
+      );
     } else {
       return;
     }
@@ -96,6 +101,7 @@ const Nav = ({ feed }) => {
       return;
     }
   };
+
   return (
     <>
       <StyleNav>
@@ -192,7 +198,7 @@ const Nav = ({ feed }) => {
           {feed ? (
             <div
               onClick={() => {
-                navigate("/user");
+                navigate(`/user/${nickname}`);
               }}
             >
               마이페이지
