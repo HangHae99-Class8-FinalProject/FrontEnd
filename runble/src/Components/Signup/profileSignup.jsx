@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { instance } from "../../Utils/Instance";
 import axios from "axios";
 
 const ProfileSignup = () => {
@@ -8,14 +8,15 @@ const ProfileSignup = () => {
 
   const kakaoLoign = async () => {
     const code = new URL(window.location.href).searchParams.get("code");
-    const res = await axios
+    const res = await instance
       .get(`/api/kakao/callback?code=${code}}`)
       .then(res => {
         const token = res.data.token;
         const userData = {
           email: res.data.email,
           image: res.data.image,
-          nickname: res.data.nickname
+          nickname: res.data.nickname,
+          userId: res.data.userId
         };
         if (token) {
           console.log(res.data);
@@ -23,7 +24,6 @@ const ProfileSignup = () => {
 
           window.localStorage.setItem("userData", JSON.stringify(userData));
           navigate(`/user/${res.data.nickname}`);
-
         } else {
           console.log(res.data);
           navigate("/signup", {

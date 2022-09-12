@@ -4,8 +4,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { runData } from "../../../Recoil/Atoms/RunData";
 import useInterval from "../../../Hooks/useInterval";
 
-import calcDistance from "../../../Utils/ClacDistnace";
-
+import calcDistance from "../../../Utils/clacDistnace";
 
 const RunningMap = ({ stopInterval, endRun }) => {
   const [distance, setDistance] = useState(0);

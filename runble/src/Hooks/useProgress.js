@@ -3,9 +3,7 @@ import { useQuery } from "react-query";
 
 const fetchNodeList = async userId => {
   if (!userId) return;
-  const { data } = await instance.get(
-    `http://54.167.169.43/api/user/${userId}`
-  );
+  const { data } = await instance.get(`/api/user/${userId}`);
   return data;
 };
 

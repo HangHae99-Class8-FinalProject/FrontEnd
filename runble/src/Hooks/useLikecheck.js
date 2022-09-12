@@ -2,9 +2,7 @@ import { useMutation, UseMutationResult, useQueryClient } from "react-query";
 import { instance } from "../Utils/Instance";
 const postGood = async postId => {
   console.log(postId);
-  return await instance.put(`/api/like/${postId}`, {
-    userId: 1
-  });
+  return await instance.put(`/api/like/${postId}`);
 };
 export const useLikeCheck = () => {
   const queryClient = useQueryClient();

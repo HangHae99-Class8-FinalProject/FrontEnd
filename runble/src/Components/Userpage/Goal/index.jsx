@@ -13,6 +13,7 @@ const Goal = () => {
   };
 
   const onSubmitHandeler = () => {
+    console.log(goal);
     mutate(goal);
     setGoal({
       goal: ""
