@@ -1,8 +1,10 @@
 import React,{ useState }  from "react";
 import styled from "styled-components";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+
 import ReplyComponent from "./replyComponent";
 import { addReply } from "../../Hooks/useReply";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+
 
 const ReplyCom = () => {
   const [replyValue, setReplyValue] = useState("");
@@ -32,6 +34,7 @@ const addReplyData = useMutation((reply)=>addReply(reply),{
       recommentCount: 0
     };
     addReplyData.mutate(initalState);
+    //addReplyData.mutate({ comment: replyValue}) //api 데이터용
     setReplyValue("");
   };
 

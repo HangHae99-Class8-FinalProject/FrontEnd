@@ -1,4 +1,5 @@
 import ProfileUpload from "../Components/Signup/profileUpload"
+
 import {useLocation, useNavigate} from "react-router-dom"
 import { useEffect } from "react";
 import styled from "styled-components";

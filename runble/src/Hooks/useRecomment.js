@@ -17,7 +17,7 @@ export const delReply = async (id) =>{
 
 export const editReply = async (reply) =>{
     console.log(reply)
-    const response = await instance.put(`http://localhost:8001/Recomment/${reply.commentId}`,{
+    const response = await instance.put(`http://localhost:8001/Recomment/${reply.recommentId}`,{
       commentId:reply.commentId,
       recommentId:reply.recommentId,
       nickname: reply.nickname,

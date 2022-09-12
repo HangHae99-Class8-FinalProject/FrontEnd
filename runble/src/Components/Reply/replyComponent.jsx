@@ -1,26 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Lion from "./lion.png";
+import { useInView } from "react-intersection-observer";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import Recomment from "./Recomment";
-import { instance } from "../../Utils/Instance";
-import { editReply,getReply,delReply } from "../../Hooks/useReply";
 
+import { editReply,delReply } from "../../Hooks/useReply";
+import Lion from "./lion.png";
+import Recomment from "./recomment";
+import useInfinityScroll from "../../Hooks/useInfinityScroll";
+import { instance } from "../../Utils/Instance";
 
 
 function ReplyComponent() {
+
+  const [ref, inView] = useInView();
+
   const queryClient = useQueryClient();
 
+  
+
   const onSuccess = () => {
-    console.log("perform side effect after data fetching");
+    console.log("조회성공");
   };
 
   const onError = () => {
-    console.log("perform side effect after encountering error");
+    console.log("조회실패");
   };
 
+  const getReply = async pageParam => {
+    const {data} = await instance.get(`http://54.167.169.43/api/comment/1/${pageParam}`);
+    return data;
+  }
+
   // 댓글 조회
-  const { isLoading, data, isError, error, isFetching, refetch } = useQuery(
+  const { data, status, fetchNextPage, isFetchingNextPage} = useInfinityScroll(
     "GET_REPLY",
     getReply,
     {
@@ -28,6 +40,13 @@ function ReplyComponent() {
       onError
     }
   );
+
+  console.log(data)
+
+  useEffect(() => {
+    if (inView) fetchNextPage;
+  }, [inView]);
+
 
   //댓글삭제 
     const delReplyData = useMutation(commentId=>delReply(commentId),{
@@ -131,11 +150,12 @@ function ReplyComponent() {
                 삭제하기
               </button>
             </Content>
-
+                  
             <Recomment replyCount={reply.recommentCount} id={reply.commentId} />
           </div>
         );
       })}
+           {isFetchingNextPage ? <span>로딩중입니다</span> : <div ref={ref}></div>}
     </ReplyBox>
   );
 }
