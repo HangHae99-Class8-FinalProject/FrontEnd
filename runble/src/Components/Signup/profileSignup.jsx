@@ -15,15 +15,14 @@ const ProfileSignup = () => {
         const userData = {
           email: res.data.email,
           image: res.data.image,
-          nickname: res.data.nickname
+          nickname: res.data.nickname,
+          userId: res.data.userId
         };
         if (token) {
           console.log(res.data);
           window.localStorage.setItem("token", token);
-
           window.localStorage.setItem("userData", JSON.stringify(userData));
           navigate(`/user/${res.data.nickname}`);
-
         } else {
           console.log(res.data);
           navigate("/signup", {

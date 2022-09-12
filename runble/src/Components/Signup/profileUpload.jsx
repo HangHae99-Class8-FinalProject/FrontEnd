@@ -55,7 +55,6 @@ function ProfileUpload({ userData }) {
     setIsLodded(true);
   };
 
-
   const signupUser = async () => {
     const { data } = await instance.post("/api/user/signup", {
       email: userData.email,
@@ -78,7 +77,8 @@ function ProfileUpload({ userData }) {
       const userData = {
         email: data.email,
         image: data.image,
-        nickname: data.nickname
+        nickname: data.nickname,
+        userId: data.userId
       };
       window.localStorage.setItem("userData", JSON.stringify(userData));
       window.localStorage.setItem("token", token);

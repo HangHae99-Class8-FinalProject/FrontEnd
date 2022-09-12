@@ -10,32 +10,19 @@ import useInfinityScroll from "../../../Hooks/useInfinityScroll";
 
 const fetchPostList = async pageParam => {
 
-  const res = await instance.post(`/api/post/scroll/${pageParam}`);
+  const res = await instance.get(`/api/post/new/${pageParam}`);
 
   const { Post, isLast } = res.data;
   return { Post, nextPage: pageParam + 1, isLast };
 };
 const MainList = () => {
-  const [postData, setPostData] = useRecoilState(NavPostData);
-
   const { ref, inView } = useInView();
-  // const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-  //   "posts",
-  //   ({ pageParam = 1 }) => fetchPostList(pageParam),
-  //   {
-  //     getNextPageParam: lastPage =>
-  //       !lastPage.isLast ? lastPage.nextPage : undefined,
-  //     refetchOnWindowFocus: false
-  //   }
-  // );
 
-  const [data, status, fetchNextPage, isFetchingNextPage] = useInfinityScroll(
+  const [data, fetchNextPage, isFetchingNextPage] = useInfinityScroll(
     "posts",
     fetchPostList
   );
 
-  const [show, setShow] = useRecoilState(NavState);
-  const [naveState, setnaveState] = useRecoilState(NavStates);
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
