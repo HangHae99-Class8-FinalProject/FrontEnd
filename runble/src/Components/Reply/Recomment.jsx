@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import styled from "styled-components";
-import { getRecomment,addReply,delReply,editReply } from "../../Hooks/useRecomment";
+import { getRecomment,addReply } from "../../Hooks/useRecomment";
 import RecommentItem  from "./recommentItem"
 
 
