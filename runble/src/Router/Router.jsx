@@ -9,7 +9,7 @@ import Reply from "../Pages/Reply";
 import Search from "../Pages/Search";
 import SignUp from "../Pages/SignUp";
 import UserPage from "../Pages/UserPage";
-import ProfileSignup from "../Components/Signup/profileSignup"
+import ProfileSignup from "../Components/Signup/profileSignup";
 
 const Router = () => {
   return (
@@ -20,13 +20,12 @@ const Router = () => {
         <Route path="/feed" element={<Feed />} />
         <Route path="/post" element={<Post />} />
         <Route path="/post/:id" element={<Post />} />
-        <Route path="/post" element={<Post />} />
         <Route path="/record" element={<Record />} />
         <Route path="/reply" element={<Reply />} />
         <Route path="/search" element={<Search />} />
         <Route path="/api/kakao/callback" element={<ProfileSignup />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/user/:id" element={<UserPage />} />
+        <Route path="/user/:nickname" element={<UserPage />} />
       </Routes>
     </BrowserRouter>
   );

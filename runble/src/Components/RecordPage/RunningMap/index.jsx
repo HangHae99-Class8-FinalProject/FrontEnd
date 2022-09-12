@@ -117,6 +117,8 @@ const RunningMap = ({ stopInterval, endRun }) => {
           height: "50vh"
         }}
         level={1}
+        zoomable={false}
+        draggable={false}
       >
         {state.isLoading && <MapMarker position={state.center} />}
         <Polyline

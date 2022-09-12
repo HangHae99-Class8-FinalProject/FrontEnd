@@ -52,7 +52,12 @@ const Hashtag = ({ merge, prevHashtag }) => {
       <div className="HashWrapOuter">
         {hashArr.map((hash, idx) => {
           return (
-            <div className="HashWrapInner" value={hash} onClick={deleteTagItem}>
+            <div
+              key={idx}
+              className="HashWrapInner"
+              value={hash}
+              onClick={deleteTagItem}
+            >
               {"#" + hash}
             </div>
           );
