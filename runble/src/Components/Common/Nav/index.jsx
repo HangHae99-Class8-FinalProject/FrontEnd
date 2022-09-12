@@ -18,15 +18,13 @@ import {
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useMutation, useQueryClient } from "react-query";
 import S3upload from "react-aws-s3";
-import axios from "axios";
+import { instance } from "../../../Utils/Instance";
 import { useNavigate, useLocation } from "react-router-dom";
 import imageCompression from "browser-image-compression";
 import { useDeletePost } from "../../../Hooks/useDeletePost";
 window.Buffer = window.Buffer || require("buffer").Buffer;
-const Nav = () => {
+const Nav = ({ feed }) => {
   const { mutate } = useDeletePost();
-  const { state } = useLocation();
-  console.log(state);
   const navigate = useNavigate();
   const [show, setShow] = useRecoilState(NavState);
   const [preview, setPreview] = useRecoilState(PreviewImg);
@@ -46,7 +44,9 @@ const Nav = () => {
   // const { mutate, isLoading, error, isSuccess } = useMutation(submit => {
   //   return axios.post("http://localhost:3001/profile", submit);
   // });
-
+  const accessToken = localStorage.getItem("userData");
+  const parseData = JSON.parse(accessToken);
+  const nickname = parseData.nickname;
   const submitImg = async () => {
     let file = imgVal.current.files[0];
     let newFileName = imgVal.current.files[0].name;
@@ -79,14 +79,19 @@ const Nav = () => {
 
   const logoutConfirm = () => {
     if (confirm("로그아웃하시겠습니까")) {
-      return;
+      return localStorage.clear(), navigate("/");
     } else {
       return;
     }
   };
+
   const outConfirm = () => {
     if (confirm("회원탈퇴하시겠습니까")) {
-      return;
+      return (
+        instance.delete("http://54.167.169.43/api/user"),
+        alert("회원탈퇴되었습니다"),
+        navigate("/")
+      );
     } else {
       return;
     }
@@ -98,6 +103,7 @@ const Nav = () => {
       return;
     }
   };
+
   return (
     <>
       <StyleNav>
@@ -108,6 +114,7 @@ const Nav = () => {
             option: (
               <StyleShow Show={show}>
                 <p
+                  href=""
                   onClick={() => {
                     logoutConfirm();
                   }}
@@ -172,7 +179,7 @@ const Nav = () => {
         <StyleButton>
           <div
             onClick={() => {
-              navigate("/feed", { state: true });
+              navigate("/feed");
             }}
           >
             게시글
@@ -191,27 +198,14 @@ const Nav = () => {
           >
             기록하기
           </div>
-          {state ? (
-            <div
-              onClick={() => {
-                navigate("/user");
-              }}
-            >
-              마이페이지
-            </div>
-          ) : (
-            <OptionsBox
-              onClick={() => {
-                setShow(prev => !prev);
-                setNaveState("option");
-              }}
-            >
-              <Options
-                style={{ width: "40px", height: "40px" }}
-                src="/img/option.png"
-              ></Options>
-            </OptionsBox>
-          )}
+
+          <div
+            onClick={() => {
+              navigate(`/user/${nickname}`, { state: nickname });
+            }}
+          >
+            마이페이지
+          </div>
         </StyleButton>
       </StyleNav>
     </>

@@ -21,7 +21,7 @@ const Router = () => {
         <Route path="/post" element={<Post />} />
         <Route path="/post/:id" element={<Post />} />
         <Route path="/record" element={<Record />} />
-        <Route path="/reply" element={<Reply />} />
+        <Route path="/reply/:id" element={<Reply />} />
         <Route path="/search" element={<Search />} />
         <Route path="/api/kakao/callback" element={<ProfileSignup />} />
         <Route path="/signup" element={<SignUp />} />

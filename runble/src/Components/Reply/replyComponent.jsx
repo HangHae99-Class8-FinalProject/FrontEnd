@@ -10,6 +10,11 @@ import useInfinityScroll from "../../Hooks/useInfinityScroll";
 import { instance } from "../../Utils/Instance";
 
 
+// const getReply = async () => {
+//   return await instance.get("http://localhost:8000/Comment");
+// };
+
+
 function ReplyComponent() {
 
   const [ref, inView] = useInView();

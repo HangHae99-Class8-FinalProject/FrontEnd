@@ -14,6 +14,12 @@ export const StyleFrofileBox = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+export const StyleFrofileImg = styled.img`
+  width: 80px;
+  height: 80px;
+  border-radius: 40px;
+  border: 1px solid black;
+`;
 export const StyleFrofile = styled.div`
   flex-direction: row;
   display: flex;
@@ -29,4 +35,22 @@ export const StyleImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+`;
+export const StyleHashBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const StyleHash = styled.div`
+  width: 100%;
+  height: 25px;
+  background-color: #353434;
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  & > span {
+    font-size: 12px;
+  }
 `;

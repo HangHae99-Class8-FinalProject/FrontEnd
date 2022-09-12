@@ -8,13 +8,19 @@ export const StyleGoal = styled.div`
   margin: 30px 30px;
   display: flex;
   flex-direction: column;
+  background-color: rgba(53, 52, 52, 1);
 `;
+export const StyleGoalButton = styled.button`
+  background-color: rgba(240, 56, 0, 1);
+  color: #ffffff;
+`;
+
 export const StyleModal = styled.div`
   height: 200px;
   position: absolute;
   border: 1px solid black;
   margin: -280px 70px;
-  background-color: rgba(102, 100, 100, 0.3);
+  background-color: rgba(0, 0, 0, 0.65);
 `;
 export const StyleInput = styled.input`
   width: 90%;
