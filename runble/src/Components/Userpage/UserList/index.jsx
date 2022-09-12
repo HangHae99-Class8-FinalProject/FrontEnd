@@ -8,12 +8,9 @@ import { useInfiniteQuery } from "react-query";
 import axios from "axios";
 
 const fetchUserList = async (pageParam, id) => {
-  const res = await axios.post(
-    `http://54.167.169.43/api/user/post/${id}/${pageParam}`,
-    {
-      userId: 1
-    }
-  );
+  const res = await axios.post(`/api/user/post/${id}/${pageParam}`, {
+    userId: 1
+  });
   const { Post, isLast } = res.data;
   return { Post, nextPage: pageParam + 1, isLast };
 };

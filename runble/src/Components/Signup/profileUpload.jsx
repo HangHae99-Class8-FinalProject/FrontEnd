@@ -1,76 +1,138 @@
-import React, { useRef, useState } from "react";
-import { instance } from "../../Utils/Instance";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
-import useInput from "../../Hooks/useInput";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "react-query";
+import imageCompression from "browser-image-compression";
+import S3upload from "react-aws-s3";
+
+import { S3config } from "../../Utils/S3Config";
+import { instance } from "../../Utils/Instance";
+import useQueryDebounce from "../../Hooks/useQueryDebounce";
+
+window.Buffer = window.Buffer || require("buffer").Buffer;
 
 function ProfileUpload({ userData }) {
-  // useState 훅을 이용하여 Image element의 src의 상태를 변경시켜준다.
-  const [nickName, onChangeNickName] = useInput("");
-  const [fileUrl, setFileUrl] = useState(null);
+  const [nickname, setNickname] = useState("");
+  const [previewImage, setPrevieImage] = useState("");
+  const [image, setImage] = useState("");
+  const [isLodded, setIsLodded] = useState("");
   const fileUpload = useRef(null);
+  const navigate = useNavigate();
 
-  //인풋이 onChange 될 때
-  const chgPreview = e => {
-    //현재 이미지 파일
-    const imageFile = e.target.files[0];
-    //선택한 이미지 파일의 url
-    const imageUrl = URL.createObjectURL(imageFile);
+  const debounceNick = useQueryDebounce(nickname, 500);
 
-    setFileUrl(imageUrl);
+  const onChangeNickName = e => {
+    const { value } = e.target;
+    const onlyHangul = value.replace(/[^ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, "");
+    setNickname(onlyHangul);
   };
+
+  const options = {
+    maxSizeMB: 1,
+    maxWidthOrHeight: 1920,
+    useWebWorker: true
+  };
+
+  const chgPreview = async e => {
+    const imageFile = e.target.files[0];
+    const compressedFile = await imageCompression(imageFile, options);
+    const imageUrl = URL.createObjectURL(compressedFile);
+    setPrevieImage(imageUrl);
+  };
+
+  const submitImage = () => {
+    if (fileUpload.current.file) {
+      const ReactS3Client = new S3upload(S3config);
+      let file = fileUpload.current.files[0];
+      let newFileName = fileUpload.current.files[0].name;
+      ReactS3Client.uploadFile(file, newFileName).then(data => {
+        if (data.status === 204) {
+          setImage(data.location);
+        }
+      });
+    }
+    setIsLodded(true);
+  };
+
+  const signupUser = async () => {
+    const { data } = await instance.post("/api/user/signup", {
+      email: userData.email,
+      nickname,
+      image
+    });
+    return data;
+  };
+
+  const nicknameCheck = async () => {
+    const { data } = await instance.post(
+      `/api/user/check?nickname=${debounceNick}`
+    );
+  };
+
+  const { mutate: signUp, isLoading } = useMutation(signupUser, {
+    onSuccess: data => {
+      console.log(data);
+      const token = data.token;
+      const userData = {
+        email: data.email,
+        image: data.image,
+        nickname: data.nickname
+      };
+      window.localStorage.setItem("userData", JSON.stringify(userData));
+      window.localStorage.setItem("token", token);
+      navigate(`/user/${data.nickname}}`);
+    }
+  });
+
+  const { mutate: nickNameCheck, data: checkResult } =
+    useMutation(nicknameCheck);
 
   const onSubmitProfile = () => {
-    instance.post("http://54.167.169.43/api/user/signup", {
-      email: userData.email,
-      nickname: nickName || userData.nickname,
-      image: userData.image
-    });
+    submitImage();
   };
+
+  //
+  useEffect(() => {
+    if (isLodded) {
+      signUp();
+    }
+  }, [isLodded]);
+
+  useEffect(() => {
+    if (debounceNick) {
+      nickNameCheck();
+    }
+  }, [debounceNick]);
 
   return (
     <>
-      <form>
-        <label htmlFor="imgFile">
-          {!fileUrl ? (
-            <Grid>
-              <DefaultImg
-                src={`${process.env.PUBLIC_URL}/img/userprofile.png`}
-              />
-            </Grid>
-          ) : (
-            <Image src={fileUrl} />
-          )}
-        </label>
-        <FileBox
-          type="file"
-          accept="image/*"
-          name="profile_Img"
-          ref={fileUpload}
-          onChange={chgPreview}
-          id="imgFile"
-        />
-        <NicInput onChange={onChangeNickName} value={nickName} type="text" />
-        <JoinBtn onClick={onSubmitProfile}>JOIN US</JoinBtn>
-      </form>
+      {isLoading && <div>회원가입 중</div>}
+      <label htmlFor="imgFile">
+        <Image src={previewImage} />
+      </label>
+      <FileBox
+        type="file"
+        accept="image/*"
+        name="profile_Img"
+        ref={fileUpload}
+        onChange={chgPreview}
+        id="imgFile"
+      />
+      <NicInput
+        onChange={onChangeNickName}
+        value={nickname}
+        type="text"
+        maxLength={5}
+        minLength={2}
+      />
+      <p>닉네임은 한글 2-5자 이내로 입력해주세요</p>
+      {checkResult?.duplicate && <div>닉네임 중복됨</div>}
+      <JoinBtn onClick={onSubmitProfile}>JOIN US</JoinBtn>
     </>
   );
 }
 
 export default ProfileUpload;
-
-const Grid = styled.div`
-  background: "#eee";
-  width: "374px";
-  height: "236px";
-  margin: "23px auto";
-  border-radius: "44px";
-  padding: "15% 30%";
-`;
-const DefaultImg = styled.img`
-  width: 200px;
-  display: block;
-  margin: 100px auto;
-`;
 
 const Image = styled.img`
   width: 200px;

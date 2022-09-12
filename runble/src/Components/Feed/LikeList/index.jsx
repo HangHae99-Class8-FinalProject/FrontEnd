@@ -5,16 +5,13 @@ import axios from "axios";
 
 import PostBox from "../../Common/PostBox";
 const fetchLikeList = async pageParam => {
-  const res = await axios.post(
-    `http://54.167.169.43/api/post/likeorder/${pageParam}`,
-    1
-  );
+  const res = await axios.post(`/api/post/likeorder/${pageParam}`, 1);
   const { Post, isLast } = res.data;
   return { Post, nextPage: pageParam + 1, isLast };
 };
 const LikeList = () => {
   const { ref, inView } = useInView();
-  const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
     "like",
     ({ pageParam = 1 }) => fetchLikeList(pageParam),
     {

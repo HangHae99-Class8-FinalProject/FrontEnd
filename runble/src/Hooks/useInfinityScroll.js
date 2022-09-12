@@ -1,11 +1,10 @@
 import { useInfiniteQuery } from "react-query";
 
-const useInfinityScroll = (QueryKey, QueryFnc, ableFlag) => {
+const useInfinityScroll = (QueryKey, QueryFnc) => {
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
     QueryKey,
     ({ pageParam = 1 }) => QueryFnc(pageParam),
     {
-      enabled: !!ableFlag,
       getNextPageParam: lastPage =>
         !lastPage.isLast ? lastPage.nextPage : undefined,
       refetchOnWindowFocus: false

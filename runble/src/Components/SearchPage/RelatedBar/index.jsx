@@ -13,7 +13,7 @@ const RelatedBar = ({
 
   const getRelated = async () => {
     const { data } = await instance.get(
-      `http://54.167.169.43/api/post/autoSearch/?hashtag=${debounceSearch}`
+      `/api/post/autocomplete/?hashtag=${debounceSearch}`
     );
     return data;
   };

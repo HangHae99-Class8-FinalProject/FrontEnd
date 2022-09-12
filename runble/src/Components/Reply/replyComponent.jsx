@@ -9,7 +9,6 @@ import { editReply } from "../../Hooks/useReply";
 
 const getReply = async () => {
   return await instance.get("http://localhost:8000/Comment");
-  //return await instance.get('http://54.167.169.43/api/comment/1')
 };
 
 function ReplyComponent() {
