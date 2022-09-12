@@ -2,7 +2,7 @@ import { useMutation, UseMutationResult, useQueryClient } from "react-query";
 import { instance } from "../Utils/Instance";
 const userProfile = async postId => {
   console.log(postId);
-  return await instance.put(`http://54.167.169.43/api/user/setgoal`, {
+  return await instance.put(`/api/user/setgoal`, {
     userId: 1
   });
 };

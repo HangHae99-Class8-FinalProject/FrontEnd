@@ -2,7 +2,7 @@ import { useMutation, UseMutationResult, useQueryClient } from "react-query";
 import { instance } from "../Utils/Instance";
 const deletePost = async postId => {
   console.log(postId);
-  return await instance.delete(`http://54.167.169.43/api/post/${postId}`);
+  return await instance.delete(`/api/post/${postId}`);
 };
 export const useDeletePost = () => {
   const queryClient = useQueryClient();

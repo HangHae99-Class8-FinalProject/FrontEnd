@@ -10,12 +10,9 @@ import useInfinityScroll from "../../../Hooks/useInfinityScroll";
 
 import axios from "axios";
 const fetchPostList = async pageParam => {
-  const res = await axios.post(
-    `http://54.167.169.43/api/post/scroll/${pageParam}`,
-    {
-      userId: 1
-    }
-  );
+  const res = await axios.post(`/api/post/scroll/${pageParam}`, {
+    userId: 1
+  });
   const { Post, isLast } = res.data;
   return { Post, nextPage: pageParam + 1, isLast };
 };

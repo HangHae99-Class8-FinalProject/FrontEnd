@@ -5,6 +5,7 @@ import imageCompression from "browser-image-compression";
 
 import { postData } from "../../../Recoil/Atoms/PostData";
 import { useRecoilState } from "recoil";
+import { S3config } from "../../../Utils/S3Config";
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
@@ -15,18 +16,11 @@ const AddPhoto = ({ merge, prevImg }) => {
   const imgRef = useRef();
   console.log(uploadImages);
 
-  const config = {
-    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
-    bucketName: process.env.REACT_APP_BUCKET_NAME,
-    region: process.env.REACT_APP_REGION
-  };
-
   // 이미지 업로드 로직
   const onSubmitImg = async () => {
     const length = imgRef.current.files.length;
     if (length > uploadImages) {
-      const ReactS3Client = new S3upload(config);
+      const ReactS3Client = new S3upload(S3config);
       for (let i = 0; i < length; i++) {
         await ReactS3Client.uploadFile(
           imgRef.current.files[i],

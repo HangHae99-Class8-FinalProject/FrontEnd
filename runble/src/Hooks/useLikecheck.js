@@ -2,7 +2,7 @@ import { useMutation, UseMutationResult, useQueryClient } from "react-query";
 import { instance } from "../Utils/Instance";
 const postGood = async postId => {
   console.log(postId);
-  return await instance.put(`http://54.167.169.43/api/like/${postId}`, {
+  return await instance.put(`/api/like/${postId}`, {
     userId: 1
   });
 };

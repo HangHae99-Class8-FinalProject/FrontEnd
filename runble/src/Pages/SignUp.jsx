@@ -5,7 +5,6 @@ import { useLocation } from "react-router-dom";
 const SignUp = () => {
   const location = useLocation();
   const data = location.state;
-  console.log("data:", data);
 
   return (
     <SignupLayout>
