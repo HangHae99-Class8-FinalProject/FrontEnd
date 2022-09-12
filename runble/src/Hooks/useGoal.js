@@ -7,7 +7,7 @@ export const useGoal = () => {
   const queryClient = useQueryClient();
   return useMutation(postGoal, {
     onSuccess: data => {
-      console.log(data); // mutation 이 성공하면 response를 받을 수 있다.
+      queryClient.invalidateQueries("userGoal"); // mutation 이 성공하면 response를 받을 수 있다.
     },
     onError: error => {
       // mutation 이 에러가 났을 경우 error를 받을 수 있다.

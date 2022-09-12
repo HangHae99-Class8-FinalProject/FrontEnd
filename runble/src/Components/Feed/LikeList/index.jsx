@@ -8,7 +8,7 @@ import PostBox from "../../Common/PostBox";
 const LikeList = () => {
   const fetchLikeList = async pageParam => {
     const { data } = await instance.get(
-      `http://54.167.169.43/api/post/likeorder/${pageParam}`
+      `http://54.167.169.43/api/post/popular/${pageParam}`
     );
 
     return data;

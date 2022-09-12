@@ -10,7 +10,7 @@ import useInfinityScroll from "../../../Hooks/useInfinityScroll";
 
 const fetchPostList = async pageParam => {
   const res = await instance.get(
-    `http://54.167.169.43/api/post/scroll/${pageParam}`
+    `http://54.167.169.43/api/post/new/${pageParam}`
   );
   const { Post, isLast } = res.data;
   return { Post, nextPage: pageParam + 1, isLast };
@@ -39,13 +39,12 @@ const MainList = () => {
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
-
   return (
     <>
       <div>
         {data?.pages.map((page, index) => (
           <React.Fragment key={index}>
-            {page?.Post.map((posts, index) => (
+            {page?.Post?.map((posts, index) => (
               <PostBox key={index} posts={posts} index={index}></PostBox>
             ))}
           </React.Fragment>

@@ -17,12 +17,9 @@ const weekOfMonth = m => m.week() - moment(m).startOf("month").week() + 1;
 const nowDate = moment().utc(true);
 const goalDate = nowDate.format("MM월 ") + weekOfMonth(nowDate) + "주차"; // 현재 날짜
 
-const Progress = ({ parseData }) => {
-  const userId = parseData.userId;
-  const { status, data, error, isFetching } = useProgress(userId);
-  console.log(data);
+const Progress = ({ goalData }) => {
+  console.log(goalData);
   const percentage = 50;
-
   return (
     <StyleWrap>
       <StyleGoal>

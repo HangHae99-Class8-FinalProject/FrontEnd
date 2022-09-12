@@ -30,6 +30,13 @@ function ProfileUpload({ userData }) {
       })
       .then(response => {
         console.log(response);
+        const token = response.data.token;
+        window.localStorage.setItem("token", token);
+        window.localStorage.setItem("userData", JSON.stringify(response.data));
+        const accessToken = localStorage.getItem("userData");
+        const parseData = JSON.parse(accessToken);
+        const userNickname = parseData.nickname;
+        navigate(`/user/${userNickname}`);
       })
       .catch(error => {
         console.log(error);

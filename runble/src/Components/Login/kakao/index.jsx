@@ -1,4 +1,3 @@
-import { KAKAO_AUTH_URL } from "../oauth";
 import { KAKAO_LOGIN } from "../oauth";
 import styled from "styled-components";
 

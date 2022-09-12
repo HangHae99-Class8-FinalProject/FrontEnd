@@ -84,11 +84,13 @@ const Nav = ({ feed }) => {
       return;
     }
   };
+
   const outConfirm = () => {
     if (confirm("회원탈퇴하시겠습니까")) {
       return (
         instance.delete("http://54.167.169.43/api/user"),
-        alert("회원탈퇴되었습니다")
+        alert("회원탈퇴되었습니다"),
+        navigate("/")
       );
     } else {
       return;
@@ -112,6 +114,7 @@ const Nav = ({ feed }) => {
             option: (
               <StyleShow Show={show}>
                 <p
+                  href=""
                   onClick={() => {
                     logoutConfirm();
                   }}
@@ -195,27 +198,14 @@ const Nav = ({ feed }) => {
           >
             기록하기
           </div>
-          {feed ? (
-            <div
-              onClick={() => {
-                navigate(`/user/${nickname}`);
-              }}
-            >
-              마이페이지
-            </div>
-          ) : (
-            <OptionsBox
-              onClick={() => {
-                setShow(prev => !prev);
-                setNaveState("option");
-              }}
-            >
-              <Options
-                style={{ width: "40px", height: "40px" }}
-                src="/img/option.png"
-              ></Options>
-            </OptionsBox>
-          )}
+
+          <div
+            onClick={() => {
+              navigate(`/user/${nickname}`, { state: nickname });
+            }}
+          >
+            마이페이지
+          </div>
         </StyleButton>
       </StyleNav>
     </>

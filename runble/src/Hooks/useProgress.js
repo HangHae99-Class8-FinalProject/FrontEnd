@@ -11,6 +11,7 @@ const fetchNodeList = async userId => {
 
 export const useProgress = userId => {
   return useQuery(["userGoal", userId], () => fetchNodeList(userId), {
-    enabled: !!userId
+    enabled: !!userId,
+    refetchOnWindowFocus: false
   });
 };

@@ -10,13 +10,9 @@ import { useInfiniteQuery } from "react-query";
 import { instance } from "../../../Utils/Instance";
 
 const UserList = () => {
-  // const { ninkname } = useParams();
+  const { nickname } = useParams();
   const { ref, inView } = useInView();
-  const accessToken = localStorage.getItem("userData");
-  const parseData = JSON.parse(accessToken);
-  const nickname = parseData.nickname;
   const fetchUserList = async pageParam => {
-    console.log(nickname);
     const { data } = await instance.get(
       `http://54.167.169.43/api/user/post/${nickname}/${pageParam}`
     );

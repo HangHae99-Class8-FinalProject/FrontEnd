@@ -25,15 +25,14 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { useLikeCheck } from "../../../Hooks/useLikeCheck";
 const PostBox = ({ posts, index }) => {
-  const accessToken = localStorage.getItem("userData");
-  const parseData = JSON.parse(accessToken);
-  const nickname = parseData.nickname;
   const navigate = useNavigate();
   const [show, setShow] = useRecoilState(NavState);
   const [navState, setNaveState] = useRecoilState(NavStates);
   const [postData, setPostData] = useRecoilState(NavPostData);
   const { mutate } = useLikeCheck();
-
+  const accessToken = localStorage.getItem("userData");
+  const parseData = JSON.parse(accessToken);
+  const nickname = parseData.nickname;
   return (
     <StyleFeed key={index}>
       <div>
@@ -42,7 +41,9 @@ const PostBox = ({ posts, index }) => {
             <div
               onClick={() => {
                 setPostData(posts);
-                navigate(`/user/${posts.nickname}`);
+                navigate(`/user/${posts.nickname}`, {
+                  state: posts.nickname
+                });
               }}
             >
               <StyleFrofileImg alt="프로필사진"></StyleFrofileImg>
