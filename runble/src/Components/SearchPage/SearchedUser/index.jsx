@@ -6,7 +6,7 @@ const SearchedUser = ({ searhValue }) => {
   console.log(searhValue);
   const getSearchUser = async () => {
     const { data } = await instance.get(
-      `http://54.167.169.43/api/user/search?nickname=${searhValue}`
+      `/api/user/search?nickname=${searhValue}`
     );
     return data;
   };

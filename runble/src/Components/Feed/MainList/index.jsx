@@ -9,9 +9,9 @@ import PostBox from "../../Common/PostBox";
 import useInfinityScroll from "../../../Hooks/useInfinityScroll";
 
 const fetchPostList = async pageParam => {
-  const res = await instance.get(
-    `http://54.167.169.43/api/post/new/${pageParam}`
-  );
+
+  const res = await axios.post(`/api/post/scroll/${pageParam}`);
+
   const { Post, isLast } = res.data;
   return { Post, nextPage: pageParam + 1, isLast };
 };

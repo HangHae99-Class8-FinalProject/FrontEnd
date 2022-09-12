@@ -28,14 +28,14 @@ const RunTimer = ({ stopInterval, endRun }) => {
     if (endRun) {
       setPath(prev => ({
         ...prev,
-        time: { hour, minute }
+        time: { hour, minute, second }
       }));
     }
   }, [endRun]);
 
   return (
     <div>
-      {hour} : {minute}
+      {hour} : {minute} :{second}
     </div>
   );
 };

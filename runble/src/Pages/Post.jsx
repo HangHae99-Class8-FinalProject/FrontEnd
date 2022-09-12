@@ -10,7 +10,6 @@ import AddPhoto from "../Components/PostPage/AddPhoto";
 import AddContent from "../Components/PostPage/AddContent";
 import { instance } from "../Utils/Instance";
 
-// http://54.167.169.43
 const Post = () => {
   const [merge, setMerge] = useState(false);
   const [post, setPost] = useRecoilState(postData);
@@ -24,17 +23,11 @@ const Post = () => {
 
   const addPosts = async () => {
     if (!postId) {
-      const { data } = await instance.post(
-        "http://54.167.169.43/api/post",
-        post
-      );
+      const { data } = await instance.post("/api/post", post);
       console.log(data);
       return data;
     } else {
-      const { data } = await instance.put(
-        `http://54.167.169.43/api/post/${postId}`,
-        post
-      );
+      const { data } = await instance.put(`/api/post/${postId}`, post);
       console.log(data);
       return data;
     }
@@ -61,7 +54,6 @@ const Post = () => {
 
   useEffect(() => {
     if (!post.isLoading && merge) {
-      console.log("요청함");
       addPosts();
     }
   }, [post, merge]);
@@ -74,7 +66,7 @@ const Post = () => {
       <div>
         {Time.hour} :{Time.minute} :{Time.second}
       </div>
-      <div>{runLog.distance.toFixed(3)}km</div>
+      <div>{runLog.distance}km</div>
       <MapBox>
         <KakaoMap path={runLog.path} />
       </MapBox>

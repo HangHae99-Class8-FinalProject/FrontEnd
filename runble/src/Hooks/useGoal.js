@@ -1,7 +1,9 @@
 import { useMutation, UseMutationResult, useQueryClient } from "react-query";
 import { instance } from "../Utils/Instance";
+
 const postGoal = async () => {
-  return await instance.post(`http://54.167.169.43/api/user/goal`);
+  return await instance.post(`/api/user/goal`);
+
 };
 export const useGoal = () => {
   const queryClient = useQueryClient();

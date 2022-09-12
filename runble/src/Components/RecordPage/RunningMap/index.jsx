@@ -3,13 +3,12 @@ import { Map, MapMarker, Polyline } from "react-kakao-maps-sdk";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { runData } from "../../../Recoil/Atoms/RunData";
 import useInterval from "../../../Hooks/useInterval";
-import calcDistance from "../../../Utils/clacDistnace";
-import { useNavigate } from "react-router-dom";
+
+import calcDistance from "../../../Utils/ClacDistnace";
+
 
 const RunningMap = ({ stopInterval, endRun }) => {
   const [distance, setDistance] = useState(0);
-
-  const navigate = useNavigate();
 
   const [path, setPath] = useRecoilState(runData);
   const runLog = useRecoilValue(runData);
@@ -93,14 +92,11 @@ const RunningMap = ({ stopInterval, endRun }) => {
     if (endRun) {
       setPath(prev => ({
         ...prev,
-        distance: distance,
+        distance: distance?.toFixed(2),
         isFinish: true
       }));
     }
-    if (runLog.isFinish) {
-      navigate("/post", { state: { runLog: path } });
-    }
-  }, [endRun, runLog.isFinish]);
+  }, [endRun]);
 
   //로딩 화면
   if (!state.isLoading) {
