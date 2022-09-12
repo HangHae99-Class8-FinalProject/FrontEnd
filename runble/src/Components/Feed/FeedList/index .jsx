@@ -9,25 +9,24 @@ const UserfeedList = () => {
   const { state } = useLocation();
   return (
     <StyleFeedWrap>
-      {state ? (
-        <StyleFilter>
-          <span
-            onClick={() => {
-              setFilter(false);
-            }}
-          >
-            최신
-          </span>
-          /
-          <span
-            onClick={() => {
-              setFilter(true);
-            }}
-          >
-            인기
-          </span>
-        </StyleFilter>
-      ) : null}
+      <StyleFilter>
+        <span
+          onClick={() => {
+            setFilter(false);
+          }}
+        >
+          최신
+        </span>
+        /
+        <span
+          onClick={() => {
+            setFilter(true);
+          }}
+        >
+          인기
+        </span>
+      </StyleFilter>
+
       {filter ? <LikeList></LikeList> : <MainList></MainList>}
     </StyleFeedWrap>
   );

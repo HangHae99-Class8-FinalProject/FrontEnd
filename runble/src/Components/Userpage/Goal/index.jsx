@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useGoal } from "../../../Hooks/useGoal";
-import { StyleGoal, StyleModal, StyleInput } from "./style";
+import { StyleGoal, StyleGoalButton, StyleModal, StyleInput } from "./style";
 const Goal = () => {
   const { mutate } = useGoal();
   const [modal, setModal] = useState(false);
@@ -13,19 +13,22 @@ const Goal = () => {
   };
 
   const onSubmitHandeler = () => {
-    // mutate(goal);
+    mutate(goal);
     setGoal({
       goal: ""
     });
   };
   return (
     <>
-      <StyleGoal
-        onClick={() => {
-          setModal(true);
-        }}
-      >
-        목표설정해주세요
+      <StyleGoal>
+        <div>이번주 목표를 입력하세요</div>
+        <StyleGoalButton
+          onClick={() => {
+            setModal(true);
+          }}
+        >
+          목표설정하기
+        </StyleGoalButton>
       </StyleGoal>
       {modal ? (
         <StyleModal>

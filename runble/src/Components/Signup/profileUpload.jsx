@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
+
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import imageCompression from "browser-image-compression";
@@ -53,6 +54,7 @@ function ProfileUpload({ userData }) {
     }
     setIsLodded(true);
   };
+
 
   const signupUser = async () => {
     const { data } = await instance.post("/api/user/signup", {

@@ -8,6 +8,7 @@ import { useInfiniteQuery } from "react-query";
 
 const SearchedHashTag = ({ searhValue }) => {
   const [ref, inView] = useInView();
+
   const [tap, setTap] = useState("최신순");
 
   const getSearchHashTagOrder = async pageParam => {

@@ -33,8 +33,3 @@ export const StyleButton = styled.div`
   bottom: 0;
   background-color: azure;
 `;
-export const OptionsBox = styled.div``;
-export const Options = styled.img`
-  width: 100px;
-  height: 50px;
-`;

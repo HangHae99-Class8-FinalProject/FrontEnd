@@ -9,24 +9,30 @@ import {
 import {
   StyleFeed,
   StyleFrofileBox,
+  StyleFrofileImg,
   StyleFrofile,
   StylePath,
   StyleRecord,
-  StyleImg
+  StyleImg,
+  StyleHashBox,
+  StyleHash
 } from "./style";
+import displayedAt from "../../../Utils/displayAt";
 import KakaoMap from "../../Common/KakaoMap/index";
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
-import { useLikeCheck } from "../../../Hooks/useLikecheck";
+import { useLikeCheck } from "../../../Hooks/useLikeCheck";
 const PostBox = ({ posts, index }) => {
   const navigate = useNavigate();
   const [show, setShow] = useRecoilState(NavState);
-  const [naveState, setnaveState] = useRecoilState(NavStates);
+  const [navState, setNaveState] = useRecoilState(NavStates);
   const [postData, setPostData] = useRecoilState(NavPostData);
   const { mutate } = useLikeCheck();
+  const accessToken = localStorage.getItem("userData");
+  const parseData = JSON.parse(accessToken);
+  const nickname = parseData.nickname;
   return (
     <StyleFeed key={index}>
       <div>
@@ -35,10 +41,12 @@ const PostBox = ({ posts, index }) => {
             <div
               onClick={() => {
                 setPostData(posts);
-                navigate(`/user/${posts.nickname}`);
+                navigate(`/user/${posts.nickname}`, {
+                  state: posts.nickname
+                });
               }}
             >
-              프로필사진
+              <StyleFrofileImg alt="프로필사진"></StyleFrofileImg>
             </div>
             <span>{posts.nickname}</span>
           </StyleFrofile>
@@ -46,15 +54,17 @@ const PostBox = ({ posts, index }) => {
             <div>
               조회수:<span>{posts?.view}</span>
             </div>
-            <div
-              onClick={() => {
-                setShow(prev => !prev);
-                setnaveState("put");
-                setPostData(posts);
-              }}
-            >
-              ...
-            </div>
+            {nickname === posts.nickname ? (
+              <div
+                onClick={() => {
+                  setShow(prev => !prev);
+                  setNaveState("put");
+                  setPostData(posts);
+                }}
+              >
+                ...
+              </div>
+            ) : null}
           </div>
         </StyleFrofileBox>
         <StyleRecord>
@@ -72,37 +82,44 @@ const PostBox = ({ posts, index }) => {
             <SwiperSlide>
               <KakaoMap path={posts.path}></KakaoMap>
             </SwiperSlide>
-            <SwiperSlide></SwiperSlide>
-            <SwiperSlide>Slide 3</SwiperSlide>
-            <SwiperSlide>Slide 4</SwiperSlide>
-            <SwiperSlide>Slide 5</SwiperSlide>
-            <SwiperSlide>Slide 6</SwiperSlide>
-            <SwiperSlide>Slide 7</SwiperSlide>
-            <SwiperSlide>Slide 8</SwiperSlide>
-            <SwiperSlide>Slide 9</SwiperSlide>
+            {posts.image.map((img, index) => (
+              <SwiperSlide key={index}>
+                <StyleImg src={img} alt="img"></StyleImg>
+              </SwiperSlide>
+            ))}
           </Swiper>
         </StylePath>
         <div>
           <p>{posts?.content}</p>
-          <div style={{ display: "flex" }}>
-            {posts?.hashtag.map((hash, idx) => (
-              <p key={idx}>#{hash}</p>
-            ))}
-          </div>
-          <div
-            onClick={() => {
-              mutate(posts.postId);
-            }}
-          >
-            {posts.likeDone ? (
-              <span>좋아요완료</span>
-            ) : (
-              <span>좋아요눌러주세요</span>
-            )}
+          <StyleHashBox>
+            <div style={{ display: "flex" }}>
+              {posts?.hashtag.map((hash, idx) => (
+                <StyleHash key={idx}>
+                  <span>#{hash}</span>
+                </StyleHash>
+              ))}
+            </div>
+            <div
+              onClick={() => {
+                mutate(posts.postId);
+              }}
+            >
+              좋아요버튼
+            </div>
+          </StyleHashBox>
+          <div>
+            좋아요
             {posts.like}개
           </div>
-          <p>댓글1개모두보기</p>
+          <p
+            onClick={() => {
+              navigate(`/reply/${posts.postId}`);
+            }}
+          >
+            댓글1개<span>모두보기</span>
+          </p>
         </div>
+        {displayedAt(posts.createdAt)}
       </div>
     </StyleFeed>
   );
