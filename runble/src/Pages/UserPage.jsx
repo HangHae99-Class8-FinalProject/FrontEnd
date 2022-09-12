@@ -12,6 +12,7 @@ const UserPage = () => {
   const userNickname = parseData.nickname;
   const userId = parseData.userId;
   const { status, data: goalData, error, isFetching } = useProgress(userId); //user 목표보여주기
+  console.log(goalData);
   return (
     <Layout>
       <Userprofile userNickname={userNickname}></Userprofile>
