@@ -16,7 +16,7 @@ import {
   StyleIcon,
   StyleHeart,
   StyleView,
-  StyleRecord,
+  StyleSpeed,
   StyleGood,
   StyleImg,
   StyleHashBox,
@@ -36,6 +36,7 @@ import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import { useLikeCheck } from "../../../Hooks/useLikecheck";
+import { useState } from "react";
 const PostBox = ({ posts, index }) => {
   const navigate = useNavigate();
   const [show, setShow] = useRecoilState(NavState);
@@ -45,7 +46,8 @@ const PostBox = ({ posts, index }) => {
   const accessToken = localStorage.getItem("userData");
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
-  console.log(posts);
+  const [heart, Setheart] = useState(false);
+  // console.log(posts);
   return (
     <StyleFeed key={index}>
       <StyleFrofileBox>
@@ -87,10 +89,6 @@ const PostBox = ({ posts, index }) => {
           ) : null}
         </div>
       </StyleFrofileBox>
-      <StyleRecord>
-        <div>거리:{posts?.distance}km</div>
-        <div>시간:30분</div>
-      </StyleRecord>
       <StylePath>
         <Swiper
           pagination={{
@@ -99,6 +97,12 @@ const PostBox = ({ posts, index }) => {
           modules={[Pagination]}
         >
           <SwiperSlide>
+            <StyleSpeed>
+              <div>
+                <div>2.04k</div>
+                <div>00:12:23</div>
+              </div>
+            </StyleSpeed>
             <KakaoMap path={posts.path}></KakaoMap>
           </SwiperSlide>
           {posts.image.map((img, index) => (
@@ -111,11 +115,23 @@ const PostBox = ({ posts, index }) => {
       <StyleContentBox>
         <StyleIcon>
           <StyleHeart>
-            <Heart
-              onClick={() => {
-                mutate(posts.postId);
-              }}
-            />
+            {heart ? (
+              <Heart
+                fill="red"
+                onClick={() => {
+                  mutate(posts.postId);
+                  Setheart(prev => !prev);
+                }}
+              />
+            ) : (
+              <Heart
+                stroke="black"
+                onClick={() => {
+                  mutate(posts.postId);
+                  Setheart(prev => !prev);
+                }}
+              />
+            )}
             <CommentIcon />
           </StyleHeart>
           <StyleView>

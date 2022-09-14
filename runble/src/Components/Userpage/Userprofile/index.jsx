@@ -9,14 +9,15 @@ import {
 import { useParams, useLocation } from "react-router-dom";
 import { ReactComponent as Option } from "../../../icons/option.svg";
 import { ReactComponent as Profile } from "../../../icons/profile.svg";
-const Userprofile = ({ userNickname }) => {
+const Userprofile = ({ userNickname, userProfile }) => {
   const { nickname } = useParams();
   const [show, setShow] = useRecoilState(NavState);
   const [navState, setNavState] = useRecoilState(NavStates);
   const previewChange = useRecoilValue(PreviewImg);
   const [naveState, setNaveState] = useRecoilState(NavStates);
   const { state } = useLocation();
-  console.log(state.profile);
+  console.log(state);
+  console.log(userProfile);
   return (
     <StyleUserWrap>
       <UserHeader>
@@ -36,14 +37,14 @@ const Userprofile = ({ userNickname }) => {
 
       <StyleUsrBox>
         <div>
-          {!previewChange ? (
+          {userProfile ? (
             <img
               onClick={() => {
                 setNavState("img");
                 setShow(prev => !prev);
               }}
-              style={{ width: "40px", height: "40px" }}
-              src={state.profile}
+              style={{ width: "40px", height: "40px", borderRadius: "20px" }}
+              src={userProfile}
             ></img>
           ) : (
             <Profile

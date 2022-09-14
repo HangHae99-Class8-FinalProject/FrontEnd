@@ -38,36 +38,38 @@ const Goal = () => {
         <div>이번주 목표를 입력하세요</div>
       </StyleGoal>
       {modal ? (
-        <StyleModal>
-          <div>
-            <label>일주일 간의 목표를 설정해주세요!</label>
-            <StyleInput
-              name="goal"
-              onChange={onChangeHandeler}
-              type="number"
-              min="0"
-              value={goal.goal}
-              placeholder="0km"
-            ></StyleInput>
+        <div>
+          <StyleModal>
+            <div>
+              <label>일주일 간의 목표를 설정해주세요!</label>
+              <StyleInput
+                name="goal"
+                onChange={onChangeHandeler}
+                type="number"
+                min="0"
+                value={goal.goal}
+                placeholder="0km"
+              ></StyleInput>
 
-            <StyleButton>
-              <span
-                onClick={() => {
-                  setModal(false);
-                }}
-              >
-                취소
-              </span>
-              <span
-                onClick={() => {
-                  onSubmitHandeler();
-                }}
-              >
-                등록
-              </span>
-            </StyleButton>
-          </div>
-        </StyleModal>
+              <StyleButton>
+                <span
+                  onClick={() => {
+                    setModal(false);
+                  }}
+                >
+                  취소
+                </span>
+                <span
+                  onClick={() => {
+                    onSubmitHandeler();
+                  }}
+                >
+                  등록
+                </span>
+              </StyleButton>
+            </div>
+          </StyleModal>
+        </div>
       ) : null}
     </div>
   );

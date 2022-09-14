@@ -3,9 +3,10 @@ export const StyleFeed = styled.div`
   width: 100%;
   flex-direction: column;
   display: flex;
-  padding: 20px 0px;
-  gap: 12px;
+  padding: 2rem 0px;
+  gap: 1.2rem;
   border-bottom: 1px solid #e6e6e6;
+  margin: 0 auto;
 `;
 export const StyleFrofileBox = styled.div`
   flex-direction: row;
@@ -15,7 +16,7 @@ export const StyleFrofileBox = styled.div`
 export const StyleFrofile = styled.div`
   flex-direction: row;
   display: flex;
-  gap: 10px;
+  gap: 1rem;
   justify-content: center;
   align-items: center;
 `;
@@ -25,19 +26,35 @@ export const StyleFrofileImg = styled.img`
   border-radius: 20px;
 `;
 
-export const StyleRecord = styled.div`
+export const StyleSpeed = styled.div`
+  position: absolute;
+  z-index: 999;
   display: flex;
+  width: 100%;
+  /* padding-left: 8%; */
+  top: 70%;
+  & > div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 3.6rem;
+    font-family: "Tungsten";
+    font-style: normal;
+    font-weight: 900;
+    color: #1a1a1a;
+    padding: 0 5%;
+  }
 `;
 export const StylePath = styled.div`
-  width: 343px;
-  height: 180px;
+  width: 100%;
+  height: 18rem;
 `;
 export const StyleContentBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;
-  width: 343px;
+  width: 100%;
 `;
 export const StyleIcon = styled.div`
   display: flex;
@@ -45,8 +62,8 @@ export const StyleIcon = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 3px 2px;
-  width: 343px;
-  height: 41.55px;
+  width: 100%;
+  height: 4.155rem;
 `;
 export const StyleHeart = styled.div`
   display: flex;
@@ -68,8 +85,8 @@ export const StyleView = styled.div`
   height: 17px;
 `;
 export const StyleImg = styled.img`
-  width: 343px;
-  height: 180px;
+  width: 34.3rem;
+  height: 18rem;
   object-fit: cover;
 `;
 

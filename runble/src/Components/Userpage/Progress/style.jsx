@@ -1,14 +1,17 @@
 import styled from "styled-components";
 export const StyleWrap = styled.div`
   width: 100%;
+  & > div {
+    padding: 2.4rem 1.6rem 2rem;
+  }
 `;
 export const StyleProgress = styled.div`
-  width: 344px;
-  height: 230px;
+  width: 95%;
+  height: 23rem;
   background-color: rgba(53, 52, 52, 1);
   box-sizing: border-box;
-  margin: 0 16px;
   border-radius: 12px;
+  margin: 0 auto;
   & > div {
     display: flex;
     justify-content: center;
@@ -35,7 +38,7 @@ export const StyleNextProgress = styled.div`
   align-items: flex-start;
   padding: 0px;
   gap: 8px;
-  width: 344px;
+  width: 100%;
   height: 230px;
   background: #353434;
   border-radius: 12px;
@@ -45,7 +48,7 @@ export const StyleSevenProgress = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0px;
-  width: 344px;
+  width: 100%;
   height: 230px;
 `;
 export const StyleSevenTitle = styled.div`

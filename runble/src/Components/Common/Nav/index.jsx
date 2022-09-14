@@ -14,11 +14,13 @@ import { ReactComponent as Mypage } from "../../../icons/mypage.svg";
 import { useUserProfileMutation } from "../../../Hooks/useProfile";
 import S3upload from "react-aws-s3";
 import { instance } from "../../../Utils/Instance";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import imageCompression from "browser-image-compression";
 import { useDeletePost } from "../../../Hooks/useDeletePost";
+import { S3config } from "../../../Utils/S3Config";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 const Nav = () => {
+  const { state } = useLocation();
   const { mutate: deletePost } = useDeletePost();
   const { mutate: postProfile } = useUserProfileMutation();
   const navigate = useNavigate();
@@ -43,14 +45,7 @@ const Nav = () => {
     let newFileName = imgVal.current.files[0].name;
     const compressedFile = await imageCompression(file, options);
     console.log(compressedFile.size / 1024 / 1024);
-
-    const config = {
-      accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
-      bucketName: process.env.REACT_APP_BUCKET_NAME,
-      region: process.env.REACT_APP_REGION
-    };
-    const ReactS3Client = new S3upload(config);
+    const ReactS3Client = new S3upload(S3config);
     ReactS3Client.uploadFile(compressedFile, newFileName).then(async data => {
       if (data.status === 204) {
         let imgUrl = data.location;
@@ -167,35 +162,49 @@ const Nav = () => {
 
         <StyleButton>
           <div>
-            <div
-              onClick={() => {
-                navigate("/feed");
-              }}
-            >
-              <Home stroke="#808080" />
-            </div>
-            <div
+            {state === "feed" ? (
+              <Home
+                stroke="#D9D9D9"
+                onClick={() => {
+                  navigate("/feed", { state: "feed" });
+                }}
+              />
+            ) : (
+              <Home
+                onClick={() => {
+                  navigate("/feed", { state: "feed" });
+                }}
+                stroke="#808080"
+              />
+            )}
+
+            <Search
               onClick={() => {
                 navigate("/search");
               }}
-            >
-              <Search stroke="#808080" />
-            </div>
-            <div
+              stroke="#808080"
+            />
+
+            <Run
               onClick={() => {
                 navigate("/record");
               }}
-            >
-              <Run />
-            </div>
-
-            <div
-              onClick={() => {
-                navigate(`/user/${nickname}`, { state: nickname });
-              }}
-            >
-              <Mypage />
-            </div>
+            />
+            {state === "user" ? (
+              <Mypage
+                stroke="#D9D9D9"
+                onClick={() => {
+                  navigate(`/user/${nickname}`, { state: "user" });
+                }}
+              />
+            ) : (
+              <Mypage
+                stroke="#808080"
+                onClick={() => {
+                  navigate(`/user/${nickname}`, { state: "user" });
+                }}
+              />
+            )}
           </div>
         </StyleButton>
       </StyleNav>

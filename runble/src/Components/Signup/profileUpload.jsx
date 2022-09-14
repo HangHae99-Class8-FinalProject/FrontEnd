@@ -15,7 +15,7 @@ window.Buffer = window.Buffer || require("buffer").Buffer;
 function ProfileUpload({ userData }) {
   const [nickname, setNickname] = useState("");
   const [previewImage, setPrevieImage] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
   const [isLodded, setIsLodded] = useState("");
   const fileUpload = useRef(null);
   const navigate = useNavigate();

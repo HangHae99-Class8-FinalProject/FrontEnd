@@ -6,11 +6,11 @@ export const StyleGoal = styled.div`
   align-items: center;
   margin: 0 16px;
   gap: 10px;
-  width: 343px;
-  height: 230px;
+  height: 23rem;
   background: #353434;
   border-radius: 12px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  position: relative;
 
   & > div {
     font-size: 12px;
@@ -33,10 +33,11 @@ export const StyleGoalButton = styled.button`
 `;
 
 export const StyleModal = styled.div`
-  width: 304px;
-  height: 174px;
-  position: fixed;
-  margin: -200px 35px;
+  width: 80%;
+  /* height: 17.4rem; */
+  margin-top: -50%;
+  margin-left: 10%;
+  position: absolute;
   background-color: rgba(0, 0, 0, 0.65);
   color: #ffffff;
   border-radius: 15px;

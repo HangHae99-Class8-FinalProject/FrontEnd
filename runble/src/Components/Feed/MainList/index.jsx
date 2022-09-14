@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { NavState, NavStates } from "../../../Recoil/Atoms/OptionAtoms";
-import { NavPostData } from "../../../Recoil/Atoms/OptionAtoms";
+import React, { useEffect } from "react";
 import { instance } from "../../../Utils/Instance";
 import { useInView } from "react-intersection-observer";
-import { useInfiniteQuery } from "react-query";
-import { useRecoilState } from "recoil";
 import PostBox from "../../Common/PostBox";
 import useInfinityScroll from "../../../Hooks/useInfinityScroll";
 
@@ -20,6 +16,7 @@ const MainList = () => {
     "posts",
     fetchPostList
   );
+
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);

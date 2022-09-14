@@ -1,8 +1,8 @@
 import styled from "styled-components";
 export const StyleUserListWrap = styled.div`
-  width: 343px;
-  padding: 24px 16px 20px;
+  width: 100%;
   box-sizing: border-box;
-  margin: 0;
-  display: flex;
+  padding: 2.4rem 1.6rem 2rem;
+  align-items: flex-start;
+  flex-direction: column;
 `;

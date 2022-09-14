@@ -2,6 +2,7 @@ import styled from "styled-components";
 export const StyleUserWrap = styled.div`
   width: 100%;
   & > div {
+    width: 100%;
     display: flex;
     align-items: center;
     box-sizing: border-box;
@@ -15,7 +16,7 @@ export const UserHeader = styled.div`
   align-items: center;
   padding: 10px 16px;
   gap: 26px;
-  width: 375px;
+  width: 37.5rem;
   height: 43px;
   background: #ffffff;
   border-bottom: 1px solid #e6e6e6;
