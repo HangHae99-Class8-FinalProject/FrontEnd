@@ -22,13 +22,14 @@ import { instance } from "../../../Utils/Instance";
 import { useNavigate, useLocation } from "react-router-dom";
 import imageCompression from "browser-image-compression";
 import { useDeletePost } from "../../../Hooks/useDeletePost";
+import { S3config } from "../../../Utils/S3Config";
+
 window.Buffer = window.Buffer || require("buffer").Buffer;
 const Nav = ({ feed }) => {
   const { mutate } = useDeletePost();
   const navigate = useNavigate();
   const [show, setShow] = useRecoilState(NavState);
   const [preview, setPreview] = useRecoilState(PreviewImg);
-  const [naveState, setNaveState] = useRecoilState(NavStates);
   const navEvent = useRecoilValue(NavStates);
   const postData = useRecoilValue(NavPostData);
   const imgVal = useRef(null);
@@ -53,13 +54,7 @@ const Nav = ({ feed }) => {
     const compressedFile = await imageCompression(file, options);
     console.log(compressedFile.size / 1024 / 1024);
 
-    const config = {
-      accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
-      bucketName: process.env.REACT_APP_BUCKET_NAME,
-      region: process.env.REACT_APP_REGION
-    };
-    const ReactS3Client = new S3upload(config);
+    const ReactS3Client = new S3upload(S3config);
     ReactS3Client.uploadFile(compressedFile, newFileName).then(async data => {
       if (data.status === 204) {
         let imgUrl = data.location;
@@ -114,7 +109,6 @@ const Nav = ({ feed }) => {
             option: (
               <StyleShow Show={show}>
                 <p
-                  href=""
                   onClick={() => {
                     logoutConfirm();
                   }}

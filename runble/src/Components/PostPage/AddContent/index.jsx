@@ -13,13 +13,9 @@ import { postData } from "../../../Recoil/Atoms/PostData";
 
 const AddContent = ({ merge, prevContent }) => {
   const [content, onChangeContent] = useInput(prevContent || "");
-  const [showWrite, setShowWrite] = useState(false);
+
   const [post, setPost] = useRecoilState(postData);
   const textRef = useRef(null);
-
-  const onShowWrite = useCallback(() => {
-    setShowWrite(true);
-  }, []);
 
   useLayoutEffect(() => {
     if (textRef.current !== null) textRef.current.focus();
@@ -35,40 +31,24 @@ const AddContent = ({ merge, prevContent }) => {
   }, [merge]);
 
   return (
-    <>
-      {!showWrite ? (
-        <NonWrite onClick={onShowWrite}>내용 작성</NonWrite>
-      ) : (
-        <Write value={content} ref={textRef} onChange={onChangeContent}></Write>
-      )}
-    </>
+    <ContentBox>
+      <Write value={content} ref={textRef} onChange={onChangeContent}></Write>
+    </ContentBox>
   );
 };
 
 export default AddContent;
 
-const NonWrite = styled.div`
-  width: 57px;
-  height: 15px;
-  left: 28px;
-  top: 463px;
-
-  font-family: "HYHeadLine-Medium";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 15px;
-
-  text-align: center;
-  color: #000000;
+const ContentBox = styled.div`
+  padding: 20px 16px;
+  height: 220px;
 `;
 
 const Write = styled.textarea`
-  position: absolute;
-  width: 315px;
-  height: 236px;
-  left: 31px;
-  top: 458px;
-
-  background: #ebebeb;
+  background: #e6e6e6;
+  border-radius: 4px;
+  padding: 10px 0px 10px 10px;
+  gap: 10px;
+  width: 343px;
+  height: 180px;
 `;

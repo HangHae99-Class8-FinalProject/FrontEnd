@@ -3,6 +3,8 @@ import { instance } from "../../../Utils/Instance";
 import { useQuery } from "react-query";
 import useQueryDebounce from "../../../Hooks/useQueryDebounce";
 
+import styled from "styled-components";
+
 const RelatedBar = ({
   searchTag,
   setSearchTag,
@@ -29,16 +31,32 @@ const RelatedBar = ({
   };
 
   return (
-    <>
+    <RelatedBarWrap>
       {related?.map((list, idx) => {
         return (
-          <div onClick={() => onChangeSearch(list)} key={idx}>
+          <RelatedItems onClick={() => onChangeSearch(list)} key={idx}>
             {list}
-          </div>
+          </RelatedItems>
         );
       })}
-    </>
+    </RelatedBarWrap>
   );
 };
 
 export default RelatedBar;
+
+const RelatedBarWrap = styled.div`
+  position: absolute;
+  z-index: 10;
+  height: 300px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+`;
+
+const RelatedItems = styled.div`
+  padding: 8px 20px;
+  font-size: 18px;
+`;

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { instance } from "../../Utils/Instance";
+import Loading from "../Common/Loading/Loading";
 
 const ProfileSignup = () => {
   const navigate = useNavigate();
@@ -16,18 +17,18 @@ const ProfileSignup = () => {
           email: res.data.email,
           image: res.data.image,
           nickname: res.data.nickname,
-          userId: res.data.userId
+          userId: res.data.userId,
+          provider: res.data.provider
         };
         if (token) {
-          console.log(res.data);
           window.localStorage.setItem("token", token);
           window.localStorage.setItem("userData", JSON.stringify(userData));
           navigate(`/user/${res.data.nickname}`);
         } else {
-          console.log(res.data);
           navigate("/signup", {
             state: {
-              email: res.data.email
+              email: res.data.email,
+              provider: res.data.provider
             }
           });
         }
@@ -39,7 +40,7 @@ const ProfileSignup = () => {
     kakaoLoign();
   }, []);
 
-  return <>로그인로딩중</>;
+  return <Loading />;
 };
 
 export default ProfileSignup;

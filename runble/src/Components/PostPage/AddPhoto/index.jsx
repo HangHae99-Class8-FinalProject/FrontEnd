@@ -7,6 +7,8 @@ import { postData } from "../../../Recoil/Atoms/PostData";
 import { useRecoilState } from "recoil";
 import { S3config } from "../../../Utils/S3Config";
 
+import { ReactComponent as PostCamera } from "../../../Icons/PostCamera.svg";
+
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const AddPhoto = ({ merge, prevImg }) => {
@@ -40,6 +42,9 @@ const AddPhoto = ({ merge, prevImg }) => {
   };
 
   const onChangeImg = async () => {
+    if (previewImages.length >= 5) {
+      return null;
+    }
     const imgArray = imgRef.current.files;
     let imgUrls = [...previewImages];
     const options = {
@@ -79,20 +84,24 @@ const AddPhoto = ({ merge, prevImg }) => {
 
   return (
     <PhotoWrap>
+      <AddButton>
+        <input ref={imgRef} type="file" multiple onChange={onChangeImg} />
+        <PostCamera />
+        <div>{previewImages.length}/5</div>
+      </AddButton>
       {previewImages &&
         previewImages.map((img, idx) => {
           return (
-            <PreviewImges
-              key={idx}
-              src={img}
-              alt="첨부한 이미지"
-              onClick={() => deletePhoto(idx)}
-            />
+            <AddButton>
+              <PreviewImges
+                key={idx}
+                src={img}
+                alt="첨부한 이미지"
+                onClick={() => deletePhoto(idx)}
+              />
+            </AddButton>
           );
         })}
-      <AddButton>
-        <input ref={imgRef} type="file" multiple onChange={onChangeImg} />+
-      </AddButton>
     </PhotoWrap>
   );
 };
@@ -100,29 +109,38 @@ const AddPhoto = ({ merge, prevImg }) => {
 export default AddPhoto;
 
 const PhotoWrap = styled.div`
+  padding: 20px 16px;
   display: flex;
-  flex-wrap: wrap;
+  gap: 20px;
+  border-bottom: 1px solid #e6e6e6;
+  overflow: scroll;
+  width: inherit;
+  flex-wrap: nowrap;
 `;
+
 const AddButton = styled.label`
-  width: 59px;
-  height: 55.87px;
-  background-color: gray;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  display: flex;
-  font-family: "VITRO CORE OTF";
-  font-style: normal;
-  font-weight: 900;
-  font-size: 48px;
-  line-height: 64px;
-
-  color: #ffffff;
+  gap: 2px;
+  width: 64px;
+  height: 64px;
+  background: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
   & input {
     display: none;
+  }
+  & div {
+    width: 25px;
+    height: 17px;
+    color: #999999;
+    font-family: "Noto Sans CJK KR";
   }
 `;
 
 const PreviewImges = styled.img`
-  width: 59px;
-  height: 55.87px;
+  width: 64px;
+  height: 64px;
 `;

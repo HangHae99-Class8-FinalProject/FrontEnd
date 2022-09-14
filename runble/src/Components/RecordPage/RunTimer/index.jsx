@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import useInterval from "../../../Hooks/useInterval";
 import { runData } from "../../../Recoil/Atoms/RunData";
 import { useRecoilState } from "recoil";
+import styled from "styled-components";
 
 const RunTimer = ({ stopInterval, endRun }) => {
   const [hour, setHour] = useState(0);
@@ -34,9 +35,21 @@ const RunTimer = ({ stopInterval, endRun }) => {
   }, [endRun]);
 
   return (
-    <div>
-      {hour} : {minute} :{second}
-    </div>
+    <TimerWrap>
+      {hour < 10 ? "0" + hour : hour}:{minute < 10 ? "0" + minute : minute}:
+      {second < 10 ? "0" + second : second}
+    </TimerWrap>
   );
 };
 export default RunTimer;
+
+const TimerWrap = styled.div`
+  width: 138px;
+  font-family: "Anton";
+  font-weight: 373;
+  font-size: 42px;
+  line-height: 50px;
+  letter-spacing: 0.02em;
+
+  color: #ffffff;
+`;
