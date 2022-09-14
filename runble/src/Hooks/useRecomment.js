@@ -1,17 +1,21 @@
 import { instance } from "../Utils/Instance";
 
-export const getRecomment = async () => {
-    return await instance.get("http://localhost:8001/Recomment");
-    //return await instance.get('http://54.167.169.43/api/comment/1/1')
-  };
 
- export const addReply = async (reply) =>{
-    console.log(reply)
-    return await instance.post('http://localhost:8001/Recomment',reply)
+
+ export const addReply = async ({comment,recommentId,commentId}) =>{
+  console.log(recommentId)
+  try{
+    const response = await instance.post(`http://54.167.169.43./api/comment/${commentId}/${recommentId}`,{comment:comment}
+    )
+    console.log(response)
+    return response.data
+  }catch(error){
+    console.log(error.code)
+  }
 }
 
 export const delReply = async (id) =>{
-    const response = await instance.delete(`http://localhost:8001/Recomment/${id}`);
+    const response = await instance.delete(`http://54.167.169.43./api/comment/${id.commentId}/${id.recommentId}`);
     return response.data ;
 }
 

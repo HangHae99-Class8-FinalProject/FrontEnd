@@ -6,7 +6,7 @@ import { delReply,editReply } from "../../Hooks/useRecomment";
 import Lion from "./lion.png";
 
 function RecommentItem ({data}){
-    console.log(data.comment)
+    console.log(data.recommentId)
     const queryClient = useQueryClient();
 
 
@@ -110,7 +110,7 @@ const handleEditreply = (
                 )}
               </button>
 
-              <button onClick={()=>handleDelreply(data.recommentId)}>
+              <button onClick={()=>handleDelreply(data)}>
                 삭제하기
               </button>
             </>

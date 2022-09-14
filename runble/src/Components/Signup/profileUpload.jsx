@@ -13,10 +13,13 @@ window.Buffer = window.Buffer || require("buffer").Buffer;
 
 
 function ProfileUpload({ userData }) {
+
+    console.log(userData)
   const [nickname, setNickname] = useState("");
   const [previewImage, setPrevieImage] = useState("");
   const [image, setImage] = useState("");
   const [isLodded, setIsLodded] = useState("");
+  const [provider, setProvider] = useState("");
   const fileUpload = useRef(null);
   const navigate = useNavigate();
 
@@ -59,7 +62,8 @@ function ProfileUpload({ userData }) {
     const { data } = await instance.post("/api/user/signup", {
       email: userData.email,
       nickname,
-      image
+      image,
+      provider: userData.provider
     });
     return data;
   };

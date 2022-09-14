@@ -24,10 +24,11 @@ const ProfileSignup = () => {
           window.localStorage.setItem("userData", JSON.stringify(userData));
           navigate(`/user/${res.data.nickname}`);
         } else {
-          console.log(res.data);
+          console.log(res.data.provider);
           navigate("/signup", {
             state: {
-              email: res.data.email
+              email: res.data.email,
+              provider: res.data.provider
             }
           });
         }

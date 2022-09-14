@@ -8,11 +8,10 @@ import Lion from "./lion.png";
 import Recomment from "./recomment";
 import useInfinityScroll from "../../Hooks/useInfinityScroll";
 import { instance } from "../../Utils/Instance";
+import { useParams } from "react-router-dom";
 
 
-// const getReply = async () => {
-//   return await instance.get("http://localhost:8000/Comment");
-// };
+
 
 
 function ReplyComponent() {
@@ -21,6 +20,8 @@ function ReplyComponent() {
 
   const queryClient = useQueryClient();
 
+  
+  const { id: postId } = useParams();
   
 
   const onSuccess = () => {
@@ -32,12 +33,15 @@ function ReplyComponent() {
   };
 
   const getReply = async pageParam => {
-    const {data} = await instance.get(`http://54.167.169.43/api/comment/1/${pageParam}`);
-    return data;
+
+    const response = await instance.get(`http://54.167.169.43/api/comment/${postId}/${pageParam}`);
+    console.log(response.data.Comment)
+    const [...data] = response.data.Comment
+    return data
   }
 
   // 댓글 조회
-  const { data, status, fetchNextPage, isFetchingNextPage} = useInfinityScroll(
+  const { data, fetchNextPage, isFetchingNextPage} = useQuery(
     "GET_REPLY",
     getReply,
     {
@@ -73,11 +77,10 @@ function ReplyComponent() {
 
   //댓글 수정
   const [editable, setEditable] = useState(false);
-  const [clickedId, setClickedId] = useState("");
-  const [replyValue, setReplyValue] = useState(data?.data.comment);
-  const [nickValue, setNicValue] = useState(data?.data.nickname);
-  const [profileValue, setProfileValue] = useState(data?.data.profile);
-  const [recoCntValue, setRecoCntValue] = useState(data?.data.recommentCount);
+  const [clickedId, setClickedId] = useState(data?.commentId);
+  const [replyValue, setReplyValue] = useState("");
+
+  console.log(replyValue)
 
   
   const editReplyData = useMutation(reply => editReply(reply), {
@@ -91,38 +94,21 @@ function ReplyComponent() {
     }
   });
 
-  const handleEditreply = (
-    commentId,
-    nickname,
-    profile,
-    comment,
-    recommentCount
-  ) => {
-    console.log(nickname);
+  const handleEditreply = ( commentId,comment) => {
     setEditable(true);
     setClickedId(commentId);
-    setNicValue(nickname);
-    setProfileValue(profile);
     setReplyValue(comment);
-    setRecoCntValue(recommentCount);
-
-    const initalState = {
-      commentId: clickedId,
-      nickname: nickValue,
-      profile: profileValue,
-      comment: replyValue,
-      recommentCount: recoCntValue
-    };
-    editReplyData.mutate(initalState);
+    console.log(replyValue)
+    editReplyData.mutate({ comment: replyValue, commentId: clickedId});
   };
 
   return (
     <ReplyBox>
-      {data?.data.map(reply => {
+      {data?.map((reply) => {
         return (
           <div key={reply.commentId}>
             <Content>
-              <Profile src={Lion}></Profile>
+              <Profile src={reply.image}></Profile>
               <N_R>
                 <NickName>{reply.nickname}</NickName>
                 {editable && clickedId === reply.commentId ? (
@@ -138,10 +124,7 @@ function ReplyComponent() {
                 onClick={() =>
                   handleEditreply(
                     reply.commentId,
-                    reply.nickname,
-                    reply.profile,
-                    reply.comment,
-                    reply.recommentCount
+                    reply.comment
                   )
                 }
               >
@@ -151,12 +134,12 @@ function ReplyComponent() {
                   <span>수정하기</span>
                 )}
               </button>
-              <button onClick={()=>handleDelreply(reply.id)}>
+              <button onClick={()=>handleDelreply(reply.commentId)}>
                 삭제하기
               </button>
             </Content>
                   
-            <Recomment replyCount={reply.recommentCount} id={reply.commentId} />
+            <Recomment id={reply.commentId} />
           </div>
         );
       })}

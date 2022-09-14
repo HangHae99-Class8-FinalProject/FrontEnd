@@ -4,11 +4,16 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import ReplyComponent from "./replyComponent";
 import { addReply } from "../../Hooks/useReply";
-
+import { useParams } from "react-router-dom";
 
 const ReplyCom = () => {
+
+    
+  const { id: postId } = useParams();
+  
+  console.log(postId)
+
   const [replyValue, setReplyValue] = useState("");
-  const [commentIdCnt, setCommentIdCnt] = useState(1);
 
   //댓글추가
   const queryClient = useQueryClient();
@@ -25,24 +30,14 @@ const addReplyData = useMutation((reply)=>addReply(reply),{
 
   const handleAddreply = e => {
     e.preventDefault();
-    setCommentIdCnt(commentIdCnt + 1);
-    const initalState = {
-      commentId: commentIdCnt,
-      nickname: "기린",
-      profile: "",
-      comment: replyValue,
-      recommentCount: 0
-    };
-    addReplyData.mutate(initalState);
-    //addReplyData.mutate({ comment: replyValue}) //api 데이터용
+    addReplyData.mutate({ comment: replyValue,postId:postId}) //api 데이터용
     setReplyValue("");
   };
 
   return (
     <>
       <Wrap>
-        <Detail />
-        <input
+      <input
           type="text"
           value={replyValue}
           onChange={e => setReplyValue(e.target.value)}
@@ -52,7 +47,9 @@ const addReplyData = useMutation((reply)=>addReply(reply),{
         <ReplyArea>
           <ReplyComponent />
         </ReplyArea>
+
       </Wrap>
+      
     </>
   );
 };
@@ -60,15 +57,11 @@ const addReplyData = useMutation((reply)=>addReply(reply),{
 export default ReplyCom;
 
 const Wrap = styled.div`
-  margin: 20px;
+  margin: 0px;
   border: 1px solid black;
   height: 1000px;
 `;
 
-const Detail = styled.div`
-  border: 1px solid black;
-  margin-top: 400px;
-`;
 
 const ReplyArea = styled.div`
   margin: 20px;

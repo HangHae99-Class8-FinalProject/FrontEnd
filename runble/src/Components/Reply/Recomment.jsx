@@ -1,36 +1,34 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import styled from "styled-components";
-import { getRecomment,addReply } from "../../Hooks/useRecomment";
+import {addReply } from "../../Hooks/useRecomment";
 import RecommentItem  from "./recommentItem"
+import {instance} from "../../Utils/Instance"
 
 
-function Recomment({ replyCount, id }) {
-  const queryClient = useQueryClient();
+function Recomment({id }) {
 
-  const [display, setDisplay] = useState(false);
-  const [replyValue, setReplyValue] = useState("");
-  const [recommentIdCnt, setRecommentIdCnt] = useState(1);
-
-  console.log(id);
   const onSuccess = () => {
-    console.log("perform side effect after data fetching");
+    console.log("조회성공");
   };
 
   const onError = () => {
-    console.log("perform side effect after encountering error");
+    console.log("조회실패");
   };
+  // 댓글 조회
 
-  // const { isLoading, data, isError, error, isFetching, refetch } = useQuery(
-  //   "GET_RECOMMENT",
-  //   getRecomment,
-  //   {
-  //     onSuccess,
-  //     onError
-  //   }
-  // );
+  const [recommentId,setRecommentId] = useState(1)
+  
 
-    const { isLoading, data, isError, error, isFetching, refetch } = useQuery(
+  const getRecomment = async (pageParam) => {
+    setRecommentId(recommentId+1)
+    console.log(recommentId)
+    const response = await instance.get(`http://54.167.169.43/api/comment/${id}/${recommentId}/${pageParam}`);
+    console.log(response.data)
+    return response.data;
+  }
+
+  const { isLoading, data, isError, error, isFetching, refetch } = useQuery(
     "GET_RECOMMENT",
     getRecomment,
     {
@@ -38,6 +36,15 @@ function Recomment({ replyCount, id }) {
       onError
     }
   );
+
+    console.log(data)
+
+
+  const queryClient = useQueryClient();
+
+  const [display, setDisplay] = useState(false);
+  const [replyValue, setReplyValue] = useState("");
+
 
 
     //대댓글 추가
@@ -53,15 +60,11 @@ function Recomment({ replyCount, id }) {
 
   const handleAddreply = e => {
     e.preventDefault();
-    setRecommentIdCnt(recommentIdCnt + 1);
-    const initalState = {
+    addReplyData.mutate({
       commentId: id,
-      recommentId: recommentIdCnt,
-      nickname: "기린",
-      profile: "",
+      recommentId:recommentId,
       comment: replyValue,
-    };
-    addReplyData.mutate(initalState);
+    });
     setReplyValue("");
   };
 
@@ -73,26 +76,27 @@ function Recomment({ replyCount, id }) {
           setDisplay(!display);
         }}
       >
-        답글{replyCount}개 보기
-
+      
+        대댓글보기
       </button>
       <div>
-      <input
-          type="text"
-          value={replyValue}
-          onChange={e => setReplyValue(e.target.value)}
-        />
-        <button onClick={handleAddreply}>대댓글추가</button>
-        </div>
+                      <input
+                          type="text"
+                          value={replyValue}
+                          onChange={e => setReplyValue(e.target.value)}
+                        />
+                        <button onClick={handleAddreply}>대댓글추가</button>
+                    </div>
 
 
       {display && (
         <ReplyBox>
-          {data?.data.map(reply => {
+          {data?.Recomment.map(reply => {
             if (id === reply.commentId) {
               return (
                 <Content key={reply.recommentId}>
-                <RecommentItem data={reply}/>
+                
+                  <RecommentItem data={reply}/>
                 </Content>
               );
             }

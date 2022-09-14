@@ -114,7 +114,9 @@ const PostBox = ({ posts, index }) => {
           </div>
           <p
             onClick={() => {
-              navigate(`/reply/${posts.postId}`);
+              navigate(`/reply/${posts.postId}`,{
+                state:posts.postId
+              });
             }}
           >
             댓글1개<span>모두보기</span>
