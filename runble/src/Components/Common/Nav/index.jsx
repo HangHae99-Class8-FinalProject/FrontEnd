@@ -1,33 +1,23 @@
 import React, { useRef, useState } from "react";
 
-import {
-  StyleNav,
-  StyleShow,
-  StyleButton,
-  StyleShowBackgroud,
-  Options,
-  OptionsBox
-} from "./style";
-
-import {
-  NavState,
-  PreviewImg,
-  NavStates,
-  NavPostData
-} from "../../../Recoil/Atoms/OptionAtoms";
+import { StyleNav, StyleShow, StyleButton, StyleShowBackgroud, ModalBox } from "./style";
+import { NavState, PreviewImg, NavStates, NavPostData } from "../../../Recoil/Atoms/OptionAtoms";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { useMutation, useQueryClient } from "react-query";
+
 import S3upload from "react-aws-s3";
 import { instance } from "../../../Utils/Instance";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import imageCompression from "browser-image-compression";
 import { useDeletePost } from "../../../Hooks/useDeletePost";
 import { S3config } from "../../../Utils/S3Config";
+import Modal from "../../RecordPage/Modal";
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
+
 const Nav = ({ feed }) => {
   const { mutate } = useDeletePost();
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState("");
   const [show, setShow] = useRecoilState(NavState);
   const [preview, setPreview] = useRecoilState(PreviewImg);
   const navEvent = useRecoilValue(NavStates);
@@ -82,11 +72,7 @@ const Nav = ({ feed }) => {
 
   const outConfirm = () => {
     if (confirm("회원탈퇴하시겠습니까")) {
-      return (
-        instance.delete("http://54.167.169.43/api/user"),
-        alert("회원탈퇴되었습니다"),
-        navigate("/")
-      );
+      return instance.delete("http://54.167.169.43/api/user"), alert("회원탈퇴되었습니다"), navigate("/");
     } else {
       return;
     }
@@ -103,26 +89,35 @@ const Nav = ({ feed }) => {
     <>
       <StyleNav>
         <StyleShowBackgroud Show={show}></StyleShowBackgroud>
-
+        {showModal && (
+          <Modal>
+            <ModalBox>
+              <p>{showModal} 하시겠습니까?</p>
+              <div>
+                <button>네</button>
+                <button>아니오</button>
+              </div>
+            </ModalBox>
+          </Modal>
+        )}
         {
           {
             option: (
               <StyleShow Show={show}>
                 <p
                   onClick={() => {
-                    logoutConfirm();
+                    setShowModal("로그아웃");
                   }}
                 >
                   로그아웃
                 </p>
                 <p
                   onClick={() => {
-                    outConfirm();
+                    setShowModal("회원 탈퇴");
                   }}
                 >
                   회원탈퇴
                 </p>
-                <p>약관보기</p>
               </StyleShow>
             ),
             img: (

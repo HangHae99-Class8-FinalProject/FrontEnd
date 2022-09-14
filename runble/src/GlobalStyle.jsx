@@ -4,15 +4,13 @@ const GlobalStyle = createGlobalStyle`
 
 
 
-/* height: calc(var(--vh, 1vh) * 100); */
-/* width: calc(var(--vw, 1vw) * 100); */
-:root{
-  -webkit-text-size-adjust: none;
-  --vh: 100%;
-  --vw: 100%;
-}
 
- html,body{
+
+ html{
+   font-size: 62.5%; //1 rem =10px
+ }
+ body{
+  font-size: 1.6rem;
   margin: 0;
   padding: 0;
   font-family: "Noto Sans CJK KR";

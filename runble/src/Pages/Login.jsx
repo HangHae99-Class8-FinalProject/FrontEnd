@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import KakaoLogin from "../Components/Login/kakao/index";
-import { KAKAO_LOGIN } from "../Components/Login/oauth";
 
 import { ReactComponent as KakaoLoginIcon } from "../Icons/KakaoLoginIcon.svg";
+
+const KAKAO_LOGIN = "http://54.167.169.43/api/kakao/login";
 
 const Login = () => {
   return (
@@ -22,24 +22,24 @@ const LoginLogo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 12px 0px 0px;
+  padding: 1.2rem 0rem 0rem;
 
   position: absolute;
-  width: 245px;
-  height: 104px;
-  left: 65px;
-  top: 176px;
+  width: 24.5rem;
+  height: 10.4rem;
+  left: 6.5rem;
+  top: 17.6rem;
 `;
 
 const LoginLink = styled.a`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0px;
-  gap: 10px;
+  padding: 0rem;
+  gap: 1rem;
 
   position: absolute;
-  width: 260px;
-  left: 58px;
-  top: 609px;
+  width: 26rem;
+  left: 5.8rem;
+  top: 60.9rem;
 `;

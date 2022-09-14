@@ -11,29 +11,21 @@ const SearchedHashTag = ({ searhValue }) => {
   const [tap, setTap] = useState("최신");
 
   const getSearchHashTagOrder = async pageParam => {
-    const { data } = await instance.get(
-      `/api/post/search/popular/${pageParam}?hashtag=${searhValue}`
-    );
+    const { data } = await instance.get(`/api/post/search/popular/${pageParam}?hashtag=${searhValue}`);
     return data;
   };
 
   const getSearchHashTagNewest = async pageParam => {
-    const { data } = await instance.get(
-      `/api/post/search/new/${pageParam}?hashtag=${searhValue}`
-    );
+    const { data } = await instance.get(`/api/post/search/new/${pageParam}?hashtag=${searhValue}`);
     return data;
   };
 
   const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
     "searchHashtag",
-    ({ pageParam = 1 }) =>
-      tap === "인기"
-        ? getSearchHashTagOrder(pageParam)
-        : getSearchHashTagNewest(pageParam),
+    ({ pageParam = 1 }) => (tap === "인기" ? getSearchHashTagOrder(pageParam) : getSearchHashTagNewest(pageParam)),
     {
       enabled: !!searhValue,
-      getNextPageParam: lastPage =>
-        !lastPage.isLast ? lastPage.nextPage : undefined
+      getNextPageParam: lastPage => (!lastPage.isLast ? lastPage.nextPage : undefined)
     }
   );
 
@@ -53,18 +45,14 @@ const SearchedHashTag = ({ searhValue }) => {
             setTap("최신");
           }}
         >
-          <span style={{ fontWeight: tap === "최신" ? "bold" : "normal" }}>
-            최신
-          </span>
+          <span style={{ fontWeight: tap === "최신" ? "bold" : "normal" }}>최신</span>
         </button>
         <button
           onClick={() => {
             setTap("인기");
           }}
         >
-          <span style={{ fontWeight: tap === "인기" ? "bold" : "normal" }}>
-            인기
-          </span>
+          <span style={{ fontWeight: tap === "인기" ? "bold" : "normal" }}>인기</span>
         </button>
       </ButtonWrap>
       <div>
@@ -88,10 +76,10 @@ const ButtonWrap = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  padding: 24px 16px 0px;
+  padding: 2.4rem 1.6rem 0rem;
 
-  width: 343px;
-  height: 17px;
+  width: 34.3rem;
+  height: 1.7rem;
   & button {
     border: none;
     background-color: white;

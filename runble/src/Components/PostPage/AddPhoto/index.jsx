@@ -24,10 +24,7 @@ const AddPhoto = ({ merge, prevImg }) => {
     if (length > uploadImages) {
       const ReactS3Client = new S3upload(S3config);
       for (let i = 0; i < length; i++) {
-        await ReactS3Client.uploadFile(
-          imgRef.current.files[i],
-          imgRef.current.files[i].name
-        )
+        await ReactS3Client.uploadFile(imgRef.current.files[i], imgRef.current.files[i].name)
           .then(data => {
             uploadImages.push(data.location);
           })
@@ -93,12 +90,7 @@ const AddPhoto = ({ merge, prevImg }) => {
         previewImages.map((img, idx) => {
           return (
             <AddButton>
-              <PreviewImges
-                key={idx}
-                src={img}
-                alt="첨부한 이미지"
-                onClick={() => deletePhoto(idx)}
-              />
+              <PreviewImges key={idx} src={img} alt="첨부한 이미지" onClick={() => deletePhoto(idx)} />
             </AddButton>
           );
         })}
@@ -109,10 +101,10 @@ const AddPhoto = ({ merge, prevImg }) => {
 export default AddPhoto;
 
 const PhotoWrap = styled.div`
-  padding: 20px 16px;
+  padding: 2rem 1.6rem;
   display: flex;
-  gap: 20px;
-  border-bottom: 1px solid #e6e6e6;
+  gap: 2rem;
+  border-bottom: 0.1rem solid #e6e6e6;
   overflow: scroll;
   width: inherit;
   flex-wrap: nowrap;
@@ -123,24 +115,24 @@ const AddButton = styled.label`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2px;
-  width: 64px;
-  height: 64px;
+  gap: 0.2rem;
+  width: 6.4rem;
+  height: 6.4rem;
   background: #ffffff;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
+  border: 0.1rem solid #cccccc;
+  border-radius: 0.4rem;
   & input {
     display: none;
   }
   & div {
-    width: 25px;
-    height: 17px;
+    width: 2.5rem;
+    height: 1.7rem;
     color: #999999;
     font-family: "Noto Sans CJK KR";
   }
 `;
 
 const PreviewImges = styled.img`
-  width: 64px;
-  height: 64px;
+  width: 6.4rem;
+  height: 6.4rem;
 `;

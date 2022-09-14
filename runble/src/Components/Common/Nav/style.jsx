@@ -15,7 +15,7 @@ export const StyleShowBackgroud = styled.div`
 
 export const StyleShow = styled.div`
   width: 100%;
-  height: ${({ Show }) => (Show ? "200px" : "0px")};
+  height: ${({ Show }) => (Show ? "20rem" : "0rem")};
   background-color: #dbff00;
   transition: height 200ms ease-in-out;
   position: absolute;
@@ -26,10 +26,33 @@ export const StyleButton = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-around;
-  height: 50px;
+  height: 5rem;
   text-align: center;
   align-items: center;
   position: fixed;
   bottom: 0;
   background-color: azure;
+`;
+
+export const ModalBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  width: 30.4rem;
+  height: 17.4rem;
+  & p {
+    margin: 4rem 0rem;
+  }
+  & button {
+    border: none;
+    background-color: white;
+    font-size: 1.6rem;
+  }
+  & div {
+    gap: 10rem;
+    display: flex;
+  }
 `;

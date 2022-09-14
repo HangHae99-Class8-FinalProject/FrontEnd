@@ -36,19 +36,18 @@ const RunTimer = ({ stopInterval, endRun }) => {
 
   return (
     <TimerWrap>
-      {hour < 10 ? "0" + hour : hour}:{minute < 10 ? "0" + minute : minute}:
-      {second < 10 ? "0" + second : second}
+      {hour < 10 ? "0" + hour : hour}:{minute < 10 ? "0" + minute : minute}:{second < 10 ? "0" + second : second}
     </TimerWrap>
   );
 };
 export default RunTimer;
 
 const TimerWrap = styled.div`
-  width: 138px;
+  width: 13.8rem;
   font-family: "Anton";
   font-weight: 373;
-  font-size: 42px;
-  line-height: 50px;
+  font-size: 4.8rem;
+  line-height: 6rem;
   letter-spacing: 0.02em;
 
   color: #ffffff;

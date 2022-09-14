@@ -63,13 +63,15 @@ const Search = () => {
       <TapWrap>
         <TapButton
           onClick={onClickUser}
-          style={{ border: selectedTab === "태그" && "none" }}
+          selectedTab={!selectedTab}
+          style={{ border: selectedTab === "태그" && "none", color: selectedTab === "태그" && "#a1a1a1" }}
         >
           유저
         </TapButton>
         <TapButton
           onClick={onClickHashTag}
-          style={{ border: selectedTab === "유저" && "none" }}
+          tab={!selectedTab}
+          style={{ border: selectedTab === "유저" && "none", color: selectedTab === "유저" && "#a1a1a1" }}
         >
           태그
         </TapButton>
@@ -88,29 +90,30 @@ const SearchHead = styled.form`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 16px;
-  gap: 12px;
+  padding: 1rem 1.6rem;
+  gap: 1.2rem;
+  font-size: 1.2rem;
 `;
 
 const SearchTerm = styled.input`
   display: flex;
-  padding: 8px 10px;
+  padding: 0.4rem 1.4rem;
   width: 83%;
-  height: 35px;
+  height: 3.5rem;
   background: #e6e6e6;
-  border-radius: 12px;
+  border-radius: 1.2rem;
   border: none;
 `;
 
 const TapWrap = styled.div`
   display: flex;
   width: 100vw;
-  height: 37px;
+  height: 3.7rem;
 `;
 
 const TapButton = styled.button`
-  width: 188px;
+  width: 18.8rem;
   border: none;
   background: #ffffff;
-  border-bottom: 1px solid #333333;
+  border-bottom: 0.1rem solid #333333;
 `;

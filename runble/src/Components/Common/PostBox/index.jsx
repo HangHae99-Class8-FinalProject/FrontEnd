@@ -1,11 +1,7 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
-import {
-  NavState,
-  NavStates,
-  NavPostData
-} from "../../../Recoil/Atoms/OptionAtoms";
+import { NavState, NavStates, NavPostData } from "../../../Recoil/Atoms/OptionAtoms";
 import {
   StyleFeed,
   StyleFrofileBox,
@@ -74,7 +70,7 @@ const PostBox = ({ posts, index }) => {
         </StyleRecord>
         <StylePath>
           <Swiper
-            style={{ height: "200px" }}
+            style={{ height: "20rem" }}
             pagination={{
               dynamicBullets: true
             }}

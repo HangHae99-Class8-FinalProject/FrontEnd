@@ -11,7 +11,7 @@ import Modal from "../Components/RecordPage/Modal";
 
 import { ReactComponent as StopIcon } from "../Icons/StopIcon.svg";
 import { ReactComponent as EndIcon } from "../Icons/EndIcon.svg";
-import { ReactComponent as StartIcon } from "../Icons/play_arrow.svg";
+import { ReactComponent as StartIcon } from "../Icons/StartIcon.svg";
 
 const Record = () => {
   const [stopInterval, setStopInterval] = useState(true);
@@ -58,16 +58,14 @@ const Record = () => {
       <RunningMap stopInterval={stopInterval} endRun={endRun}></RunningMap>
       {start && (
         <RecordHeader>
-          <RunDistance>
-            {runLog.distance === 0 ? 0.0 : runLog.distance}km
-          </RunDistance>
-          <RunTimer stopInterval={stopInterval} endRun={endRun} />
+          <HeaderWrap>
+            <RunDistance>{runLog.distance === 0 ? 0.0 : runLog.distance}km</RunDistance>
+            <RunTimer stopInterval={stopInterval} endRun={endRun} />
+          </HeaderWrap>
         </RecordHeader>
       )}
       <ButtonWrap>
-        <div onClick={stopRun}>
-          {!stopInterval ? <StopIcon /> : <StartIcon />}
-        </div>
+        <div onClick={stopRun}>{!stopInterval ? <StopIcon /> : <StartIcon />}</div>
         <div onClick={onClickEnd}>
           <EndIcon />
         </div>
@@ -98,78 +96,80 @@ export default Record;
 
 const StartButton = styled.div`
   background: #333333;
-  border-radius: 12px;
-  height: 75px;
+  border-radius: 1.2rem;
+  height: 7.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 50px;
+  padding: 1rem 5rem;
   p {
     font-family: "Anton";
-    font-size: 46px;
-    line-height: 55px;
+    font-size: 4.6rem;
+    line-height: 5.5rem;
     text-align: center;
     letter-spacing: 0.02em;
     color: #ffffff;
   }
 `;
 
+const HeaderWrap = styled.div`
+  width: 82%;
+  display: flex;
+  justify-content: space-between;
+`;
+
 const RecordHeader = styled.div`
   z-index: 10;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 62px 32px 42px;
-  position: absolute;
+  padding: 6.2rem 3.2rem 4.2rem;
+  position: fixed;
   width: 100%;
-  top: 0px;
+  top: 0;
+  left: 0;
   background: #333333;
 `;
 
 const RunDistance = styled.div`
   font-family: "Anton";
-  font-size: 48px;
-  line-height: 58px;
-  width: 96px;
-  height: 58px;
+  font-size: 4.8rem;
+  line-height: 5.8rem;
+  width: 9.6rem;
+  height: 5.8rem;
   color: white;
 `;
 
 const ButtonWrap = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 0px;
-  gap: 112px;
-  width: 375px;
-  height: 52px;
+  gap: 12rem;
+  width: 100%;
+  height: 5.2rem;
   z-index: 10;
   position: absolute;
-  top: 380px;
-  left: 0px;
-  color: black;
+  top: 38rem;
 `;
 
 const EndModal = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 1rem;
   justify-content: center;
   align-items: center;
-  width: 304px;
-  height: 174px;
+  width: 30.4rem;
+  height: 17.4rem;
   & p {
-    margin: 40px 0px;
+    margin: 4rem 0rem;
   }
   & button {
     border: none;
     background-color: white;
-    font-size: 16px;
+    font-size: 1.6rem;
   }
   & div {
-    gap: 100px;
+    gap: 10rem;
     display: flex;
   }
 `;

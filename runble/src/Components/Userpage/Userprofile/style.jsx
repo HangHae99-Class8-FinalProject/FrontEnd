@@ -5,8 +5,8 @@ export const StyleUserWrap = styled.div`
   & > div {
     display: flex;
     align-items: center;
-    padding: 0 30px;
-    border: 1px solid black;
+    padding: 0 3rem;
+    border: 0.1rem solid black;
     box-sizing: border-box;
   }
 `;
@@ -15,16 +15,16 @@ export const UserHeader = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 16px;
-  gap: 26px;
-  width: 375px;
-  height: 43px;
+  padding: 1rem 1.6rem;
+  gap: 2.6rem;
+  width: 37.5rem;
+  height: 4.3rem;
   background: #ffffff;
-  border-bottom: 1px solid #e6e6e6;
+  border-bottom: 0.1rem solid #e6e6e6;
 `;
 
 export const OptionsBox = styled.div``;
 export const Options = styled.img`
-  width: 100px;
-  height: 50px;
+  width: 10rem;
+  height: 5rem;
 `;

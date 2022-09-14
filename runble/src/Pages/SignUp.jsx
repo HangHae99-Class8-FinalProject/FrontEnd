@@ -23,13 +23,13 @@ const SignUpLogo = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 96px;
-  margin-bottom: 138px;
+  height: 9.6rem;
+  margin-bottom: 13.8rem;
   & > P {
-    height: 32px;
+    height: 3.2rem;
     font-weight: 900;
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 2.4rem;
+    line-height: 3.2rem;
     color: #353434;
   }
 `;

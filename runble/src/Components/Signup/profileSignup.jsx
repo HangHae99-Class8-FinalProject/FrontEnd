@@ -36,8 +36,15 @@ const ProfileSignup = () => {
     return res;
   };
 
+  const userData = JSON.parse(window.localStorage.getItem("userData")) || null;
+  console.log(userData);
+
   useEffect(() => {
-    kakaoLoign();
+    if (userData) {
+      navigate(`/user/${userData.nickname}`);
+    } else {
+      kakaoLoign();
+    }
   }, []);
 
   return <Loading />;

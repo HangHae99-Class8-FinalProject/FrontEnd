@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { StyleUserWrap, OptionsBox, Options, UserHeader } from "./style";
 import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  NavState,
-  PreviewImg,
-  NavStates
-} from "../../../Recoil/Atoms/OptionAtoms";
+import { NavState, PreviewImg, NavStates } from "../../../Recoil/Atoms/OptionAtoms";
 import { useLocation, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import axios from "axios";
@@ -28,10 +24,7 @@ const Userprofile = ({ userNickname }) => {
                 setNaveState("option");
               }}
             >
-              <Options
-                style={{ width: "40px", height: "40px" }}
-                src="/img/option.png"
-              ></Options>
+              <Options style={{ width: "4rem", height: "4rem" }} src="/img/option.png"></Options>
             </OptionsBox>
           </>
         ) : null}
@@ -44,7 +37,7 @@ const Userprofile = ({ userNickname }) => {
               setNavState("img");
               setShow(prev => !prev);
             }}
-            style={{ width: "80px", height: "80px" }}
+            style={{ width: "8rem", height: "8rem" }}
             src="/img/userprofile.png"
           ></img>
         ) : (
@@ -53,7 +46,7 @@ const Userprofile = ({ userNickname }) => {
               setNavState("img");
               setShow(prev => !prev);
             }}
-            style={{ width: "80px", height: "80px" }}
+            style={{ width: "8rem", height: "8rem" }}
             src={previewChange}
           ></img>
         )}

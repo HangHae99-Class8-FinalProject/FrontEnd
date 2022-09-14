@@ -19,7 +19,7 @@ const LottieWrap = styled.div`
   position: absolute;
   width: 100vw;
   height: 100vh;
-  margin-top: 150px;
+  margin-top: 15rem;
   z-index: 500;
   background-color: white;
 `;
@@ -28,7 +28,7 @@ const LottieMsg = styled.div`
   width: 100%;
   text-align: center;
   position: absolute;
-  top: 350px;
-  font-size: 24px;
+  top: 35rem;
+  font-size: 2.4rem;
   font-family: "Anton";
 `;

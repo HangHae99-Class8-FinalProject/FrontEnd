@@ -5,18 +5,11 @@ import useQueryDebounce from "../../../Hooks/useQueryDebounce";
 
 import styled from "styled-components";
 
-const RelatedBar = ({
-  searchTag,
-  setSearchTag,
-  setSearchValue,
-  onCloseRelatedBar
-}) => {
+const RelatedBar = ({ searchTag, setSearchTag, setSearchValue, onCloseRelatedBar }) => {
   const debounceSearch = useQueryDebounce(searchTag, 500);
 
   const getRelated = async () => {
-    const { data } = await instance.get(
-      `/api/post/autocomplete/?hashtag=${debounceSearch}`
-    );
+    const { data } = await instance.get(`/api/post/autocomplete/?hashtag=${debounceSearch}`);
     return data;
   };
 
@@ -48,7 +41,7 @@ export default RelatedBar;
 const RelatedBarWrap = styled.div`
   position: absolute;
   z-index: 10;
-  height: 300px;
+  height: 30rem;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -57,6 +50,6 @@ const RelatedBarWrap = styled.div`
 `;
 
 const RelatedItems = styled.div`
-  padding: 8px 20px;
-  font-size: 18px;
+  padding: 0.8rem 2rem;
+  font-size: 1.8rem;
 `;

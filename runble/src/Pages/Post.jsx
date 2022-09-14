@@ -105,20 +105,20 @@ export default Post;
 const PostHeader = styled.div`
   display: flex;
   align-items: flex-start;
-  padding: 0px;
-  height: 43px;
+  padding: 0rem;
+  height: 4.3rem;
 `;
 
 const HeaderItems = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 10px 16px;
+  padding: 1rem 1.6rem;
   width: 100%;
-  border-bottom: 1px solid #e6e6e6;
+  border-bottom: 0.1rem solid #e6e6e6;
   & div {
     font-family: "Noto Sans CJK KR";
-    font-size: 16px;
-    line-height: 23px;
+    font-size: 1.6rem;
+    line-height: 2.3rem;
   }
   & > div:last-child {
     color: #f03800;
@@ -129,32 +129,32 @@ const PostBody = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0px;
+  padding: 0rem;
 `;
 
 const PostMap = styled.div`
-  padding: 20px 20px 0px;
+  padding: 2rem 2rem 0rem;
 `;
 
 const ModalWrap = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 1rem;
   justify-content: center;
   align-items: center;
-  width: 304px;
-  height: 174px;
+  width: 30.4rem;
+  height: 17.4rem;
   & p {
-    margin: 40px 0px;
+    margin: 4rem 0rem;
   }
   & button {
     border: none;
     background-color: white;
-    font-size: 16px;
+    font-size: 1.6rem;
   }
   & div {
-    gap: 100px;
+    gap: 10rem;
     display: flex;
   }
 `;

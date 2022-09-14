@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useCallback,
-  useRef,
-  useLayoutEffect,
-  useEffect
-} from "react";
+import React, { useState, useCallback, useRef, useLayoutEffect, useEffect } from "react";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 
@@ -40,15 +34,15 @@ const AddContent = ({ merge, prevContent }) => {
 export default AddContent;
 
 const ContentBox = styled.div`
-  padding: 20px 16px;
-  height: 220px;
+  padding: 2rem 1.6rem;
+  height: 22rem;
 `;
 
 const Write = styled.textarea`
   background: #e6e6e6;
-  border-radius: 4px;
-  padding: 10px 0px 10px 10px;
-  gap: 10px;
-  width: 343px;
-  height: 180px;
+  border-radius: 0.4rem;
+  padding: 1rem 0 1rem 1rem;
+  gap: 1rem;
+  width: 34.3rem;
+  height: 18rem;
 `;

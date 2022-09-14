@@ -32,9 +32,7 @@ const Hashtag = ({ merge, prevHashtag }) => {
 
   const deleteTagItem = e => {
     const deleteTagItem = e.target.innerText;
-    const filteredTagList = hashArr.filter(
-      tagItem => "#" + tagItem !== deleteTagItem
-    );
+    const filteredTagList = hashArr.filter(tagItem => "#" + tagItem !== deleteTagItem);
     setHashArr(filteredTagList);
   };
 
@@ -75,37 +73,37 @@ export default Hashtag;
 
 const HashTagWrap = styled.div`
   display: flex;
-  padding: 0px 16px;
-  gap: 10px;
+  padding: 0 1.6rem;
+  gap: 1rem;
   flex-wrap: wrap;
 `;
 
 const HashTagBox = styled.div`
-  padding: 1px 10px 4px;
-  gap: 10px;
-  min-width: 60px;
-  height: 22px;
+  padding: 0.1rem 1rem 0.4rem;
+  gap: 1rem;
+  min-width: 6rem;
+  height: 2.2rem;
   background: #e6e6e6;
-  border-radius: 20px;
+  border-radius: 2rem;
   border: none;
   flex-wrap: nowrap;
   & span {
     font-family: "Noto Sans CJK KR";
-    width: 40px;
-    height: 17px;
-    font-size: 12px;
+    width: 4rem;
+    height: 1.7rem;
+    font-size: 1.2rem;
     color: #1a1a1a;
     text-align: center;
-    line-height: 17px;
+    line-height: 1.7rem;
   }
 `;
 
 const HashTagInput = styled.input`
   border: none;
-  padding: 1px 10px 4px;
-  gap: 10px;
-  width: 60px;
-  height: 22px;
+  padding: 0.1rem 1rem 0.4rem;
+  gap: 1rem;
+  width: 6rem;
+  height: 2.2rem;
   background: #e6e6e6;
-  border-radius: 20px;
+  border-radius: 2rem;
 `;

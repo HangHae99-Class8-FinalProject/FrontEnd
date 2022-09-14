@@ -9,9 +9,7 @@ const SearchedUser = ({ searhValue }) => {
 
   console.log(searhValue);
   const getSearchUser = async () => {
-    const { data } = await instance.get(
-      `/api/user/search?nickname=${searhValue}`
-    );
+    const { data } = await instance.get(`/api/user/search?nickname=${searhValue}`);
     return data;
   };
 
@@ -28,10 +26,7 @@ const SearchedUser = ({ searhValue }) => {
     <>
       {data?.map(user => {
         return (
-          <SearchUserWrap
-            key={user.nickname}
-            onClick={() => navUserPage(user.nickname)}
-          >
+          <SearchUserWrap key={user.nickname} onClick={() => navUserPage(user.nickname)}>
             <img src={user.profile} />
             <div>{user.nickname}</div>
           </SearchUserWrap>
@@ -46,21 +41,21 @@ export default SearchedUser;
 const SearchUserWrap = styled.div`
   display: flex;
   align-items: center;
-  padding: 12px 16px;
+  padding: 1.2rem 1.6rem;
   width: 100%;
-  height: 84.37px;
+  height: 8.437rem;
   & img {
-    width: 60px;
-    height: 60px;
-    border-radius: 100px;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 10rem;
     transform: rotate(-0.36deg);
   }
   & div {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0px;
-    margin-left: 18.5px;
-    height: 22px;
+    padding: 0rem;
+    margin-left: 1.85rem;
+    height: 2.2rem;
   }
 `;
