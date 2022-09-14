@@ -1,14 +1,5 @@
 import React, { useRef, useState } from "react";
-
-import {
-  StyleNav,
-  StyleShow,
-  StyleButton,
-  StyleShowBackgroud,
-  Options,
-  OptionsBox
-} from "./style";
-
+import { StyleNav, StyleShow, StyleButton, StyleShowBackgroud } from "./style";
 import {
   NavState,
   PreviewImg,
@@ -16,34 +7,34 @@ import {
   NavPostData
 } from "../../../Recoil/Atoms/OptionAtoms";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { useMutation, useQueryClient } from "react-query";
+import { ReactComponent as Home } from "../../../icons/home.svg";
+import { ReactComponent as Search } from "../../../icons/search.svg";
+import { ReactComponent as Run } from "../../../icons/run.svg";
+import { ReactComponent as Mypage } from "../../../icons/mypage.svg";
+import { useUserProfileMutation } from "../../../Hooks/useProfile";
 import S3upload from "react-aws-s3";
 import { instance } from "../../../Utils/Instance";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import imageCompression from "browser-image-compression";
 import { useDeletePost } from "../../../Hooks/useDeletePost";
 window.Buffer = window.Buffer || require("buffer").Buffer;
-const Nav = ({ feed }) => {
-  const { mutate } = useDeletePost();
+const Nav = () => {
+  const { mutate: deletePost } = useDeletePost();
+  const { mutate: postProfile } = useUserProfileMutation();
   const navigate = useNavigate();
   const [show, setShow] = useRecoilState(NavState);
   const [preview, setPreview] = useRecoilState(PreviewImg);
-  const [naveState, setNaveState] = useRecoilState(NavStates);
   const navEvent = useRecoilValue(NavStates);
   const postData = useRecoilValue(NavPostData);
   const imgVal = useRef(null);
   const [submit, setSubmit] = useState({
-    profile: ""
+    image: ""
   });
   const options = {
     maxSizeMB: 1,
     maxWidthOrHeight: 1920,
     useWebWorker: true
   };
-
-  // const { mutate, isLoading, error, isSuccess } = useMutation(submit => {
-  //   return axios.post("http://localhost:3001/profile", submit);
-  // });
   const accessToken = localStorage.getItem("userData");
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
@@ -63,8 +54,8 @@ const Nav = ({ feed }) => {
     ReactS3Client.uploadFile(compressedFile, newFileName).then(async data => {
       if (data.status === 204) {
         let imgUrl = data.location;
-        const newimg = { ...submit, profile: imgUrl };
-        // mutate(newimg);
+        const newimg = { ...submit, image: imgUrl };
+        postProfile(newimg);
       } else {
         window.alert("사진 업로드에 오류가 있어요! 관리자에게 문의해주세요.");
       }
@@ -98,7 +89,7 @@ const Nav = ({ feed }) => {
   };
   const DeleteConfirm = () => {
     if (confirm("정말삭제하시겠습니까?")) {
-      return mutate(postData.postId);
+      return deletePost(postData.postId);
     } else {
       return;
     }
@@ -114,7 +105,6 @@ const Nav = ({ feed }) => {
             option: (
               <StyleShow Show={show}>
                 <p
-                  href=""
                   onClick={() => {
                     logoutConfirm();
                   }}
@@ -128,14 +118,13 @@ const Nav = ({ feed }) => {
                 >
                   회원탈퇴
                 </p>
-                <p>약관보기</p>
               </StyleShow>
             ),
             img: (
               <StyleShow Show={show}>
                 <p
                   onClick={() => {
-                    setPreview(`/img/userprofile.png`);
+                    setPreview(null);
                   }}
                 >
                   기본이미지로변경하기
@@ -177,34 +166,36 @@ const Nav = ({ feed }) => {
         }
 
         <StyleButton>
-          <div
-            onClick={() => {
-              navigate("/feed");
-            }}
-          >
-            게시글
-          </div>
-          <div
-            onClick={() => {
-              navigate("/search");
-            }}
-          >
-            검색
-          </div>
-          <div
-            onClick={() => {
-              navigate("/record");
-            }}
-          >
-            기록하기
-          </div>
+          <div>
+            <div
+              onClick={() => {
+                navigate("/feed");
+              }}
+            >
+              <Home stroke="#808080" />
+            </div>
+            <div
+              onClick={() => {
+                navigate("/search");
+              }}
+            >
+              <Search stroke="#808080" />
+            </div>
+            <div
+              onClick={() => {
+                navigate("/record");
+              }}
+            >
+              <Run />
+            </div>
 
-          <div
-            onClick={() => {
-              navigate(`/user/${nickname}`, { state: nickname });
-            }}
-          >
-            마이페이지
+            <div
+              onClick={() => {
+                navigate(`/user/${nickname}`, { state: nickname });
+              }}
+            >
+              <Mypage />
+            </div>
           </div>
         </StyleButton>
       </StyleNav>

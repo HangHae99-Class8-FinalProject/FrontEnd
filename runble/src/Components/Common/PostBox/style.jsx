@@ -3,54 +3,129 @@ export const StyleFeed = styled.div`
   width: 100%;
   flex-direction: column;
   display: flex;
-  border: 1px solid black;
-  margin-bottom: 50px;
-  & > div {
-    padding: 10px;
-  }
+  padding: 20px 0px;
+  gap: 12px;
+  border-bottom: 1px solid #e6e6e6;
 `;
 export const StyleFrofileBox = styled.div`
   flex-direction: row;
   display: flex;
   justify-content: space-between;
 `;
-export const StyleFrofileImg = styled.img`
-  width: 80px;
-  height: 80px;
-  border-radius: 40px;
-  border: 1px solid black;
-`;
 export const StyleFrofile = styled.div`
   flex-direction: row;
   display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
 `;
+export const StyleFrofileImg = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+`;
+
 export const StyleRecord = styled.div`
   display: flex;
 `;
 export const StylePath = styled.div`
-  height: 200px;
-  background-color: azure;
+  width: 343px;
+  height: 180px;
+`;
+export const StyleContentBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  width: 343px;
+`;
+export const StyleIcon = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 2px;
+  width: 343px;
+  height: 41.55px;
+`;
+export const StyleHeart = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 0px;
+  gap: 15px;
+  width: 48px;
+  height: 35.55px;
+  justify-content: center;
+`;
+export const StyleView = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 6px;
+  width: 38px;
+  height: 17px;
 `;
 export const StyleImg = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 343px;
+  height: 180px;
   object-fit: cover;
+`;
+
+export const StyleContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 0px 2px 10px;
 `;
 export const StyleHashBox = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 5px;
+  height: 22px;
 `;
-
 export const StyleHash = styled.div`
-  width: 100%;
-  height: 25px;
-  background-color: #353434;
-  color: white;
-  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 1px 10px 4px;
+  gap: 10px;
+  height: 22px;
   text-align: center;
   justify-content: center;
   align-items: center;
+  background: #e6e6e6;
+  border-radius: 20px;
+
   & > span {
     font-size: 12px;
   }
+`;
+export const StyleGood = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 5px 2px 0px;
+  gap: 10px;
+  height: 22px;
+  font-size: 12px;
+  text-align: center;
+  align-items: center;
+`;
+export const StyleComment = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 2px 2px 5px;
+  gap: 10px;
+  height: 24px;
+  font-size: 12px;
+`;
+export const StyleTime = styled.div`
+  color: #999999;
+  font-size: 12px;
 `;

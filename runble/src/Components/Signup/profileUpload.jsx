@@ -59,7 +59,8 @@ function ProfileUpload({ userData }) {
     const { data } = await instance.post("/api/user/signup", {
       email: userData.email,
       nickname,
-      image
+      image,
+      provider: userData.provider
     });
     return data;
   };
@@ -78,7 +79,8 @@ function ProfileUpload({ userData }) {
         email: data.email,
         image: data.image,
         nickname: data.nickname,
-        userId: data.userId
+        userId: data.userId,
+        provider: data.provider
       };
       window.localStorage.setItem("userData", JSON.stringify(userData));
       window.localStorage.setItem("token", token);

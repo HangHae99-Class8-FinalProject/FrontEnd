@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { useGoal } from "../../../Hooks/useGoal";
-import { StyleGoal, StyleGoalButton, StyleModal, StyleInput } from "./style";
+import {
+  StyleGoal,
+  StyleGoalButton,
+  StyleModal,
+  StyleInput,
+  StyleButton
+} from "./style";
 const Goal = () => {
   const { mutate } = useGoal();
   const [modal, setModal] = useState(false);
@@ -20,9 +26,8 @@ const Goal = () => {
     });
   };
   return (
-    <>
+    <div>
       <StyleGoal>
-        <div>이번주 목표를 입력하세요</div>
         <StyleGoalButton
           onClick={() => {
             setModal(true);
@@ -30,38 +35,41 @@ const Goal = () => {
         >
           목표설정하기
         </StyleGoalButton>
+        <div>이번주 목표를 입력하세요</div>
       </StyleGoal>
       {modal ? (
         <StyleModal>
           <div>
-            <label>일주일간의 목표 km을 입력해주세요</label>
+            <label>일주일 간의 목표를 설정해주세요!</label>
             <StyleInput
               name="goal"
               onChange={onChangeHandeler}
               type="number"
               min="0"
               value={goal.goal}
+              placeholder="0km"
             ></StyleInput>
-          </div>
-          <div>
-            <button
-              onClick={() => {
-                setModal(false);
-              }}
-            >
-              취소
-            </button>
-            <button
-              onClick={() => {
-                onSubmitHandeler();
-              }}
-            >
-              등록
-            </button>
+
+            <StyleButton>
+              <span
+                onClick={() => {
+                  setModal(false);
+                }}
+              >
+                취소
+              </span>
+              <span
+                onClick={() => {
+                  onSubmitHandeler();
+                }}
+              >
+                등록
+              </span>
+            </StyleButton>
           </div>
         </StyleModal>
       ) : null}
-    </>
+    </div>
   );
 };
 export default Goal;

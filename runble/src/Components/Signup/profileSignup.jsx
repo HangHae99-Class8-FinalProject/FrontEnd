@@ -16,7 +16,8 @@ const ProfileSignup = () => {
           email: res.data.email,
           image: res.data.image,
           nickname: res.data.nickname,
-          userId: res.data.userId
+          userId: res.data.userId,
+          provider: res.data.provider
         };
         if (token) {
           console.log(res.data);
@@ -28,7 +29,8 @@ const ProfileSignup = () => {
           console.log(res.data);
           navigate("/signup", {
             state: {
-              email: res.data.email
+              email: res.data.email,
+              provider: res.data.provider
             }
           });
         }
