@@ -26,7 +26,7 @@ function Recomment({id}) {
   const getRecomment = async (pageParam) => {
     setRecommentId(recommentId+1)
     console.log(pageParam)
-    const response = await instance.get(`http://54.167.169.43/api/comment/${id}/${recommentId}/${pageParam}`);
+    const response = await instance.get(`http://54.167.169.43/api/comment/${id}/${pageParam}`);
     console.log(response.data)
     return response.data;
   }
@@ -72,7 +72,7 @@ function Recomment({id}) {
   return (
       <ReplyBox>
       {data?.pages.map((page, i)=>{
-        console.log(page.Recomment[i].commentId)
+        // console.log(page.Recomment[i].commentId)
          return  (
           <React.Fragment key={i}>
                <input
@@ -80,7 +80,7 @@ function Recomment({id}) {
             value={replyValue}
             onChange={e => setReplyValue(e.target.value)}
           />
-          <button onClick={()=>handleAddreply(page.Recomment[i].recommentId)}>대댓글추가</button>
+          <button onClick={()=>handleAddreply}>대댓글추가</button>
           {page?.Recomment.map(reply => {
             console.log(reply)
             if (id === reply.commentId) {
@@ -106,7 +106,6 @@ export default Recomment;
 
 const ReplyBox = styled.div`
   width: 100%;
-  margin-bottom: 2rem;
 `
 
 const Content = styled.div`

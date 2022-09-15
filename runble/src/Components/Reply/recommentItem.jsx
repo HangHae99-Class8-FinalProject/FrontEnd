@@ -99,8 +99,9 @@ const Profile = styled.img`
   float: left;
 `;
 
-const N_R = styled.div``;
+const N_R = styled.div`  margin-left:10p ;`;
 const NickName = styled.div`
+
 `;
 const ReplyContent = styled.p`
   display: inline-block;

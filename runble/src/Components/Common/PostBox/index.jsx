@@ -43,7 +43,6 @@ const PostBox = ({ posts, index }) => {
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
   const [heart, Setheart] = useState(false);
-  // console.log(posts);
   return (
     <StyleFeed key={index}>
       <StyleFrofileBox>
@@ -149,7 +148,15 @@ const PostBox = ({ posts, index }) => {
         </StyleGood>
         <StyleComment
           onClick={() => {
-            navigate(`/reply/${posts.postId}`);
+            navigate(`/reply/${posts.postId}`,{
+              state: {
+                nickname:posts.nickname,
+                profile:posts.profile,
+                content:posts.content,
+                createdAt:posts.createdAt,
+                like:posts.like   
+              }
+            });
           }}
         >
           댓글{posts.commentNum}개모두보기

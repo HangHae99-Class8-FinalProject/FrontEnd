@@ -3,39 +3,39 @@ import styled from "styled-components";
 import { useMutation, useQueryClient } from "react-query";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 
-import { ReactComponent as Reservation } from "../../Icons/Rectangle.svg"
-import { addReply } from "../../Hooks/useReply";
+import { ReactComponent as Reservation } from "../../Icons/BackIcon.svg"
+
 import PostItem from "./postItem";
 import ReplyComponent from "./replyComponent";
 
 const ReplyCom = () => {
   const location = useLocation();
   const data = location.state;
+  console.log(data)
 
   const navigate = useNavigate();
 
-  const { id: postId } = useParams();
+  
 
-  const [replyValue, setReplyValue] = useState("");
 
   //댓글추가
-  const queryClient = useQueryClient();
 
-  const addReplyData = useMutation(reply => addReply(reply), {
-    onSuccess: data => {
-      console.log(data);
-      queryClient.invalidateQueries("GET_REPLY");
-    },
-    onError: error => {
-      console.log(error);
-    }
-  });
 
-  const handleAddreply = e => {
-    e.preventDefault();
-    addReplyData.mutate({ comment: replyValue, postId: postId }); //api 데이터용
-    setReplyValue("");
-  };
+  // const addReplyData = useMutation(reply => addReply(reply), {
+  //   onSuccess: data => {
+  //     console.log(data);
+  //     queryClient.invalidateQueries("GET_REPLY");
+  //   },
+  //   onError: error => {
+  //     console.log(error);
+  //   }
+  // });
+
+  // const handleAddreply = e => {
+  //   e.preventDefault();
+  //   addReplyData.mutate({ comment: replyValue, postId: postId }); //api 데이터용
+  //   setReplyValue("");
+  // };
 
   return (
     <>
@@ -55,10 +55,10 @@ const ReplyCom = () => {
         <PostItem data={data} />
         <ReplyComponent />
         <ReplyArea>
-          <input type="text" value={replyValue} onChange={e => setReplyValue(e.target.value)} />
           <Detail />
-          <input type="text" value={replyValue} onChange={e => setReplyValue(e.target.value)} />
-          <button onClick={handleAddreply}>댓글추가</button>
+
+          {/* <input type="text" value={replyValue} onChange={e => setReplyValue(e.target.value)} />
+          <button onClick={handleAddreply}>댓글추가</button> */}
         </ReplyArea>
       </Wrap>
     </>
@@ -72,6 +72,7 @@ const Wrap = styled.div`
   height: 100rem;
   width:37.5rem;
   min-width:39rem;
+  border-right: 1px solid black ;
 `;
 
 const Head = styled.div`

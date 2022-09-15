@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useInView } from "react-intersection-observer";
 import { useMutation, useQueryClient } from "react-query";
+import { useParams } from "react-router-dom";
 
 import { editReply,delReply } from "../../Hooks/useReply";
 import Recomment from "./Recomment"
 import useInfinityScroll from "../../Hooks/useInfinityScroll";
 import { instance } from "../../Utils/Instance";
-import { useParams } from "react-router-dom";
+
 import displayedAt from "../../Utils/displayAt";
+
 
 
 function ReplyComponent() {
@@ -41,7 +43,7 @@ function ReplyComponent() {
     onError
   });
 
-  console.log(data?.pages[0].Comment[0].commentId);
+  console.log(data);
 
   useEffect(() => {
     if (inView) fetchNextPage();
@@ -108,10 +110,10 @@ function ReplyComponent() {
                         </ReplyContent>
                       )}
                     </N_R>
-                    <button onClick={() => handleEditreply(reply.commentId, reply.comment)}>
+                     <button onClick={() => handleEditreply(reply.commentId, reply.comment)}>
                       {editable && clickedId === reply.commentId ? <span>제출하기</span> : <span>수정하기</span>}
                     </button>
-                    <button onClick={() => handleDelreply(reply.commentId)}>삭제하기</button>
+                    <button onClick={() => handleDelreply(reply.commentId)}>삭제하기</button> 
                     <Time>{displayedAt(reply.createdAt)}</Time>
                     <Write>답글달기</Write>
 
@@ -131,7 +133,6 @@ function ReplyComponent() {
           </React.Fragment>
         );
       })}
-      {isFetchingNextPage ? <span>로딩중입니다</span> : <div ref={ref}></div>}
     </ReplyBox>
   );
 }
@@ -144,7 +145,7 @@ const ReplyBox = styled.div`
 `;
 
 const Content = styled.div`
-  border-bottom: 1px solid #111;
+  border-bottom: 1px solid #ccc;
   height: auto;
 `;
 const Profile = styled.img`
@@ -156,7 +157,7 @@ const Profile = styled.img`
 `;
 
 const N_R = styled.div`
-  width: 80%;
+  width: 75%;
   margin-left: auto;
   word-break: break-all;
 `;
@@ -174,48 +175,30 @@ const ReplyText = styled.p``;
 const Time = styled.div`
   display: inline-block;
   color: #999999;
-<<<<<<< HEAD
-=======
-  font-family: "Noto Sans CJK KR";
-  font-style: normal;
-  font-weight: 400;
->>>>>>> 25c909c450b4e7c12940684bff3acd9e7da365c1
   font-size: 15px;
   line-height: 14px;
   position: relative;
-  left: 110px;
+  left: 2rem;
 `;
 
 const Write = styled.button`
   color: #999999;
-<<<<<<< HEAD
-=======
-  font-family: "Noto Sans CJK KR";
-  font-style: normal;
-  font-weight: 400;
->>>>>>> 25c909c450b4e7c12940684bff3acd9e7da365c1
   font-size: 15px;
   line-height: 14px;
   background-color: transparent;
   border: 0;
   outline: 0;
   position: relative;
-  left: 130px;
+  left: 4rem;
 `;
 
 const RecommentBtn = styled.button`
   color: #999999;
-<<<<<<< HEAD
-=======
-  font-family: "Noto Sans CJK KR";
-  font-style: normal;
-  font-weight: 400;
->>>>>>> 25c909c450b4e7c12940684bff3acd9e7da365c1
   font-size: 15px;
   line-height: 14px;
   background-color: white;
   border: 0;
   outline: 0;
   position: relative;
-  left: 150px;
+  left: 4.5rem;
 `;
