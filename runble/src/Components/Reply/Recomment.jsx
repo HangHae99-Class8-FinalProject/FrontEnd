@@ -17,14 +17,10 @@ function Recomment({ replyCount, id }) {
   const getrecommentReply = async () => {
     return await instance.get("http://localhost:8001/Recomment");
   };
-  const { isLoading, data, isError, error, isFetching, refetch } = useQuery(
-    "GET_RECOMMENT",
-    getrecommentReply,
-    {
-      onSuccess,
-      onError
-    }
-  );
+  const { isLoading, data, isError, error, isFetching, refetch } = useQuery("GET_RECOMMENT", getrecommentReply, {
+    onSuccess,
+    onError
+  });
 
   console.log(data?.data[0].commentId);
   const [display, setDisplay] = useState(false);
@@ -63,24 +59,24 @@ export default Recomment;
 const ReplyBox = styled.div`
   width: 100%;
   background-color: #eee;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 `;
 
 const Content = styled.div`
-  margin-left: 40px;
-  margin-bottom: 10px;
+  margin-left: 4rem;
+  margin-bottom: 1rem;
 `;
 const Profile = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 5rem;
+  height: 5rem;
   float: left;
 `;
 
 const N_R = styled.div``;
 const NickName = styled.h4`
-  margin: 0 10px;
+  margin: 0 1rem;
 `;
 const ReplyContent = styled.p`
   display: inline-block;
-  margin: 10px 0 0 10px;
+  margin: 1rem 0 0 1rem;
 `;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 export const StyleHeader = styled.div`
   width: 100%;
-  height: 60px;
+  height: 6rem;
   background-color: aliceblue;
 `;
 export const StyleFlexHeader = styled.div`
@@ -12,8 +12,8 @@ export const StyleFlexHeader = styled.div`
   text-align: center;
 `;
 export const Logo = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 5rem;
+  height: 5rem;
 
   margin: 0 auto;
 `;

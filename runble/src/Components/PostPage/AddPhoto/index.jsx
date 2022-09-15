@@ -7,6 +7,8 @@ import { postData } from "../../../Recoil/Atoms/PostData";
 import { useRecoilState } from "recoil";
 import { S3config } from "../../../Utils/S3Config";
 
+import { ReactComponent as PostCamera } from "../../../Icons/PostCamera.svg";
+
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const AddPhoto = ({ merge, prevImg }) => {
@@ -22,10 +24,7 @@ const AddPhoto = ({ merge, prevImg }) => {
     if (length > uploadImages) {
       const ReactS3Client = new S3upload(S3config);
       for (let i = 0; i < length; i++) {
-        await ReactS3Client.uploadFile(
-          imgRef.current.files[i],
-          imgRef.current.files[i].name
-        )
+        await ReactS3Client.uploadFile(imgRef.current.files[i], imgRef.current.files[i].name)
           .then(data => {
             uploadImages.push(data.location);
           })
@@ -40,6 +39,9 @@ const AddPhoto = ({ merge, prevImg }) => {
   };
 
   const onChangeImg = async () => {
+    if (previewImages.length >= 5) {
+      return null;
+    }
     const imgArray = imgRef.current.files;
     let imgUrls = [...previewImages];
     const options = {
@@ -79,20 +81,19 @@ const AddPhoto = ({ merge, prevImg }) => {
 
   return (
     <PhotoWrap>
+      <AddButton>
+        <input ref={imgRef} type="file" multiple onChange={onChangeImg} />
+        <PostCamera />
+        <div>{previewImages.length}/5</div>
+      </AddButton>
       {previewImages &&
         previewImages.map((img, idx) => {
           return (
-            <PreviewImges
-              key={idx}
-              src={img}
-              alt="첨부한 이미지"
-              onClick={() => deletePhoto(idx)}
-            />
+            <AddButton>
+              <PreviewImges key={idx} src={img} alt="첨부한 이미지" onClick={() => deletePhoto(idx)} />
+            </AddButton>
           );
         })}
-      <AddButton>
-        <input ref={imgRef} type="file" multiple onChange={onChangeImg} />+
-      </AddButton>
     </PhotoWrap>
   );
 };
@@ -100,29 +101,38 @@ const AddPhoto = ({ merge, prevImg }) => {
 export default AddPhoto;
 
 const PhotoWrap = styled.div`
+  padding: 2rem 1.6rem;
   display: flex;
-  flex-wrap: wrap;
+  gap: 2rem;
+  border-bottom: 0.1rem solid #e6e6e6;
+  overflow: scroll;
+  width: inherit;
+  flex-wrap: nowrap;
 `;
+
 const AddButton = styled.label`
-  width: 59px;
-  height: 55.87px;
-  background-color: gray;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  display: flex;
-  font-family: "VITRO CORE OTF";
-  font-style: normal;
-  font-weight: 900;
-  font-size: 48px;
-  line-height: 64px;
-
-  color: #ffffff;
+  gap: 0.2rem;
+  width: 6.4rem;
+  height: 6.4rem;
+  background: #ffffff;
+  border: 0.1rem solid #cccccc;
+  border-radius: 0.4rem;
   & input {
     display: none;
+  }
+  & div {
+    width: 2.5rem;
+    height: 1.7rem;
+    color: #999999;
+    font-family: "Noto Sans CJK KR";
   }
 `;
 
 const PreviewImges = styled.img`
-  width: 59px;
-  height: 55.87px;
+  width: 6.4rem;
+  height: 6.4rem;
 `;

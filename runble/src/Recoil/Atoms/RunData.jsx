@@ -4,7 +4,7 @@ export const runData = atom({
   key: "runData",
   default: {
     path: [],
-    distance: "",
+    distance: 0.0,
     time: "",
     speed: "",
     isFinish: false

@@ -49,6 +49,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-react-hooks", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:4.6.0"],\
             ["geolocation-distance-between", "npm:0.1.0"],\
             ["json-server", "npm:0.17.0"],\
+            ["lottie-react", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:2.3.1"],\
             ["moment", "npm:2.29.4"],\
             ["react", "npm:18.2.0"],\
             ["react-aws-s3", "npm:1.5.0"],\
@@ -12157,6 +12158,42 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["lottie-react", [\
+        ["npm:2.3.1", {\
+          "packageLocation": "./.yarn/cache/lottie-react-npm-2.3.1-2c42200039-3f83511eec.zip/node_modules/lottie-react/",\
+          "packageDependencies": [\
+            ["lottie-react", "npm:2.3.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:2.3.1", {\
+          "packageLocation": "./.yarn/__virtual__/lottie-react-virtual-b013acd7bb/0/cache/lottie-react-npm-2.3.1-2c42200039-3f83511eec.zip/node_modules/lottie-react/",\
+          "packageDependencies": [\
+            ["lottie-react", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:2.3.1"],\
+            ["@types/react", null],\
+            ["@types/react-dom", null],\
+            ["lottie-web", "npm:5.9.6"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["lottie-web", [\
+        ["npm:5.9.6", {\
+          "packageLocation": "./.yarn/cache/lottie-web-npm-5.9.6-93f381883a-aed6a1d0c2.zip/node_modules/lottie-web/",\
+          "packageDependencies": [\
+            ["lottie-web", "npm:5.9.6"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["lowdb", [\
         ["npm:1.0.0", {\
           "packageLocation": "./.yarn/cache/lowdb-npm-1.0.0-5f300eaaff-7ae89e3d6e.zip/node_modules/lowdb/",\
@@ -16236,6 +16273,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-react-hooks", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:4.6.0"],\
             ["geolocation-distance-between", "npm:0.1.0"],\
             ["json-server", "npm:0.17.0"],\
+            ["lottie-react", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:2.3.1"],\
             ["moment", "npm:2.29.4"],\
             ["react", "npm:18.2.0"],\
             ["react-aws-s3", "npm:1.5.0"],\

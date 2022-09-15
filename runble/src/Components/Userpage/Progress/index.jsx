@@ -1,10 +1,6 @@
 import React from "react";
 import { StyleProgress, StyleProgressBox, StyleWrap, StyleGoal } from "./style";
-import {
-  CircularProgressbar,
-  buildStyles,
-  CircularProgressbarWithChildren
-} from "react-circular-progressbar";
+import { CircularProgressbar, buildStyles, CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useProgress } from "../../../Hooks/useProgress";
 import moment from "moment";
@@ -28,7 +24,7 @@ const Progress = ({ goalData }) => {
 
       <StyleProgress>
         <Swiper
-          style={{ height: "300px" }}
+          style={{ height: "30rem" }}
           pagination={{
             dynamicBullets: true
           }}
@@ -38,14 +34,14 @@ const Progress = ({ goalData }) => {
             <div>
               <span>{goalDate}</span>
             </div>
-            <div style={{ margin: "30px 0" }}>
+            <div style={{ margin: "3rem 0" }}>
               <div>10km</div>
               <CircularProgressbarWithChildren
                 value={percentage}
                 text={`${percentage}%`}
                 strokeWidth={10}
                 styles={{
-                  root: { height: "150px" },
+                  root: { height: "15rem" },
                   path: {
                     stroke: "#4fce84",
                     strokeLinecap: "butt",
@@ -57,7 +53,7 @@ const Progress = ({ goalData }) => {
                   },
                   text: {
                     fill: "#333333",
-                    fontSize: "18px"
+                    fontSize: "1.8rem"
                   }
                 }}
               />

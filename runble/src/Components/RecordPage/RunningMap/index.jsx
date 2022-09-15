@@ -5,14 +5,15 @@ import { runData } from "../../../Recoil/Atoms/RunData";
 import useInterval from "../../../Hooks/useInterval";
 
 import calcDistance from "../../../Utils/ClacDistnace";
-
+import Marker from "../../../Icons/Map_Marker.svg";
+import Loading from "../../Common/Loading/Loading";
 
 const RunningMap = ({ stopInterval, endRun }) => {
+  const { kakao } = window;
   const [distance, setDistance] = useState(0);
 
   const [path, setPath] = useRecoilState(runData);
   const runLog = useRecoilValue(runData);
-  console.log(runLog);
 
   const [state, setState] = useState({
     center: {
@@ -54,6 +55,7 @@ const RunningMap = ({ stopInterval, endRun }) => {
   useInterval(
     () => {
       if (navigator.geolocation) {
+        setDistance(calcDistance(path));
         navigator.geolocation.getCurrentPosition(
           position => {
             setState(prev => ({
@@ -66,7 +68,8 @@ const RunningMap = ({ stopInterval, endRun }) => {
             }));
             setPath(prev => ({
               ...prev,
-              path: prev.path.concat(state.center)
+              path: prev.path.concat(state.center),
+              distance: distance?.toFixed(1)
             }));
           },
           error => {
@@ -81,8 +84,6 @@ const RunningMap = ({ stopInterval, endRun }) => {
           isLoading: false
         }));
       }
-      //이동거리구하기
-      setDistance(calcDistance(path));
     },
     stopInterval ? null : 5000
   );
@@ -92,39 +93,48 @@ const RunningMap = ({ stopInterval, endRun }) => {
     if (endRun) {
       setPath(prev => ({
         ...prev,
-        distance: distance?.toFixed(2),
+        distance: distance?.toFixed(1),
         isFinish: true
       }));
     }
   }, [endRun]);
 
+  let imageSrc = Marker;
+
   //로딩 화면
   if (!state.isLoading) {
-    return <div>잠시만 기다려주세요.</div>;
+    return (
+      <Loading>
+        <div>지도 정보를 가져오고 있어요</div>
+      </Loading>
+    );
   }
 
   return (
     <>
-      {state.errMsg && <div>{state.errMsg}</div>}
       <Map
         center={state.center}
         style={{
-          width: "100%",
-          height: "50vh"
+          width: "100vw",
+          height: "100vh"
         }}
-        level={1}
+        level={2}
         zoomable={false}
         draggable={false}
       >
-        {state.isLoading && <MapMarker position={state.center} />}
+        {state.isLoading && (
+          <MapMarker
+            position={state.center}
+            image={{ src: imageSrc, size: { width: 36, height: 36 } }}
+          />
+        )}
         <Polyline
           path={runLog.path}
           strokeWeight={7}
-          strokeColor={"#FFAE00"}
+          strokeColor={"##F03800"}
           strokeOpacity={0.7}
           strokeStyle={"solid"}
         />
-        <div>총 거리 : {distance.toFixed(3)}</div>
       </Map>
     </>
   );

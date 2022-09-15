@@ -22,14 +22,10 @@ function ReplyComponent() {
     console.log("perform side effect after encountering error");
   };
 
-  const { isLoading, data, isError, error, isFetching, refetch } = useQuery(
-    "GET_REPLY",
-    getReply,
-    {
-      onSuccess,
-      onError
-    }
-  );
+  const { isLoading, data, isError, error, isFetching, refetch } = useQuery("GET_REPLY", getReply, {
+    onSuccess,
+    onError
+  });
 
   //   const delReplyData = useMutation((commentId)=>delReply(commentId),{
   //     onSuccess: (commentId) => {
@@ -64,13 +60,7 @@ function ReplyComponent() {
     }
   });
 
-  const handleEditreply = (
-    commentId,
-    nickname,
-    profile,
-    comment,
-    recommentCount
-  ) => {
+  const handleEditreply = (commentId, nickname, profile, comment, recommentCount) => {
     console.log(nickname);
     setEditable(true);
     setClickedId(commentId);
@@ -100,34 +90,19 @@ function ReplyComponent() {
               <N_R>
                 <NickName>{reply.nickname}</NickName>
                 {editable && clickedId === reply.commentId ? (
-                  <input
-                    value={replyValue}
-                    onChange={e => setReplyValue(e.target.value)}
-                  />
+                  <input value={replyValue} onChange={e => setReplyValue(e.target.value)} />
                 ) : (
                   <ReplyContent>{reply.comment}</ReplyContent>
                 )}
               </N_R>
               <button
                 onClick={() =>
-                  handleEditreply(
-                    reply.commentId,
-                    reply.nickname,
-                    reply.profile,
-                    reply.comment,
-                    reply.recommentCount
-                  )
+                  handleEditreply(reply.commentId, reply.nickname, reply.profile, reply.comment, reply.recommentCount)
                 }
               >
-                {editable && clickedId === reply.commentId ? (
-                  <span>제출하기</span>
-                ) : (
-                  <span>수정하기</span>
-                )}
+                {editable && clickedId === reply.commentId ? <span>제출하기</span> : <span>수정하기</span>}
               </button>
-              <button onClick={handleDelreply(reply.commentId)}>
-                삭제하기
-              </button>
+              <button onClick={handleDelreply(reply.commentId)}>삭제하기</button>
             </Content>
 
             <Recomment replyCount={reply.recommentCount} id={reply.commentId} />
@@ -143,21 +118,21 @@ export default ReplyComponent;
 const ReplyBox = styled.div`
   width: 100%;
   background-color: #eee;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 `;
 
 const Content = styled.div``;
 const Profile = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 5rem;
+  height: 5rem;
   float: left;
 `;
 
 const N_R = styled.div``;
 const NickName = styled.h4`
-  margin: 0 10px;
+  margin: 0 1rem;
 `;
 const ReplyContent = styled.p`
   display: inline-block;
-  margin: 10px 0 0 10px;
+  margin: 1rem 0 0 1rem;
 `;
