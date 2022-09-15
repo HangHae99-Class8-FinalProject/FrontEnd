@@ -20,7 +20,7 @@ const Goal = () => {
     });
   };
   return (
-    <div>
+    <div style={{ height: "23rem" }}>
       <StyleGoal>
         <StyleGoalButton
           onClick={() => {

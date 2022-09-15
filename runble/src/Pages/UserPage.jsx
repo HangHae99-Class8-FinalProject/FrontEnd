@@ -21,7 +21,7 @@ const UserPage = () => {
   console.log(userIds);
   return (
     <Layout>
-      <Userprofile goalData={goalData} userProfile={userProfile} userNickname={userNickname}></Userprofile>
+      <Userprofile userId={userId} userIds={userIds} goalData={goalData} userNickname={userNickname}></Userprofile>
       {goalData?.result ? <Progress goalData={goalData}></Progress> : <Goal></Goal>}
 
       <UserList></UserList>

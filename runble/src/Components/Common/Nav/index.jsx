@@ -162,55 +162,68 @@ const Nav = () => {
         <StyleButton>
           <div>
             {state === "feed" ? (
-              <Home
-                stroke="white"
-                onClick={() => {
-                  navigate("/feed", { state: "feed" });
-                }}
-              />
+              <div>
+                <Home
+                  stroke="white"
+                  onClick={() => {
+                    navigate("/feed", { state: "feed" });
+                  }}
+                />
+              </div>
             ) : (
-              <Home
-                onClick={() => {
-                  navigate("/feed", { state: "feed" });
-                }}
-                stroke="#808080"
-              />
+              <div>
+                <Home
+                  onClick={() => {
+                    navigate("/feed", { state: "feed" });
+                  }}
+                  stroke="#808080"
+                />
+              </div>
             )}
             {state === "search" ? (
-              <Search
-                onClick={() => {
-                  navigate("/search", { state: "search" });
-                }}
-                stroke="white"
-              />
+              <div>
+                <Search
+                  onClick={() => {
+                    navigate("/search", { state: "search" });
+                  }}
+                  stroke="white"
+                />
+              </div>
             ) : (
-              <Search
-                onClick={() => {
-                  navigate("/search", { state: "search" });
-                }}
-                stroke="#808080"
-              />
+              <div>
+                <Search
+                  onClick={() => {
+                    navigate("/search", { state: "search" });
+                  }}
+                  stroke="#808080"
+                />
+              </div>
             )}
-
-            <Run
-              onClick={() => {
-                navigate("/record");
-              }}
-            />
+            <div>
+              <Run
+                onClick={() => {
+                  navigate("/record");
+                }}
+              />
+            </div>
             {state === "user" ? (
-              <Mypage
-                stroke="#D9D9D9"
-                onClick={() => {
-                  navigate(`/user/${nickname}`, { state: "user" });
-                }}
-              />
+              <div>
+                <Mypage
+                  stroke="#D9D9D9"
+                  onClick={() => {
+                    navigate(`/user/${nickname}`, { state: "user" });
+                  }}
+                />
+              </div>
             ) : (
-              <Mypage
-                stroke="#808080"
-                onClick={() => {
-                  navigate(`/user/${nickname}`, { state: "user" });
-                }}
-              />
+              <div>
+                <Mypage
+                  stroke="#808080"
+                  onClick={() => {
+                    navigate(`/user/${nickname}`, { state: "user" });
+                  }}
+                />
+              </div>
             )}
           </div>
         </StyleButton>

@@ -1,25 +1,32 @@
 import styled from "styled-components";
 export const StyleUserWrap = styled.div`
   width: 100%;
+`;
+export const StyleUser = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  width: 100%;
+
+  /* width: 100%; */
+  position: relative;
+
+  background: #ffffff;
+`;
+export const StyleHeader = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 4.3rem;
+  background: #ffffff;
+  border-bottom: 1px solid #e6e6e6;
   & > div {
     width: 100%;
     display: flex;
-    align-items: center;
-    box-sizing: border-box;
-    padding: 2rem 1.6rem;
+    justify-content: space-between;
+    margin-left: 1.6rem;
+    margin-right: 1.6rem;
   }
-`;
-export const UserHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 16px;
-  gap: 26px;
-  width: 37.5rem;
-  height: 43px;
-  background: #ffffff;
-  border-bottom: 0.1rem solid #e6e6e6;
 `;
 export const StyleUsrBox = styled.div`
   display: flex;
@@ -27,4 +34,5 @@ export const StyleUsrBox = styled.div`
   align-items: center;
   padding: 0px;
   gap: 10px;
+  padding: 0 1.6rem;
 `;
