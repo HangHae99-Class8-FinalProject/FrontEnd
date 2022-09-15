@@ -14,10 +14,8 @@ import Profile from "../../Icons/profile.svg";
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
-
 function ProfileUpload({ userData }) {
-
-    console.log(userData)
+  console.log(userData);
   const [nickname, setNickname] = useState("");
   const [previewImage, setPrevieImage] = useState(Profile);
   const [image, setImage] = useState(null);
@@ -143,7 +141,6 @@ function ProfileUpload({ userData }) {
 }
 
 export default ProfileUpload;
-
 
 const Image = styled.img`
   width: 16rem;

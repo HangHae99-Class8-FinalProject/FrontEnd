@@ -8,30 +8,58 @@ export const StyleNav = styled.div`
   z-index: 999;
 `;
 export const StyleShowBackgroud = styled.div`
-  background-color: rgba(102, 100, 100, 0.3);
+  background-color: rgba(26, 26, 26, 0.5);
   height: 100vh;
   display: ${({ Show }) => (Show ? "block" : "none")};
 `;
 
 export const StyleShow = styled.div`
   width: 100%;
-  height: ${({ Show }) => (Show ? "20rem" : "0rem")};
-  background-color: #dbff00;
+  height: ${({ Show }) => (Show ? "160px" : "0px")};
+  background-color: #ffffff;
   transition: height 200ms ease-in-out;
+  align-items: center;
   position: absolute;
   bottom: 0;
   right: 0;
+  & > p {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 16px;
+  }
+  & > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 16px;
+  }
 `;
 export const StyleButton = styled.div`
   width: 100%;
+  height: 74px;
   display: flex;
   justify-content: space-around;
-  height: 5rem;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
   text-align: center;
   align-items: center;
   position: fixed;
   bottom: 0;
-  background-color: azure;
+  background-color: #353434;
+  & > div {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 69px;
+    & > div {
+      flex: none;
+      order: 0;
+      flex-grow: 0;
+    }
+  }
 `;
 
 export const ModalBox = styled.div`

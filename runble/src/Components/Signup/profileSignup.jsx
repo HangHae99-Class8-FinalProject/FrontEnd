@@ -9,30 +9,28 @@ const ProfileSignup = () => {
 
   const kakaoLoign = async () => {
     const code = new URL(window.location.href).searchParams.get("code");
-    const res = await instance
-      .get(`/api/kakao/callback?code=${code}}`)
-      .then(res => {
-        const token = res.data.token;
-        const userData = {
-          email: res.data.email,
-          image: res.data.image,
-          nickname: res.data.nickname,
-          userId: res.data.userId,
-          provider: res.data.provider
-        };
-        if (token) {
-          window.localStorage.setItem("token", token);
-          window.localStorage.setItem("userData", JSON.stringify(userData));
-          navigate(`/user/${res.data.nickname}`);
-        } else {
-          navigate("/signup", {
-            state: {
-              email: res.data.email,
-              provider: res.data.provider
-            }
-          });
-        }
-      });
+    const res = await instance.get(`/api/kakao/callback?code=${code}}`).then(res => {
+      const token = res.data.token;
+      const userData = {
+        email: res.data.email,
+        image: res.data.image,
+        nickname: res.data.nickname,
+        userId: res.data.userId,
+        provider: res.data.provider
+      };
+      if (token) {
+        window.localStorage.setItem("token", token);
+        window.localStorage.setItem("userData", JSON.stringify(userData));
+        navigate(`/user/${res.data.nickname}`);
+      } else {
+        navigate("/signup", {
+          state: {
+            email: res.data.email,
+            provider: res.data.provider
+          }
+        });
+      }
+    });
     return res;
   };
 
@@ -51,4 +49,3 @@ const ProfileSignup = () => {
 };
 
 export default ProfileSignup;
-

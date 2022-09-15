@@ -6,7 +6,7 @@ const KakaoMap = ({ path }) => {
     <>
       <Map
         style={{
-          width: "34.3rem",
+          width: "100%",
           height: "18rem"
         }}
         center={path[path?.length - 1]}

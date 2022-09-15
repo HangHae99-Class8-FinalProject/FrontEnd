@@ -1,8 +1,19 @@
 import React from "react";
-import { StyleProgress, StyleProgressBox, StyleWrap, StyleGoal } from "./style";
+import {
+  StyleProgress,
+  StyleProgressBox,
+  StyleWrap,
+  StyleProgressGoalData,
+  StyleNextProgress,
+  StyleSevenProgress,
+  StyleSevenTitle,
+  StyleSevenGoal,
+  StyleGoalDate,
+  StyleSevenDate,
+  StyleDistanceBox
+} from "./style";
 import { CircularProgressbar, buildStyles, CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { useProgress } from "../../../Hooks/useProgress";
 import moment from "moment";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -14,54 +25,107 @@ const nowDate = moment().utc(true);
 const goalDate = nowDate.format("MM월 ") + weekOfMonth(nowDate) + "주차"; // 현재 날짜
 
 const Progress = ({ goalData }) => {
-  console.log(goalData);
+  console.log(goalData.getUserInfo);
   const percentage = 50;
   return (
     <StyleWrap>
-      <StyleGoal>
-        <span>목표 달성도 </span>
-      </StyleGoal>
+      <div>
+        <StyleProgress>
+          <Swiper
+            style={{ height: "23rem" }}
+            pagination={{
+              dynamicBullets: true
+            }}
+            modules={[Pagination]}
+          >
+            <SwiperSlide>
+              <StyleProgressBox>
+                <StyleProgressGoalData>{goalData.getUserInfo.goal}km 달성까지</StyleProgressGoalData>
+                <div>
+                  <CircularProgressbarWithChildren
+                    value={percentage}
+                    text={`${percentage}%`}
+                    strokeWidth={20}
+                    styles={{
+                      root: { height: "104px" },
+                      path: {
+                        stroke: "rgba(240, 56, 0, 1)",
+                        strokeLinecap: "butt",
+                        transition: "stroke-dashoffset 0.5s ease 0s"
+                      },
 
-      <StyleProgress>
-        <Swiper
-          style={{ height: "30rem" }}
-          pagination={{
-            dynamicBullets: true
-          }}
-          modules={[Pagination]}
-        >
-          <SwiperSlide>
-            <div>
-              <span>{goalDate}</span>
-            </div>
-            <div style={{ margin: "3rem 0" }}>
-              <div>10km</div>
-              <CircularProgressbarWithChildren
-                value={percentage}
-                text={`${percentage}%`}
-                strokeWidth={10}
-                styles={{
-                  root: { height: "15rem" },
-                  path: {
-                    stroke: "#4fce84",
-                    strokeLinecap: "butt",
-                    transition: "stroke-dashoffset 0.5s ease 0s"
-                  },
-
-                  trail: {
-                    stroke: "#d7d7d7"
-                  },
-                  text: {
-                    fill: "#333333",
-                    fontSize: "1.8rem"
-                  }
-                }}
-              />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide></SwiperSlide>
-        </Swiper>
-      </StyleProgress>
+                      trail: {
+                        stroke: "rgba(77, 77, 77, 1)"
+                      },
+                      text: {
+                        fill: "#ffffff",
+                        fontSize: "18px"
+                      }
+                    }}
+                  />
+                </div>
+              </StyleProgressBox>
+            </SwiperSlide>
+            <SwiperSlide>
+              <StyleNextProgress>
+                <StyleSevenProgress>
+                  <StyleSevenTitle>
+                    <StyleSevenGoal>한주간{goalData.getUserInfo.goal}km런닝</StyleSevenGoal>
+                    <StyleGoalDate>{goalDate}</StyleGoalDate>
+                  </StyleSevenTitle>
+                  <StyleSevenDate>
+                    <div>
+                      <span>월</span>
+                      <span>k</span>
+                      <span>0:12:23</span>
+                    </div>
+                    <div>
+                      <span>화</span>
+                      <span>k</span>
+                      <span>0:12:23</span>
+                    </div>
+                    <div>
+                      <span>수</span>
+                      <span>k</span>
+                      <span>0:12:23</span>
+                    </div>
+                    <div>
+                      <span>목</span>
+                      <span>k</span>
+                      <span>0:12:23</span>
+                    </div>
+                    <div>
+                      <span>금</span>
+                      <span>k</span>
+                      <span>0:12:23</span>
+                    </div>
+                    <div>
+                      <span>토</span>
+                      <span>k</span>
+                      <span>0:12:23</span>
+                    </div>
+                    <div>
+                      <span>일</span>
+                      <span>k</span>
+                      <span>0:12:23</span>
+                    </div>
+                  </StyleSevenDate>
+                  <StyleDistanceBox>
+                    <div>
+                      <span>6.2k</span>
+                      <span>총거리</span>
+                    </div>
+                    <div>
+                      <span>5d</span>
+                      <span>총운동일</span>
+                    </div>
+                  </StyleDistanceBox>
+                </StyleSevenProgress>
+              </StyleNextProgress>
+            </SwiperSlide>
+          </Swiper>
+        </StyleProgress>
+      </div>
     </StyleWrap>
   );
 };
