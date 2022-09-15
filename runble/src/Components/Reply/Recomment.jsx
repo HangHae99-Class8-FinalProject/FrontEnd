@@ -1,12 +1,17 @@
-import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import React,{ useState,useEffect } from "react";
+import { useMutation,useQueryClient,useQuery } from "react-query";
 import styled from "styled-components";
+import { useInView } from "react-intersection-observer";
+
+import useInfinityScroll from "../../Hooks/useInfinityScroll";
 import {addReply } from "../../Hooks/useRecomment";
 import RecommentItem  from "./recommentItem"
 import {instance} from "../../Utils/Instance"
 
 
-function Recomment({id }) {
+function Recomment({id}) {
+
+  const [ref, inView] = useInView();
 
   const onSuccess = () => {
     console.log("조회성공");
@@ -15,37 +20,32 @@ function Recomment({id }) {
   const onError = () => {
     console.log("조회실패");
   };
-  // 댓글 조회
 
-  const [recommentId,setRecommentId] = useState(1)
-  
+  const [recommentId,setRecommentId] = useState(0)
 
   const getRecomment = async (pageParam) => {
     setRecommentId(recommentId+1)
-    console.log(recommentId)
+    console.log(pageParam)
     const response = await instance.get(`http://54.167.169.43/api/comment/${id}/${recommentId}/${pageParam}`);
     console.log(response.data)
     return response.data;
   }
 
-  const { isLoading, data, isError, error, isFetching, refetch } = useQuery(
+
+  const [data, fetchNextPage, isFetchingNextPage] = useInfinityScroll(
     "GET_RECOMMENT",
     getRecomment,
-    {
-      onSuccess,
-      onError
-    }
+   
   );
 
-    console.log(data)
+  console.log(data)
 
+  useEffect(() => {
+    if (inView) fetchNextPage();
+  }, [inView]);
 
   const queryClient = useQueryClient();
-
-  const [display, setDisplay] = useState(false);
   const [replyValue, setReplyValue] = useState("");
-
-
 
     //대댓글 추가
     const addReplyData = useMutation((reply)=>addReply(reply),{
@@ -58,8 +58,8 @@ function Recomment({id }) {
         },
     })
 
-  const handleAddreply = e => {
-    e.preventDefault();
+  const handleAddreply = recommentId => {
+    console.log(recommentId)
     addReplyData.mutate({
       commentId: id,
       recommentId:recommentId,
@@ -70,53 +70,47 @@ function Recomment({id }) {
 
 
   return (
-    <>
-      <button
-        onClick={() => {
-          setDisplay(!display);
-        }}
-      >
-      
-        대댓글보기
-      </button>
-      <div>
-                      <input
-                          type="text"
-                          value={replyValue}
-                          onChange={e => setReplyValue(e.target.value)}
-                        />
-                        <button onClick={handleAddreply}>대댓글추가</button>
-                    </div>
-
-
-      {display && (
-        <ReplyBox>
-          {data?.Recomment.map(reply => {
+      <ReplyBox>
+      {data?.pages.map((page, i)=>{
+        console.log(page.Recomment[i].commentId)
+         return  (
+          <React.Fragment key={i}>
+               <input
+            type="text"
+            value={replyValue}
+            onChange={e => setReplyValue(e.target.value)}
+          />
+          <button onClick={()=>handleAddreply(page.Recomment[i].recommentId)}>대댓글추가</button>
+          {page?.Recomment.map(reply => {
+            console.log(reply)
             if (id === reply.commentId) {
               return (
                 <Content key={reply.recommentId}>
                 
                   <RecommentItem data={reply}/>
+          
                 </Content>
               );
             }
           })}
-        </ReplyBox>
-      )}
-    </>
-  );
+          </React.Fragment>
+        )
+      
+      
+      })}  
+  </ReplyBox>
+  )
 }
 
 export default Recomment;
 
 const ReplyBox = styled.div`
   width: 100%;
-  background-color: #eee;
   margin-bottom: 20px;
 `;
 
 const Content = styled.div`
-  margin-left: 40px;
+  margin-left: 80px;
   margin-bottom: 10px;
 `;
 

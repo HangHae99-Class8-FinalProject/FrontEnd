@@ -1,17 +1,16 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation,useQueryClient } from "react-query";
 
 import { delReply,editReply } from "../../Hooks/useRecomment";
-import Lion from "./lion.png";
 
 function RecommentItem ({data}){
-    console.log(data.recommentId)
-    const queryClient = useQueryClient();
+  console.log(data)
+  const queryClient = useQueryClient();
 
 
       //대댓글 삭제
-   const delReplyData = useMutation(recommentId=>delReply(recommentId),{
+  const delReplyData = useMutation(recommentId=>delReply(recommentId),{
     onSuccess: data => {
         console.log(data);
         queryClient.invalidateQueries("GET_RECOMMENT")
@@ -30,13 +29,8 @@ const handleDelreply = (id) => {
 //대댓글 수정
 
 const [editable, setEditable] = useState(false);
-const [clickedId, setClickedId] = useState("");
-const [nickValue, setNicValue] = useState(data.nickname);
-const [profileValue, setProfileValue] = useState(data.profile);
-const [recoCntValue, setRecoCntValue] = useState("");
+const [clickedId, setClickedId] = useState(data.commentId);
 const [commentValue, setCommentValue] = useState(data.comment)
-
-
 
 const editReplyData = useMutation(reply => editReply(reply), {
   onSuccess: data => {
@@ -49,35 +43,18 @@ const editReplyData = useMutation(reply => editReply(reply), {
   }
 });
 
-const handleEditreply = (
-  commentId,
-  recommentId,
-  nickname,
-  profile,
-  comment,
-) => {
-  console.log(nickname);
-  setEditable(true);
+const handleEditreply = (commentId) => {
   setClickedId(commentId);
-  setNicValue(nickname);
-  setProfileValue(profile);
-  setCommentValue(comment);
-  setRecoCntValue(recommentId);
-
-  const initalState = {
+  editReplyData.mutate({
     commentId: clickedId,
-    recommentId:recoCntValue,
-    nickname: nickValue,
-    profile: profileValue,
+    recommentId:data.recommentId,
     comment: commentValue,
-  };
-  editReplyData.mutate(initalState);
+  });
 };
 
     return(
-        
             <>
-                  <Profile src={Lion}></Profile>
+                  <Profile src={data.image}></Profile>
                   <N_R>
                     <NickName>{data.nickname}</NickName>
 
@@ -96,10 +73,7 @@ const handleEditreply = (
                   handleEditreply(
                     data.commentId,
                     data.recommentId,
-                    data.nickname,
-                    data.profile,
-                    data.comment,
-                    
+                    data.comment
                   )
                 }
               >
@@ -113,14 +87,11 @@ const handleEditreply = (
               <button onClick={()=>handleDelreply(data)}>
                 삭제하기
               </button>
-            </>
-            
+         </>      
     )
 }
 
 export default RecommentItem;
-
-
 
 const Profile = styled.img`
   width: 50px;
@@ -129,11 +100,12 @@ const Profile = styled.img`
 `;
 
 const N_R = styled.div``;
-const NickName = styled.h4`
-  margin: 0 10px;
+const NickName = styled.div`
+  margin: 0 0px;
 `;
 const ReplyContent = styled.p`
   display: inline-block;
+  word-break:break-all;
   margin: 10px 0 0 10px;
 `;
 

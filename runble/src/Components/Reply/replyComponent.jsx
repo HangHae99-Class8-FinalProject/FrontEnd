@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useInView } from "react-intersection-observer";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 import { editReply,delReply } from "../../Hooks/useReply";
-import Lion from "./lion.png";
 import Recomment from "./recomment";
 import useInfinityScroll from "../../Hooks/useInfinityScroll";
 import { instance } from "../../Utils/Instance";
 import { useParams } from "react-router-dom";
-
-
-
-
+import displayedAt from "../../Utils/displayAt";
 
 function ReplyComponent() {
+  
+  const [display,setDisplay] = useState(false);
 
   const [ref, inView] = useInView();
 
   const queryClient = useQueryClient();
 
-  
   const { id: postId } = useParams();
   
 
@@ -32,16 +29,16 @@ function ReplyComponent() {
     console.log("조회실패");
   };
 
+//댓글조회
   const getReply = async pageParam => {
 
     const response = await instance.get(`http://54.167.169.43/api/comment/${postId}/${pageParam}`);
-    console.log(response.data.Comment)
-    const [...data] = response.data.Comment
-    return data
+    const { Comment, isLast } = response.data;
+    console.log(pageParam)
+    return { Comment, nextPage: pageParam + 1, isLast };
   }
 
-  // 댓글 조회
-  const { data, fetchNextPage, isFetchingNextPage} = useQuery(
+  const [data, fetchNextPage, isFetchingNextPage] = useInfinityScroll(
     "GET_REPLY",
     getReply,
     {
@@ -50,15 +47,15 @@ function ReplyComponent() {
     }
   );
 
-  console.log(data)
+  console.log(data?.pages[0].Comment[0].commentId)
 
   useEffect(() => {
-    if (inView) fetchNextPage;
+    if (inView) fetchNextPage();
   }, [inView]);
 
 
   //댓글삭제 
-    const delReplyData = useMutation(commentId=>delReply(commentId),{
+  const delReplyData = useMutation(commentId=>delReply(commentId),{
       onSuccess: data => {
           console.log(data);
           queryClient.invalidateQueries("GET_REPLY")
@@ -74,16 +71,12 @@ function ReplyComponent() {
     delReplyData.mutate(id)
   };
 
-
   //댓글 수정
   const [editable, setEditable] = useState(false);
   const [clickedId, setClickedId] = useState(data?.commentId);
   const [replyValue, setReplyValue] = useState("");
 
-  console.log(replyValue)
-
-  
-  const editReplyData = useMutation(reply => editReply(reply), {
+  const editReplyData = useMutation(reply =>editReply(reply), {
     onSuccess: data => {
       console.log(data);
       setEditable(!editable);
@@ -104,9 +97,12 @@ function ReplyComponent() {
 
   return (
     <ReplyBox>
-      {data?.map((reply) => {
+      {data?.pages.map((page, i)=>{
+        return  (
+    <React.Fragment key={i}>
+      {page?.Comment?.map((reply,i) => {
         return (
-          <div key={reply.commentId}>
+          <div key={i}>
             <Content>
               <Profile src={reply.image}></Profile>
               <N_R>
@@ -117,7 +113,11 @@ function ReplyComponent() {
                     onChange={e => setReplyValue(e.target.value)}
                   />
                 ) : (
-                  <ReplyContent>{reply.comment}</ReplyContent>
+                  <ReplyContent>
+                    <ReplyText>
+                      {reply.comment} 
+                    </ReplyText>
+                  </ReplyContent>
                 )}
               </N_R>
               <button
@@ -137,12 +137,25 @@ function ReplyComponent() {
               <button onClick={()=>handleDelreply(reply.commentId)}>
                 삭제하기
               </button>
+              <Time>
+              {displayedAt(reply.createdAt)}
+              </Time>
+              <Write>답글달기</Write>
+        
+  
+              <RecommentBtn onClick={()=>{setDisplay(!display)}}>답글0개더보기</RecommentBtn>
+              
+              {display && (<Recomment id={reply.commentId}/> )}
+   
             </Content>
-                  
-            <Recomment id={reply.commentId} />
           </div>
         );
       })}
+    </React.Fragment>
+         ) 
+      }
+    
+      )}
            {isFetchingNextPage ? <span>로딩중입니다</span> : <div ref={ref}></div>}
     </ReplyBox>
   );
@@ -151,23 +164,73 @@ function ReplyComponent() {
 export default ReplyComponent;
 
 const ReplyBox = styled.div`
-  width: 100%;
-  background-color: #eee;
-  margin-bottom: 20px;
 `;
 
-const Content = styled.div``;
+const Content = styled.div`
+  border-bottom: 1px solid #111;
+  height:auto;
+
+`;
 const Profile = styled.img`
   width: 50px;
   height: 50px;
   float: left;
+  margin-left:50px ;
+  margin-bottom:10px;
 `;
 
-const N_R = styled.div``;
-const NickName = styled.h4`
-  margin: 0 10px;
+const N_R = styled.div`
+  width:80%;
+  margin-left: auto;
+  word-break:break-all;
+`
+
+const NickName = styled.p`
+  margin: 10px;
 `;
-const ReplyContent = styled.p`
-  display: inline-block;
+const ReplyContent = styled.div`
   margin: 10px 0 0 10px;
+  width:90%;
 `;
+
+const ReplyText = styled.p`
+`
+
+const Time = styled.div`
+  display:inline-block ;
+  color: #999999;
+  font-family: 'Noto Sans CJK KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 14px;
+  position: relative;
+  left: 110px;
+  `
+
+const Write = styled.button`
+  color: #999999;
+  font-family: 'Noto Sans CJK KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 14px;
+  background-color:transparent;
+  border:0;
+  outline:0;
+  position:relative;
+  left:130px;`
+
+const RecommentBtn = styled.button`
+  color: #999999;
+  font-family: 'Noto Sans CJK KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 14px;
+  background-color:white;
+  border:0;
+  outline:0;
+  position: relative;
+  left:150px`
+

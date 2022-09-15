@@ -34,6 +34,7 @@ const PostBox = ({ posts, index }) => {
   const accessToken = localStorage.getItem("userData");
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
+  console.log(posts)
   return (
     <StyleFeed key={index}>
       <div>
@@ -115,7 +116,14 @@ const PostBox = ({ posts, index }) => {
           <p
             onClick={() => {
               navigate(`/reply/${posts.postId}`,{
-                state:posts.postId
+                state:{
+                  postId: posts.postId,
+                  nickname: posts.nickname,
+                  content: posts.content,
+                  createdAt: posts.createdAt,
+                  like:posts.like,
+                  profile : posts.profile
+                }
               });
             }}
           >
