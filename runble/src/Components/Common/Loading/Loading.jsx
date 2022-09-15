@@ -19,7 +19,6 @@ const LottieWrap = styled.div`
   position: absolute;
   width: 100vw;
   height: 100vh;
-  margin-top: 15rem;
   z-index: 500;
   background-color: white;
 `;

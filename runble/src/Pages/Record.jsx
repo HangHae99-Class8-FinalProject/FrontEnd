@@ -36,19 +36,31 @@ const Record = () => {
   const onClickEnd = useCallback(async () => {
     setEndRun(true);
     setStopInterval(true);
-    const { data } = await instance.post("/api/user/distance", {
-      distance: runLog.distance
-    });
   });
 
-  const onFeed = () => {
+  let hour = runLog.time.hour * 60 * 60;
+  let minute = runLog.time.minute * 60;
+  let second = runLog.time.second;
+
+  let totalTime = hour + minute + second;
+  console.log(totalTime);
+
+  const onFeed = async () => {
     if (runLog.isFinish) {
+      const { data } = await instance.post("/api/user/distance", {
+        distance: runLog.distance,
+        time: totalTime
+      });
       navigate("/post", { state: { runLog } });
     }
   };
 
   const onNotFeed = async () => {
     if (runLog.isFinish) {
+      const { data } = await instance.post("/api/user/distance", {
+        distance: runLog.distance,
+        time: totalTime
+      });
       navigate("/feed");
     }
   };
