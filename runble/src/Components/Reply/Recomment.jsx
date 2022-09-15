@@ -106,12 +106,11 @@ export default Recomment;
 
 const ReplyBox = styled.div`
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 `
 
 const Content = styled.div`
   margin-left: 4rem;
   margin-bottom: 1rem;
 `;
-
 

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useMutation, useQueryClient } from "react-query";
 import { useLocation, useParams,useNavigate } from "react-router-dom";
 
-import { ReactComponent as Reservation } from "./Rectangle.svg"
+import { ReactComponent as Reservation } from "../../Icons/Rectangle.svg"
 import { addReply } from "../../Hooks/useReply";
 import PostItem from "./postItem";
 import ReplyComponent from "./replyComponent";
@@ -73,8 +73,8 @@ export default ReplyCom;
 const Wrap = styled.div`
   margin: 0px;
   height: 100rem;
-  width:490px;
-  min-width:390px;
+  width:37.5rem;
+  min-width:39rem;
 `;
 
 const Head = styled.div`

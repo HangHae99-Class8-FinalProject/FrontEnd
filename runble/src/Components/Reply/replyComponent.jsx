@@ -4,11 +4,12 @@ import { useInView } from "react-intersection-observer";
 import { useMutation, useQueryClient } from "react-query";
 
 import { editReply,delReply } from "../../Hooks/useReply";
-import Recomment from "./recomment";
+import Recomment from "./Recomment"
 import useInfinityScroll from "../../Hooks/useInfinityScroll";
 import { instance } from "../../Utils/Instance";
 import { useParams } from "react-router-dom";
 import displayedAt from "../../Utils/displayAt";
+
 
 function ReplyComponent() {
   
@@ -119,7 +120,7 @@ function ReplyComponent() {
                   </ReplyContent>
                 )}
               </N_R>
-              <button
+              {/* <button
                 onClick={() =>
                   handleEditreply(
                     reply.commentId,
@@ -135,7 +136,7 @@ function ReplyComponent() {
               </button>
               <button onClick={()=>handleDelreply(reply.commentId)}>
                 삭제하기
-              </button>
+              </button> */}
               <Time>
               {displayedAt(reply.createdAt)}
               </Time>
@@ -165,7 +166,6 @@ export default ReplyComponent;
 
 const ReplyBox = styled.div`
   width: 100%;
-  background-color: #eee;
   margin-bottom: 2rem;
 `;
 
@@ -202,9 +202,6 @@ const ReplyText = styled.p`
 const Time = styled.div`
   display:inline-block ;
   color: #999999;
-  font-family: 'Noto Sans CJK KR';
-  font-style: normal;
-  font-weight: 400;
   font-size: 15px;
   line-height: 14px;
   position: relative;
@@ -213,9 +210,6 @@ const Time = styled.div`
 
 const Write = styled.button`
   color: #999999;
-  font-family: 'Noto Sans CJK KR';
-  font-style: normal;
-  font-weight: 400;
   font-size: 15px;
   line-height: 14px;
   background-color:transparent;
@@ -226,9 +220,6 @@ const Write = styled.button`
 
 const RecommentBtn = styled.button`
   color: #999999;
-  font-family: 'Noto Sans CJK KR';
-  font-style: normal;
-  font-weight: 400;
   font-size: 15px;
   line-height: 14px;
   background-color:white;

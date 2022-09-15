@@ -45,9 +45,6 @@ const Nic = styled.div`
 
   const Time = styled.div`
     color: #999999;
-    font-family: 'Noto Sans CJK KR';
-    font-style: normal;
-    font-weight: 400;
     font-size: 15px;
     line-height: 14px;
     position:absolute;
@@ -56,9 +53,6 @@ const Nic = styled.div`
 
   const Like = styled.div`
     color: #999999;
-    font-family: 'Noto Sans CJK KR';
-    font-style: normal;
-    font-weight: 400;
     font-size: 15px;
     line-height: 14px;
     position:absolute;
@@ -67,9 +61,6 @@ const Nic = styled.div`
 
 const Write = styled.button`
   color: #999999;
-  font-family: 'Noto Sans CJK KR';
-  font-style: normal;
-  font-weight: 400;
   font-size: 15px;
   line-height: 14px;
   position:absolute;

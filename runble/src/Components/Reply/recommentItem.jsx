@@ -94,18 +94,16 @@ const handleEditreply = (commentId) => {
 export default RecommentItem;
 
 const Profile = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 5rem;
+  height: 5rem;
   float: left;
 `;
 
 const N_R = styled.div``;
 const NickName = styled.div`
-  margin: 0 0px;
 `;
 const ReplyContent = styled.p`
   display: inline-block;
   word-break:break-all;
-  margin: 10px 0 0 10px;
 `;
 
