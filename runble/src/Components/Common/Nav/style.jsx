@@ -54,6 +54,7 @@ export const StyleButton = styled.div`
     align-items: flex-start;
     padding: 0px;
     gap: 69px;
+    margin-bottom: 12px;
     & > div {
       flex: none;
       order: 0;

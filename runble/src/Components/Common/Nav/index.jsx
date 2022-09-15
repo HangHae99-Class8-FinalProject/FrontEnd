@@ -6,6 +6,8 @@ import { ReactComponent as Home } from "../../../Icons/home.svg";
 import { ReactComponent as Search } from "../../../Icons/search.svg";
 import { ReactComponent as Run } from "../../../Icons/run.svg";
 import { ReactComponent as Mypage } from "../../../Icons/mypage.svg";
+import { ReactComponent as RightSearch } from "../../../Icons/searchRight.svg";
+
 import { useUserProfileMutation } from "../../../Hooks/useProfile";
 import S3upload from "react-aws-s3";
 import { instance } from "../../../Utils/Instance";
@@ -68,7 +70,12 @@ const Nav = () => {
 
   const outConfirm = () => {
     if (confirm("회원탈퇴하시겠습니까")) {
-      return instance.delete("http://54.167.169.43/api/user"), alert("회원탈퇴되었습니다"), navigate("/");
+      return (
+        instance.delete("http://54.167.169.43/api/user"),
+        alert("회원탈퇴되었습니다"),
+        localStorage.clear(),
+        navigate("/")
+      );
     } else {
       return;
     }
@@ -111,6 +118,7 @@ const Nav = () => {
                 <p
                   onClick={() => {
                     setPreview(null);
+                    postProfile({ image: null });
                   }}
                 >
                   기본이미지로변경하기
@@ -155,7 +163,7 @@ const Nav = () => {
           <div>
             {state === "feed" ? (
               <Home
-                stroke="#D9D9D9"
+                stroke="white"
                 onClick={() => {
                   navigate("/feed", { state: "feed" });
                 }}
@@ -168,13 +176,21 @@ const Nav = () => {
                 stroke="#808080"
               />
             )}
-
-            <Search
-              onClick={() => {
-                navigate("/search");
-              }}
-              stroke="#808080"
-            />
+            {state === "search" ? (
+              <Search
+                onClick={() => {
+                  navigate("/search", { state: "search" });
+                }}
+                stroke="white"
+              />
+            ) : (
+              <Search
+                onClick={() => {
+                  navigate("/search", { state: "search" });
+                }}
+                stroke="#808080"
+              />
+            )}
 
             <Run
               onClick={() => {

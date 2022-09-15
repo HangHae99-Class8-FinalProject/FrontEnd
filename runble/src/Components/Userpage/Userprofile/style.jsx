@@ -6,7 +6,7 @@ export const StyleUserWrap = styled.div`
     display: flex;
     align-items: center;
     box-sizing: border-box;
-    padding: 20px 16px;
+    padding: 2rem 1.6rem;
   }
 `;
 export const UserHeader = styled.div`

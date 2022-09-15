@@ -24,7 +24,7 @@ import {
 import { ReactComponent as View } from "../../../Icons/view.svg";
 import { ReactComponent as Heart } from "../../../Icons/heart.svg";
 import { ReactComponent as CommentIcon } from "../../../Icons/comment.svg";
-import { ReactComponent as Profile } from "../../../Icons/profile.svg";
+import { ReactComponent as Profile } from "../../../Icons/myPageProfile.svg";
 import displayedAt from "../../../Utils/displayAt";
 import KakaoMap from "../../Common/KakaoMap/index";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -33,6 +33,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { useLikeCheck } from "../../../Hooks/useLikecheck";
 import { useState } from "react";
+import imageCompression from "browser-image-compression";
 const PostBox = ({ posts, index }) => {
   const navigate = useNavigate();
   const [show, setShow] = useRecoilState(NavState);
@@ -43,7 +44,6 @@ const PostBox = ({ posts, index }) => {
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
   const [heart, Setheart] = useState(false);
-  // console.log(posts);
   return (
     <StyleFeed key={index}>
       <StyleFrofileBox>
@@ -53,7 +53,7 @@ const PostBox = ({ posts, index }) => {
               onClick={() => {
                 setPostData(posts);
                 navigate(`/user/${posts.nickname}`, {
-                  state: { nickname: posts.nickname, profile: posts.profile }
+                  state: { nickname: posts.nickname, profile: posts.profile, userId: posts.userId }
                 });
               }}
             />
@@ -62,7 +62,7 @@ const PostBox = ({ posts, index }) => {
               onClick={() => {
                 setPostData(posts);
                 navigate(`/user/${posts.nickname}`, {
-                  state: { nickname: posts.nickname, profile: posts.profile }
+                  state: { nickname: posts.nickname, profile: posts.profile, userId: posts.userId }
                 });
               }}
               src={posts.profile}

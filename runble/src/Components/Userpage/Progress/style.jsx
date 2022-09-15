@@ -1,35 +1,17 @@
 import styled from "styled-components";
 export const StyleWrap = styled.div`
   width: 100%;
-<<<<<<< HEAD
-=======
-`;
-export const StyleGoal = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0 3rem;
-  align-items: center;
->>>>>>> d17d200b8c98c1a71a38f714bd93c796ea8c7f25
   & > div {
     padding: 2.4rem 1.6rem 2rem;
   }
 `;
 export const StyleProgress = styled.div`
-<<<<<<< HEAD
-  width: 95%;
+  width: 100%;
   height: 23rem;
   background-color: rgba(53, 52, 52, 1);
   box-sizing: border-box;
   border-radius: 12px;
   margin: 0 auto;
-=======
-  height: 30rem;
-  background-color: aliceblue;
-  border: 0.1rem solid black;
-  box-sizing: border-box;
-  margin-top: 5rem;
-  margin: 1rem 3rem;
->>>>>>> d17d200b8c98c1a71a38f714bd93c796ea8c7f25
   & > div {
     display: flex;
     justify-content: center;
@@ -38,17 +20,16 @@ export const StyleProgress = styled.div`
   }
 `;
 export const StyleProgressBox = styled.div`
-<<<<<<< HEAD
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 20px;
+  padding-top: 2rem;
 `;
 export const StyleProgressGoalData = styled.div`
   color: #ffffff;
-  font-size: 16px;
-  margin-bottom: 28px;
+  font-size: 1.6rem;
+  margin-bottom: 2.8rem;
 `;
 export const StyleNextProgress = styled.div`
   display: flex;
@@ -56,7 +37,7 @@ export const StyleNextProgress = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   padding: 0px;
-  gap: 8px;
+  gap: 0.8rem;
   width: 100%;
   height: 230px;
   background: #353434;
@@ -68,20 +49,20 @@ export const StyleSevenProgress = styled.div`
   align-items: center;
   padding: 0px;
   width: 100%;
-  height: 230px;
+  height: 23rem;
 `;
 export const StyleSevenTitle = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 47px;
-  width: 332px;
+  height: 4.7rem;
+  width: 100%;
 
   /* background-color: darkblue; */
 `;
 export const StyleSevenGoal = styled.span`
-  padding: 12px 14px;
+  padding: 1.2rem 1.4rem;
   font-family: "Noto Sans CJK KR";
   font-style: normal;
   font-weight: 400;
@@ -97,7 +78,7 @@ export const StyleGoalDate = styled.span`
   font-size: 12px;
   line-height: 17px;
   text-align: center;
-  padding: 12px 14px;
+  padding: 1.2rem 1.4rem;
 
   color: #ffffff;
 `;
@@ -106,9 +87,9 @@ export const StyleSevenDate = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 10px 14px;
+  padding: 1rem 1.4rem;
   width: 95%;
-  height: 85px;
+  height: 8.5rem;
   & > div {
     display: flex;
     flex-direction: column;
@@ -136,25 +117,30 @@ export const StyleDistanceBox = styled.div`
   align-items: center;
   gap: 22px;
   /* background-color: aliceblue; */
-  width: 344px;
-  height: 96px;
+  /* width: 344px; */
+  height: 9.6rem;
   & > div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     color: white;
+    position: relative;
     /* padding: 0px 78px 18px; */
     padding: 0 40px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     & > span:first-child {
+      /* width: 100%; */
       font-size: 36px;
+      text-align: center;
+      align-items: center;
+      display: flex;
     }
     & > span:nth-child(2) {
+      width: 120%;
       font-size: 12px;
     }
   }
-=======
-  height: 10rem;
-  display: block;
->>>>>>> d17d200b8c98c1a71a38f714bd93c796ea8c7f25
 `;

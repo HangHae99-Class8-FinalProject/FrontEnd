@@ -13,17 +13,11 @@ const UserList = () => {
   const { nickname } = useParams();
   const { ref, inView } = useInView();
   const fetchUserList = async pageParam => {
-    const { data } = await instance.get(
-      `http://54.167.169.43/api/user/post/${nickname}/${pageParam}`
-    );
+    const { data } = await instance.get(`/api/user/post/${nickname}/${pageParam}`);
+
     return data;
   };
-  const [data, status, fetchNextPage, isFetchingNextPage] = useInfinityScroll(
-    "user",
-    fetchUserList,
-    nickname
-  );
-
+  const [data, status, fetchNextPage, isFetchingNextPage] = useInfinityScroll("user", fetchUserList);
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
