@@ -5,7 +5,7 @@ export const StyleWrap = styled.div`
 export const StyleGoal = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 0 30px;
+  margin: 0 3rem;
   align-items: center;
   & > div {
     display: flex;
@@ -13,12 +13,12 @@ export const StyleGoal = styled.div`
   }
 `;
 export const StyleProgress = styled.div`
-  height: 300px;
+  height: 30rem;
   background-color: aliceblue;
-  border: 1px solid black;
+  border: 0.1rem solid black;
   box-sizing: border-box;
-  margin-top: 50px;
-  margin: 10px 30px;
+  margin-top: 5rem;
+  margin: 1rem 3rem;
   & > div {
     display: flex;
     justify-content: center;
@@ -27,6 +27,6 @@ export const StyleProgress = styled.div`
   }
 `;
 export const StyleProgressBox = styled.div`
-  height: 100px;
+  height: 10rem;
   display: block;
 `;

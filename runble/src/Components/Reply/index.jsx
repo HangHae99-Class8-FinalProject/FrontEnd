@@ -58,6 +58,8 @@ const ReplyCom = () => {
           value={replyValue}
           onChange={e => setReplyValue(e.target.value)}
         />
+        <Detail />
+        <input type="text" value={replyValue} onChange={e => setReplyValue(e.target.value)} />
         <button onClick={handleAddreply}>댓글추가</button>
         </ReplyArea>
       </Wrap>
@@ -89,9 +91,14 @@ const ReplyText = styled.div`
   display:inline-block ;
   font-size: 20px ;
   margin:10px 150px;
-  `
+`;
+
+const Detail = styled.div`
+  border: 0.1rem solid black;
+  margin-top: 40rem;
+`;
 
 const ReplyArea = styled.div`
-  margin: 20px;
+  margin: 2rem;
 `;
 

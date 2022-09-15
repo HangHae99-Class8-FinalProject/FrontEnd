@@ -29,6 +29,7 @@ function ReplyComponent() {
     console.log("조회실패");
   };
 
+
 //댓글조회
   const getReply = async pageParam => {
 
@@ -87,6 +88,7 @@ function ReplyComponent() {
     }
   });
 
+
   const handleEditreply = ( commentId,comment) => {
     setEditable(true);
     setClickedId(commentId);
@@ -108,10 +110,7 @@ function ReplyComponent() {
               <N_R>
                 <NickName>{reply.nickname}</NickName>
                 {editable && clickedId === reply.commentId ? (
-                  <input
-                    value={replyValue}
-                    onChange={e => setReplyValue(e.target.value)}
-                  />
+                  <input value={replyValue} onChange={e => setReplyValue(e.target.value)} />
                 ) : (
                   <ReplyContent>
                     <ReplyText>
@@ -146,7 +145,8 @@ function ReplyComponent() {
               <RecommentBtn onClick={()=>{setDisplay(!display)}}>답글0개더보기</RecommentBtn>
               
               {display && (<Recomment id={reply.commentId}/> )}
-   
+
+      
             </Content>
           </div>
         );
@@ -164,6 +164,9 @@ function ReplyComponent() {
 export default ReplyComponent;
 
 const ReplyBox = styled.div`
+  width: 100%;
+  background-color: #eee;
+  margin-bottom: 2rem;
 `;
 
 const Content = styled.div`
@@ -172,8 +175,8 @@ const Content = styled.div`
 
 `;
 const Profile = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 5rem;
+  height: 5rem;
   float: left;
   margin-left:50px ;
   margin-bottom:10px;
@@ -190,8 +193,8 @@ const NickName = styled.p`
 `;
 const ReplyContent = styled.div`
   margin: 10px 0 0 10px;
-  width:90%;
-`;
+  width:90%;`
+
 
 const ReplyText = styled.p`
 `

@@ -1,11 +1,11 @@
 import styled from "styled-components";
 export const StyleGoal = styled.div`
-  height: 300px;
+  height: 30rem;
   background-color: aliceblue;
-  border: 1px solid black;
+  border: 0.1rem solid black;
   box-sizing: border-box;
-  margin-top: 50px;
-  margin: 30px 30px;
+  margin-top: 5rem;
+  margin: 3rem 3rem;
   display: flex;
   flex-direction: column;
   background-color: rgba(53, 52, 52, 1);
@@ -16,15 +16,15 @@ export const StyleGoalButton = styled.button`
 `;
 
 export const StyleModal = styled.div`
-  height: 200px;
+  height: 20rem;
   position: absolute;
-  border: 1px solid black;
-  margin: -280px 70px;
+  border: 0.1rem solid black;
+  margin: -28rem 7rem;
   background-color: rgba(0, 0, 0, 0.65);
 `;
 export const StyleInput = styled.input`
   width: 90%;
-  height: 30px;
-  border-radius: 5px;
-  border: 1px solid black;
+  height: 3rem;
+  border-radius: 0.5rem;
+  border: 0.1rem solid black;
 `;

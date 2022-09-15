@@ -2,10 +2,12 @@ import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 
 import RelatedBar from "../Components/SearchPage/RelatedBar";
-import SearchedHashTag from "../Components/SearchPage/SearchedHasTag";
+import SearchedHashTag from "../Components/SearchPage/SearchedHashTag";
 import SearchedUser from "../Components/SearchPage/SearchedUser";
 import useInput from "../Hooks/useInput";
 import Nav from "../Components/Common/Nav";
+
+import { ReactComponent as SearchIcon } from "../Icons/SearchIcon.svg";
 
 const Search = () => {
   const [searchTag, onChangeSearchTag, setSearchTag] = useInput("");
@@ -40,7 +42,7 @@ const Search = () => {
 
   return (
     <>
-      <form onSubmit={onSubmitSearch}>
+      <SearchHead onSubmit={onSubmitSearch}>
         <SearchTerm
           type="text"
           value={searchTag}
@@ -48,9 +50,9 @@ const Search = () => {
           onClick={onShowRelatedBar}
           onChange={onChangeSearchTag}
         />
-      </form>
-      <CloseButton onClick={onCloseRelatedBar}>&times;</CloseButton>
-      {showRelatedBar && searchTag && (
+        <SearchIcon onClick={onSubmitSearch} />
+      </SearchHead>
+      {selectedTab === "태그" && searchTag && showRelatedBar && (
         <RelatedBar
           searchTag={searchTag}
           setSearchTag={setSearchTag}
@@ -58,22 +60,22 @@ const Search = () => {
           onCloseRelatedBar={onCloseRelatedBar}
         />
       )}
-      {!showRelatedBar && (
-        <TapWrap>
-          <TapButton
-            onClick={onClickUser}
-            style={{ border: selectedTab === "유저" && "none" }}
-          >
-            유저
-          </TapButton>
-          <TapButton
-            onClick={onClickHashTag}
-            style={{ border: selectedTab === "태그" && "none" }}
-          >
-            태그
-          </TapButton>
-        </TapWrap>
-      )}
+      <TapWrap>
+        <TapButton
+          onClick={onClickUser}
+          selectedTab={!selectedTab}
+          style={{ border: selectedTab === "태그" && "none", color: selectedTab === "태그" && "#a1a1a1" }}
+        >
+          유저
+        </TapButton>
+        <TapButton
+          onClick={onClickHashTag}
+          tab={!selectedTab}
+          style={{ border: selectedTab === "유저" && "none", color: selectedTab === "유저" && "#a1a1a1" }}
+        >
+          태그
+        </TapButton>
+      </TapWrap>
       {selectedTab === "유저" && <SearchedUser searhValue={searhValue} />}
       {selectedTab === "태그" && <SearchedHashTag searhValue={searhValue} />}
       <Nav />
@@ -83,41 +85,35 @@ const Search = () => {
 
 export default Search;
 
-const SearchTerm = styled.input`
-  width: 345px;
-  height: 61px;
-  background: #353434;
-  font-size: 16px;
-  color: white;
-  padding: 0 15px;
-  line-height: 18px;
-  font-weight: 400;
+const SearchHead = styled.form`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.6rem;
+  gap: 1.2rem;
+  font-size: 1.2rem;
 `;
 
-const CloseButton = styled.div`
-  position: absolute;
+const SearchTerm = styled.input`
   display: flex;
-  width: 40px;
-  height: 40px;
-  left: 326px;
-  top: 11px;
-  background: #353434;
-  justify-content: center;
-  align-items: center;
-  font-size: 36px;
-  color: white;
+  padding: 0.4rem 1.4rem;
+  width: 83%;
+  height: 3.5rem;
+  background: #e6e6e6;
+  border-radius: 1.2rem;
+  border: none;
 `;
 
 const TapWrap = styled.div`
   display: flex;
-  width: 100%;
-  justify-content: space-between;
+  width: 100vw;
+  height: 3.7rem;
 `;
 
 const TapButton = styled.button`
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-bottom: 4px solid #353434;
+  width: 18.8rem;
+  border: none;
+  background: #ffffff;
+  border-bottom: 0.1rem solid #333333;
 `;

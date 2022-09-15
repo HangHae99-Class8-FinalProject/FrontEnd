@@ -35,7 +35,7 @@ function Recomment({id}) {
   const [data, fetchNextPage, isFetchingNextPage] = useInfinityScroll(
     "GET_RECOMMENT",
     getRecomment,
-   
+    {onSuccess,onError}
   );
 
   console.log(data)
@@ -107,11 +107,11 @@ export default Recomment;
 const ReplyBox = styled.div`
   width: 100%;
   margin-bottom: 20px;
-`;
+`
 
 const Content = styled.div`
-  margin-left: 80px;
-  margin-bottom: 10px;
+  margin-left: 4rem;
+  margin-bottom: 1rem;
 `;
 
 

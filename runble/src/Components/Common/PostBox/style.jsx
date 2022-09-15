@@ -3,10 +3,10 @@ export const StyleFeed = styled.div`
   width: 100%;
   flex-direction: column;
   display: flex;
-  border: 1px solid black;
-  margin-bottom: 50px;
+  border: 0.1rem solid black;
+  margin-bottom: 5rem;
   & > div {
-    padding: 10px;
+    padding: 1rem;
   }
 `;
 export const StyleFrofileBox = styled.div`
@@ -15,10 +15,10 @@ export const StyleFrofileBox = styled.div`
   justify-content: space-between;
 `;
 export const StyleFrofileImg = styled.img`
-  width: 80px;
-  height: 80px;
-  border-radius: 40px;
-  border: 1px solid black;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 4rem;
+  border: 0.1rem solid black;
 `;
 export const StyleFrofile = styled.div`
   flex-direction: row;
@@ -28,7 +28,7 @@ export const StyleRecord = styled.div`
   display: flex;
 `;
 export const StylePath = styled.div`
-  height: 200px;
+  height: 20rem;
   background-color: azure;
 `;
 export const StyleImg = styled.img`
@@ -43,14 +43,14 @@ export const StyleHashBox = styled.div`
 
 export const StyleHash = styled.div`
   width: 100%;
-  height: 25px;
+  height: 2.5rem;
   background-color: #353434;
   color: white;
-  border-radius: 10px;
+  border-radius: 1rem;
   text-align: center;
   justify-content: center;
   align-items: center;
   & > span {
-    font-size: 12px;
+    font-size: 1.2rem;
   }
 `;
