@@ -1,8 +1,8 @@
 import { useMutation, UseMutationResult, useQueryClient } from "react-query";
 import { instance } from "../Utils/Instance";
-const userProfile = async postId => {
-  console.log(postId);
-  return await instance.put(`/api/user/image`);
+const userProfile = async image => {
+  console.log(image);
+  return await instance.put(`/api/user/image`, image);
 };
 
 export const useUserProfileMutation = () => {

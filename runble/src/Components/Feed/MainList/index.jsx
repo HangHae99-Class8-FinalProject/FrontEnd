@@ -1,29 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { NavState, NavStates } from "../../../Recoil/Atoms/OptionAtoms";
-import { NavPostData } from "../../../Recoil/Atoms/OptionAtoms";
+import React, { useEffect } from "react";
 import { instance } from "../../../Utils/Instance";
 import { useInView } from "react-intersection-observer";
-import { useInfiniteQuery } from "react-query";
-import { useRecoilState } from "recoil";
 import PostBox from "../../Common/PostBox";
 import useInfinityScroll from "../../../Hooks/useInfinityScroll";
 
 const fetchPostList = async pageParam => {
-
   const res = await instance.get(`/api/post/new/${pageParam}`);
 
   const { Post, isLast } = res.data;
   return { Post, nextPage: pageParam + 1, isLast };
 };
 
-
 const MainList = () => {
   const { ref, inView } = useInView();
-
-  const [data, fetchNextPage, isFetchingNextPage] = useInfinityScroll(
-    "posts",
-    fetchPostList
-  );
+  const [data, fetchNextPage, isFetchingNextPage] = useInfinityScroll("posts", fetchPostList);
 
   useEffect(() => {
     if (inView) fetchNextPage();

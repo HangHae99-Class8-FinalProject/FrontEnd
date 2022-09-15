@@ -2,10 +2,10 @@ import React, { useRef, useState } from "react";
 import { StyleNav, StyleShow, StyleButton, StyleShowBackgroud } from "./style";
 import { NavState, PreviewImg, NavStates, NavPostData } from "../../../Recoil/Atoms/OptionAtoms";
 import { useRecoilState, useRecoilValue } from "recoil";
-// import { ReactComponent as Home } from "../../../Icons/home.svg";
-// import { ReactComponent as Search } from "../../../Icons/search.svg";
-// import { ReactComponent as Run } from "../../../Icons/run.svg";
-// import { ReactComponent as Mypage } from "../../../Icons/mypage.svg";
+import { ReactComponent as Home } from "../../../Icons/home.svg";
+import { ReactComponent as Search } from "../../../Icons/search.svg";
+import { ReactComponent as Run } from "../../../Icons/run.svg";
+import { ReactComponent as Mypage } from "../../../Icons/mypage.svg";
 import { useUserProfileMutation } from "../../../Hooks/useProfile";
 import S3upload from "react-aws-s3";
 import { instance } from "../../../Utils/Instance";
@@ -81,126 +81,126 @@ const Nav = () => {
     }
   };
 
-  // return (
-  //   <>
-  //     <StyleNav>
-  //       <StyleShowBackgroud Show={show}></StyleShowBackgroud>
+  return (
+    <>
+      <StyleNav>
+        <StyleShowBackgroud Show={show}></StyleShowBackgroud>
 
-  //       {
-  //         {
-  //           option: (
-  //             <StyleShow Show={show}>
-  //               <p
-  //                 onClick={() => {
-  //                   logoutConfirm();
-  //                 }}
-  //               >
-  //                 로그아웃
-  //               </p>
-  //               <p
-  //                 onClick={() => {
-  //                   outConfirm();
-  //                 }}
-  //               >
-  //                 회원탈퇴
-  //               </p>
-  //             </StyleShow>
-  //           ),
-  //           img: (
-  //             <StyleShow Show={show}>
-  //               <p
-  //                 onClick={() => {
-  //                   setPreview(null);
-  //                 }}
-  //               >
-  //                 기본이미지로변경하기
-  //               </p>
-  //               <div>
-  //                 <label htmlFor="inputFile">앨범에서 사진선택하기</label>
-  //                 <input
-  //                   style={{ display: "none" }}
-  //                   onChange={onChangeImg}
-  //                   id="inputFile"
-  //                   type="file"
-  //                   accept="image/*"
-  //                   ref={imgVal}
-  //                 ></input>
-  //               </div>
-  //             </StyleShow>
-  //           ),
-  //           put: (
-  //             <StyleShow Show={show}>
-  //               <p
-  //                 onClick={() => {
-  //                   navigate(`/post/${postData.postId}`, {
-  //                     state: { runLog: postData }
-  //                   });
-  //                 }}
-  //               >
-  //                 수정하기
-  //               </p>
-  //               <p
-  //                 onClick={() => {
-  //                   DeleteConfirm();
-  //                 }}
-  //               >
-  //                 삭제하기
-  //               </p>
-  //             </StyleShow>
-  //           )
-  //         }[navEvent]
-  //       }
+        {
+          {
+            option: (
+              <StyleShow Show={show}>
+                <p
+                  onClick={() => {
+                    logoutConfirm();
+                  }}
+                >
+                  로그아웃
+                </p>
+                <p
+                  onClick={() => {
+                    outConfirm();
+                  }}
+                >
+                  회원탈퇴
+                </p>
+              </StyleShow>
+            ),
+            img: (
+              <StyleShow Show={show}>
+                <p
+                  onClick={() => {
+                    setPreview(null);
+                  }}
+                >
+                  기본이미지로변경하기
+                </p>
+                <div>
+                  <label htmlFor="inputFile">앨범에서 사진선택하기</label>
+                  <input
+                    style={{ display: "none" }}
+                    onChange={onChangeImg}
+                    id="inputFile"
+                    type="file"
+                    accept="image/*"
+                    ref={imgVal}
+                  ></input>
+                </div>
+              </StyleShow>
+            ),
+            put: (
+              <StyleShow Show={show}>
+                <p
+                  onClick={() => {
+                    navigate(`/post/${postData.postId}`, {
+                      state: { runLog: postData }
+                    });
+                  }}
+                >
+                  수정하기
+                </p>
+                <p
+                  onClick={() => {
+                    DeleteConfirm();
+                  }}
+                >
+                  삭제하기
+                </p>
+              </StyleShow>
+            )
+          }[navEvent]
+        }
 
-  //       <StyleButton>
-  //         <div>
-  //           {state === "feed" ? (
-  //             <Home
-  //               stroke="#D9D9D9"
-  //               onClick={() => {
-  //                 navigate("/feed", { state: "feed" });
-  //               }}
-  //             />
-  //           ) : (
-  //             <Home
-  //               onClick={() => {
-  //                 navigate("/feed", { state: "feed" });
-  //               }}
-  //               stroke="#808080"
-  //             />
-  //           )}
+        <StyleButton>
+          <div>
+            {state === "feed" ? (
+              <Home
+                stroke="#D9D9D9"
+                onClick={() => {
+                  navigate("/feed", { state: "feed" });
+                }}
+              />
+            ) : (
+              <Home
+                onClick={() => {
+                  navigate("/feed", { state: "feed" });
+                }}
+                stroke="#808080"
+              />
+            )}
 
-  //           <Search
-  //             onClick={() => {
-  //               navigate("/search");
-  //             }}
-  //             stroke="#808080"
-  //           />
+            <Search
+              onClick={() => {
+                navigate("/search");
+              }}
+              stroke="#808080"
+            />
 
-  //           <Run
-  //             onClick={() => {
-  //               navigate("/record");
-  //             }}
-  //           />
-  //           {state === "user" ? (
-  //             <Mypage
-  //               stroke="#D9D9D9"
-  //               onClick={() => {
-  //                 navigate(`/user/${nickname}`, { state: "user" });
-  //               }}
-  //             />
-  //           ) : (
-  //             <Mypage
-  //               stroke="#808080"
-  //               onClick={() => {
-  //                 navigate(`/user/${nickname}`, { state: "user" });
-  //               }}
-  //             />
-  //           )}
-  //         </div>
-  //       </StyleButton>
-  //     </StyleNav>
-  //   </>
-  // );
+            <Run
+              onClick={() => {
+                navigate("/record");
+              }}
+            />
+            {state === "user" ? (
+              <Mypage
+                stroke="#D9D9D9"
+                onClick={() => {
+                  navigate(`/user/${nickname}`, { state: "user" });
+                }}
+              />
+            ) : (
+              <Mypage
+                stroke="#808080"
+                onClick={() => {
+                  navigate(`/user/${nickname}`, { state: "user" });
+                }}
+              />
+            )}
+          </div>
+        </StyleButton>
+      </StyleNav>
+    </>
+  );
 };
 
 export default Nav;

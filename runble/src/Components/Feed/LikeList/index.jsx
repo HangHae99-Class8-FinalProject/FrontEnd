@@ -19,7 +19,7 @@ const LikeList = () => {
     "like",
     fetchLikeList
   );
-
+  console.log(isFetchingNextPage);
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);

@@ -1,8 +1,11 @@
 import styled from "styled-components";
 export const StyleHeader = styled.div`
-  width: 100%;
-  height: 6rem;
-  background-color: aliceblue;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px 0px;
+  gap: 10px;
 `;
 export const StyleFlexHeader = styled.div`
   width: 100%;
@@ -12,8 +15,5 @@ export const StyleFlexHeader = styled.div`
   text-align: center;
 `;
 export const Logo = styled.div`
-  width: 5rem;
-  height: 5rem;
-
   margin: 0 auto;
 `;

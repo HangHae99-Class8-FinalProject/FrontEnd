@@ -123,10 +123,7 @@ const RunningMap = ({ stopInterval, endRun }) => {
         draggable={false}
       >
         {state.isLoading && (
-          <MapMarker
-            position={state.center}
-            image={{ src: imageSrc, size: { width: 36, height: 36 } }}
-          />
+          <MapMarker position={state.center} image={{ src: imageSrc, size: { width: 36, height: 36 } }} />
         )}
         <Polyline
           path={runLog.path}
