@@ -12,11 +12,7 @@ import {
   StyleSevenDate,
   StyleDistanceBox
 } from "./style";
-import {
-  CircularProgressbar,
-  buildStyles,
-  CircularProgressbarWithChildren
-} from "react-circular-progressbar";
+import { CircularProgressbar, buildStyles, CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import moment from "moment";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -44,9 +40,7 @@ const Progress = ({ goalData }) => {
           >
             <SwiperSlide>
               <StyleProgressBox>
-                <StyleProgressGoalData>
-                  {goalData.getUserInfo.goal}km 달성까지
-                </StyleProgressGoalData>
+                <StyleProgressGoalData>{goalData.getUserInfo.goal}km 달성까지</StyleProgressGoalData>
                 <div>
                   <CircularProgressbarWithChildren
                     value={percentage}
@@ -76,9 +70,7 @@ const Progress = ({ goalData }) => {
               <StyleNextProgress>
                 <StyleSevenProgress>
                   <StyleSevenTitle>
-                    <StyleSevenGoal>
-                      한주간{goalData.getUserInfo.goal}km런닝
-                    </StyleSevenGoal>
+                    <StyleSevenGoal>한주간{goalData.getUserInfo.goal}km런닝</StyleSevenGoal>
                     <StyleGoalDate>{goalDate}</StyleGoalDate>
                   </StyleSevenTitle>
                   <StyleSevenDate>

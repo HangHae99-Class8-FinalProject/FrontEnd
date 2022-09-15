@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useCallback,
-  useRef,
-  useLayoutEffect,
-  useEffect
-} from "react";
+import React, { useState, useCallback, useRef, useLayoutEffect, useEffect } from "react";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 
@@ -13,13 +7,9 @@ import { postData } from "../../../Recoil/Atoms/PostData";
 
 const AddContent = ({ merge, prevContent }) => {
   const [content, onChangeContent] = useInput(prevContent || "");
-  const [showWrite, setShowWrite] = useState(false);
+
   const [post, setPost] = useRecoilState(postData);
   const textRef = useRef(null);
-
-  const onShowWrite = useCallback(() => {
-    setShowWrite(true);
-  }, []);
 
   useLayoutEffect(() => {
     if (textRef.current !== null) textRef.current.focus();
@@ -35,40 +25,24 @@ const AddContent = ({ merge, prevContent }) => {
   }, [merge]);
 
   return (
-    <>
-      {!showWrite ? (
-        <NonWrite onClick={onShowWrite}>내용 작성</NonWrite>
-      ) : (
-        <Write value={content} ref={textRef} onChange={onChangeContent}></Write>
-      )}
-    </>
+    <ContentBox>
+      <Write value={content} ref={textRef} onChange={onChangeContent}></Write>
+    </ContentBox>
   );
 };
 
 export default AddContent;
 
-const NonWrite = styled.div`
-  width: 57px;
-  height: 15px;
-  left: 28px;
-  top: 463px;
-
-  font-family: "HYHeadLine-Medium";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 15px;
-
-  text-align: center;
-  color: #000000;
+const ContentBox = styled.div`
+  padding: 2rem 1.6rem;
+  height: 22rem;
 `;
 
 const Write = styled.textarea`
-  position: absolute;
-  width: 315px;
-  height: 236px;
-  left: 31px;
-  top: 458px;
-
-  background: #ebebeb;
+  background: #e6e6e6;
+  border-radius: 0.4rem;
+  padding: 1rem 0 1rem 1rem;
+  gap: 1rem;
+  width: 34.3rem;
+  height: 18rem;
 `;

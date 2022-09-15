@@ -10,12 +10,10 @@ const fetchPostList = async pageParam => {
   const { Post, isLast } = res.data;
   return { Post, nextPage: pageParam + 1, isLast };
 };
+
 const MainList = () => {
   const { ref, inView } = useInView();
-  const [data, fetchNextPage, isFetchingNextPage] = useInfinityScroll(
-    "posts",
-    fetchPostList
-  );
+  const [data, fetchNextPage, isFetchingNextPage] = useInfinityScroll("posts", fetchPostList);
 
   useEffect(() => {
     if (inView) fetchNextPage();

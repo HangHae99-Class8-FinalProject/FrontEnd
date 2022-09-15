@@ -1,16 +1,11 @@
 import React, { useRef, useState } from "react";
 import { StyleNav, StyleShow, StyleButton, StyleShowBackgroud } from "./style";
-import {
-  NavState,
-  PreviewImg,
-  NavStates,
-  NavPostData
-} from "../../../Recoil/Atoms/OptionAtoms";
+import { NavState, PreviewImg, NavStates, NavPostData } from "../../../Recoil/Atoms/OptionAtoms";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { ReactComponent as Home } from "../../../icons/home.svg";
-import { ReactComponent as Search } from "../../../icons/search.svg";
-import { ReactComponent as Run } from "../../../icons/run.svg";
-import { ReactComponent as Mypage } from "../../../icons/mypage.svg";
+import { ReactComponent as Home } from "../../../Icons/home.svg";
+import { ReactComponent as Search } from "../../../Icons/search.svg";
+import { ReactComponent as Run } from "../../../Icons/run.svg";
+import { ReactComponent as Mypage } from "../../../Icons/mypage.svg";
 import { useUserProfileMutation } from "../../../Hooks/useProfile";
 import S3upload from "react-aws-s3";
 import { instance } from "../../../Utils/Instance";
@@ -73,11 +68,7 @@ const Nav = () => {
 
   const outConfirm = () => {
     if (confirm("회원탈퇴하시겠습니까")) {
-      return (
-        instance.delete("http://54.167.169.43/api/user"),
-        alert("회원탈퇴되었습니다"),
-        navigate("/")
-      );
+      return instance.delete("http://54.167.169.43/api/user"), alert("회원탈퇴되었습니다"), navigate("/");
     } else {
       return;
     }

@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
-
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import imageCompression from "browser-image-compression";
@@ -10,13 +9,19 @@ import { S3config } from "../../Utils/S3Config";
 import { instance } from "../../Utils/Instance";
 import useQueryDebounce from "../../Hooks/useQueryDebounce";
 
+import { ReactComponent as SmallCamera } from "../../Icons/sm-camera.svg";
+import Profile from "../../Icons/profile.svg";
+
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 function ProfileUpload({ userData }) {
+  console.log(userData);
   const [nickname, setNickname] = useState("");
-  const [previewImage, setPrevieImage] = useState("");
+  const [previewImage, setPrevieImage] = useState(Profile);
   const [image, setImage] = useState(null);
   const [isLodded, setIsLodded] = useState("");
+  const [error, setError] = useState(false);
+
   const fileUpload = useRef(null);
   const navigate = useNavigate();
 
@@ -65,13 +70,12 @@ function ProfileUpload({ userData }) {
     return data;
   };
 
-  const nicknameCheck = async () => {
-    const { data } = await instance.post(
-      `/api/user/check?nickname=${debounceNick}`
-    );
+  const nicknameCheck = async debounceNick => {
+    const { data } = await instance.post(`/api/user/check?nickname=${debounceNick}`);
+    return data;
   };
 
-  const { mutate: signUp, isLoading } = useMutation(signupUser, {
+  const { mutate: signUp } = useMutation(signupUser, {
     onSuccess: data => {
       console.log(data);
       const token = data.token;
@@ -88,14 +92,12 @@ function ProfileUpload({ userData }) {
     }
   });
 
-  const { mutate: nickNameCheck, data: checkResult } =
-    useMutation(nicknameCheck);
+  const { mutate: duplicateCheck, data: checkResult } = useMutation(nicknameCheck);
 
   const onSubmitProfile = () => {
     submitImage();
   };
 
-  //
   useEffect(() => {
     if (isLodded) {
       signUp();
@@ -104,34 +106,36 @@ function ProfileUpload({ userData }) {
 
   useEffect(() => {
     if (debounceNick) {
-      nickNameCheck();
+      duplicateCheck(debounceNick, {
+        onSuccess: data => {
+          if (data.duplicate) {
+            setError(true);
+          } else {
+            setError(false);
+          }
+        }
+      });
     }
   }, [debounceNick]);
 
   return (
     <>
-      {isLoading && <div>회원가입 중</div>}
-      <label htmlFor="imgFile">
-        <Image src={previewImage} />
+      <label>
+        <Image src={previewImage}></Image>
+        <CameraIcon>
+          <SmallCamera />
+        </CameraIcon>
+        <FileBox type="file" accept="image/*" name="profile_Img" ref={fileUpload} onChange={chgPreview} id="imgFile" />
       </label>
-      <FileBox
-        type="file"
-        accept="image/*"
-        name="profile_Img"
-        ref={fileUpload}
-        onChange={chgPreview}
-        id="imgFile"
-      />
-      <NicInput
-        onChange={onChangeNickName}
-        value={nickname}
-        type="text"
-        maxLength={5}
-        minLength={2}
-      />
-      <p>닉네임은 한글 2-5자 이내로 입력해주세요</p>
-      {checkResult?.duplicate && <div>닉네임 중복됨</div>}
-      <JoinBtn onClick={onSubmitProfile}>JOIN US</JoinBtn>
+      <NickNameInput onChange={onChangeNickName} value={nickname} type="text" maxLength={5} minLength={2} />
+      {!error ? (
+        <NickForm>닉네임은 한글 2-5자 이내로 입력해주세요</NickForm>
+      ) : (
+        <NickForm style={{ color: "red" }}>이미 존재하는 닉네임입니다.</NickForm>
+      )}
+      <JoinBtn onClick={onSubmitProfile} disabled={error}>
+        <p>가입하기</p>
+      </JoinBtn>
     </>
   );
 }
@@ -139,24 +143,59 @@ function ProfileUpload({ userData }) {
 export default ProfileUpload;
 
 const Image = styled.img`
-  width: 200px;
-  height: 236px;
-  display: block;
-  margin: 100px auto;
+  width: 16rem;
+  height: 16rem;
+  margin: 0rem 10.8rem 7.2rem;
 `;
+
 const FileBox = styled.input`
   display: none;
 `;
-const NicInput = styled.input`
-  display: block;
-  margin: 0 auto;
+
+const CameraIcon = styled.div`
+  position: absolute;
+  width: 4.8rem;
+  height: 4.8rem;
+  left: 21.4rem;
+  top: 34.6rem;
 `;
-const JoinBtn = styled.div`
-  width: 100%;
-  height: 100px;
-  color: white;
-  font-size: 80px;
-  background-color: black;
+
+const NickNameInput = styled.input`
+  border: none;
+  border-bottom: 0.1rem solid #e6e6e6;
+  box-sizing: border-box;
+  width: 21.4rem;
+  height: 4.1rem;
+  margin: 0 8rem 1.2rem;
   text-align: center;
-  margin-top: 450px;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const NickForm = styled.p`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.7rem;
+  text-align: center;
+  color: #b3b3b3;
+`;
+
+const JoinBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  height: 9.7rem;
+  bottom: 0rem;
+  background: #4d4d4d;
+  & p {
+    font-size: 2.4rem;
+    text-align: center;
+    color: #ffffff;
+  }
+  &:disabled {
+    background: #b3b3b3;
+  }
 `;

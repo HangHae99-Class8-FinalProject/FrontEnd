@@ -119,7 +119,7 @@ export const StyleHash = styled.div`
   border-radius: 20px;
 
   & > span {
-    font-size: 12px;
+    font-size: 1.2rem;
   }
 `;
 export const StyleGood = styled.div`

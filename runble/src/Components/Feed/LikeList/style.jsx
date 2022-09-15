@@ -3,10 +3,10 @@ export const StyleFeed = styled.div`
   width: 100%;
   flex-direction: column;
   display: flex;
-  border: 1px solid black;
-  margin-bottom: 50px;
+  border: 0.1rem solid black;
+  margin-bottom: 5rem;
   & > div {
-    padding: 10px;
+    padding: 1rem;
   }
 `;
 export const StyleFrofileBox = styled.div`
@@ -22,7 +22,7 @@ export const StyleRecord = styled.div`
   display: flex;
 `;
 export const StylePath = styled.div`
-  height: 200px;
+  height: 20rem;
   background-color: azure;
 `;
 export const StyleImg = styled.img`

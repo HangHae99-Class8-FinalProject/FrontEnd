@@ -1,86 +1,117 @@
-import { instance } from "../../Utils/Instance";
-import { useQuery } from "react-query";
-import { useState } from "react";
-import Lion from "./lion.png";
+import React,{ useState,useEffect } from "react";
+import { useMutation,useQueryClient,useQuery } from "react-query";
 import styled from "styled-components";
+import { useInView } from "react-intersection-observer";
 
-function Recomment({ replyCount, id }) {
-  console.log(id);
+import useInfinityScroll from "../../Hooks/useInfinityScroll";
+import {addReply } from "../../Hooks/useRecomment";
+import RecommentItem  from "./recommentItem"
+import {instance} from "../../Utils/Instance"
+
+
+function Recomment({id}) {
+
+  const [ref, inView] = useInView();
+
   const onSuccess = () => {
-    console.log("perform side effect after data fetching");
+    console.log("조회성공");
   };
 
   const onError = () => {
-    console.log("perform side effect after encountering error");
+    console.log("조회실패");
   };
 
-  const getrecommentReply = async () => {
-    return await instance.get("http://localhost:8001/Recomment");
-  };
-  const { isLoading, data, isError, error, isFetching, refetch } = useQuery(
+  const [recommentId,setRecommentId] = useState(0)
+
+  const getRecomment = async (pageParam) => {
+    setRecommentId(recommentId+1)
+    console.log(pageParam)
+    const response = await instance.get(`http://54.167.169.43/api/comment/${id}/${recommentId}/${pageParam}`);
+    console.log(response.data)
+    return response.data;
+  }
+
+
+  const [data, fetchNextPage, isFetchingNextPage] = useInfinityScroll(
     "GET_RECOMMENT",
-    getrecommentReply,
-    {
-      onSuccess,
-      onError
-    }
+    getRecomment,
+    {onSuccess,onError}
   );
 
-  console.log(data?.data[0].commentId);
-  const [display, setDisplay] = useState(false);
+  console.log(data)
+
+  useEffect(() => {
+    if (inView) fetchNextPage();
+  }, [inView]);
+
+  const queryClient = useQueryClient();
+  const [replyValue, setReplyValue] = useState("");
+
+    //대댓글 추가
+    const addReplyData = useMutation((reply)=>addReply(reply),{
+      onSuccess: data => {
+          console.log(data);
+          queryClient.invalidateQueries("GET_RECOMMENT")
+      },
+      onError: error => {
+          console.log(error);
+        },
+    })
+
+  const handleAddreply = recommentId => {
+    console.log(recommentId)
+    addReplyData.mutate({
+      commentId: id,
+      recommentId:recommentId,
+      comment: replyValue,
+    });
+    setReplyValue("");
+  };
+
+
   return (
-    <>
-      <button
-        onClick={() => {
-          setDisplay(!display);
-        }}
-      >
-        답글{replyCount}개 보기
-      </button>
-      {display && (
-        <ReplyBox>
-          {data?.data.map(reply => {
+      <ReplyBox>
+      {data?.pages.map((page, i)=>{
+        console.log(page.Recomment[i].commentId)
+         return  (
+          <React.Fragment key={i}>
+               <input
+            type="text"
+            value={replyValue}
+            onChange={e => setReplyValue(e.target.value)}
+          />
+          <button onClick={()=>handleAddreply(page.Recomment[i].recommentId)}>대댓글추가</button>
+          {page?.Recomment.map(reply => {
+            console.log(reply)
             if (id === reply.commentId) {
               return (
                 <Content key={reply.recommentId}>
-                  <Profile src={Lion}></Profile>
-                  <N_R>
-                    <NickName>{reply.nickname}</NickName>
-                    <ReplyContent>{reply.comment}</ReplyContent>
-                  </N_R>
+                
+                  <RecommentItem data={reply}/>
+          
                 </Content>
               );
             }
           })}
-        </ReplyBox>
-      )}
-    </>
-  );
+          </React.Fragment>
+        )
+      
+      
+      })}  
+  </ReplyBox>
+  )
 }
 
 export default Recomment;
 
 const ReplyBox = styled.div`
   width: 100%;
-  background-color: #eee;
   margin-bottom: 20px;
-`;
+`
 
 const Content = styled.div`
-  margin-left: 40px;
-  margin-bottom: 10px;
-`;
-const Profile = styled.img`
-  width: 50px;
-  height: 50px;
-  float: left;
+  margin-left: 4rem;
+  margin-bottom: 1rem;
 `;
 
-const N_R = styled.div``;
-const NickName = styled.h4`
-  margin: 0 10px;
-`;
-const ReplyContent = styled.p`
-  display: inline-block;
-  margin: 10px 0 0 10px;
-`;
+

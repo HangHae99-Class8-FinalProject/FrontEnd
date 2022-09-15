@@ -19,7 +19,7 @@ export const UserHeader = styled.div`
   width: 37.5rem;
   height: 43px;
   background: #ffffff;
-  border-bottom: 1px solid #e6e6e6;
+  border-bottom: 0.1rem solid #e6e6e6;
 `;
 export const StyleUsrBox = styled.div`
   display: flex;

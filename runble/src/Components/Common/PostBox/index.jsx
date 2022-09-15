@@ -1,11 +1,7 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
-import {
-  NavState,
-  NavStates,
-  NavPostData
-} from "../../../Recoil/Atoms/OptionAtoms";
+import { NavState, NavStates, NavPostData } from "../../../Recoil/Atoms/OptionAtoms";
 import {
   StyleFeed,
   StyleFrofileBox,
@@ -25,10 +21,10 @@ import {
   StyleComment,
   StyleTime
 } from "./style";
-import { ReactComponent as View } from "../../../icons/view.svg";
-import { ReactComponent as Heart } from "../../../icons/heart.svg";
-import { ReactComponent as CommentIcon } from "../../../icons/comment.svg";
-import { ReactComponent as Profile } from "../../../icons/profile.svg";
+import { ReactComponent as View } from "../../../Icons/view.svg";
+import { ReactComponent as Heart } from "../../../Icons/heart.svg";
+import { ReactComponent as CommentIcon } from "../../../Icons/comment.svg";
+import { ReactComponent as Profile } from "../../../Icons/profile.svg";
 import displayedAt from "../../../Utils/displayAt";
 import KakaoMap from "../../Common/KakaoMap/index";
 import { Swiper, SwiperSlide } from "swiper/react";

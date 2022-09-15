@@ -1,17 +1,35 @@
 import styled from "styled-components";
 export const StyleWrap = styled.div`
   width: 100%;
+<<<<<<< HEAD
+=======
+`;
+export const StyleGoal = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 0 3rem;
+  align-items: center;
+>>>>>>> d17d200b8c98c1a71a38f714bd93c796ea8c7f25
   & > div {
     padding: 2.4rem 1.6rem 2rem;
   }
 `;
 export const StyleProgress = styled.div`
+<<<<<<< HEAD
   width: 95%;
   height: 23rem;
   background-color: rgba(53, 52, 52, 1);
   box-sizing: border-box;
   border-radius: 12px;
   margin: 0 auto;
+=======
+  height: 30rem;
+  background-color: aliceblue;
+  border: 0.1rem solid black;
+  box-sizing: border-box;
+  margin-top: 5rem;
+  margin: 1rem 3rem;
+>>>>>>> d17d200b8c98c1a71a38f714bd93c796ea8c7f25
   & > div {
     display: flex;
     justify-content: center;
@@ -20,6 +38,7 @@ export const StyleProgress = styled.div`
   }
 `;
 export const StyleProgressBox = styled.div`
+<<<<<<< HEAD
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -134,4 +153,8 @@ export const StyleDistanceBox = styled.div`
       font-size: 12px;
     }
   }
+=======
+  height: 10rem;
+  display: block;
+>>>>>>> d17d200b8c98c1a71a38f714bd93c796ea8c7f25
 `;

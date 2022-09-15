@@ -1,8 +1,4 @@
 import styled from "styled-components";
-import { ReactComponent as Home } from "../../../icons/home.svg";
-import { ReactComponent as Search } from "../../../icons/search.svg";
-import { ReactComponent as Run } from "../../../icons/run.svg";
-import { ReactComponent as Mypage } from "../../../icons/mypage.svg";
 export const StyleNav = styled.div`
   width: 100%;
   position: fixed;
@@ -63,5 +59,28 @@ export const StyleButton = styled.div`
       order: 0;
       flex-grow: 0;
     }
+  }
+`;
+
+export const ModalBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  width: 30.4rem;
+  height: 17.4rem;
+  & p {
+    margin: 4rem 0rem;
+  }
+  & button {
+    border: none;
+    background-color: white;
+    font-size: 1.6rem;
+  }
+  & div {
+    gap: 10rem;
+    display: flex;
   }
 `;

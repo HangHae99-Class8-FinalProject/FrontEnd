@@ -1,57 +1,72 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Lion from "./lion.png";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useInView } from "react-intersection-observer";
+import { useMutation, useQueryClient } from "react-query";
+
+import { editReply, delReply } from "../../Hooks/useReply";
 import Recomment from "./Recomment";
-
+import useInfinityScroll from "../../Hooks/useInfinityScroll";
 import { instance } from "../../Utils/Instance";
-import { editReply } from "../../Hooks/useReply";
-
-const getReply = async () => {
-  return await instance.get("http://localhost:8000/Comment");
-};
+import { useParams } from "react-router-dom";
+import displayedAt from "../../Utils/displayAt";
 
 function ReplyComponent() {
+  const [display, setDisplay] = useState(false);
+
+  const [ref, inView] = useInView();
+
   const queryClient = useQueryClient();
 
+  const { id: postId } = useParams();
+
   const onSuccess = () => {
-    console.log("perform side effect after data fetching");
+    console.log("조회성공");
   };
 
   const onError = () => {
-    console.log("perform side effect after encountering error");
+    console.log("조회실패");
   };
 
-  const { isLoading, data, isError, error, isFetching, refetch } = useQuery(
-    "GET_REPLY",
-    getReply,
-    {
-      onSuccess,
-      onError
-    }
-  );
+  //댓글조회
+  const getReply = async pageParam => {
+    const response = await instance.get(`http://54.167.169.43/api/comment/${postId}/${pageParam}`);
+    const { Comment, isLast } = response.data;
+    console.log(pageParam);
+    return { Comment, nextPage: pageParam + 1, isLast };
+  };
 
-  //   const delReplyData = useMutation((commentId)=>delReply(commentId),{
-  //     onSuccess: (commentId) => {
-  //         console.log(commentId);
-  //         queryClient.invalidateQueries("GET_REPLY")
-  //     },
-  //     onError: (error) => {
-  //         console.log(error);
-  //       },
-  //   })
+  const [data, fetchNextPage, isFetchingNextPage] = useInfinityScroll("GET_REPLY", getReply, {
+    onSuccess,
+    onError
+  });
+
+  console.log(data?.pages[0].Comment[0].commentId);
+
+  useEffect(() => {
+    if (inView) fetchNextPage();
+  }, [inView]);
+
+  //댓글삭제
+  const delReplyData = useMutation(commentId => delReply(commentId), {
+    onSuccess: data => {
+      console.log(data);
+      queryClient.invalidateQueries("GET_REPLY");
+    },
+    onError: error => {
+      console.log(error);
+    }
+  });
 
   //댓글 삭제 버튼
-  const handleDelreply = commentId => {
-    console.log(commentId);
+  const handleDelreply = id => {
+    console.log(id);
+    delReplyData.mutate(id);
   };
 
+  //댓글 수정
   const [editable, setEditable] = useState(false);
-  const [clickedId, setClickedId] = useState("");
-  const [replyValue, setReplyValue] = useState(data?.data.comment);
-  const [nickValue, setNicValue] = useState(data?.data.nickname);
-  const [profileValue, setProfileValue] = useState(data?.data.profile);
-  const [recoCntValue, setRecoCntValue] = useState(data?.data.recommentCount);
+  const [clickedId, setClickedId] = useState(data?.commentId);
+  const [replyValue, setReplyValue] = useState("");
 
   const editReplyData = useMutation(reply => editReply(reply), {
     onSuccess: data => {
@@ -64,76 +79,58 @@ function ReplyComponent() {
     }
   });
 
-  const handleEditreply = (
-    commentId,
-    nickname,
-    profile,
-    comment,
-    recommentCount
-  ) => {
-    console.log(nickname);
+  const handleEditreply = (commentId, comment) => {
     setEditable(true);
     setClickedId(commentId);
-    setNicValue(nickname);
-    setProfileValue(profile);
     setReplyValue(comment);
-    setRecoCntValue(recommentCount);
-
-    const initalState = {
-      commentId: clickedId,
-      nickname: nickValue,
-      profile: profileValue,
-      comment: replyValue,
-      recommentCount: recoCntValue
-    };
-    editReplyData.mutate(initalState);
+    console.log(replyValue);
+    editReplyData.mutate({ comment: replyValue, commentId: clickedId });
   };
 
   return (
     <ReplyBox>
-      {data?.data.map(reply => {
-        console.log(reply);
+      {data?.pages.map((page, i) => {
         return (
-          <div key={reply.commentId}>
-            <Content>
-              <Profile src={Lion}></Profile>
-              <N_R>
-                <NickName>{reply.nickname}</NickName>
-                {editable && clickedId === reply.commentId ? (
-                  <input
-                    value={replyValue}
-                    onChange={e => setReplyValue(e.target.value)}
-                  />
-                ) : (
-                  <ReplyContent>{reply.comment}</ReplyContent>
-                )}
-              </N_R>
-              <button
-                onClick={() =>
-                  handleEditreply(
-                    reply.commentId,
-                    reply.nickname,
-                    reply.profile,
-                    reply.comment,
-                    reply.recommentCount
-                  )
-                }
-              >
-                {editable && clickedId === reply.commentId ? (
-                  <span>제출하기</span>
-                ) : (
-                  <span>수정하기</span>
-                )}
-              </button>
-              <button onClick={handleDelreply(reply.commentId)}>
-                삭제하기
-              </button>
-            </Content>
+          <React.Fragment key={i}>
+            {page?.Comment?.map((reply, i) => {
+              return (
+                <div key={i}>
+                  <Content>
+                    <Profile src={reply.image}></Profile>
+                    <N_R>
+                      <NickName>{reply.nickname}</NickName>
+                      {editable && clickedId === reply.commentId ? (
+                        <input value={replyValue} onChange={e => setReplyValue(e.target.value)} />
+                      ) : (
+                        <ReplyContent>
+                          <ReplyText>{reply.comment}</ReplyText>
+                        </ReplyContent>
+                      )}
+                    </N_R>
+                    <button onClick={() => handleEditreply(reply.commentId, reply.comment)}>
+                      {editable && clickedId === reply.commentId ? <span>제출하기</span> : <span>수정하기</span>}
+                    </button>
+                    <button onClick={() => handleDelreply(reply.commentId)}>삭제하기</button>
+                    <Time>{displayedAt(reply.createdAt)}</Time>
+                    <Write>답글달기</Write>
 
-            <Recomment replyCount={reply.recommentCount} id={reply.commentId} />
-          </div>
+                    <RecommentBtn
+                      onClick={() => {
+                        setDisplay(!display);
+                      }}
+                    >
+                      답글0개더보기
+                    </RecommentBtn>
+
+                    {display && <Recomment id={reply.commentId} />}
+                  </Content>
+                </div>
+              );
+            })}
+          </React.Fragment>
         );
       })}
+      {isFetchingNextPage ? <span>로딩중입니다</span> : <div ref={ref}></div>}
     </ReplyBox>
   );
 }
@@ -143,21 +140,73 @@ export default ReplyComponent;
 const ReplyBox = styled.div`
   width: 100%;
   background-color: #eee;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 `;
 
-const Content = styled.div``;
+const Content = styled.div`
+  border-bottom: 1px solid #111;
+  height: auto;
+`;
 const Profile = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 5rem;
+  height: 5rem;
   float: left;
+  margin-left: 50px;
+  margin-bottom: 10px;
 `;
 
-const N_R = styled.div``;
-const NickName = styled.h4`
-  margin: 0 10px;
+const N_R = styled.div`
+  width: 80%;
+  margin-left: auto;
+  word-break: break-all;
 `;
-const ReplyContent = styled.p`
-  display: inline-block;
+
+const NickName = styled.p`
+  margin: 10px;
+`;
+const ReplyContent = styled.div`
   margin: 10px 0 0 10px;
+  width: 90%;
+`;
+
+const ReplyText = styled.p``;
+
+const Time = styled.div`
+  display: inline-block;
+  color: #999999;
+  font-family: "Noto Sans CJK KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 14px;
+  position: relative;
+  left: 110px;
+`;
+
+const Write = styled.button`
+  color: #999999;
+  font-family: "Noto Sans CJK KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 14px;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  position: relative;
+  left: 130px;
+`;
+
+const RecommentBtn = styled.button`
+  color: #999999;
+  font-family: "Noto Sans CJK KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 14px;
+  background-color: white;
+  border: 0;
+  outline: 0;
+  position: relative;
+  left: 150px;
 `;

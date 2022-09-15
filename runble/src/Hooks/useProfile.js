@@ -4,6 +4,7 @@ const userProfile = async image => {
   console.log(image);
   return await instance.put(`/api/user/image`, image);
 };
+
 export const useUserProfileMutation = () => {
   const queryClient = useQueryClient();
   return useMutation(userProfile, {
