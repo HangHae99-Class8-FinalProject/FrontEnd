@@ -30,6 +30,7 @@ const PostBox = ({ posts, index }) => {
   const accessToken = localStorage.getItem("userData");
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
+  console.log(posts)
   return (
     <StyleFeed key={index}>
       <div>
@@ -110,7 +111,16 @@ const PostBox = ({ posts, index }) => {
           </div>
           <p
             onClick={() => {
-              navigate(`/reply/${posts.postId}`);
+              navigate(`/reply/${posts.postId}`,{
+                state:{
+                  postId: posts.postId,
+                  nickname: posts.nickname,
+                  content: posts.content,
+                  createdAt: posts.createdAt,
+                  like:posts.like,
+                  profile : posts.profile
+                }
+              });
             }}
           >
             댓글1개<span>모두보기</span>

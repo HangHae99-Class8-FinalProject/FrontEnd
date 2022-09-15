@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
-
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import imageCompression from "browser-image-compression";
@@ -15,12 +14,16 @@ import Profile from "../../Icons/profile.svg";
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
+
 function ProfileUpload({ userData }) {
+
+    console.log(userData)
   const [nickname, setNickname] = useState("");
   const [previewImage, setPrevieImage] = useState(Profile);
   const [image, setImage] = useState(null);
   const [isLodded, setIsLodded] = useState("");
   const [error, setError] = useState(false);
+
   const fileUpload = useRef(null);
   const navigate = useNavigate();
 
@@ -140,6 +143,7 @@ function ProfileUpload({ userData }) {
 }
 
 export default ProfileUpload;
+
 
 const Image = styled.img`
   width: 16rem;

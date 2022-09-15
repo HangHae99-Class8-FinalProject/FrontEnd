@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Map, MapMarker, Polyline } from "react-kakao-maps-sdk";
 import { useRecoilState, useRecoilValue } from "recoil";
+
 import { runData } from "../../../Recoil/Atoms/RunData";
 import useInterval from "../../../Hooks/useInterval";
-
-import calcDistance from "../../../Utils/ClacDistnace";
+import calcDistance from "../../../Utils/clacDistnace";
 import Marker from "../../../Icons/Map_Marker.svg";
 import Loading from "../../Common/Loading/Loading";
 

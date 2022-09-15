@@ -1,11 +1,12 @@
+import ProfileUpload from "../Components/Signup/profileUpload"
+
+import {useLocation, useNavigate} from "react-router-dom"
 import styled from "styled-components";
-import ProfileUpload from "../Components/Signup/profileUpload";
-import { useLocation } from "react-router-dom";
+
 
 const SignUp = () => {
   const location = useLocation();
   const data = location.state;
-
   return (
     <>
       <SignUpLogo>

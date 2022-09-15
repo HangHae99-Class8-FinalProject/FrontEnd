@@ -9,11 +9,14 @@ import PostBox from "../../Common/PostBox";
 import useInfinityScroll from "../../../Hooks/useInfinityScroll";
 
 const fetchPostList = async pageParam => {
+
   const res = await instance.get(`/api/post/new/${pageParam}`);
 
   const { Post, isLast } = res.data;
   return { Post, nextPage: pageParam + 1, isLast };
 };
+
+
 const MainList = () => {
   const { ref, inView } = useInView();
 
