@@ -10,7 +10,7 @@ import { instance } from "../../Utils/Instance";
 import useQueryDebounce from "../../Hooks/useQueryDebounce";
 
 import { ReactComponent as SmallCamera } from "../../Icons/sm-camera.svg";
-import Profile from "../../Icons/profile.svg";
+import Profile from "../../Icons/SignUpProfile.svg";
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
 

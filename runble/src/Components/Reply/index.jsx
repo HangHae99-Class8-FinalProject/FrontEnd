@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useMutation, useQueryClient } from "react-query";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 
-import { ReactComponent as Reservation } from "../../Icons/Rectangle.svg";
+import { ReactComponent as Reservation } from "../../Icons/BackIcon.svg";
 import { addReply } from "../../Hooks/useReply";
 import PostItem from "./postItem";
 import ReplyComponent from "./replyComponent";
