@@ -92,10 +92,9 @@ function ReplyComponent() {
 
   const handleEditreply = (commentId, comment) => {
     setEditable(true);
-    setClickedId(commentId);
     setReplyValue(comment);
     console.log(replyValue);
-    editReplyData.mutate({ comment: replyValue, commentId: clickedId });
+    editReplyData.mutate({ comment: replyValue, commentId: commentId });
   };
 
   return (
