@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StyleUserWrap, StyleUser, StyleHeader, StyleUsrBox, RankLink } from "./style";
+import { StyleUserWrap, StyleUser, StyleHeader, StyleUsrBox, RankLink, UserTitle } from "./style";
 
 import { useRecoilState } from "recoil";
 import { NavState, NavStates } from "../../../Recoil/Atoms/OptionAtoms";
@@ -55,7 +55,12 @@ const Userprofile = ({ userNickname, goalData }) => {
                 )}
               </div>
 
-              <div>{nickname}님의 주간 목표</div>
+              <UserTitle>
+                {nickname}님의 주간 목표
+                <RankLink to="/rank">
+                  <img src={trophy} />
+                </RankLink>
+              </UserTitle>
             </StyleUsrBox>
           </>
         ) : (

@@ -10,7 +10,6 @@ import { instance } from "../../../Utils/Instance";
 
 const UserList = () => {
   const { nickname } = useParams();
-  console.log(nickname);
   const { ref, inView } = useInView();
   const fetchUserList = async pageParam => {
     const res = await instance.get(`/api/user/post/${nickname}/${pageParam}`);

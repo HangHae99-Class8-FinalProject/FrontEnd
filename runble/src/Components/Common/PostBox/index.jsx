@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { NavState, NavStates, NavPostData } from "../../../Recoil/Atoms/OptionAtoms";
@@ -35,7 +35,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { useLikeCheck } from "../../../Hooks/useLikecheck";
 import { useState } from "react";
-import imageCompression from "browser-image-compression";
 const PostBox = ({ posts, index }) => {
   const navigate = useNavigate();
   const [show, setShow] = useRecoilState(NavState);
@@ -46,7 +45,16 @@ const PostBox = ({ posts, index }) => {
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
   const [heart, Setheart] = useState(false);
+  console.log(posts);
+  const divideTime = useCallback(time => {
+    let seconds = time.seconds;
+    let minute = time.minute;
+    let hours = time.hours;
 
+    hours = hours < 10 ? "0" + hours : hours;
+    minute = minute < 10 ? "0" + minute : minute;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+  }, []);
   return (
     <StyleFeed key={index}>
       <StyleFrofileBox>
