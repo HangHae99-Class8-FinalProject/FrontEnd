@@ -1,82 +1,87 @@
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
-
 import displayedAt from "../../Utils/displayAt";
+import ReplyInput from "./ReplyInput";
+import { useParams } from "react-router-dom";
 
-function PostItem ({data}) {
-    
-    return(
-        <>
-        <PostBox>
-            <Profile src={data.profile}/>
-            <Nic>{data.nickname}</Nic>    
-            <Content>{data.content}</Content>
+function PostItem({ data }) {
+  const [showInput, setShowInput] = useState(false);
+  const { id: postId } = useParams();
+
+  const onCloseInput = useCallback(e => {
+    setShowInput(false);
+  }, []);
+  console.log(showInput);
+
+  return (
+    <>
+      <PostBox>
+        <div>
+          <img src={data.profile} />
+        </div>
+          <PostBody>
+            <div>{data.nickname}</div>
+            <div>{data.content}</div>
+          </PostBody>
+          <PostFooter>
             <Time>{displayedAt(data.createdAt)}</Time>
             <Like>좋아요{data.like}개</Like>
-            <Write>답글달기</Write>
-        </PostBox>
-  
-        </>
-    )
+            <Write
+          onClick={() => {
+            setShowInput("댓글");
+          }}
+        >
+          답글달기
+        </Write>
+          </PostFooter>
+        <ReplyInput showInput={showInput} onCloseInput={onCloseInput} postId={postId} />
+      </PostBox>
+    </>
+  );
 }
-export default PostItem
+export default PostItem;
 
 const PostBox = styled.div`
- border-bottom:1px solid #111 ;
- height:10% ;
-`
-const Profile = styled.img`
-  width: 50px;
-  height: 50px;
-  float: left;
-  margin-right:0px ;
+font-size: 1rem;
+display: flex;
+align-items: center;
+padding: 1.5rem 1.6rem;
+gap: 0.8rem;
+height: 7rem;
+border-bottom: 0.1rem solid #111;
+& img {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 10rem;
+  }
 `;
 
-const Nic = styled.div`
- position:absolute;
- left:110px;
- top:55px;`
+const PostBody = styled.div`
+  align-items: flex-start;
+  gap: 0.2rem;
+  height: 4.2rem;
+  width: 29.7rem;`
 
- const Content = styled.div`
-  position:absolute;
-  left:110px;
-  top:80px;
-  width:70%;
-  word-break:break-all`
+const PostFooter = styled.div`
+  display: flex;
+  width:40rem;
+  position:relative;
+  right:13rem;
+  top:3rem;
+  color:#aaa;
+`;
 
-  const Time = styled.div`
-    color: #999999;
-    font-family: 'Noto Sans CJK KR';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 14px;
-    position:absolute;
-    left:110px;
-    top:120px;`
-
-  const Like = styled.div`
-    color: #999999;
-    font-family: 'Noto Sans CJK KR';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 14px;
-    position:absolute;
-    left:180px;
-    top:120px;`
-
+const Time = styled.div`
+  padding-right:1rem;`
+const Like = styled.div`
+  padding-right:1rem;`
 const Write = styled.button`
-  color: #999999;
-  font-family: 'Noto Sans CJK KR';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 14px;
-  position:absolute;
-  left:260px;
-  top:118px;
-  background-color:white;
+  outline:0;
   border:0;
-  outline:0;`
+  color:#aaa;
+  background-color:transparent;
+  font-size:1rem;
+  margin-top:0.1rem`
+
 
 

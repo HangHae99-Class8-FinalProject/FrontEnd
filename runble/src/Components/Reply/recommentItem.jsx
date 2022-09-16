@@ -1,111 +1,125 @@
 import styled from "styled-components";
-import { useState } from "react";
-import { useMutation,useQueryClient } from "react-query";
+import React, { useCallback, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 
-import { delReply,editReply } from "../../Hooks/useRecomment";
+import { ReactComponent as ReplyUpdate } from "../../Icons/ReplyUpdate.svg";
+import { ReactComponent as ReplyDelete } from "../../Icons/ReplyDelete.svg";
 
-function RecommentItem ({data}){
-  console.log(data)
+import displayedAt from "../../Utils/displayAt";
+import { delRecomment, editRecomment } from "../../Hooks/useRecomment";
+import useInput from "../../Hooks/useInput";
+
+function RecommentItem({ data }) {
+  console.log(data);
   const queryClient = useQueryClient();
 
-
-      //대댓글 삭제
-  const delReplyData = useMutation(recommentId=>delReply(recommentId),{
+  //대댓글 삭제
+  const delRecommentData = useMutation(() => delRecomment(data), {
     onSuccess: data => {
-        console.log(data);
-        queryClient.invalidateQueries("GET_RECOMMENT")
+      console.log(data);
+      queryClient.invalidateQueries("GET_RECOMMENT");
     },
     onError: error => {
-        console.log(error);
-      },
-  })
-    //대댓글 삭제 버튼
-const handleDelreply = (id) => {
-    console.log(id);
-    delReplyData.mutate(id)
+      console.log(error);
+    }
+  });
+  //대댓글 삭제 버튼
+  const handleDelreply = () => {
+    delRecommentData.mutate();
   };
 
+  //대댓글 수정
 
-//대댓글 수정
+  const [editable, setEditable] = useState(false);
+  const [commentValue, setCommentValue] = useState(data.comment);
+  const [editValue, onChangeEditValue, setEditValue] = useInput("");
 
-const [editable, setEditable] = useState(false);
-const [clickedId, setClickedId] = useState(data.commentId);
-const [commentValue, setCommentValue] = useState(data.comment)
+  const onShowEdit = useCallback(() => {
+    setEditable(prev => !prev);
+  }, []);
 
-const editReplyData = useMutation(reply => editReply(reply), {
-  onSuccess: data => {
-    console.log(data);
-    setEditable(!editable);
-    queryClient.invalidateQueries("GET_RECOMMENT");
-  },
-  onError: error => {
-    console.log(error);
-  }
-});
-
-const handleEditreply = (commentId) => {
-  setClickedId(commentId);
-  editReplyData.mutate({
-    commentId: clickedId,
-    recommentId:data.recommentId,
-    comment: commentValue,
+  const editRecommentData = useMutation(reply => editRecomment(reply), {
+    onSuccess: data => {
+      console.log(data);
+      setEditable(!editable);
+      queryClient.invalidateQueries("GET_RECOMMENT");
+    },
+    onError: error => {
+      console.log(error);
+    }
   });
-};
 
-    return(
-            <>
-                  <Profile src={data.image}></Profile>
-                  <N_R>
-                    <NickName>{data.nickname}</NickName>
+  const handleEditreply = () => {
+    setEditable(false);
+    editRecommentData.mutate({
+      commentId : data.commentId,
+      recommentId: data.recommentId,
+      comment: commentValue
+    });
+  };
 
-                    {editable && clickedId === data.commentId ? (
-                  <input 
-                    value={commentValue}
-                    onChange={event => setCommentValue(event.target.value)}
-                  />
-                ) : (
-                  <ReplyContent>{data.comment}</ReplyContent>
-                )}
-                   
-                  </N_R>
-                  <button
-                onClick={() =>
-                  handleEditreply(
-                    data.commentId,
-                    data.recommentId,
-                    data.comment
-                  )
-                }
-              >
-                {editable && clickedId === data.commentId ? (
-                  <span>제출하기</span>
-                ) : (
-                  <span>수정하기</span>
-                )}
-              </button>
+  return (
+    <>
+      <RecommentBox>
+        <div>
+          <img src={data.image} />
+        </div>
+        <RecommentBody>
+          <div>{data.nickname}</div>
+          {!editable ? (
+            <div>{data.comment}</div>
+          ):( 
+          <form onSubmit={handleEditreply}>
+            <input value={editValue} onChange={onChangeEditValue} />
+          </form>
+          )}
+        </RecommentBody>
+        <RecommentFooter>
+        <Time>{displayedAt(data.createdAt)}</Time>
+        </RecommentFooter>
+        <div>
+          <button onClick={onShowEdit}>{!editable ? <ReplyUpdate /> : <>&times;</>}</button>
+          <button onClick={handleDelreply}>
+            <ReplyDelete />
+          </button>
+        </div>
+      </RecommentBox>
 
-              <button onClick={()=>handleDelreply(data)}>
-                삭제하기
-              </button>
-         </>      
-    )
+    </>
+  );
 }
 
 export default RecommentItem;
 
-const Profile = styled.img`
-  width: 50px;
-  height: 50px;
-  float: left;
+const RecommentBox = styled.div`
+   margin-left:3rem; 
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 1.6rem;
+  gap: 0.8rem;  
+  height: 7rem;;
+& img {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 10rem;
+  }
 `;
 
-const N_R = styled.div``;
-const NickName = styled.div`
-  margin: 0 0px;
-`;
-const ReplyContent = styled.p`
-  display: inline-block;
-  word-break:break-all;
-  margin: 10px 0 0 10px;
+const RecommentBody = styled.div`
+ align-items: flex-start;
+  gap: 0.2rem;
+  height: 4.2rem;
+  width: 29.7rem;`
+
+const RecommentFooter = styled.div`
+  display: flex;
+  width:40rem;
+  position:relative;
+  right:12rem;
+  top:3rem;
+  color:#aaa;
 `;
 
+const Time = styled.div`
+ `

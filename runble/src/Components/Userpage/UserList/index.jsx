@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { NavState, NavStates } from "../../../Recoil/Atoms/OptionAtoms";
+
 import { StyleUserListWrap } from "./style";
 import useInfinityScroll from "../../../Hooks/useInfinityScroll";
 import PostBox from "../../Common/PostBox";
 import { useParams } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
-import { useInfiniteQuery } from "react-query";
+
 import { instance } from "../../../Utils/Instance";
 
 const UserList = () => {

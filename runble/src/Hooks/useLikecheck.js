@@ -1,4 +1,4 @@
-import { useMutation, UseMutationResult, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { instance } from "../Utils/Instance";
 const postGood = async postId => {
   console.log(postId);

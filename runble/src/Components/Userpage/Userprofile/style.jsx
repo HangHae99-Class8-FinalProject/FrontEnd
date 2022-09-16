@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
 export const StyleUserWrap = styled.div`
   width: 100%;
 `;
@@ -31,4 +33,8 @@ export const StyleUsrBox = styled.div`
   padding: 0px;
   gap: 1rem;
   padding: 2rem 1.6rem;
+`;
+
+export const RankLink = styled(Link)`
+  padding-right: 1rem;
 `;

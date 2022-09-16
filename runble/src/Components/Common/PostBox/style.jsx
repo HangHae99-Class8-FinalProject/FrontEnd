@@ -1,4 +1,17 @@
 import styled from "styled-components";
+
+export const StyleUserWrap = styled.div`
+  width: 100%;
+`;
+
+export const StyleUser = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  background: #ffffff;
+`;
+
 export const StyleFeed = styled.div`
   width: 100%;
   flex-direction: column;
@@ -36,8 +49,10 @@ export const StyleSpeed = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
-    font-size: 2.7rem;
-    font-style: normal;
+
+    font-size: 3.6rem;
+    font-family: "Anton";
+
     font-weight: 900;
     color: #1a1a1a;
     padding: 0 2%;

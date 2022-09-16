@@ -24,7 +24,9 @@ import {
 import { ReactComponent as View } from "../../../Icons/view.svg";
 import { ReactComponent as Heart } from "../../../Icons/heart.svg";
 import { ReactComponent as CommentIcon } from "../../../Icons/comment.svg";
-import { ReactComponent as Profile } from "../../../Icons/myPageProfile.svg";
+
+import { ReactComponent as Profile } from "../../../Icons/MyPageProfile.svg";
+
 import displayedAt from "../../../Utils/displayAt";
 import KakaoMap from "../../Common/KakaoMap/index";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -44,7 +46,7 @@ const PostBox = ({ posts, index }) => {
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
   const [heart, Setheart] = useState(false);
-  console.log(posts);
+
   return (
     <StyleFeed key={index}>
       <StyleFrofileBox>
@@ -150,7 +152,15 @@ const PostBox = ({ posts, index }) => {
         </StyleGood>
         <StyleComment
           onClick={() => {
-            navigate(`/reply/${posts.postId}`);
+            navigate(`/reply/${posts.postId}`, {
+              state: {
+                nickname: posts.nickname,
+                profile: posts.profile,
+                content: posts.content,
+                createdAt: posts.createdAt,
+                like: posts.like
+              }
+            });
           }}
         >
           댓글{posts.commentNum}개 모두보기

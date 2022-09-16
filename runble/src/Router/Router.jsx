@@ -10,6 +10,7 @@ import Search from "../Pages/Search";
 import SignUp from "../Pages/SignUp";
 import UserPage from "../Pages/UserPage";
 import ProfileSignup from "../Components/Signup/profileSignup";
+import Rank from "../Pages/Rank";
 
 const Router = () => {
   return (
@@ -27,6 +28,7 @@ const Router = () => {
         <Route path="/api/kakao/callback" element={<ProfileSignup />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/user/:nickname" element={<UserPage />} />
+        <Route path="/rank" element={<Rank />} />
       </Routes>
     </BrowserRouter>
   );

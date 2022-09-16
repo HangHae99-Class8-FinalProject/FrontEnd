@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useMutation, useQueryClient } from "react-query";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ReactComponent as BackIcon } from "../../Icons/BackIcon.svg";
 
-import { ReactComponent as Reservation } from "../../Icons/Rectangle.svg";
-import { addReply } from "../../Hooks/useReply";
 import PostItem from "./postItem";
 import ReplyComponent from "./replyComponent";
 
@@ -12,30 +10,11 @@ const ReplyCom = () => {
   const location = useLocation();
   const data = location.state;
 
+  const [display, setDisplay] = useState(false);
+
+
+
   const navigate = useNavigate();
-
-  const { id: postId } = useParams();
-
-  const [replyValue, setReplyValue] = useState("");
-
-  //댓글추가
-  const queryClient = useQueryClient();
-
-  const addReplyData = useMutation(reply => addReply(reply), {
-    onSuccess: data => {
-      console.log(data);
-      queryClient.invalidateQueries("GET_REPLY");
-    },
-    onError: error => {
-      console.log(error);
-    }
-  });
-
-  const handleAddreply = e => {
-    e.preventDefault();
-    addReplyData.mutate({ comment: replyValue, postId: postId }); //api 데이터용
-    setReplyValue("");
-  };
 
   return (
     <>
@@ -46,21 +25,19 @@ const ReplyCom = () => {
               navigate("/feed");
             }}
           >
-            <Reservation />
+            <BackIcon />
           </Back>
           <ReplyText>
             <span>댓글</span>
           </ReplyText>
         </Head>
-        <PostItem data={data} />
-        <ReplyComponent />
-        <ReplyArea>
-          <input type="text" value={replyValue} onChange={e => setReplyValue(e.target.value)} />
-          <Detail />
-          <input type="text" value={replyValue} onChange={e => setReplyValue(e.target.value)} />
-          <button onClick={handleAddreply}>댓글추가</button>
-        </ReplyArea>
+        <Body>
+            <PostItem data={data} />
+            {display == true ? <>댓글이 없습니다.</>: <ReplyComponent />}
+        </Body>
       </Wrap>
+  
+    
     </>
   );
 };
@@ -68,34 +45,28 @@ const ReplyCom = () => {
 export default ReplyCom;
 
 const Wrap = styled.div`
-  margin: 0px;
-  height: 100rem;
-  width: 490px;
-  min-width: 390px;
+  height:100%;
 `;
 
 const Head = styled.div`
   width: 100%;
-  height: 43px;
+  height: 4.3rem;
   border-bottom: 1px solid #111;
 `;
 
 const Back = styled.div`
   float: left;
-  margin: 15px 20px;
+  position:relative;
+  left:1rem;
+  top:1rem
 `;
 
 const ReplyText = styled.div`
   display: inline-block;
-  font-size: 20px;
-  margin: 10px 150px;
+  font-size: 2rem;
+  margin:0.5rem 16rem;
 `;
 
-const Detail = styled.div`
-  border: 0.1rem solid black;
-  margin-top: 40rem;
-`;
+const Body = styled.div`
+`
 
-const ReplyArea = styled.div`
-  margin: 2rem;
-`;
