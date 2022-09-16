@@ -24,7 +24,9 @@ import {
 import { ReactComponent as View } from "../../../Icons/view.svg";
 import { ReactComponent as Heart } from "../../../Icons/heart.svg";
 import { ReactComponent as CommentIcon } from "../../../Icons/comment.svg";
+
 import { ReactComponent as Profile } from "../../../Icons/MyPageProfile.svg";
+
 import displayedAt from "../../../Utils/displayAt";
 import KakaoMap from "../../Common/KakaoMap/index";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -33,6 +35,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { useLikeCheck } from "../../../Hooks/useLikecheck";
 import { useState } from "react";
+import imageCompression from "browser-image-compression";
 const PostBox = ({ posts, index }) => {
   const navigate = useNavigate();
   const [show, setShow] = useRecoilState(NavState);
@@ -43,6 +46,7 @@ const PostBox = ({ posts, index }) => {
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
   const [heart, Setheart] = useState(false);
+
   return (
     <StyleFeed key={index}>
       <StyleFrofileBox>
@@ -52,7 +56,7 @@ const PostBox = ({ posts, index }) => {
               onClick={() => {
                 setPostData(posts);
                 navigate(`/user/${posts.nickname}`, {
-                  state: { nickname: posts.nickname, profile: posts.profile }
+                  state: { userId: posts.userId }
                 });
               }}
             />
@@ -61,7 +65,7 @@ const PostBox = ({ posts, index }) => {
               onClick={() => {
                 setPostData(posts);
                 navigate(`/user/${posts.nickname}`, {
-                  state: { nickname: posts.nickname, profile: posts.profile }
+                  state: posts.userId
                 });
               }}
               src={posts.profile}
@@ -159,7 +163,7 @@ const PostBox = ({ posts, index }) => {
             });
           }}
         >
-          댓글{posts.commentNum}개모두보기
+          댓글{posts.commentNum}개 모두보기
         </StyleComment>
         <StyleTime>{displayedAt(posts.createdAt)}</StyleTime>
       </StyleContentBox>

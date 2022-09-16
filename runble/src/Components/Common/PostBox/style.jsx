@@ -21,9 +21,9 @@ export const StyleFrofile = styled.div`
   align-items: center;
 `;
 export const StyleFrofileImg = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 2rem;
 `;
 
 export const StyleSpeed = styled.div`
@@ -31,17 +31,18 @@ export const StyleSpeed = styled.div`
   z-index: 999;
   display: flex;
   width: 100%;
-  /* padding-left: 8%; */
   top: 70%;
   & > div {
     width: 100%;
     display: flex;
     justify-content: space-between;
+
     font-size: 3.6rem;
     font-family: "Anton";
+
     font-weight: 900;
     color: #1a1a1a;
-    padding: 0 5%;
+    padding: 0 2%;
   }
 `;
 export const StylePath = styled.div`
@@ -60,7 +61,7 @@ export const StyleIcon = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 3px 2px;
+  padding: 0.3rem 0.2rem;
   width: 100%;
   height: 4.155rem;
 `;
@@ -69,9 +70,9 @@ export const StyleHeart = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 10px 0px;
-  gap: 15px;
-  width: 48px;
-  height: 35.55px;
+  gap: 1.5rem;
+  width: 4.8rem;
+  height: 3.555rem;
   justify-content: center;
 `;
 export const StyleView = styled.div`
@@ -80,8 +81,9 @@ export const StyleView = styled.div`
   align-items: center;
   padding: 0px;
   gap: 6px;
-  width: 38px;
-  height: 17px;
+  width: 3.8rem;
+  height: 1.7rem;
+  font-size: 1.2rem;
 `;
 export const StyleImg = styled.img`
   width: 34.3rem;
@@ -93,16 +95,16 @@ export const StyleContent = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 10px;
-  padding: 0px 2px 10px;
+  gap: 1rem;
+  padding: 0px 0.2rem 1rem;
 `;
 export const StyleHashBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   padding: 0px;
-  gap: 5px;
-  height: 22px;
+  gap: 0.5rem;
+  height: 2.2rem;
 `;
 export const StyleHash = styled.div`
   display: flex;
