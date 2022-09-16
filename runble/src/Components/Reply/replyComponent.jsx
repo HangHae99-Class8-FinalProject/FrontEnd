@@ -1,83 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import { useInView } from "react-intersection-observer";
-import { useMutation, useQueryClient,useInfiniteQuery } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 
-import { editReply,delReply } from "../../Hooks/useReply";
-import Recomment from "./Recomment"
+import { editReply, delReply } from "../../Hooks/useReply";
+import useInfinityScroll from "../../Hooks/useInfinityScroll";
 import { instance } from "../../Utils/Instance";
-import displayedAt from "../../Utils/displayAt";
-import { ReactComponent as ReplyUpdate} from "../../Icons/ReplyUpdate.svg"
-import { ReactComponent as ReplyDelete} from "../../Icons/ReplyDelete.svg"
-
-
+import ReplyInput from "./ReplyInput";
+import CommentList from "./CommentList";
+import Nav from "../Common/Nav/index";
 
 function ReplyComponent() {
-  const [display, setDisplay] = useState(false);
-
-
+  const [showInput, setShowInput] = useState(false);
 
   const queryClient = useQueryClient();
-
   const { id: postId } = useParams();
-
-  const onSuccess = () => {
-    console.log("조회성공");
-  };
-
-  const onError = () => {
-    console.log("조회실패");
-  };
 
   //댓글조회
   const getReply = async pageParam => {
-    const response = await instance.get(`http://54.167.169.43/api/comment/${postId}/${pageParam}`);
-    const { Comment, isLast } = response.data;
-    console.log(pageParam);
-    return { Comment, nextPage: pageParam + 1, isLast };
+    const { data } = await instance.get(`http://54.167.169.43/api/comment/${postId}/${pageParam}`);
+    return data;
   };
 
   const [ref, inView] = useInView();
 
-    const {data ,status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery("GET_REPLY",
-    ({pageParam = 1}) => getReply(pageParam),
-      {
-      getNextPageParam: (lastPage) =>
-       !lastPage.isLast ? lastPage.nextPage:undefined,
-      }
-    );
- 
-
-  console.log(data);
+  const [data, fetchNextPage, lastPage] = useInfinityScroll("GET_REPLY", getReply);
 
   useEffect(() => {
-    if (inView) fetchNextPage();
-  }, [inView]);
-
-
-
-  //댓글삭제
-  const delReplyData = useMutation(commentId => delReply(commentId), {
-    onSuccess: data => {
-      console.log(data);
-      queryClient.invalidateQueries("GET_REPLY");
-    },
-    onError: error => {
-      console.log(error);
-    }
-  });
-
-  //댓글 삭제 버튼
-  const handleDelreply = id => {
-    console.log(id);
-    delReplyData.mutate(id);
-  };
+    if (inView && lastPage) fetchNextPage();
+  }, [inView, lastPage]);
 
   //댓글 수정
   const [editable, setEditable] = useState(false);
-  const [clickedId, setClickedId] = useState(data?.commentId);
   const [replyValue, setReplyValue] = useState("");
+
+  const [recommentKey, setRecommentKey] = useState("");
+  console.log(recommentKey, "key");
 
   const editReplyData = useMutation(reply => editReply(reply), {
     onSuccess: data => {
@@ -97,51 +56,31 @@ function ReplyComponent() {
     editReplyData.mutate({ comment: replyValue, commentId: commentId });
   };
 
+  const onCloseInput = useCallback(() => {
+    setShowInput(false);
+  }, []);
+
   return (
-    <ReplyBox>
-      {data?.pages.map((page, i) => {
-        return (
-          <React.Fragment key={i}>
-            {page?.Comment?.map((reply, i) => {
-              return (
-                <div key={i}>
-                  <Content>
-                    <Profile src={reply.image}></Profile>
-                    <N_R>
-                      <NickName>{reply.nickname}</NickName>
-                      {editable && clickedId === reply.commentId ? (
-                        <Input value={replyValue} onChange={e => setReplyValue(e.target.value)} />
-                      ) : (
-                        <ReplyContent>
-                          <ReplyText>{reply.comment}</ReplyText>
-                        </ReplyContent>
-                      )}
-                    </N_R>
-                     <Button onClick={() => handleEditreply(reply.commentId, reply.comment)}>
-                      {editable && clickedId === reply.commentId ? <ReplyUpdate /> :    <ReplyUpdate/>}
-                    </Button>
-                    <Button onClick={() => handleDelreply(reply.commentId)}><ReplyDelete/></Button> 
-                    <Time>{displayedAt(reply.createdAt)}</Time>
-                    <Write>답글달기</Write>
-
-                    <RecommentBtn
-                      onClick={() => {
-                        setDisplay(!display);
-                      }}
-                    >
-                      답글0개더보기
-                    </RecommentBtn>
-
-                    {display && <Recomment id={reply.commentId} />}
-                  </Content>
-                </div>
-              );
-            })}
-          </React.Fragment>
-        );
-      })}
-      {isFetchingNextPage ? <>로딩중입니다</> : <div ref={ref}/> }
-    </ReplyBox>
+    <>
+      <ReplyBox>
+        {data?.pages.map((page, i) => {
+          return (
+            <React.Fragment key={i}>
+              {page?.Comment?.map((reply, idx) => {
+                console.log(page, reply);
+                return (
+                  <div key={idx}>
+                    <CommentList reply={reply} setShowInput={setShowInput} setRecommnetKey={setRecommentKey} />
+                  </div>
+                );
+              })}
+            </React.Fragment>
+          );
+        })}
+        <ReplyInput onCloseInput={onCloseInput} showInput={showInput} postId={recommentKey} />
+      </ReplyBox>
+      <Nav />
+    </>
   );
 }
 
@@ -212,11 +151,12 @@ const RecommentBtn = styled.button`
 `;
 
 const Button = styled.button`
-  outline:0;
-  border:0;
-  `
-  const Input = styled.input`
-    width:20rem;
-  height:3rem;
-  border-radius:1rem;
-  margin: 0rem 1rem`
+  outline: 0;
+  border: 0;
+`;
+const Input = styled.input`
+  width: 20rem;
+  height: 3rem;
+  border-radius: 1rem;
+  margin: 0rem 1rem;
+`;

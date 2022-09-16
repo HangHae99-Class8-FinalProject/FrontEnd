@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ReactComponent as BackIcon} from "../../Icons/BackIcon.svg"
+import { ReactComponent as BackIcon } from "../../Icons/BackIcon.svg";
 
 import PostItem from "./postItem";
 import ReplyComponent from "./replyComponent";
@@ -9,7 +9,6 @@ import ReplyComponent from "./replyComponent";
 const ReplyCom = () => {
   const location = useLocation();
   const data = location.state;
-  console.log(data)
 
   const navigate = useNavigate();
 
@@ -43,9 +42,9 @@ export default ReplyCom;
 const Wrap = styled.div`
   margin: 0px;
   height: 100rem;
-  width:37.5rem;
-  min-width:39rem;
-  border-right: 1px solid black ;
+  width: 37.5rem;
+  min-width: 39rem;
+  border-right: 1px solid black;
 `;
 
 const Head = styled.div`
