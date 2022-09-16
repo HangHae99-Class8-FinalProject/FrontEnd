@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ReactComponent as BackIcon } from "../../Icons/BackIcon.svg";
@@ -10,63 +10,47 @@ const ReplyCom = () => {
   const location = useLocation();
   const data = location.state;
 
-  const [display, setDisplay] = useState(false);
-
-
-
   const navigate = useNavigate();
 
   return (
     <>
-      <Wrap>
-        <Head>
-          <Back
+      <HeaderWrap>
+        <HeaderItems>
+          <div
             onClick={() => {
               navigate("/feed");
             }}
           >
             <BackIcon />
-          </Back>
-          <ReplyText>
-            <span>댓글</span>
-          </ReplyText>
-        </Head>
-        <Body>
-            <PostItem data={data} />
-            {display == true ? <>댓글이 없습니다.</>: <ReplyComponent />}
-        </Body>
-      </Wrap>
-  
-    
+          </div>
+          <div>답글</div>
+        </HeaderItems>
+      </HeaderWrap>
+      <>
+        <PostItem data={data} />
+        <ReplyComponent />
+      </>
     </>
   );
 };
 
 export default ReplyCom;
 
-const Wrap = styled.div`
-  height:100%;
-`;
-
-const Head = styled.div`
-  width: 100%;
+const HeaderWrap = styled.div`
+  display: flex;
+  align-items: flex-start;
+  padding: 0rem;
   height: 4.3rem;
-  border-bottom: 1px solid #111;
 `;
 
-const Back = styled.div`
-  float: left;
-  position:relative;
-  left:1rem;
-  top:1rem
+const HeaderItems = styled.div`
+  display: flex;
+  padding: 1rem 1.6rem;
+  width: 100%;
+  border-bottom: 0.1rem solid #e6e6e6;
+  & div {
+    font-size: 1.6rem;
+    line-height: 2.3rem;
+    width: 46.8%;
+  }
 `;
-
-const ReplyText = styled.div`
-  display: inline-block;
-  font-size: 2rem;
-  margin:0.5rem 16rem;
-`;
-
-const Body = styled.div`
-`
-

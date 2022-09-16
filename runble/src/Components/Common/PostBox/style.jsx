@@ -29,7 +29,7 @@ export const StyleFrofileBox = styled.div`
 export const StyleFrofile = styled.div`
   flex-direction: row;
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
   justify-content: center;
   align-items: center;
 `;
