@@ -8,26 +8,13 @@ function PostItem({ data }) {
   const [showInput, setShowInput] = useState(false);
   const { id: postId } = useParams();
 
-  const onCloseInput = useCallback(() => {
+  const onCloseInput = useCallback(e => {
     setShowInput(false);
   }, []);
+  console.log(showInput);
 
   return (
     <>
-      {/* <PostBox>
-        <Profile src={data.profile} />
-        <Nic>{data.nickname}</Nic>
-        <Content>{data.content}</Content>
-        <Time>{displayedAt(data.createdAt)}</Time>
-        <Like>좋아요{data.like}개</Like>
-        <Write
-          onClick={() => {
-            setShowInput("댓글");
-          }}
-        >
-          답글달기
-        </Write>
-      </PostBox> */}
       <PostBox>
         <div>
           <img src={data.profile} />
@@ -47,8 +34,8 @@ function PostItem({ data }) {
           답글달기
         </Write>
           </PostFooter>
+        <ReplyInput showInput={showInput} onCloseInput={onCloseInput} postId={postId} />
       </PostBox>
-      <ReplyInput showInput={showInput} onCloseInput={onCloseInput} postId={postId} />
     </>
   );
 }

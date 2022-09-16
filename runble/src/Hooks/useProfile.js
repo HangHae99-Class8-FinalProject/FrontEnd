@@ -11,6 +11,7 @@ export const useUserProfileMutation = () => {
     onSuccess: data => {
       queryClient.invalidateQueries("posts");
       queryClient.invalidateQueries("like");
+      queryClient.invalidateQueries("userGoal");
       console.log(data); // mutation 이 성공하면 response를 받을 수 있다.
     },
     onError: error => {
