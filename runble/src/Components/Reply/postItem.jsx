@@ -16,19 +16,24 @@ function PostItem({ data }) {
   return (
     <>
       <PostBox>
-        <Profile src={data.profile} />
-        <Nic>{data.nickname}</Nic>
-        <Content>{data.content}</Content>
-        <Time>{displayedAt(data.createdAt)}</Time>
-        <Like>좋아요{data.like}개</Like>
-        <Write
-          onClick={e => {
-            e.stopPropagation();
+        <div>
+          <img src={data.profile} />
+        </div>
+          <PostBody>
+            <div>{data.nickname}</div>
+            <div>{data.content}</div>
+          </PostBody>
+          <PostFooter>
+            <Time>{displayedAt(data.createdAt)}</Time>
+            <Like>좋아요{data.like}개</Like>
+            <Write
+          onClick={() => {
             setShowInput("댓글");
           }}
         >
           답글달기
         </Write>
+          </PostFooter>
         <ReplyInput showInput={showInput} onCloseInput={onCloseInput} postId={postId} />
       </PostBox>
     </>
@@ -37,56 +42,46 @@ function PostItem({ data }) {
 export default PostItem;
 
 const PostBox = styled.div`
-  border-bottom: 1px solid #111;
-  height: 10%;
-`;
-const Profile = styled.img`
-  width: 50px;
-  height: 50px;
-  float: left;
-  margin-top: 10px;
-`;
-
-const Nic = styled.div`
-  position: absolute;
-  left: 110px;
-  top: 55px;
+font-size: 1rem;
+display: flex;
+align-items: center;
+padding: 1.5rem 1.6rem;
+gap: 0.8rem;
+height: 7rem;
+border-bottom: 0.1rem solid #111;
+& img {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 10rem;
+  }
 `;
 
-const Content = styled.div`
-  position: absolute;
-  left: 110px;
-  top: 80px;
-  width: 70%;
-  word-break: break-all;
+const PostBody = styled.div`
+  align-items: flex-start;
+  gap: 0.2rem;
+  height: 4.2rem;
+  width: 29.7rem;`
+
+const PostFooter = styled.div`
+  display: flex;
+  width:40rem;
+  position:relative;
+  right:13rem;
+  top:3rem;
+  color:#aaa;
 `;
 
 const Time = styled.div`
-  color: #999999;
-  font-size: 15px;
-  line-height: 14px;
-  position: absolute;
-  left: 110px;
-  top: 120px;
-`;
-
+  padding-right:1rem;`
 const Like = styled.div`
-  color: #999999;
-  font-size: 15px;
-  line-height: 14px;
-  position: absolute;
-  left: 180px;
-  top: 120px;
-`;
-
+  padding-right:1rem;`
 const Write = styled.button`
-  color: #999999;
-  font-size: 15px;
-  line-height: 14px;
-  position: absolute;
-  left: 260px;
-  top: 118px;
-  background-color: white;
-  border: 0;
-  outline: 0;
-`;
+  outline:0;
+  border:0;
+  color:#aaa;
+  background-color:transparent;
+  font-size:1rem;
+  margin-top:0.1rem`
+
+
+

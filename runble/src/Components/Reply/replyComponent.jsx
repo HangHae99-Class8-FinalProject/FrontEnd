@@ -25,11 +25,19 @@ function ReplyComponent() {
 
   const [ref, inView] = useInView();
 
-  console.log(data);
+
+  const [data, status, fetchNextPage, isFetchingNextPage, lastPage] = useInfinityScroll("GET_REPLY", getReply);
 
   useEffect(() => {
-    if (inView) fetchNextPage();
+    if (inView ) fetchNextPage();
   }, [inView]);
+
+  //댓글 수정
+  const [editable, setEditable] = useState(false);
+  const [replyValue, setReplyValue] = useState("");
+
+  const [recommentKey, setRecommentKey] = useState("");
+  console.log(recommentKey, "key");
 
   const onCloseInput = useCallback(() => {
     setShowInput(false);
@@ -53,6 +61,7 @@ function ReplyComponent() {
         })}
         <ReplyInput onCloseInput={onCloseInput} showInput={showInput} postId={recommentKey} />
       </ReplyBox>
+      {isFetchingNextPage ? <></> : <div ref={ref}></div>}
       <Nav />
       {isFetchingNextPage ? <span>로딩중입니다</span> : <div ref={ref}></div>}
     </>
