@@ -41,14 +41,11 @@ export default ReplyCom;
 
 const Wrap = styled.div`
   margin: 0px;
-  height: 100rem;
-  width: 37.5rem;
-  min-width: 39rem;
+  /* height: 100rem; */
   border-right: 1px solid black;
 `;
 
 const Head = styled.div`
-  width: 100%;
   height: 43px;
   border-bottom: 1px solid #111;
 `;
