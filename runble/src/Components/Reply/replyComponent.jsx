@@ -21,13 +21,12 @@ function ReplyComponent() {
   const getReply = async pageParam => {
     const res = await instance.get(`http://54.167.169.43/api/comment/${postId}/${pageParam}`);
     const {Comment, isLast} = res.data;
-    console.log("확인",pageParam)
     return { Comment, nextPage: pageParam + 1, isLast };
   };
 
   const [ref, inView] = useInView();
 
-  const [data, status, fetchNextPage, isFetchingNextPage, lastPage] = useInfinityScroll("GET_REPLY", getReply);
+  const {data, status, fetchNextPage, isFetchingNextPage, lastPage} = useInfinityScroll("GET_REPLY", getReply);
 
   
 
@@ -40,7 +39,6 @@ function ReplyComponent() {
   const [replyValue, setReplyValue] = useState("");
 
   const [recommentKey, setRecommentKey] = useState("");
-  console.log(recommentKey, "key");
 
 
   const onCloseInput = useCallback(() => {
@@ -54,7 +52,6 @@ function ReplyComponent() {
           return (
             <React.Fragment key={i}>
               {page?.Comment?.map((reply, idx) => {
-                console.log(page, reply);
                 return (
                   <div key={idx}>
                     <CommentList reply={reply} setShowInput={setShowInput} setRecommnetKey={setRecommentKey} />

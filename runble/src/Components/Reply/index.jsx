@@ -51,7 +51,7 @@ const Wrap = styled.div`
 const Head = styled.div`
   width: 100%;
   height: 4.3rem;
-  border-bottom: 1px solid #111;
+  border-bottom: 1px solid #e6e6e6;
 `;
 
 const Back = styled.div`

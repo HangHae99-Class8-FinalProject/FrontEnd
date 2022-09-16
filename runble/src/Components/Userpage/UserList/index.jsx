@@ -18,7 +18,7 @@ const UserList = () => {
     );
     return data;
   };
-  const [data, status, fetchNextPage, isFetchingNextPage] = useInfinityScroll(
+  const {data, status, fetchNextPage, isFetchingNextPage} = useInfinityScroll(
     "user",
     fetchUserList,
     nickname

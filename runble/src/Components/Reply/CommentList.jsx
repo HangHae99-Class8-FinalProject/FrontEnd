@@ -104,7 +104,6 @@ const CommentWrap = styled.div`
   padding: 1.5rem 1.6rem;
   gap: 0.8rem;
   height: 7rem;
-  border-bottom: 0.1rem solid #e6e6e6;
 
   & img {
     width: 4rem;

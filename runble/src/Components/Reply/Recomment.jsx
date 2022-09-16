@@ -12,15 +12,17 @@ function Recomment({ id }) {
   const getRecomment = async pageParam => {
     const response = await instance.get(`http://54.167.169.43/api/comment/recomment/${id}/${pageParam}`);
     const {Recomment, isLast} = response.data;
-    console.log("확인",pageParam)
+    console.log("확인",Recomment)
     return { Recomment, nextPage: pageParam + 1, isLast };
   };
 
 
-  const [data, fetchNextPage,isFetchingNextPage] = useInfinityScroll("GET_RECOMMENT", getRecomment);
+  const {data, fetchNextPage,isFetchingNextPage,lastPage} = useInfinityScroll("GET_RECOMMENT", getRecomment);
+
+
   useEffect(() => {
-    if (inView) fetchNextPage();
-  }, [inView]);
+    if (inView && !lastPage) fetchNextPage();
+  }, [inView,lastPage]);
 
   return (
     <ReplyBox>
@@ -39,7 +41,7 @@ function Recomment({ id }) {
           </React.Fragment>
         );
       })}
-        {isFetchingNextPage ? <>로딩중</> : <div ref={ref}></div>}
+        {isFetchingNextPage ? <></> : <div ref={ref}></div>}
     </ReplyBox>
   );
 }
