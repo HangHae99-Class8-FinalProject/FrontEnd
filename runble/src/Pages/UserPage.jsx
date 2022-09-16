@@ -14,11 +14,10 @@ const UserPage = () => {
   const parseData = JSON.parse(accessToken);
   const userNickname = parseData.nickname;
   const userId = parseData.userId;
-  const userProfile = parseData.image;
 
-  const [userIds, SetuserIds] = useState(state?.userId || userId);
+  const [userIds] = useState(state?.userId || userId);
 
-  const { status, data: goalData, error, isFetching } = useProgress(userIds); //user 목표보여주기
+  const { data: goalData } = useProgress(userIds); //user 목표보여주기
 
   return (
     <Layout>

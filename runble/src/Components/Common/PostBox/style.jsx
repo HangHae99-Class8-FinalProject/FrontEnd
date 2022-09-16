@@ -1,4 +1,17 @@
 import styled from "styled-components";
+
+export const StyleUserWrap = styled.div`
+  width: 100%;
+`;
+
+export const StyleUser = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  background: #ffffff;
+`;
+
 export const StyleFeed = styled.div`
   width: 100%;
   flex-direction: column;

@@ -21,22 +21,15 @@ function ReplyComponent() {
     const { Comment, isLast } = res.data;
     return { Comment, nextPage: pageParam + 1, isLast };
   };
-  const { data, fetchNextPage, isFetchingNextPage } = useInfinityScroll("GET_REPLY", getReply);
+
+  const { data, fetchNextPage, isFetchingNextPage, lastPage } = useInfinityScroll("GET_REPLY", getReply);
 
   const [ref, inView] = useInView();
 
-
-  const [data, status, fetchNextPage, isFetchingNextPage, lastPage] = useInfinityScroll("GET_REPLY", getReply);
-
   useEffect(() => {
-    if (inView ) fetchNextPage();
-  }, [inView]);
+    if (inView && lastPage) fetchNextPage();
+  }, [inView, lastPage]);
 
-  //댓글 수정
-  const [editable, setEditable] = useState(false);
-  const [replyValue, setReplyValue] = useState("");
-
-  const [recommentKey, setRecommentKey] = useState("");
   console.log(recommentKey, "key");
 
   const onCloseInput = useCallback(() => {
@@ -63,7 +56,6 @@ function ReplyComponent() {
       </ReplyBox>
       {isFetchingNextPage ? <></> : <div ref={ref}></div>}
       <Nav />
-      {isFetchingNextPage ? <span>로딩중입니다</span> : <div ref={ref}></div>}
     </>
   );
 }

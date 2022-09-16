@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { NavState, NavStates } from "../../../Recoil/Atoms/OptionAtoms";
+
 import { StyleUserListWrap } from "./style";
 import useInfinityScroll from "../../../Hooks/useInfinityScroll";
 import PostBox from "../../Common/PostBox";
 import { useParams } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
-import { useInfiniteQuery } from "react-query";
+
 import { instance } from "../../../Utils/Instance";
 
 const UserList = () => {
@@ -18,7 +17,7 @@ const UserList = () => {
     const { Post, isLast } = res.data;
     return { Post, nextPage: pageParam + 1, isLast };
   };
-  const [data, status, fetchNextPage, isFetchingNextPage] = useInfinityScroll("user", fetchUserList);
+  const { data, status, fetchNextPage, isFetchingNextPage } = useInfinityScroll("user", fetchUserList);
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
