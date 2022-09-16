@@ -10,6 +10,7 @@ import AddPhoto from "../Components/PostPage/AddPhoto";
 import AddContent from "../Components/PostPage/AddContent";
 import { instance } from "../Utils/Instance";
 import Modal from "../Components/RecordPage/Modal";
+import Loading from "../Components/Common/Loading/Loading";
 
 import { ReactComponent as BackIcon } from "../Icons/BackIcon.svg";
 
@@ -17,6 +18,7 @@ const Post = () => {
   const [merge, setMerge] = useState(false);
   const [post, setPost] = useRecoilState(postData);
   const [showModal, setShowModal] = useState(false);
+  const [postLoading, setPostLoading] = useState(false);
 
   const { id: postId } = useParams();
 
@@ -28,11 +30,11 @@ const Post = () => {
   const addPosts = async () => {
     if (!postId) {
       const { data } = await instance.post("/api/post", post);
-      console.log(data);
+      setPostLoading(false);
       return data;
     } else {
       const { data } = await instance.put(`/api/post/${postId}`, post);
-      console.log(data);
+      setPostLoading(false);
       return data;
     }
   };
@@ -54,23 +56,29 @@ const Post = () => {
       isLoading: true
     }));
     setMerge(true);
+    setPostLoading(true);
   }, [merge, post]);
 
   useEffect(() => {
-    console.log(post.isLoading, merge);
     if (!post.isLoading && merge) {
       addPosts();
-      navigate("/feed");
+      const LoadingScreen = setTimeout(() => {
+        navigate("/feed");
+      }, 2000);
+      return () => clearTimeout(LoadingScreen);
     }
   }, [post, merge]);
 
-  console.log(post);
-
   return (
     <>
+      {postLoading && <Loading>게시물을 업로드하고 있어요</Loading>}
       <PostHeader>
         <HeaderItems>
-          <div>
+          <div
+            onClick={() => {
+              navigate("/feed");
+            }}
+          >
             <BackIcon />
           </div>
           <div>글쓰기</div>
@@ -86,14 +94,8 @@ const Post = () => {
         <Hashtag merge={merge} prevHashtag={runLog.hashtag} />
       </PostBody>
       {showModal && (
-        <Modal>
-          <ModalWrap>
-            <p>{postId ? "수정하시겠어요?" : "작성하시겠어요?"}</p>
-            <div>
-              <button onClick={onCloseModal}>취소</button>
-              <button onClick={onClickSubmit}>확인</button>
-            </div>
-          </ModalWrap>
+        <Modal onClickNo={onCloseModal} onClickYes={onClickSubmit}>
+          <p>{postId ? "수정하시겠어요?" : "작성하시겠어요?"}</p>
         </Modal>
       )}
     </>
@@ -106,6 +108,7 @@ const PostHeader = styled.div`
   display: flex;
   align-items: flex-start;
   padding: 0rem;
+
   height: 4.3rem;
 `;
 
@@ -134,27 +137,5 @@ const PostBody = styled.div`
 
 const PostMap = styled.div`
   padding: 2rem 2rem 0rem;
-`;
-
-const ModalWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  border-radius: 1rem;
-  justify-content: center;
-  align-items: center;
-  width: 30.4rem;
-  height: 17.4rem;
-  & p {
-    margin: 4rem 0rem;
-  }
-  & button {
-    border: none;
-    background-color: white;
-    font-size: 1.6rem;
-  }
-  & div {
-    gap: 10rem;
-    display: flex;
-  }
+  width: 35.2rem;
 `;

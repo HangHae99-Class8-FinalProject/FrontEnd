@@ -61,22 +61,36 @@ const Nav = () => {
     submitImg();
   };
 
+  const kakaoLogout = async () => {
+    const { data } = await instance.get("/api/kakao/logout");
+    return data;
+  };
+
   const logoutConfirm = () => {
     if (confirm("로그아웃하시겠습니까")) {
-      return localStorage.clear(), navigate("/");
+      kakaoLogout();
+      localStorage.clear();
+      navigate("/");
     } else {
       return;
     }
   };
+
+
   const userDelete = async () => {
-    const { data } = instance.delete("/api/user").then(responce => {
+    const { data } = await instance.delete("/api/user").then(() => {
       localStorage.clear();
     });
+
     return data;
   };
+
   const outConfirm = () => {
     if (confirm("회원탈퇴하시겠습니까")) {
-      return userDelete(), alert("회원탈퇴되었습니다"), navigate("/");
+      userDelete();
+      alert("회원탈퇴되었습니다");
+      navigate("/");
+
     } else {
       return;
     }

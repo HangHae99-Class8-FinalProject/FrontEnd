@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useMutation, useQueryClient } from "react-query";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ReactComponent as BackIcon } from "../../Icons/BackIcon.svg";
 
-import { ReactComponent as Reservation } from "../../Icons/Rectangle.svg";
-import { addReply } from "../../Hooks/useReply";
 import PostItem from "./postItem";
 import ReplyComponent from "./replyComponent";
 
@@ -13,29 +11,6 @@ const ReplyCom = () => {
   const data = location.state;
 
   const navigate = useNavigate();
-
-  const { id: postId } = useParams();
-
-  const [replyValue, setReplyValue] = useState("");
-
-  //댓글추가
-  const queryClient = useQueryClient();
-
-  const addReplyData = useMutation(reply => addReply(reply), {
-    onSuccess: data => {
-      console.log(data);
-      queryClient.invalidateQueries("GET_REPLY");
-    },
-    onError: error => {
-      console.log(error);
-    }
-  });
-
-  const handleAddreply = e => {
-    e.preventDefault();
-    addReplyData.mutate({ comment: replyValue, postId: postId }); //api 데이터용
-    setReplyValue("");
-  };
 
   return (
     <>
@@ -46,7 +21,7 @@ const ReplyCom = () => {
               navigate("/feed");
             }}
           >
-            <Reservation />
+            <BackIcon />
           </Back>
           <ReplyText>
             <span>댓글</span>
@@ -55,10 +30,7 @@ const ReplyCom = () => {
         <PostItem data={data} />
         <ReplyComponent />
         <ReplyArea>
-          <input type="text" value={replyValue} onChange={e => setReplyValue(e.target.value)} />
           <Detail />
-          <input type="text" value={replyValue} onChange={e => setReplyValue(e.target.value)} />
-          <button onClick={handleAddreply}>댓글추가</button>
         </ReplyArea>
       </Wrap>
     </>
@@ -69,13 +41,11 @@ export default ReplyCom;
 
 const Wrap = styled.div`
   margin: 0px;
-  height: 100rem;
-  width: 490px;
-  min-width: 390px;
+  /* height: 100rem; */
+  border-right: 1px solid black;
 `;
 
 const Head = styled.div`
-  width: 100%;
   height: 43px;
   border-bottom: 1px solid #111;
 `;
