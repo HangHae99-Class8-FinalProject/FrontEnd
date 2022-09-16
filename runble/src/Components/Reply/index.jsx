@@ -31,9 +31,13 @@ const ReplyCom = () => {
             <span>댓글</span>
           </ReplyText>
         </Head>
-        <PostItem data={data} />
-        {display == true ? <>댓글이 없습니다.</>: <ReplyComponent />}
+        <Body>
+            <PostItem data={data} />
+            {display == true ? <>댓글이 없습니다.</>: <ReplyComponent />}
+        </Body>
       </Wrap>
+  
+    
     </>
   );
 };
@@ -41,11 +45,7 @@ const ReplyCom = () => {
 export default ReplyCom;
 
 const Wrap = styled.div`
-  margin: 0px;
-  height: 100rem;
-  width: 37.5rem;
-  min-width: 39rem;
-  border-right: 1px solid black;
+  height:100%;
 `;
 
 const Head = styled.div`
@@ -56,12 +56,17 @@ const Head = styled.div`
 
 const Back = styled.div`
   float: left;
-  margin: 1.5rem 2rem;
+  position:relative;
+  left:1rem;
+  top:1rem
 `;
 
 const ReplyText = styled.div`
   display: inline-block;
   font-size: 2rem;
-  margin:0.5rem 13rem;
+  margin:0.5rem 16rem;
 `;
+
+const Body = styled.div`
+`
 

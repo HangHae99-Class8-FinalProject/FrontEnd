@@ -4,14 +4,8 @@ import { useInView } from "react-intersection-observer";
 import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 
-<<<<<<< HEAD
-import { editReply,delReply } from "../../Hooks/useReply";
-import useInfinityScroll from "../../Hooks/useInfinityScroll";
-import Recomment from "./recomment"
-=======
 import { editReply, delReply } from "../../Hooks/useReply";
 import useInfinityScroll from "../../Hooks/useInfinityScroll";
->>>>>>> 84e967e7b28122c2dd1a71469fd09a13d23e3eea
 import { instance } from "../../Utils/Instance";
 import ReplyInput from "./ReplyInput";
 import CommentList from "./CommentList";
@@ -25,17 +19,21 @@ function ReplyComponent() {
 
   //댓글조회
   const getReply = async pageParam => {
-    const { data } = await instance.get(`http://54.167.169.43/api/comment/${postId}/${pageParam}`);
-    return data;
+    const res = await instance.get(`http://54.167.169.43/api/comment/${postId}/${pageParam}`);
+    const {Comment, isLast} = res.data;
+    console.log("확인",pageParam)
+    return { Comment, nextPage: pageParam + 1, isLast };
   };
 
   const [ref, inView] = useInView();
 
-  const [data, fetchNextPage, lastPage] = useInfinityScroll("GET_REPLY", getReply);
+  const [data, status, fetchNextPage, isFetchingNextPage, lastPage] = useInfinityScroll("GET_REPLY", getReply);
+
+  
 
   useEffect(() => {
-    if (inView && lastPage) fetchNextPage();
-  }, [inView, lastPage]);
+    if (inView ) fetchNextPage();
+  }, [inView]);
 
   //댓글 수정
   const [editable, setEditable] = useState(false);
@@ -44,23 +42,6 @@ function ReplyComponent() {
   const [recommentKey, setRecommentKey] = useState("");
   console.log(recommentKey, "key");
 
-  const editReplyData = useMutation(reply => editReply(reply), {
-    onSuccess: data => {
-      console.log(data);
-      setEditable(!editable);
-      queryClient.invalidateQueries("GET_REPLY");
-    },
-    onError: error => {
-      console.log(error);
-    }
-  });
-
-  const handleEditreply = (commentId, comment) => {
-    setEditable(true);
-    setReplyValue(comment);
-    console.log(replyValue);
-    editReplyData.mutate({ comment: replyValue, commentId: commentId });
-  };
 
   const onCloseInput = useCallback(() => {
     setShowInput(false);
@@ -85,6 +66,7 @@ function ReplyComponent() {
         })}
         <ReplyInput onCloseInput={onCloseInput} showInput={showInput} postId={recommentKey} />
       </ReplyBox>
+      {isFetchingNextPage ? <></> : <div ref={ref}></div>}
       <Nav />
     </>
   );
@@ -93,6 +75,5 @@ function ReplyComponent() {
 export default ReplyComponent;
 
 const ReplyBox = styled.div`
-  width: 100%;
-  margin-bottom: 2rem;
+  height:100rem ;
 `;

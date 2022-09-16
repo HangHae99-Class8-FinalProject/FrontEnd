@@ -7,8 +7,8 @@ import { ReactComponent as ReplyDelete } from "../../Icons/ReplyDelete.svg";
 
 import Recomment from "./Recomment";
 import displayedAt from "../../Utils/displayAt";
-import { delReply } from "../../Hooks/useReply";
 import { editReply } from "../../Hooks/useReply";
+import { delReply } from "../../Hooks/useReply";
 import useInput from "../../Hooks/useInput";
 
 const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
@@ -78,8 +78,8 @@ const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
             </form>
           )}
           <CommentFooter>
-            <div>{displayedAt(reply.createdAt)}</div>
-            <div onClick={onShowInput}>답글달기</div>
+            <Time>{displayedAt(reply.createdAt)}</Time>
+            <Write onClick={onShowInput}>답글달기</Write>
             <div onClick={onShowRecomment}>댓글 {reply.recommentNum}개더보기</div>
           </CommentFooter>
         </CommentBody>
@@ -115,7 +115,17 @@ const CommentWrap = styled.div`
 
 const CommentFooter = styled.div`
   display: flex;
+  color:#aaa;
+  position:relative;
+  top:1.5rem ;
+
 `;
+
+const Time = styled.div`
+  padding-right:1rem;`
+const Write = styled.div`
+  padding-right:1rem;`
+  
 
 const CommentBody = styled.div`
   align-items: flex-start;
