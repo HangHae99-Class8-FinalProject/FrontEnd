@@ -22,9 +22,7 @@ function Recomment({id}) {
   };
 
   const getRecomment = async (pageParam) => {
-    console.log(pageParam)
     const response = await instance.get(`http://54.167.169.43/api/comment/${id}/${pageParam}`);
-    console.log(response)
     return response.data;
   }
 
@@ -81,7 +79,7 @@ function Recomment({id}) {
       
           {page?.Comment.map(reply => {
             console.log(reply)
-            // if (Number(id) === reply.commentId) {
+             if (Number(id) === reply.commentId) {
               return (
                 <Content key={reply.recommentId}>
          
@@ -89,7 +87,7 @@ function Recomment({id}) {
           
                 </Content>
               );
-            // }
+             }
           })}
           </React.Fragment>
         )
@@ -111,4 +109,14 @@ const Content = styled.div`
   margin-bottom: 1rem;
 `;
 
+const Input = styled.input`
+width:20rem;
+height:3rem;
+border-radius:1rem;
+margin: 0rem 1rem`
 
+
+const Button = styled.button`
+  outline:0;
+  border:0;
+  `

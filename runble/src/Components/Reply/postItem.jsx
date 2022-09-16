@@ -32,7 +32,9 @@ function PostItem ({data}) {
     return(
         <>
         <PostBox>
-            <Profile src={data.profile}/>
+            <Profile >
+              <img src={data.profile}/>
+            </Profile>
             <Nic>{data.nickname}</Nic>    
             <Content>{data.content}</Content>
             <Time>{displayedAt(data.createdAt)}</Time>
@@ -54,17 +56,17 @@ const PostBox = styled.div`
  border-bottom:1px solid #111 ;
  height:10% ;
 `
-const Profile = styled.img`
+const Profile = styled.div`
   width: 50px;
   height: 50px;
   float: left;
-  margin-top:10px ;
 `;
 
 const Nic = styled.div`
  position:absolute;
  left:110px;
- top:55px;`
+ top:55px;
+ font-size:1rem`
 
  const Content = styled.div`
   position:absolute;

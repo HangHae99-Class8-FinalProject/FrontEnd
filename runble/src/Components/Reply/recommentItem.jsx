@@ -2,8 +2,6 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useMutation,useQueryClient } from "react-query";
 
-
-// import { ReactComponent as DeleteIcon} from "../../Icons/ReplyDelete.svg"
 import { delReply,editReply } from "../../Hooks/useRecomment";
 
 function RecommentItem ({data}){

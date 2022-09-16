@@ -5,7 +5,8 @@ import { useMutation, useQueryClient,useInfiniteQuery } from "react-query";
 import { useParams } from "react-router-dom";
 
 import { editReply,delReply } from "../../Hooks/useReply";
-import Recomment from "./Recomment"
+import useInfinityScroll from "../../Hooks/useInfinityScroll";
+import Recomment from "./recomment"
 import { instance } from "../../Utils/Instance";
 import displayedAt from "../../Utils/displayAt";
 import { ReactComponent as ReplyUpdate} from "../../Icons/ReplyUpdate.svg"
@@ -22,17 +23,10 @@ function ReplyComponent() {
 
   const { id: postId } = useParams();
 
-  const onSuccess = () => {
-    console.log("조회성공");
-  };
-
-  const onError = () => {
-    console.log("조회실패");
-  };
 
   //댓글조회
   const getReply = async pageParam => {
-    const response = await instance.get(`http://54.167.169.43/api/comment/${postId}/${pageParam}`);
+    const response = await instance.get(`http://54.167.169.43/api/comment/${postId}/${pageParam}/:12`);
     const { Comment, isLast } = response.data;
     console.log(pageParam);
     return { Comment, nextPage: pageParam + 1, isLast };
@@ -40,20 +34,25 @@ function ReplyComponent() {
 
   const [ref, inView] = useInView();
 
-    const {data ,status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery("GET_REPLY",
-    ({pageParam = 1}) => getReply(pageParam),
-      {
-      getNextPageParam: (lastPage) =>
-       !lastPage.isLast ? lastPage.nextPage:undefined,
-      }
+    // const {data ,status, fetchNextPage, isFetchingNextPage, lastPage } = useInfiniteQuery("GET_REPLY",
+    // ({pageParam = 1}) => getReply(pageParam),
+    //   {
+    //   getNextPageParam: (lastPage) =>
+    //    !lastPage.isLast ? lastPage.nextPage:undefined,
+    //   }
+    // );
+
+    const [data, fetchNextPage, isFetchingNextPage,lastPage] = useInfinityScroll(
+      "GET_REPLY",
+      getReply,
     );
  
 
   console.log(data);
 
   useEffect(() => {
-    if (inView) fetchNextPage();
-  }, [inView]);
+    if (inView && lastPage) fetchNextPage();
+  }, [inView,lastPage]);
 
 
 
@@ -172,13 +171,15 @@ const N_R = styled.div`
 
 const NickName = styled.p`
   margin: 10px;
+  font-weight:bold ;
 `;
 const ReplyContent = styled.div`
   margin: 10px 0 0 10px;
   width: 90%;
 `;
 
-const ReplyText = styled.p``;
+const ReplyText = styled.p`
+  font-size:1rem`;
 
 const Time = styled.div`
   display: inline-block;

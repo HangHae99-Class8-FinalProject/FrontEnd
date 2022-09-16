@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ReactComponent as BackIcon} from "../../Icons/BackIcon.svg"
@@ -10,6 +10,10 @@ const ReplyCom = () => {
   const location = useLocation();
   const data = location.state;
   console.log(data)
+
+  const [display, setDisplay] = useState(false);
+
+
 
   const navigate = useNavigate();
 
@@ -29,10 +33,7 @@ const ReplyCom = () => {
           </ReplyText>
         </Head>
         <PostItem data={data} />
-        <ReplyComponent />
-        <ReplyArea>
-          <Detail />
-        </ReplyArea>
+        {display == true ? <>댓글이 없습니다.</>: <ReplyComponent />}
       </Wrap>
     </>
   );
@@ -43,33 +44,24 @@ export default ReplyCom;
 const Wrap = styled.div`
   margin: 0px;
   height: 100rem;
-  width:37.5rem;
   min-width:39rem;
   border-right: 1px solid black ;
 `;
 
 const Head = styled.div`
   width: 100%;
-  height: 43px;
+  height: 4.3rem;
   border-bottom: 1px solid #111;
 `;
 
 const Back = styled.div`
   float: left;
-  margin: 15px 20px;
+  margin: 1.5rem 2rem;
 `;
 
 const ReplyText = styled.div`
   display: inline-block;
-  font-size: 20px;
-  margin: 10px 150px;
+  font-size: 2rem;
+  margin:0.5rem 13rem;
 `;
 
-const Detail = styled.div`
-  border: 0.1rem solid black;
-  margin-top: 40rem;
-`;
-
-const ReplyArea = styled.div`
-  margin: 2rem;
-`;
