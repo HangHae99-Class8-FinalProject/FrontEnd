@@ -8,6 +8,7 @@ import { ReactComponent as ReplyDelete } from "../../Icons/ReplyDelete.svg";
 import displayedAt from "../../Utils/displayAt";
 import { delRecomment, editRecomment } from "../../Hooks/useRecomment";
 import useInput from "../../Hooks/useInput";
+import { ReactComponent as Profile } from "../../Icons/myPageProfile.svg";
 
 function RecommentItem({ data }) {
   console.log(data);
@@ -52,54 +53,75 @@ function RecommentItem({ data }) {
   const handleEditreply = () => {
     setEditable(false);
     editRecommentData.mutate({
-      commentId : data.commentId,
+      commentId: data.commentId,
       recommentId: data.recommentId,
       comment: commentValue
     });
   };
 
+  const userData = JSON.parse(window.localStorage.getItem("userData"));
+
   return (
-    <>
+    <Body>
       <RecommentBox>
-        <div>
-          <img src={data.image} />
-        </div>
+        <div>{data.image ? <img src={data.image} /> : <Profile />}</div>
         <RecommentBody>
-          <div>{data.nickname}</div>
+          <Nick>{data.nickname}</Nick>
           {!editable ? (
             <div>{data.comment}</div>
-          ):( 
-          <form onSubmit={handleEditreply}>
-            <input value={editValue} onChange={onChangeEditValue} />
-          </form>
+          ) : (
+            <form onSubmit={handleEditreply}>
+              <input value={editValue} onChange={onChangeEditValue} />
+            </form>
           )}
+          <RecommentFooter>
+            <div>{displayedAt(data.createdAt)}</div>
+          </RecommentFooter>
         </RecommentBody>
-        <RecommentFooter>
-        <Time>{displayedAt(data.createdAt)}</Time>
-        </RecommentFooter>
-        <div>
-          <button onClick={onShowEdit}>{!editable ? <ReplyUpdate /> : <>&times;</>}</button>
-          <button onClick={handleDelreply}>
-            <ReplyDelete />
-          </button>
-        </div>
+        {data.nickname === userData.nickname ? (
+          <ButtonWrap>
+            <button onClick={onShowEdit}>{!editable ? <ReplyUpdate /> : <>&times;</>}</button>
+            <button onClick={handleDelreply}>
+              <ReplyDelete />
+            </button>
+          </ButtonWrap>
+        ) : null}
       </RecommentBox>
-
-    </>
+    </Body>
   );
 }
 
 export default RecommentItem;
 
+const Body = styled.div`
+  display: flex;
+  max-width: 100%;
+  overflow-y: hidden;
+  margin-left: 3rem;
+`;
+
+const Nick = styled.div`
+  line-height: 1rem;
+  font-family: "Anton";
+  font-size: 1.1rem;
+  font-weight: 700;
+`;
+const ButtonWrap = styled.div`
+  display: flex;
+  margin-left: 1.2rem;
+  & button {
+    border: none;
+  }
+`;
+
 const RecommentBox = styled.div`
-   margin-left:3rem; 
   font-size: 1rem;
   display: flex;
   align-items: center;
-  padding: 1.5rem 1.6rem;
-  gap: 0.8rem;  
-  height: 7rem;;
-& img {
+  padding: 1.5rem 0rem 1.5rem 1.6rem;
+  gap: 0.8rem;
+  height: 7rem;
+  & img {
     width: 4rem;
     height: 4rem;
     border-radius: 10rem;
@@ -107,19 +129,17 @@ const RecommentBox = styled.div`
 `;
 
 const RecommentBody = styled.div`
- align-items: flex-start;
+  align-items: flex-start;
   gap: 0.2rem;
   height: 4.2rem;
-  width: 29.7rem;`
-
-const RecommentFooter = styled.div`
-  display: flex;
-  width:40rem;
-  position:relative;
-  right:12rem;
-  top:3rem;
-  color:#aaa;
+  width: 26.7rem;
+  & div:first-child {
+    line-height: 1rem;
+  }
 `;
 
-const Time = styled.div`
- `
+const RecommentFooter = styled.div`
+  position: relative;
+  top: 1.5rem;
+  color: #aaa;
+`;

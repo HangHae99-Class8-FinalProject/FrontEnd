@@ -35,6 +35,12 @@ export const StyleUsrBox = styled.div`
   padding: 2rem 1.6rem;
 `;
 
+export const UserTitle = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const RankLink = styled(Link)`
   padding-right: 1rem;
 `;

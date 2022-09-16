@@ -163,7 +163,7 @@ const PostBox = ({ posts, index }) => {
             });
           }}
         >
-          댓글{posts.commentNum}개 모두보기
+          {posts.commentNum > 0 && <>댓글{posts.commentNum}개 모두보기</>}
         </StyleComment>
         <StyleTime>{displayedAt(posts.createdAt)}</StyleTime>
       </StyleContentBox>
