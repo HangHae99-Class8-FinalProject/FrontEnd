@@ -215,7 +215,6 @@ const RecommentBtn = styled.button`
 const Button = styled.button`
   outline:0;
   border:0;
-
   `
   const Input = styled.input`
     width:20rem;

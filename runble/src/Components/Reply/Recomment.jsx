@@ -111,13 +111,4 @@ const Content = styled.div`
   margin-bottom: 1rem;
 `;
 
-const Input = styled.input`
-  width:20rem;
-  height:3rem;
-  border-radius:1rem;
-  margin: 1rem 4rem;`
 
-const Button = styled.button`
-  outline:0;
-  border:0;
-`

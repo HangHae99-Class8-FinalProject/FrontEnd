@@ -1,9 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-
-
-
  html{
    font-size: 62.5%; //1 rem =10px
  }
@@ -12,7 +9,10 @@ const GlobalStyle = createGlobalStyle`
   margin: 0;
   padding: 0;
   font-family: "Noto Sans CJK KR";
- }`
+ }
+
+
+`;
 
 
 export default GlobalStyle;
