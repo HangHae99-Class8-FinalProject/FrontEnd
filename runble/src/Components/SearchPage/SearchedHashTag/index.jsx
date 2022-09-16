@@ -21,7 +21,7 @@ const SearchedHashTag = ({ searhValue }) => {
   };
 
   const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    "searchHashtag",
+    ["searchHashtag", searhValue],
     ({ pageParam = 1 }) => (tap === "인기" ? getSearchHashTagOrder(pageParam) : getSearchHashTagNewest(pageParam)),
     {
       enabled: !!searhValue,

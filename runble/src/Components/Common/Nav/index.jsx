@@ -58,9 +58,16 @@ const Nav = () => {
     submitImg();
   };
 
+  const kakaoLogout = () => {
+    const { data } = instance.get("/api/kakao/logout");
+    return data;
+  };
+
   const logoutConfirm = () => {
     if (confirm("로그아웃하시겠습니까")) {
-      return localStorage.clear(), navigate("/");
+      kakaoLogout();
+      localStorage.clear();
+      navigate("/");
     } else {
       return;
     }

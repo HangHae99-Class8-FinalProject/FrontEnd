@@ -105,9 +105,10 @@ const PhotoWrap = styled.div`
   display: flex;
   gap: 2rem;
   border-bottom: 0.1rem solid #e6e6e6;
-  overflow: scroll;
+  overflow-y: auto;
   width: inherit;
   flex-wrap: nowrap;
+  max-width: 34.3rem; ;
 `;
 
 const AddButton = styled.label`
@@ -116,7 +117,7 @@ const AddButton = styled.label`
   justify-content: center;
   align-items: center;
   gap: 0.2rem;
-  width: 6.4rem;
+  min-width: 6.4rem;
   height: 6.4rem;
   background: #ffffff;
   border: 0.1rem solid #cccccc;
