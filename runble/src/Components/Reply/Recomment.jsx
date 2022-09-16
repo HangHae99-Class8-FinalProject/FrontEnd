@@ -19,13 +19,11 @@ function Recomment({ id }) {
     console.log("조회실패");
   };
 
-  const [recommentId, setRecommentId] = useState(0);
+  const getRecomment = async (pageParam) => {
+    console.log(pageParam)
+    const response = await instance.get(`http://54.167.169.43/api/comment/${id}/${pageParam}`);
+    console.log(response)
 
-  const getRecomment = async pageParam => {
-    setRecommentId(recommentId + 1);
-    console.log(pageParam);
-    const response = await instance.get(`http://54.167.169.43/api/comment/${id}/${recommentId}/${pageParam}`);
-    console.log(response.data);
     return response.data;
   };
 
@@ -65,36 +63,47 @@ function Recomment({ id }) {
   };
 
   return (
-    <ReplyBox>
-      {data?.pages.map((page, i) => {
-        console.log(page.Recomment[i].commentId);
-        return (
+
+      <ReplyBox>
+               <Input
+                   type="text"
+                    value={replyValue}
+                    onChange={e => setReplyValue(e.target.value)}
+                  />
+                  <Button onClick={handleAddreply}>대댓글추가</Button>
+   
+      {data?.pages.map((page, i)=>{
+         return  (
           <React.Fragment key={i}>
-            <input type="text" value={replyValue} onChange={e => setReplyValue(e.target.value)} />
-            <button onClick={() => handleAddreply(page.Recomment[i].recommentId)}>대댓글추가</button>
-            {page?.Recomment.map(reply => {
-              console.log(reply);
-              if (id === reply.commentId) {
-                return (
-                  <Content key={reply.recommentId}>
-                    <RecommentItem data={reply} />
-                  </Content>
-                );
-              }
-            })}
+      
+          {page?.Comment.map(reply => {
+            console.log(reply)
+            // if (Number(id) === reply.commentId) {
+              return (
+                <Content key={reply.recommentId}>
+         
+                  <RecommentItem data={reply}/>
+          
+                </Content>
+              );
+            // }
+          })}
           </React.Fragment>
-        );
-      })}
-    </ReplyBox>
-  );
+        )
+      
+      
+      })} 
+  </ReplyBox>
+  )
+
 }
 
 export default Recomment;
 
 const ReplyBox = styled.div`
   width: 100%;
-  margin-bottom: 20px;
-`;
+`
+
 
 const Content = styled.div`
   margin-left: 4rem;

@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useInView } from "react-intersection-observer";
-import { useMutation, useQueryClient } from "react-query";
-
-import { editReply, delReply } from "../../Hooks/useReply";
-import Recomment from "./Recomment";
-import useInfinityScroll from "../../Hooks/useInfinityScroll";
-import { instance } from "../../Utils/Instance";
+import { useMutation, useQueryClient,useInfiniteQuery } from "react-query";
 import { useParams } from "react-router-dom";
+
+import { editReply,delReply } from "../../Hooks/useReply";
+import Recomment from "./Recomment"
+import { instance } from "../../Utils/Instance";
 import displayedAt from "../../Utils/displayAt";
+import { ReactComponent as ReplyUpdate} from "../../Icons/ReplyUpdate.svg"
+import { ReactComponent as ReplyDelete} from "../../Icons/ReplyDelete.svg"
+
+
 
 function ReplyComponent() {
   const [display, setDisplay] = useState(false);
 
-  const [ref, inView] = useInView();
+
 
   const queryClient = useQueryClient();
 
@@ -35,16 +38,24 @@ function ReplyComponent() {
     return { Comment, nextPage: pageParam + 1, isLast };
   };
 
-  const [data, fetchNextPage, isFetchingNextPage] = useInfinityScroll("GET_REPLY", getReply, {
-    onSuccess,
-    onError
-  });
+  const [ref, inView] = useInView();
 
-  console.log(data?.pages[0].Comment[0].commentId);
+    const {data ,status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery("GET_REPLY",
+    ({pageParam = 1}) => getReply(pageParam),
+      {
+      getNextPageParam: (lastPage) =>
+       !lastPage.isLast ? lastPage.nextPage:undefined,
+      }
+    );
+ 
+
+  console.log(data);
 
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
+
+
 
   //댓글삭제
   const delReplyData = useMutation(commentId => delReply(commentId), {
@@ -81,10 +92,9 @@ function ReplyComponent() {
 
   const handleEditreply = (commentId, comment) => {
     setEditable(true);
-    setClickedId(commentId);
     setReplyValue(comment);
     console.log(replyValue);
-    editReplyData.mutate({ comment: replyValue, commentId: clickedId });
+    editReplyData.mutate({ comment: replyValue, commentId: commentId });
   };
 
   return (
@@ -100,17 +110,17 @@ function ReplyComponent() {
                     <N_R>
                       <NickName>{reply.nickname}</NickName>
                       {editable && clickedId === reply.commentId ? (
-                        <input value={replyValue} onChange={e => setReplyValue(e.target.value)} />
+                        <Input value={replyValue} onChange={e => setReplyValue(e.target.value)} />
                       ) : (
                         <ReplyContent>
                           <ReplyText>{reply.comment}</ReplyText>
                         </ReplyContent>
                       )}
                     </N_R>
-                    <button onClick={() => handleEditreply(reply.commentId, reply.comment)}>
-                      {editable && clickedId === reply.commentId ? <span>제출하기</span> : <span>수정하기</span>}
-                    </button>
-                    <button onClick={() => handleDelreply(reply.commentId)}>삭제하기</button>
+                     <Button onClick={() => handleEditreply(reply.commentId, reply.comment)}>
+                      {editable && clickedId === reply.commentId ? <ReplyUpdate /> :    <ReplyUpdate/>}
+                    </Button>
+                    <Button onClick={() => handleDelreply(reply.commentId)}><ReplyDelete/></Button> 
                     <Time>{displayedAt(reply.createdAt)}</Time>
                     <Write>답글달기</Write>
 
@@ -130,7 +140,7 @@ function ReplyComponent() {
           </React.Fragment>
         );
       })}
-      {isFetchingNextPage ? <span>로딩중입니다</span> : <div ref={ref}></div>}
+      {isFetchingNextPage ? <>로딩중입니다</> : <div ref={ref}/> }
     </ReplyBox>
   );
 }
@@ -139,12 +149,11 @@ export default ReplyComponent;
 
 const ReplyBox = styled.div`
   width: 100%;
-  background-color: #eee;
   margin-bottom: 2rem;
 `;
 
 const Content = styled.div`
-  border-bottom: 1px solid #111;
+  border-bottom: 1px solid #ccc;
   height: auto;
 `;
 const Profile = styled.img`
@@ -156,7 +165,7 @@ const Profile = styled.img`
 `;
 
 const N_R = styled.div`
-  width: 80%;
+  width: 75%;
   margin-left: auto;
   word-break: break-all;
 `;
@@ -174,39 +183,40 @@ const ReplyText = styled.p``;
 const Time = styled.div`
   display: inline-block;
   color: #999999;
-  font-family: "Noto Sans CJK KR";
-  font-style: normal;
-  font-weight: 400;
   font-size: 15px;
   line-height: 14px;
   position: relative;
-  left: 110px;
+  left: 2rem;
 `;
 
 const Write = styled.button`
   color: #999999;
-  font-family: "Noto Sans CJK KR";
-  font-style: normal;
-  font-weight: 400;
   font-size: 15px;
   line-height: 14px;
   background-color: transparent;
   border: 0;
   outline: 0;
   position: relative;
-  left: 130px;
+  left: 4rem;
 `;
 
 const RecommentBtn = styled.button`
   color: #999999;
-  font-family: "Noto Sans CJK KR";
-  font-style: normal;
-  font-weight: 400;
   font-size: 15px;
   line-height: 14px;
   background-color: white;
   border: 0;
   outline: 0;
   position: relative;
-  left: 150px;
+  left: 4.5rem;
 `;
+
+const Button = styled.button`
+  outline:0;
+  border:0;
+  `
+  const Input = styled.input`
+    width:20rem;
+  height:3rem;
+  border-radius:1rem;
+  margin: 0rem 1rem`

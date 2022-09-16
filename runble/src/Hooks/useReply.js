@@ -28,7 +28,7 @@ export const delReply = async (id)=>{
 
 export const editReply = async ({comment,commentId}) =>{
   try{
-      console.log(comment)
+      console.log(commentId)
         const response = await instance.put(`http://54.167.169.43/api/comment/${commentId}`,
           {comment:comment}
         )

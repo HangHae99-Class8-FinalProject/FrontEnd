@@ -43,7 +43,6 @@ const PostBox = ({ posts, index }) => {
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
   const [heart, Setheart] = useState(false);
-  // console.log(posts);
   return (
     <StyleFeed key={index}>
       <StyleFrofileBox>
