@@ -56,16 +56,6 @@ const Userprofile = ({ userNickname, goalData }) => {
           </>
         ) : (
           <>
-            <StyleHeader>
-              <span>마이페이지</span>
-
-              <Option
-                onClick={() => {
-                  setShow(prev => !prev);
-                  setNaveState("option");
-                }}
-              ></Option>
-            </StyleHeader>
             <StyleUsrBox>
               <div>
                 {goalData?.getUserInfo.profile ? (
@@ -85,9 +75,5 @@ const Userprofile = ({ userNickname, goalData }) => {
       </StyleUser>
     </StyleUserWrap>
   );
-
-  function newFunction() {
-    return { nickname } === userNickname;
-  }
 };
 export default Userprofile;

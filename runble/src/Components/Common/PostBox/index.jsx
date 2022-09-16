@@ -44,6 +44,7 @@ const PostBox = ({ posts, index }) => {
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
   const [heart, Setheart] = useState(false);
+  console.log(posts);
   return (
     <StyleFeed key={index}>
       <StyleFrofileBox>
@@ -53,7 +54,7 @@ const PostBox = ({ posts, index }) => {
               onClick={() => {
                 setPostData(posts);
                 navigate(`/user/${posts.nickname}`, {
-                  state: { nickname: posts.nickname, profile: posts.profile, userId: posts.userId }
+                  state: { userId: posts.userId }
                 });
               }}
             />
@@ -62,7 +63,7 @@ const PostBox = ({ posts, index }) => {
               onClick={() => {
                 setPostData(posts);
                 navigate(`/user/${posts.nickname}`, {
-                  state: { nickname: posts.nickname, profile: posts.profile, userId: posts.userId }
+                  state: posts.userId
                 });
               }}
               src={posts.profile}
@@ -152,7 +153,7 @@ const PostBox = ({ posts, index }) => {
             navigate(`/reply/${posts.postId}`);
           }}
         >
-          댓글{posts.commentNum}개모두보기
+          댓글{posts.commentNum}개 모두보기
         </StyleComment>
         <StyleTime>{displayedAt(posts.createdAt)}</StyleTime>
       </StyleContentBox>

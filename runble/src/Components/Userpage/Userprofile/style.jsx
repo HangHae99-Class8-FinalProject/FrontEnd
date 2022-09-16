@@ -5,12 +5,8 @@ export const StyleUserWrap = styled.div`
 export const StyleUser = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 26px;
   width: 100%;
-
-  /* width: 100%; */
   position: relative;
-
   background: #ffffff;
 `;
 export const StyleHeader = styled.div`
@@ -33,6 +29,6 @@ export const StyleUsrBox = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 0px;
-  gap: 10px;
-  padding: 0 1.6rem;
+  gap: 1rem;
+  padding: 2rem 1.6rem;
 `;

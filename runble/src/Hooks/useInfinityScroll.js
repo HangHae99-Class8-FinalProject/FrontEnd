@@ -5,8 +5,7 @@ const useInfinityScroll = (QueryKey, QueryFnc) => {
     QueryKey,
     ({ pageParam = 1 }) => QueryFnc(pageParam),
     {
-      getNextPageParam: lastPage =>
-        !lastPage.isLast ? lastPage.nextPage : undefined,
+      getNextPageParam: lastPage => (!lastPage.isLast ? lastPage.nextPage : undefined),
       refetchOnWindowFocus: false
     }
   );

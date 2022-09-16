@@ -10,7 +10,7 @@ export const StyleProgress = styled.div`
   height: 23rem;
   background-color: rgba(53, 52, 52, 1);
   box-sizing: border-box;
-  border-radius: 12px;
+  border-radius: 1.2rem;
   margin: 0 auto;
   & > div {
     display: flex;
@@ -39,7 +39,7 @@ export const StyleNextProgress = styled.div`
   padding: 0px;
   gap: 0.8rem;
   width: 100%;
-  height: 230px;
+  height: 23rem;
   background: #353434;
   border-radius: 12px;
 `;
@@ -58,16 +58,14 @@ export const StyleSevenTitle = styled.div`
   align-items: center;
   height: 4.7rem;
   width: 100%;
-
-  /* background-color: darkblue; */
+  color: #ffffff;
 `;
 export const StyleSevenGoal = styled.span`
   padding: 1.2rem 1.4rem;
   font-family: "Noto Sans CJK KR";
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 23px;
+  font-size: 1.6rem;
   text-align: center;
   color: #ffffff;
 `;
@@ -75,49 +73,47 @@ export const StyleGoalDate = styled.span`
   font-family: "Noto Sans CJK KR";
   font-style: normal;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 1.2rem;
   line-height: 17px;
   text-align: center;
   padding: 1.2rem 1.4rem;
-
-  color: #ffffff;
 `;
 export const StyleSevenDate = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: flex-start;
   padding: 1rem 1.4rem;
   width: 95%;
-  height: 8.5rem;
+  position: relative;
   & > div {
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-around;
     padding: 0px;
-    gap: 5px;
+    font-size: 1rem;
     color: #ffffff;
-    width: 34px;
-    height: 57px;
-    & > span:first-child {
-      font-size: 10px;
-    }
-    & > span:nth-child(2) {
-      font-size: 16px;
-    }
-    & > span:last-child {
-      font-size: 10px;
+    & > span {
+      width: 100%;
+      text-align: center;
     }
   }
 `;
+export const StyleSpanDistance = styled.span`
+  color: ${({ Distance }) => (Distance === 0 ? "#4D4D4D;" : "#ffffff")};
+  font-size: 1.6rem;
+`;
+export const StyleSpanTime = styled.span`
+  color: ${({ Time }) => (Time === 0 ? "#4D4D4D;" : "#ffffff")}; ;
+`;
+
 export const StyleDistanceBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  gap: 22px;
-  /* background-color: aliceblue; */
-  /* width: 344px; */
+  gap: 2.2rem;
   height: 9.6rem;
   & > div {
     display: flex;
@@ -126,14 +122,12 @@ export const StyleDistanceBox = styled.div`
     align-items: center;
     color: white;
     position: relative;
-    /* padding: 0px 78px 18px; */
-    padding: 0 40px;
+    padding: 0 4rem;
     justify-content: center;
     align-items: center;
     text-align: center;
     & > span:first-child {
-      /* width: 100%; */
-      font-size: 36px;
+      font-size: 3.6rem;
       text-align: center;
       align-items: center;
       display: flex;

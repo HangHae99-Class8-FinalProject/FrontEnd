@@ -37,6 +37,7 @@ const Nav = () => {
   const accessToken = localStorage.getItem("userData");
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
+  const userId = parseData.userId;
   const submitImg = async () => {
     let file = imgVal.current.files[0];
     let newFileName = imgVal.current.files[0].name;
@@ -67,15 +68,15 @@ const Nav = () => {
       return;
     }
   };
-
+  const userDelete = async () => {
+    const { data } = instance.delete("/api/user").then(responce => {
+      localStorage.clear();
+    });
+    return data;
+  };
   const outConfirm = () => {
     if (confirm("회원탈퇴하시겠습니까")) {
-      return (
-        instance.delete("http://54.167.169.43/api/user"),
-        alert("회원탈퇴되었습니다"),
-        localStorage.clear(),
-        navigate("/")
-      );
+      return userDelete(), alert("회원탈퇴되었습니다"), navigate("/");
     } else {
       return;
     }
