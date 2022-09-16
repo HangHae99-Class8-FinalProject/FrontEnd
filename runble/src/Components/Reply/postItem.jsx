@@ -1,117 +1,90 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
-import { useMutation, useQueryClient } from "react-query";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
 import displayedAt from "../../Utils/displayAt";
-import { addReply } from "../../Hooks/useReply";
+import ReplyInput from "./ReplyInput";
+import { useParams } from "react-router-dom";
 
-function PostItem ({data}) {
-      console.log(data)
+function PostItem({ data }) {
+  const [showInput, setShowInput] = useState(false);
+  const { id: postId } = useParams();
 
-      const { id: postId } = useParams();
-      const [replyValue, setReplyValue] = useState("");
-      const [inputValue, setInputValue] = useState(false);
+  const onCloseInput = useCallback(() => {
+    setShowInput(false);
+  }, []);
 
-
-      const queryClient = useQueryClient();
-      const addReplyData = useMutation(reply => addReply(reply), {
-        onSuccess: data => {
-          console.log(data);
-          queryClient.invalidateQueries("GET_REPLY");
-        },
-        onError: error => {
-          console.log(error);
-        }
-      });
-    
-      const handleAddreply = e => {
-        e.preventDefault();
-        addReplyData.mutate({ comment: replyValue, postId: postId }); //api 데이터용
-        setReplyValue("");
-      };
-    return(
-        <>
-        <PostBox>
-            <Profile src={data.profile}/>
-            <Nic>{data.nickname}</Nic>    
-            <Content>{data.content}</Content>
-            <Time>{displayedAt(data.createdAt)}</Time>
-            <Like>좋아요{data.like}개</Like>
-            <Write onClick={()=>{setInputValue(!inputValue)}} >답글달기</Write>
-        </PostBox>
-        {inputValue &&(
-                   <InputBox>
-                   <Input type="text" value={replyValue} onChange={e => setReplyValue(e.target.value)} />
-                   <Button onClick={handleAddreply}>댓글추가</Button>
-                  </InputBox>
-            )}
-        </>
-    )
+  return (
+    <>
+      <PostBox>
+        <Profile src={data.profile} />
+        <Nic>{data.nickname}</Nic>
+        <Content>{data.content}</Content>
+        <Time>{displayedAt(data.createdAt)}</Time>
+        <Like>좋아요{data.like}개</Like>
+        <Write
+          onClick={() => {
+            setShowInput("댓글");
+          }}
+        >
+          답글달기
+        </Write>
+      </PostBox>
+      <ReplyInput showInput={showInput} onCloseInput={onCloseInput} postId={postId} />
+    </>
+  );
 }
-export default PostItem
+export default PostItem;
 
 const PostBox = styled.div`
- border-bottom:1px solid #111 ;
- height:10% ;
-`
+  border-bottom: 1px solid #111;
+  height: 10%;
+`;
 const Profile = styled.img`
   width: 50px;
   height: 50px;
   float: left;
-  margin-top:10px ;
+  margin-top: 10px;
 `;
 
 const Nic = styled.div`
- position:absolute;
- left:110px;
- top:55px;`
+  position: absolute;
+  left: 110px;
+  top: 55px;
+`;
 
- const Content = styled.div`
-  position:absolute;
-  left:110px;
-  top:80px;
-  width:70%;
-  word-break:break-all;`
+const Content = styled.div`
+  position: absolute;
+  left: 110px;
+  top: 80px;
+  width: 70%;
+  word-break: break-all;
+`;
 
-  const Time = styled.div`
-    color: #999999;
-    font-size: 15px;
-    line-height: 14px;
-    position:absolute;
-    left:110px;
-    top:120px;`
+const Time = styled.div`
+  color: #999999;
+  font-size: 15px;
+  line-height: 14px;
+  position: absolute;
+  left: 110px;
+  top: 120px;
+`;
 
-  const Like = styled.div`
-    color: #999999;
-    font-size: 15px;
-    line-height: 14px;
-    position:absolute;
-    left:180px;
-    top:120px;`
+const Like = styled.div`
+  color: #999999;
+  font-size: 15px;
+  line-height: 14px;
+  position: absolute;
+  left: 180px;
+  top: 120px;
+`;
 
 const Write = styled.button`
   color: #999999;
   font-size: 15px;
   line-height: 14px;
-  position:absolute;
-  left:260px;
-  top:118px;
-  background-color:white;
-  border:0;
-  outline:0;`
-
-const InputBox = styled.div`
-  background-color: #eee ;
-  height:5.5rem ;
-  `
-const Input = styled.input`
-  width:20rem;
-  height:3rem;
-  border-radius:1rem;
-  margin: 1rem 4rem`
-
-const Button = styled.button`
-  outline:0;
-  border:0;
-  font-size:2rem`
-
+  position: absolute;
+  left: 260px;
+  top: 118px;
+  background-color: white;
+  border: 0;
+  outline: 0;
+`;
