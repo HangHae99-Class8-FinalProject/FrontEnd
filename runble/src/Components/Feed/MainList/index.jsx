@@ -10,6 +10,7 @@ const fetchPostList = async pageParam => {
   const { Post, isLast } = res.data;
   return { Post, nextPage: pageParam + 1, isLast };
 };
+console.log();
 
 const MainList = () => {
   const { ref, inView } = useInView();

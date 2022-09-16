@@ -25,7 +25,7 @@ import { ReactComponent as View } from "../../../Icons/view.svg";
 import { ReactComponent as Heart } from "../../../Icons/heart.svg";
 import { ReactComponent as CommentIcon } from "../../../Icons/comment.svg";
 
-import { ReactComponent as Profile } from "../../../Icons/myPageProfile.svg";
+import { ReactComponent as Profile } from "../../../Icons/MyPageProfile.svg";
 
 import displayedAt from "../../../Utils/displayAt";
 import KakaoMap from "../../Common/KakaoMap/index";
@@ -46,7 +46,17 @@ const PostBox = ({ posts, index }) => {
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
   const [heart, Setheart] = useState(false);
-
+  console.log(posts);
+  const divideTime = useCallback(time => {
+    let seconds = time.seconds;
+    let minute = time.minute;
+    let hours = time.hours;
+    
+    hours = hours < 10 ? "0" + hours : hours;
+    minute = minute < 10 ? "0" + minute : minute;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+  }, []);
+  
   const linkToReply = useCallback(() => {
     navigate(`/reply/${posts.postId}`, {
       state: {
@@ -63,6 +73,7 @@ const PostBox = ({ posts, index }) => {
     navigate("/search", {
       state: hash
     });
+
   }, []);
   return (
     <StyleFeed key={index}>
