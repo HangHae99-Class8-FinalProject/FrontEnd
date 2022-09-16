@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useInView } from "react-intersection-observer";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient,useInfiniteQuery } from "react-query";
 import { useParams } from "react-router-dom";
 
 import { editReply,delReply } from "../../Hooks/useReply";
 import Recomment from "./Recomment"
-import useInfinityScroll from "../../Hooks/useInfinityScroll";
 import { instance } from "../../Utils/Instance";
-
 import displayedAt from "../../Utils/displayAt";
+import { ReactComponent as ReplyUpdate} from "../../Icons/ReplyUpdate.svg"
+import { ReactComponent as ReplyDelete} from "../../Icons/ReplyDelete.svg"
 
 
 
 function ReplyComponent() {
   const [display, setDisplay] = useState(false);
 
-  const [ref, inView] = useInView();
+
 
   const queryClient = useQueryClient();
 
@@ -38,16 +38,24 @@ function ReplyComponent() {
     return { Comment, nextPage: pageParam + 1, isLast };
   };
 
-  const [data, fetchNextPage, isFetchingNextPage] = useInfinityScroll("GET_REPLY", getReply, {
-    onSuccess,
-    onError
-  });
+  const [ref, inView] = useInView();
+
+    const {data ,status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery("GET_REPLY",
+    ({pageParam = 1}) => getReply(pageParam),
+      {
+      getNextPageParam: (lastPage) =>
+       !lastPage.isLast ? lastPage.nextPage:undefined,
+      }
+    );
+ 
 
   console.log(data);
 
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
+
+
 
   //댓글삭제
   const delReplyData = useMutation(commentId => delReply(commentId), {
@@ -103,17 +111,17 @@ function ReplyComponent() {
                     <N_R>
                       <NickName>{reply.nickname}</NickName>
                       {editable && clickedId === reply.commentId ? (
-                        <input value={replyValue} onChange={e => setReplyValue(e.target.value)} />
+                        <Input value={replyValue} onChange={e => setReplyValue(e.target.value)} />
                       ) : (
                         <ReplyContent>
                           <ReplyText>{reply.comment}</ReplyText>
                         </ReplyContent>
                       )}
                     </N_R>
-                     <button onClick={() => handleEditreply(reply.commentId, reply.comment)}>
-                      {editable && clickedId === reply.commentId ? <span>제출하기</span> : <span>수정하기</span>}
-                    </button>
-                    <button onClick={() => handleDelreply(reply.commentId)}>삭제하기</button> 
+                     <Button onClick={() => handleEditreply(reply.commentId, reply.comment)}>
+                      {editable && clickedId === reply.commentId ? <ReplyUpdate /> :    <ReplyUpdate/>}
+                    </Button>
+                    <Button onClick={() => handleDelreply(reply.commentId)}><ReplyDelete/></Button> 
                     <Time>{displayedAt(reply.createdAt)}</Time>
                     <Write>답글달기</Write>
 
@@ -133,6 +141,7 @@ function ReplyComponent() {
           </React.Fragment>
         );
       })}
+      {isFetchingNextPage ? <>로딩중입니다</> : <div ref={ref}/> }
     </ReplyBox>
   );
 }
@@ -202,3 +211,14 @@ const RecommentBtn = styled.button`
   position: relative;
   left: 4.5rem;
 `;
+
+const Button = styled.button`
+  outline:0;
+  border:0;
+
+  `
+  const Input = styled.input`
+    width:20rem;
+  height:3rem;
+  border-radius:1rem;
+  margin: 0rem 1rem`

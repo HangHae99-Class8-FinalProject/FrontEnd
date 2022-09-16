@@ -21,13 +21,10 @@ function Recomment({id}) {
     console.log("조회실패");
   };
 
-  const [recommentId,setRecommentId] = useState(0)
-
   const getRecomment = async (pageParam) => {
-    setRecommentId(recommentId+1)
     console.log(pageParam)
     const response = await instance.get(`http://54.167.169.43/api/comment/${id}/${pageParam}`);
-    console.log(response.data)
+    console.log(response)
     return response.data;
   }
 
@@ -71,33 +68,34 @@ function Recomment({id}) {
 
   return (
       <ReplyBox>
+               <Input
+                   type="text"
+                    value={replyValue}
+                    onChange={e => setReplyValue(e.target.value)}
+                  />
+                  <Button onClick={handleAddreply}>대댓글추가</Button>
+   
       {data?.pages.map((page, i)=>{
-        // console.log(page.Recomment[i].commentId)
          return  (
           <React.Fragment key={i}>
-               <input
-            type="text"
-            value={replyValue}
-            onChange={e => setReplyValue(e.target.value)}
-          />
-          <button onClick={()=>handleAddreply}>대댓글추가</button>
-          {page?.Recomment.map(reply => {
+      
+          {page?.Comment.map(reply => {
             console.log(reply)
-            if (id === reply.commentId) {
+            // if (Number(id) === reply.commentId) {
               return (
                 <Content key={reply.recommentId}>
-                
+         
                   <RecommentItem data={reply}/>
           
                 </Content>
               );
-            }
+            // }
           })}
           </React.Fragment>
         )
       
       
-      })}  
+      })} 
   </ReplyBox>
   )
 }
@@ -113,3 +111,13 @@ const Content = styled.div`
   margin-bottom: 1rem;
 `;
 
+const Input = styled.input`
+  width:20rem;
+  height:3rem;
+  border-radius:1rem;
+  margin: 1rem 4rem;`
+
+const Button = styled.button`
+  outline:0;
+  border:0;
+`

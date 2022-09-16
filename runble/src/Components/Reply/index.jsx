@@ -1,10 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useMutation, useQueryClient } from "react-query";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
-
-import { ReactComponent as Reservation } from "../../Icons/BackIcon.svg"
-
+import { useLocation, useNavigate } from "react-router-dom";
+import { ReactComponent as BackIcon} from "../../Icons/BackIcon.svg"
 import PostItem from "./postItem";
 import ReplyComponent from "./replyComponent";
 
@@ -15,28 +12,6 @@ const ReplyCom = () => {
 
   const navigate = useNavigate();
 
-  
-
-
-  //댓글추가
-
-
-  // const addReplyData = useMutation(reply => addReply(reply), {
-  //   onSuccess: data => {
-  //     console.log(data);
-  //     queryClient.invalidateQueries("GET_REPLY");
-  //   },
-  //   onError: error => {
-  //     console.log(error);
-  //   }
-  // });
-
-  // const handleAddreply = e => {
-  //   e.preventDefault();
-  //   addReplyData.mutate({ comment: replyValue, postId: postId }); //api 데이터용
-  //   setReplyValue("");
-  // };
-
   return (
     <>
       <Wrap>
@@ -46,7 +21,7 @@ const ReplyCom = () => {
               navigate("/feed");
             }}
           >
-            <Reservation />
+            <BackIcon />
           </Back>
           <ReplyText>
             <span>댓글</span>
@@ -56,9 +31,6 @@ const ReplyCom = () => {
         <ReplyComponent />
         <ReplyArea>
           <Detail />
-
-          {/* <input type="text" value={replyValue} onChange={e => setReplyValue(e.target.value)} />
-          <button onClick={handleAddreply}>댓글추가</button> */}
         </ReplyArea>
       </Wrap>
     </>

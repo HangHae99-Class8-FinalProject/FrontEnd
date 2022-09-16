@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useMutation,useQueryClient } from "react-query";
 
+
+// import { ReactComponent as DeleteIcon} from "../../Icons/ReplyDelete.svg"
 import { delReply,editReply } from "../../Hooks/useRecomment";
 
 function RecommentItem ({data}){
@@ -81,12 +83,14 @@ const handleEditreply = (commentId) => {
                   <span>제출하기</span>
                 ) : (
                   <span>수정하기</span>
+                 
                 )}
               </button>
-
+              {/* <DeleteIcon/> */}
               <button onClick={()=>handleDelreply(data)}>
-                삭제하기
+          
               </button>
+            
          </>      
     )
 }

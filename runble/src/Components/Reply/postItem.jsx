@@ -58,7 +58,7 @@ const Profile = styled.img`
   width: 50px;
   height: 50px;
   float: left;
-  margin-right:0px ;
+  margin-top:10px ;
 `;
 
 const Nic = styled.div`
