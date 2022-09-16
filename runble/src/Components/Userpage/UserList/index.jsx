@@ -33,7 +33,7 @@ const UserList = () => {
           ))}
         </div>
       </StyleUserListWrap>
-      {isFetchingNextPage ? <span>로딩중입니다</span> : <div ref={ref}></div>}
+      {isFetchingNextPage ? <span></span> : <div ref={ref}></div>}
     </>
   );
 };
