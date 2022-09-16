@@ -41,5 +41,5 @@ const LoginLink = styled.a`
   position: absolute;
   width: 26rem;
   left: 5.8rem;
-  top: 60.9rem;
+  bottom: 8.1rem;
 `;

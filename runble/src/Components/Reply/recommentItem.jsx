@@ -1,94 +1,72 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useMutation,useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
-import { delReply,editReply } from "../../Hooks/useRecomment";
+import { delReply, editReply } from "../../Hooks/useRecomment";
 
-function RecommentItem ({data}){
-  console.log(data)
+function RecommentItem({ data }) {
+  console.log(data);
   const queryClient = useQueryClient();
 
-
-      //대댓글 삭제
-  const delReplyData = useMutation(recommentId=>delReply(recommentId),{
+  //대댓글 삭제
+  const delReplyData = useMutation(recommentId => delReply(recommentId), {
     onSuccess: data => {
-        console.log(data);
-        queryClient.invalidateQueries("GET_RECOMMENT")
+      console.log(data);
+      queryClient.invalidateQueries("GET_RECOMMENT");
     },
     onError: error => {
-        console.log(error);
-      },
-  })
-    //대댓글 삭제 버튼
-const handleDelreply = (id) => {
+      console.log(error);
+    }
+  });
+  //대댓글 삭제 버튼
+  const handleDelreply = id => {
     console.log(id);
-    delReplyData.mutate(id)
+    delReplyData.mutate(id);
   };
 
+  //대댓글 수정
 
-//대댓글 수정
+  const [editable, setEditable] = useState(false);
+  const [clickedId, setClickedId] = useState(data.commentId);
+  const [commentValue, setCommentValue] = useState(data.comment);
 
-const [editable, setEditable] = useState(false);
-const [clickedId, setClickedId] = useState(data.commentId);
-const [commentValue, setCommentValue] = useState(data.comment)
-
-const editReplyData = useMutation(reply => editReply(reply), {
-  onSuccess: data => {
-    console.log(data);
-    setEditable(!editable);
-    queryClient.invalidateQueries("GET_RECOMMENT");
-  },
-  onError: error => {
-    console.log(error);
-  }
-});
-
-const handleEditreply = (commentId) => {
-  setClickedId(commentId);
-  editReplyData.mutate({
-    commentId: clickedId,
-    recommentId:data.recommentId,
-    comment: commentValue,
+  const editReplyData = useMutation(reply => editReply(reply), {
+    onSuccess: data => {
+      console.log(data);
+      setEditable(!editable);
+      queryClient.invalidateQueries("GET_RECOMMENT");
+    },
+    onError: error => {
+      console.log(error);
+    }
   });
-};
 
-    return(
-            <>
-                  <Profile src={data.image}></Profile>
-                  <N_R>
-                    <NickName>{data.nickname}</NickName>
+  const handleEditreply = commentId => {
+    setClickedId(commentId);
+    editReplyData.mutate({
+      commentId: clickedId,
+      recommentId: data.recommentId,
+      comment: commentValue
+    });
+  };
 
-                    {editable && clickedId === data.commentId ? (
-                  <input 
-                    value={commentValue}
-                    onChange={event => setCommentValue(event.target.value)}
-                  />
-                ) : (
-                  <ReplyContent>{data.comment}</ReplyContent>
-                )}
-                   
-                  </N_R>
-                  <button
-                onClick={() =>
-                  handleEditreply(
-                    data.commentId,
-                    data.recommentId,
-                    data.comment
-                  )
-                }
-              >
-                {editable && clickedId === data.commentId ? (
-                  <span>제출하기</span>
-                ) : (
-                  <span>수정하기</span>
-                )}
-              </button>
-
-              <button onClick={()=>handleDelreply(data)}>
-                삭제하기
-              </button>
-         </>      
-    )
+  return (
+    <>
+      <Profile src={data.image}></Profile>
+      <N_R>
+        <NickName>{data.nickname}</NickName>
+        {editable && clickedId === data.commentId ? (
+          <input value={commentValue} onChange={event => setCommentValue(event.target.value)} />
+        ) : (
+          <ReplyContent>{data.comment}</ReplyContent>
+        )}
+      </N_R>
+      <button onClick={() => handleEditreply(data.commentId, data.recommentId, data.comment)}>
+        {editable && clickedId === data.commentId ? <span>제출하기</span> : <span>수정하기</span>}
+      </button>
+      <button onClick={() => handleDelreply(data)}>삭제하기</button>
+    </>
+  );
 }
 
 export default RecommentItem;
@@ -105,7 +83,6 @@ const NickName = styled.div`
 `;
 const ReplyContent = styled.p`
   display: inline-block;
-  word-break:break-all;
+  word-break: break-all;
   margin: 10px 0 0 10px;
 `;
-
