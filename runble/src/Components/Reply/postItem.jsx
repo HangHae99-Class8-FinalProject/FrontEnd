@@ -8,9 +8,10 @@ function PostItem({ data }) {
   const [showInput, setShowInput] = useState(false);
   const { id: postId } = useParams();
 
-  const onCloseInput = useCallback(() => {
+  const onCloseInput = useCallback(e => {
     setShowInput(false);
   }, []);
+  console.log(showInput);
 
   return (
     <>
@@ -21,14 +22,15 @@ function PostItem({ data }) {
         <Time>{displayedAt(data.createdAt)}</Time>
         <Like>좋아요{data.like}개</Like>
         <Write
-          onClick={() => {
+          onClick={e => {
+            e.stopPropagation();
             setShowInput("댓글");
           }}
         >
           답글달기
         </Write>
+        <ReplyInput showInput={showInput} onCloseInput={onCloseInput} postId={postId} />
       </PostBox>
-      <ReplyInput showInput={showInput} onCloseInput={onCloseInput} postId={postId} />
     </>
   );
 }

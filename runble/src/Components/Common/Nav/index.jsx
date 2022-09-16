@@ -58,8 +58,8 @@ const Nav = () => {
     submitImg();
   };
 
-  const kakaoLogout = () => {
-    const { data } = instance.get("/api/kakao/logout");
+  const kakaoLogout = async () => {
+    const { data } = await instance.get("/api/kakao/logout");
     return data;
   };
 
@@ -73,9 +73,19 @@ const Nav = () => {
     }
   };
 
+  const userDelete = async () => {
+    const { data } = await instance.delete("/api/user").then(() => {
+      localStorage.clear();
+    });
+
+    return data;
+  };
+
   const outConfirm = () => {
     if (confirm("회원탈퇴하시겠습니까")) {
-      return instance.delete("http://54.167.169.43/api/user"), alert("회원탈퇴되었습니다"), navigate("/");
+      userDelete();
+      alert("회원탈퇴되었습니다");
+      navigate("/");
     } else {
       return;
     }

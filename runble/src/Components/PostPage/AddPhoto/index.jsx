@@ -105,7 +105,6 @@ const PhotoWrap = styled.div`
   display: flex;
   gap: 2rem;
   border-bottom: 0.1rem solid #e6e6e6;
-  overflow-y: auto;
   width: inherit;
   flex-wrap: nowrap;
   max-width: 34.3rem; ;

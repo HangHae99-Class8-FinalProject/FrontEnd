@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { StyleUserWrap, StyleUsrBox, UserHeader } from "./style";
+import { StyleUserWrap, StyleUsrBox, UserHeader, UserTitle, RankLink } from "./style";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { NavState, PreviewImg, NavStates } from "../../../Recoil/Atoms/OptionAtoms";
 import { useParams, useLocation } from "react-router-dom";
 import { ReactComponent as Option } from "../../../Icons/option.svg";
 import { ReactComponent as Profile } from "../../../Icons/MyPageProfile.svg";
+import trophy from "../../../Icons/trophy.png";
+import { Link } from "react-router-dom";
+
 const Userprofile = ({ userNickname, userProfile }) => {
   const { nickname } = useParams();
   const [show, setShow] = useRecoilState(NavState);
@@ -52,7 +55,12 @@ const Userprofile = ({ userNickname, userProfile }) => {
           )}
         </div>
 
-        <div>{nickname}님의 주간 목표</div>
+        <UserTitle>
+          {nickname}님의 주간 목표
+          <RankLink to="/rank">
+            <img src={trophy} />
+          </RankLink>
+        </UserTitle>
       </StyleUsrBox>
     </StyleUserWrap>
   );

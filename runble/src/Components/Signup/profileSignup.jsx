@@ -35,7 +35,6 @@ const ProfileSignup = () => {
   };
 
   const userData = JSON.parse(window.localStorage.getItem("userData")) || null;
-  console.log(userData);
 
   useEffect(() => {
     if (userData) {

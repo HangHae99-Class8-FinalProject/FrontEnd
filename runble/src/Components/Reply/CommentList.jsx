@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useRef, useEffect } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
 
@@ -14,7 +14,7 @@ import useInput from "../../Hooks/useInput";
 const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
   const [showReply, setShowReply] = useState(false);
   const [editable, setEditable] = useState(false);
-  const [editValue, onChangeEditValue, setEditValue] = useInput("");
+  const [editValue, onChangeEditValue] = useInput("");
 
   const queryClient = useQueryClient();
 
@@ -83,14 +83,13 @@ const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
             <div onClick={onShowRecomment}>댓글 {reply.recommentNum}개더보기</div>
           </CommentFooter>
         </CommentBody>
-        <div>
-          <button onClick={onShowEdit}>{!editable ? <ReplyUpdate /> : <>&times;</>}</button>
-          <button onClick={handleDelreply}>
-            <ReplyDelete />
-          </button>
-        </div>
       </CommentWrap>
       {showReply && <Recomment id={reply.commentId} />}
+
+      <button onClick={onShowEdit}>{!editable ? <ReplyUpdate /> : <>&times;</>}</button>
+      <button onClick={handleDelreply}>
+        <ReplyDelete />
+      </button>
     </>
   );
 };
