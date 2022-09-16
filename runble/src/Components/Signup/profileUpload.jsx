@@ -15,7 +15,6 @@ import Profile from "../../Icons/SignUpProfile.svg";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 function ProfileUpload({ userData }) {
-  console.log(userData);
   const [nickname, setNickname] = useState("");
   const [previewImage, setPrevieImage] = useState(Profile);
   const [image, setImage] = useState(null);
@@ -46,38 +45,39 @@ function ProfileUpload({ userData }) {
     setPrevieImage(imageUrl);
   };
 
-  const submitImage = () => {
-    if (fileUpload.current.file) {
+  const submitImage = async () => {
+    if (fileUpload.current.files[0]) {
       const ReactS3Client = new S3upload(S3config);
       let file = fileUpload.current.files[0];
       let newFileName = fileUpload.current.files[0].name;
-      ReactS3Client.uploadFile(file, newFileName).then(data => {
-        if (data.status === 204) {
-          setImage(data.location);
-        }
-      });
+      await ReactS3Client.uploadFile(file, newFileName)
+        .then(data => {
+          if (data.status === 204) {
+            setImage(data.location);
+          } else {
+            window.alert("사진 업로드에 오류가 있어요! 관리자에게 문의해주세요.");
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
     setIsLodded(true);
   };
 
+  //회원가입
   const signupUser = async () => {
     const { data } = await instance.post("/api/user/signup", {
       email: userData.email,
       nickname,
-      image,
+      image: image,
       provider: userData.provider
     });
     return data;
   };
 
-  const nicknameCheck = async debounceNick => {
-    const { data } = await instance.post(`/api/user/check?nickname=${debounceNick}`);
-    return data;
-  };
-
   const { mutate: signUp } = useMutation(signupUser, {
     onSuccess: data => {
-      console.log(data);
       const token = data.token;
       const userData = {
         email: data.email,
@@ -92,8 +92,6 @@ function ProfileUpload({ userData }) {
     }
   });
 
-  const { mutate: duplicateCheck, data: checkResult } = useMutation(nicknameCheck);
-
   const onSubmitProfile = () => {
     submitImage();
   };
@@ -103,6 +101,14 @@ function ProfileUpload({ userData }) {
       signUp();
     }
   }, [isLodded]);
+
+  //닉네임 중복 체크
+  const nicknameCheck = async debounceNick => {
+    const { data } = await instance.post(`/api/user/check?nickname=${debounceNick}`);
+    return data;
+  };
+
+  const { mutate: duplicateCheck } = useMutation(nicknameCheck);
 
   useEffect(() => {
     if (debounceNick) {
@@ -125,7 +131,7 @@ function ProfileUpload({ userData }) {
         <CameraIcon>
           <SmallCamera />
         </CameraIcon>
-        <FileBox type="file" accept="image/*" name="profile_Img" ref={fileUpload} onChange={chgPreview} id="imgFile" />
+        <FileBox type="file" ref={fileUpload} onChange={chgPreview} />
       </label>
       <NickNameInput onChange={onChangeNickName} value={nickname} type="text" maxLength={5} minLength={2} />
       {!error ? (

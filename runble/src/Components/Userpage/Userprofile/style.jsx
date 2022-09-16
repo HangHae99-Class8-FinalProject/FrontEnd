@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 export const StyleUserWrap = styled.div`
   width: 100%;
   & > div {
@@ -27,4 +28,10 @@ export const StyleUsrBox = styled.div`
   align-items: center;
   padding: 0px;
   gap: 10px;
+`;
+
+export const UserTitle = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 `;

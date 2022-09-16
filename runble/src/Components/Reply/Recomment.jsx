@@ -22,11 +22,9 @@ function Recomment({ id }) {
   return (
     <ReplyBox>
       {data?.pages.map((page, i) => {
-        console.log("page:", page);
         return (
           <React.Fragment key={i}>
             {page?.Recomment.map(reply => {
-              console.log("reply:", reply);
               return (
                 <Content key={reply.recommentId}>
                   <RecommentItem data={reply} />
