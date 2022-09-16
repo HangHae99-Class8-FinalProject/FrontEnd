@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import styled from "styled-components";
-import { ReactComponent as Profile } from "../../../Icons/MyPageProfile.svg";
+import { ReactComponent as Profile } from "../../../Icons/myPageProfile.svg";
 
 const RankBody = ({ rankData }) => {
   const divideTime = useCallback(time => {
