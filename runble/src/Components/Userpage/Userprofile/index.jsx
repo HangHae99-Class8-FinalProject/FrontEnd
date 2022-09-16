@@ -9,10 +9,7 @@ const Userprofile = ({ userNickname, goalData }) => {
   const { nickname } = useParams();
   const [show, setShow] = useRecoilState(NavState);
   const [navState, setNavState] = useRecoilState(NavStates);
-  const previewChange = useRecoilValue(PreviewImg);
   const [naveState, setNaveState] = useRecoilState(NavStates);
-  const { state } = useLocation();
-
   return (
     <StyleUserWrap>
       <StyleUser>

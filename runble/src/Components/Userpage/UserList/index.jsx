@@ -18,7 +18,7 @@ const UserList = () => {
     const { Post, isLast } = res.data;
     return { Post, nextPage: pageParam + 1, isLast };
   };
-  const [data, status, fetchNextPage, isFetchingNextPage] = useInfinityScroll("user", fetchUserList);
+  const { data, status, fetchNextPage, isFetchingNextPage } = useInfinityScroll("user", fetchUserList);
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
