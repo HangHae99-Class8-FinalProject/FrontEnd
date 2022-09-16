@@ -17,11 +17,19 @@ const Record = () => {
   const [stopInterval, setStopInterval] = useState(true);
   const [endRun, setEndRun] = useState(false);
   const [showModal, setShowModal] = useState(true);
+  const [showErrorModal, setShowErrorModal] = useState(false);
   const [start, setStart] = useState(false);
+  const [noRecord, setNoRecord] = useState(false);
   const runLog = useRecoilValue(runData);
-  console.log(runLog);
 
   const navigate = useNavigate();
+  console.log(runLog);
+
+  let hour = runLog.time.hour * 60 * 60;
+  let minute = runLog.time.minute * 60;
+  let second = runLog.time.second;
+
+  let totalTime = hour + minute + second;
 
   const stopRun = useCallback(() => {
     setStopInterval(prev => !prev);
@@ -34,21 +42,18 @@ const Record = () => {
   }, []);
 
   const onClickEnd = useCallback(async () => {
+    setShowErrorModal(true);
     setEndRun(true);
     setStopInterval(true);
+    if (Number(runLog.distance) <= 0) {
+      setNoRecord(true);
+    }
   });
-
-  let hour = runLog.time.hour * 60 * 60;
-  let minute = runLog.time.minute * 60;
-  let second = runLog.time.second;
-
-  let totalTime = hour + minute + second;
-  console.log(totalTime);
 
   const onFeed = async () => {
     if (runLog.isFinish) {
       const { data } = await instance.post("/api/user/distance", {
-        distance: runLog.distance,
+        distance: Number(runLog.distance),
         time: totalTime
       });
       navigate("/post", { state: { runLog } });
@@ -58,11 +63,19 @@ const Record = () => {
   const onNotFeed = async () => {
     if (runLog.isFinish) {
       const { data } = await instance.post("/api/user/distance", {
-        distance: runLog.distance,
+        distance: Number(runLog.distance),
         time: totalTime
       });
       navigate("/feed");
     }
+  };
+
+  const onClickYes = () => {
+    setEndRun(false);
+    setNoRecord(false);
+  };
+  const onClickNo = () => {
+    navigate("/feed");
   };
 
   return (
@@ -71,33 +84,38 @@ const Record = () => {
       {start && (
         <RecordHeader>
           <HeaderWrap>
-            <RunDistance>{runLog.distance === 0 ? 0.0 : runLog.distance}km</RunDistance>
+            <RunDistance>{runLog.distance}km</RunDistance>
             <RunTimer stopInterval={stopInterval} endRun={endRun} />
           </HeaderWrap>
         </RecordHeader>
       )}
-      <ButtonWrap>
-        <div onClick={stopRun}>{!stopInterval ? <StopIcon /> : <StartIcon />}</div>
-        <div onClick={onClickEnd}>
-          <EndIcon />
-        </div>
-      </ButtonWrap>
+      {start && (
+        <ButtonWrap>
+          <div onClick={stopRun}>{!stopInterval ? <StopIcon /> : <StartIcon />}</div>
+          <div onClick={onClickEnd}>
+            <EndIcon />
+          </div>
+        </ButtonWrap>
+      )}
       {showModal && (
-        <Modal>
+        <Modal noneStyle={true}>
           <StartButton onClick={onStart}>
             <p>START!</p>
           </StartButton>
         </Modal>
       )}
       {endRun && (
-        <Modal>
-          <EndModal>
-            <p>기록을 피드에 공유 하시겠습니까?</p>
-            <div>
-              <button onClick={onFeed}>네</button>
-              <button onClick={onNotFeed}>아니오</button>
-            </div>
-          </EndModal>
+        <Modal onClickNo={onNotFeed} onClickYes={onFeed}>
+          <p>기록을 피드에 공유 하시겠습니까?</p>
+        </Modal>
+      )}
+      {noRecord && (
+        <Modal onClickYes={onClickYes} onClickNo={onClickNo}>
+          <p>
+            100m이하의 기록은 기록하실 수 없어요
+            <br />
+            이어하시겠어요?
+          </p>
         </Modal>
       )}
     </>
@@ -161,27 +179,4 @@ const ButtonWrap = styled.div`
   z-index: 10;
   position: absolute;
   top: 38rem;
-`;
-
-const EndModal = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  border-radius: 1rem;
-  justify-content: center;
-  align-items: center;
-  width: 30.4rem;
-  height: 17.4rem;
-  & p {
-    margin: 4rem 0rem;
-  }
-  & button {
-    border: none;
-    background-color: white;
-    font-size: 1.6rem;
-  }
-  & div {
-    gap: 10rem;
-    display: flex;
-  }
 `;

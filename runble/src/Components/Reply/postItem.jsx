@@ -32,9 +32,7 @@ function PostItem ({data}) {
     return(
         <>
         <PostBox>
-            <Profile >
-              <img src={data.profile}/>
-            </Profile>
+            <Profile src={data.profile} />
             <Nic>{data.nickname}</Nic>    
             <Content>{data.content}</Content>
             <Time>{displayedAt(data.createdAt)}</Time>

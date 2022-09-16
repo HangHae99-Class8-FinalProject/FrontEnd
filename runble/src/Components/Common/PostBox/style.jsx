@@ -38,8 +38,7 @@ export const StyleSpeed = styled.div`
     display: flex;
     justify-content: space-between;
     font-size: 3.6rem;
-    font-family: "Tungsten";
-    font-style: normal;
+    font-family: "Anton";
     font-weight: 900;
     color: #1a1a1a;
     padding: 0 5%;
