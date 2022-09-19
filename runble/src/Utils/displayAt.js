@@ -12,10 +12,8 @@ function displayedAt(createdAt) {
 
   if (hours < 24) return `${Math.floor(hours)}시간 전`;
   const days = hours / 24;
-  console.log(days);
   if (days < 2) return `${Math.floor(days)}일 전`;
-  if (days >= 2) return;
-  `${today.getMonth() + 1 + "월" + today.getDate() + "일"}`;
+  if (days >= 2) return `${today.getMonth() + 1 + "월" + today.getDate() + "일"}`;
 }
 
 export default displayedAt;

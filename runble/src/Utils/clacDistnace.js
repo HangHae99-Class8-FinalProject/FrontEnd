@@ -1,4 +1,5 @@
 import { getDistanceBetween } from "geolocation-distance-between";
+
 const calcDistance = ({ path }) => {
   let distanceBetween = 0;
   if (1 < path.length) {

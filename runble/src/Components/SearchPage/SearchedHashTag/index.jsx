@@ -13,9 +13,7 @@ const SearchedHashTag = ({ searhValue }) => {
   const [tap, setTap] = useState("최신");
 
   const { state } = useLocation();
-  console.log(state);
-
-  if (state) {
+  if (state !== "search" && searhValue === "") {
     searhValue = state;
   }
 
@@ -38,13 +36,9 @@ const SearchedHashTag = ({ searhValue }) => {
     }
   );
 
-  console.log(tap);
-
   useEffect(() => {
     if (inView && searhValue) fetchNextPage();
   }, [inView, searhValue]);
-
-  console.log("result:", data);
 
   return (
     <Body>
@@ -83,6 +77,7 @@ export default SearchedHashTag;
 
 const Body = styled.div`
   margin-bottom: 7rem;
+  padding: 2.4rem 1.6rem;
 `;
 
 const ButtonWrap = styled.div`
@@ -90,10 +85,7 @@ const ButtonWrap = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  padding: 2.4rem 1.6rem 0rem;
 
-  width: 34.3rem;
-  height: 1.7rem;
   & button {
     border: none;
     background-color: white;

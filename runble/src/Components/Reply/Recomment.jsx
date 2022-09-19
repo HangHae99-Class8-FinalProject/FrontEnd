@@ -15,10 +15,10 @@ function Recomment({ id }) {
     return { Recomment, nextPage: pageParam + 1, isLast };
   };
 
-  const { data, fetchNextPage, isFetchingNextPage, lastPage } = useInfinityScroll("GET_RECOMMENT", getRecomment);
+  const { data, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfinityScroll("GET_RECOMMENT", getRecomment);
   useEffect(() => {
-    if (inView && lastPage) fetchNextPage();
-  }, [inView, lastPage]);
+    if (inView && hasNextPage) fetchNextPage();
+  }, [inView, hasNextPage]);
 
   return (
     <ReplyBox>

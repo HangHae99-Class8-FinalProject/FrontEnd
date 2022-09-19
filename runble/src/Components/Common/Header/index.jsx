@@ -1,14 +1,19 @@
 import React from "react";
+import styled from "styled-components";
 
-import { StyleHeader, StyleFlexHeader, Logo } from "./style";
+import { ReactComponent as MainLogo } from "../../../Icons/MainLogo.svg";
 
 const Header = () => {
   return (
     <StyleHeader>
-      <StyleFlexHeader>
-        <Logo>Weekly Run</Logo>
-      </StyleFlexHeader>
+      <MainLogo />
     </StyleHeader>
   );
 };
 export default Header;
+
+const StyleHeader = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

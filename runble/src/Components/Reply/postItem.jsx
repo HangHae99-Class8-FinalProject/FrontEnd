@@ -5,14 +5,16 @@ import ReplyInput from "./ReplyInput";
 import { useParams } from "react-router-dom";
 import { ReactComponent as Profile } from "../../Icons/myPageProfile.svg";
 
+import Loading from "../Common/Loading/Loading";
+
 function PostItem({ data }) {
   const [showInput, setShowInput] = useState(false);
+
   const { id: postId } = useParams();
 
   const onCloseInput = useCallback(e => {
     setShowInput(false);
   }, []);
-  console.log(showInput);
 
   return (
     <>
@@ -33,8 +35,8 @@ function PostItem({ data }) {
             답글달기
           </Write>
         </PostFooter>
-        <ReplyInput showInput={showInput} onCloseInput={onCloseInput} postId={postId} />
       </PostBox>
+      <ReplyInput showInput={showInput} onCloseInput={onCloseInput} postId={postId} />
     </>
   );
 }
@@ -73,7 +75,7 @@ const PostFooter = styled.div`
   display: flex;
   width: 40rem;
   position: relative;
-  right: 13rem;
+  right: 14.6rem;
   top: 3rem;
   color: #aaa;
 `;
@@ -81,9 +83,11 @@ const PostFooter = styled.div`
 const Time = styled.div`
   padding-right: 1rem;
 `;
+
 const Like = styled.div`
   padding-right: 1rem;
 `;
+
 const Write = styled.button`
   outline: 0;
   border: 0;

@@ -17,8 +17,9 @@ export default Loading;
 
 const LottieWrap = styled.div`
   position: absolute;
+  padding-top: 10rem;
   width: 100vw;
-  height: 100vh;
+  height: 150vh;
   z-index: 500;
   background-color: white;
 `;
@@ -27,7 +28,7 @@ const LottieMsg = styled.div`
   width: 100%;
   text-align: center;
   position: absolute;
-  top: 35rem;
+  top: 47rem;
   font-size: 2.4rem;
   font-family: "Anton";
 `;

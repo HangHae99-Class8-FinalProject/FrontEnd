@@ -4,10 +4,13 @@ import useInput from "../../Hooks/useInput";
 import { useMutation, useQueryClient } from "react-query";
 import { addReply } from "../../Hooks/useReply";
 import { addRecomment } from "../../Hooks/useRecomment";
+import { useRecoilState } from "recoil";
+import { postLoading } from "../../Recoil/Atoms/PostLoading";
 
 const ReplyInput = ({ showInput, onCloseInput, postId }) => {
   const inputRef = useRef(null);
   const [replyValue, onChangeReplyValue, setReplyValue] = useInput("");
+  const [isLoading, setIsLoading] = useRecoilState(postLoading);
 
   const queryClient = useQueryClient();
 
@@ -19,6 +22,9 @@ const ReplyInput = ({ showInput, onCloseInput, postId }) => {
   const addReplyData = useMutation(reply => addReply(reply), {
     onSuccess: data => {
       queryClient.invalidateQueries("GET_REPLY");
+      setIsLoading({
+        isLoading: false
+      });
     },
     onError: error => {
       console.log(error);
@@ -28,7 +34,10 @@ const ReplyInput = ({ showInput, onCloseInput, postId }) => {
   //대댓글 작성
   const addRecommnetData = useMutation(reply => addRecomment(reply), {
     onSuccess: data => {
-      queryClient.invalidateQueries("GET_RECOMMENT");
+      queryClient.invalidateQueries("GET_REPLY");
+      setIsLoading({
+        isLoading: false
+      });
     },
     onError: error => {
       console.log(error);
@@ -37,6 +46,9 @@ const ReplyInput = ({ showInput, onCloseInput, postId }) => {
 
   const handleAddreply = e => {
     e.preventDefault();
+    setIsLoading({
+      isLoading: true
+    });
     if (showInput === "댓글") {
       addReplyData.mutate({ comment: replyValue, postId });
     }
@@ -51,12 +63,15 @@ const ReplyInput = ({ showInput, onCloseInput, postId }) => {
   };
 
   const stopPropagation = e => {
-    e.stopPropagation();
+    // e.stopPropagation();
   };
+
+  console.log(showInput);
 
   if (!showInput) {
     return null;
   }
+
   return (
     <form onSubmit={handleAddreply}>
       <InputWrap onClick={stopPropagation}>

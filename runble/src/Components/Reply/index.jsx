@@ -5,8 +5,13 @@ import { ReactComponent as BackIcon } from "../../Icons/BackIcon.svg";
 
 import PostItem from "./postItem";
 import ReplyComponent from "./replyComponent";
+import { postLoading } from "../../Recoil/Atoms/PostLoading";
+import { useRecoilValue } from "recoil";
+import Loading from "../Common/Loading/Loading";
 
 const ReplyCom = () => {
+  const { isLoading } = useRecoilValue(postLoading);
+
   const location = useLocation();
   const data = location.state;
 
@@ -14,6 +19,7 @@ const ReplyCom = () => {
 
   return (
     <>
+      {isLoading && <Loading>답글을 작성하고 있어요</Loading>}
       <HeaderWrap>
         <HeaderItems>
           <div

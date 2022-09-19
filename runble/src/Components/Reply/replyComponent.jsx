@@ -7,6 +7,7 @@ import useInfinityScroll from "../../Hooks/useInfinityScroll";
 import { instance } from "../../Utils/Instance";
 import ReplyInput from "./ReplyInput";
 import CommentList from "./CommentList";
+import Loading from "../Common/Loading/Loading";
 import Nav from "../Common/Nav/index";
 
 function ReplyComponent() {
@@ -22,15 +23,13 @@ function ReplyComponent() {
     return { Comment, nextPage: pageParam + 1, isLast };
   };
 
-  const { data, fetchNextPage, isFetchingNextPage, lastPage } = useInfinityScroll("GET_REPLY", getReply);
+  const { data, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfinityScroll("GET_REPLY", getReply);
 
   const [ref, inView] = useInView();
 
   useEffect(() => {
-    if (inView && lastPage) fetchNextPage();
-  }, [inView, lastPage]);
-
-  console.log(recommentKey, "key");
+    if (inView && hasNextPage) fetchNextPage();
+  }, [inView, hasNextPage]);
 
   const onCloseInput = useCallback(() => {
     setShowInput(false);

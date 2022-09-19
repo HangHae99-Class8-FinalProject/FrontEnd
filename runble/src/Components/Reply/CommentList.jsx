@@ -69,26 +69,10 @@ const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
     setEditable(false);
     editReplyData.mutate({ comment: editValue, commentId: reply.commentId });
   };
-  const [startMove, setStartMove] = useState("");
-  const [endMove, setEndMove] = useState("");
-
-  const onMouseDown = e => {
-    e.stopPropagation();
-    console.log("start");
-    setStartMove(e.pageX);
-  };
-  const onMouseUP = e => {
-    console.log("end");
-    e.stopPropagation();
-    setEndMove(e.pageX);
-  };
-
-  console.log("start", startMove);
-  console.log("end", endMove);
 
   return (
     <>
-      <Body ref={scrollRef} onMouseDown={onMouseDown} onMouseUp={onMouseUP}>
+      <Body ref={scrollRef}>
         <CommentWrap>
           <div>{reply.image ? <img src={reply.image} /> : <Profile />}</div>
           <CommentBody>
@@ -103,7 +87,11 @@ const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
             <CommentFooter>
               <Time>{displayedAt(reply.createdAt)}</Time>
               <Write onClick={onShowInput}>답글달기</Write>
-              {!showReply && <div onClick={onShowRecomment}>답글 {reply.recommentNum}개더보기</div>}
+              {!showReply && (
+                <div onClick={onShowRecomment}>
+                  {reply.recommentNum > 0 ? <>답글 {reply.recommentNum}개 더보기</> : null}
+                </div>
+              )}
               {showReply && <div onClick={onShowRecomment}>답글 닫기</div>}
             </CommentFooter>
           </CommentBody>

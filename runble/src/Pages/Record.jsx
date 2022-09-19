@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 
 import RunTimer from "../Components/RecordPage/RunTimer";
 import RunningMap from "../Components/RecordPage/RunningMap/index";
@@ -20,10 +20,21 @@ const Record = () => {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [start, setStart] = useState(false);
   const [noRecord, setNoRecord] = useState(false);
+  const [path, setPath] = useRecoilState(runData);
   const runLog = useRecoilValue(runData);
 
   const navigate = useNavigate();
   console.log(runLog);
+
+  const clearPath = () => {
+    setPath({
+      path: [],
+      distance: 0,
+      time: "",
+      speed: "",
+      isFinish: false
+    });
+  };
 
   let hour = runLog.time.hour * 60 * 60;
   let minute = runLog.time.minute * 60;
@@ -56,6 +67,7 @@ const Record = () => {
         distance: Number(runLog.distance),
         time: totalTime
       });
+      clearPath();
       navigate("/post", { state: { runLog } });
     }
   };
@@ -66,6 +78,7 @@ const Record = () => {
         distance: Number(runLog.distance),
         time: totalTime
       });
+      clearPath();
       navigate("/feed");
     }
   };
@@ -75,6 +88,7 @@ const Record = () => {
     setNoRecord(false);
   };
   const onClickNo = () => {
+    clearPath();
     navigate("/feed");
   };
 
