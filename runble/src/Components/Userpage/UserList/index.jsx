@@ -10,7 +10,6 @@ import { instance } from "../../../Utils/Instance";
 
 const UserList = () => {
   const { nickname } = useParams();
-  console.log(nickname);
   const { ref, inView } = useInView();
   const fetchUserList = async pageParam => {
     const res = await instance.get(`/api/user/post/${nickname}/${pageParam}`);
@@ -36,7 +35,7 @@ const UserList = () => {
           ))}
         </div>
       </StyleUserListWrap>
-      {isFetchingNextPage ? <span>로딩중입니다</span> : <div ref={ref}></div>}
+      {isFetchingNextPage ? <span></span> : <div ref={ref}></div>}
     </>
   );
 };

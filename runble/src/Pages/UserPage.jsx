@@ -22,7 +22,7 @@ const UserPage = () => {
   return (
     <Layout>
       <Userprofile goalData={goalData} userNickname={userNickname}></Userprofile>
-      {goalData?.result ? <Progress goalData={goalData}></Progress> : <Goal></Goal>}
+      {goalData?.result ? <Progress goalData={goalData}></Progress> : <Goal userNickname={userNickname}></Goal>}
       <UserList></UserList>
     </Layout>
   );

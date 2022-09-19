@@ -27,10 +27,8 @@ const nowDate = moment().utc(true);
 const goalDate = nowDate.format("MM월 ") + weekOfMonth(nowDate) + "주차"; // 현재 날짜
 
 const Progress = ({ goalData }) => {
-  console.log(goalData.getUserInfo);
   const sevenTime = goalData.getUserInfo.weekOfTime;
   const result = sevenTime.filter(distance => distance !== 0);
-  console.log(result.length);
 
   const divideTime = useCallback(time => {
     let seconds = Math.floor(time % 60);

@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef, useEffect } from "react";
+import React, { useCallback, useState, useRef, useLayoutEffect } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
 
@@ -10,11 +10,19 @@ import displayedAt from "../../Utils/displayAt";
 import { editReply } from "../../Hooks/useReply";
 import { delReply } from "../../Hooks/useReply";
 import useInput from "../../Hooks/useInput";
+import { ReactComponent as Profile } from "../../Icons/myPageProfile.svg";
 
 const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
   const [showReply, setShowReply] = useState(false);
   const [editable, setEditable] = useState(false);
   const [editValue, onChangeEditValue] = useInput("");
+
+  const replyRef = useRef(null);
+  const scrollRef = useRef();
+
+  useLayoutEffect(() => {
+    if (replyRef.current !== null) replyRef.current.focus();
+  });
 
   const queryClient = useQueryClient();
 
@@ -61,46 +69,87 @@ const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
     setEditable(false);
     editReplyData.mutate({ comment: editValue, commentId: reply.commentId });
   };
+  const [startMove, setStartMove] = useState("");
+  const [endMove, setEndMove] = useState("");
+
+  const onMouseDown = e => {
+    e.stopPropagation();
+    console.log("start");
+    setStartMove(e.pageX);
+  };
+  const onMouseUP = e => {
+    console.log("end");
+    e.stopPropagation();
+    setEndMove(e.pageX);
+  };
+
+  console.log("start", startMove);
+  console.log("end", endMove);
 
   return (
     <>
-      <CommentWrap>
-        <div>
-          <img src={reply.image} />
-        </div>
-        <CommentBody>
-          <div>{reply.nickname}</div>
-          {!editable ? (
-            <div>{reply.comment}</div>
-          ) : (
-            <form onSubmit={handleEditreply}>
-              <input value={editValue} onChange={onChangeEditValue} />
-            </form>
-          )}
-          <CommentFooter>
-            <Time>{displayedAt(reply.createdAt)}</Time>
-            <Write onClick={onShowInput}>답글달기</Write>
-            <div onClick={onShowRecomment}>댓글 {reply.recommentNum}개더보기</div>
-          </CommentFooter>
-        </CommentBody>
-      </CommentWrap>
+      <Body ref={scrollRef} onMouseDown={onMouseDown} onMouseUp={onMouseUP}>
+        <CommentWrap>
+          <div>{reply.image ? <img src={reply.image} /> : <Profile />}</div>
+          <CommentBody>
+            <Nick>{reply.nickname}</Nick>
+            {!editable ? (
+              <div>{reply.comment}</div>
+            ) : (
+              <form onSubmit={handleEditreply}>
+                <input value={editValue} onChange={onChangeEditValue} ref={replyRef} />
+              </form>
+            )}
+            <CommentFooter>
+              <Time>{displayedAt(reply.createdAt)}</Time>
+              <Write onClick={onShowInput}>답글달기</Write>
+              {!showReply && <div onClick={onShowRecomment}>답글 {reply.recommentNum}개더보기</div>}
+              {showReply && <div onClick={onShowRecomment}>답글 닫기</div>}
+            </CommentFooter>
+          </CommentBody>
+          <ButtonWrap>
+            <button onClick={onShowEdit}>{!editable ? <ReplyUpdate /> : <CancleButton>&times;</CancleButton>}</button>
+            <button onClick={handleDelreply}>
+              <ReplyDelete />
+            </button>
+          </ButtonWrap>
+        </CommentWrap>
+      </Body>
       {showReply && <Recomment id={reply.commentId} />}
-
-      <button onClick={onShowEdit}>{!editable ? <ReplyUpdate /> : <>&times;</>}</button>
-      <button onClick={handleDelreply}>
-        <ReplyDelete />
-      </button>
     </>
   );
 };
 
 export default CommentList;
 
+const Body = styled.div`
+  display: flex;
+  overflow-y: hidden;
+`;
+
+const ButtonWrap = styled.div`
+  margin-left: 1.2rem;
+  display: flex;
+  & button {
+    border: none;
+  }
+`;
+
+const CancleButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  font-size: 5.4rem;
+`;
 const CommentWrap = styled.div`
+  /* transform: translateX(-25%); */
   font-size: 1rem;
   display: flex;
   align-items: center;
-  padding: 1.5rem 1.6rem;
+  padding: 1.5rem 0rem 1.5rem 1.6rem;
   gap: 0.8rem;
   height: 7rem;
 
@@ -113,21 +162,28 @@ const CommentWrap = styled.div`
 
 const CommentFooter = styled.div`
   display: flex;
-  color:#aaa;
-  position:relative;
-  top:1.5rem ;
-
+  color: #aaa;
+  position: relative;
+  top: 1.5rem;
 `;
 
 const Time = styled.div`
-  padding-right:1rem;`
+  padding-right: 1rem;
+`;
 const Write = styled.div`
-  padding-right:1rem;`
-  
+  padding-right: 1rem;
+`;
 
 const CommentBody = styled.div`
   align-items: flex-start;
   gap: 0.2rem;
   height: 4.2rem;
   width: 29.7rem;
+`;
+
+const Nick = styled.div`
+  line-height: 1rem;
+  font-family: "Anton";
+  font-size: 1.1rem;
+  font-weight: 700;
 `;
