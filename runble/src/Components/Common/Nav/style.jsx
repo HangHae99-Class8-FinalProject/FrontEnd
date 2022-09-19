@@ -37,27 +37,31 @@ export const StyleShow = styled.div`
 `;
 export const StyleButton = styled.div`
   width: 100%;
-  height: 74px;
+  min-width: 3.75em;
+  height: 7.4rem;
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
   flex: none;
   order: 1;
   flex-grow: 0;
-  text-align: center;
+  /* text-align: center; */
   align-items: center;
   position: fixed;
   bottom: 0;
   background-color: #353434;
   & > div {
+    width: 100vw;
+    /* min-width: 2.8rem; */
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    justify-content: space-around;
+    flex: 1;
+    /* justify-content: center; */
     padding: 0px;
-    gap: 69px;
+    margin-bottom: 1.2rem;
     & > div {
-      flex: none;
-      order: 0;
-      flex-grow: 0;
+      flex-shrink: 1;
     }
   }
 `;

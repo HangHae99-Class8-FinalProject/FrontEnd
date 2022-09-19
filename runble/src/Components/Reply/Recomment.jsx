@@ -24,14 +24,14 @@ function Recomment({ id }) {
     if (inView && !lastPage) fetchNextPage();
   }, [inView,lastPage]);
 
+  
+
   return (
     <ReplyBox>
       {data?.pages.map((page, i) => {
-        console.log("page:", page);
         return (
           <React.Fragment key={i}>
             {page?.Recomment.map(reply => {
-              console.log("reply:", reply);
               return (
                 <Content key={reply.recommentId}>
                   <RecommentItem data={reply} />
@@ -44,13 +44,13 @@ function Recomment({ id }) {
         {isFetchingNextPage ? <></> : <div ref={ref}></div>}
     </ReplyBox>
   );
-}
-
+  }
+    
 export default Recomment;
 
 const ReplyBox = styled.div`
   width: 100%;
 `;
+    
 
-const Content = styled.div`
-`;
+const Content = styled.div``;

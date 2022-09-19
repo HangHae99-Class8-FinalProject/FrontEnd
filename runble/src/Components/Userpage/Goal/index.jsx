@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import { useGoal } from "../../../Hooks/useGoal";
-import {
-  StyleGoal,
-  StyleGoalButton,
-  StyleModal,
-  StyleInput,
-  StyleButton
-} from "./style";
+import { StyleGoal, StyleGoalButton, StyleModalBox, StyleModal, StyleInput, StyleButton } from "./style";
 const Goal = () => {
   const { mutate } = useGoal();
   const [modal, setModal] = useState(false);
@@ -26,7 +20,7 @@ const Goal = () => {
     });
   };
   return (
-    <div>
+    <div style={{ height: "23rem" }}>
       <StyleGoal>
         <StyleGoalButton
           onClick={() => {
@@ -38,7 +32,7 @@ const Goal = () => {
         <div>이번주 목표를 입력하세요</div>
       </StyleGoal>
       {modal ? (
-        <div>
+        <StyleModalBox>
           <StyleModal>
             <div>
               <label>일주일 간의 목표를 설정해주세요!</label>
@@ -69,7 +63,7 @@ const Goal = () => {
               </StyleButton>
             </div>
           </StyleModal>
-        </div>
+        </StyleModalBox>
       ) : null}
     </div>
   );

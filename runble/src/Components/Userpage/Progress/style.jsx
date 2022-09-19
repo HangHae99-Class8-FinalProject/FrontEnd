@@ -1,35 +1,17 @@
 import styled from "styled-components";
 export const StyleWrap = styled.div`
   width: 100%;
-<<<<<<< HEAD
-=======
-`;
-export const StyleGoal = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0 3rem;
-  align-items: center;
->>>>>>> d17d200b8c98c1a71a38f714bd93c796ea8c7f25
   & > div {
     padding: 2.4rem 1.6rem 2rem;
   }
 `;
 export const StyleProgress = styled.div`
-<<<<<<< HEAD
-  width: 95%;
+  width: 100%;
   height: 23rem;
   background-color: rgba(53, 52, 52, 1);
   box-sizing: border-box;
-  border-radius: 12px;
+  border-radius: 1.2rem;
   margin: 0 auto;
-=======
-  height: 30rem;
-  background-color: aliceblue;
-  border: 0.1rem solid black;
-  box-sizing: border-box;
-  margin-top: 5rem;
-  margin: 1rem 3rem;
->>>>>>> d17d200b8c98c1a71a38f714bd93c796ea8c7f25
   & > div {
     display: flex;
     justify-content: center;
@@ -38,17 +20,16 @@ export const StyleProgress = styled.div`
   }
 `;
 export const StyleProgressBox = styled.div`
-<<<<<<< HEAD
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 20px;
+  padding-top: 2rem;
 `;
 export const StyleProgressGoalData = styled.div`
   color: #ffffff;
-  font-size: 16px;
-  margin-bottom: 28px;
+  font-size: 1.6rem;
+  margin-bottom: 2.8rem;
 `;
 export const StyleNextProgress = styled.div`
   display: flex;
@@ -56,9 +37,9 @@ export const StyleNextProgress = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   padding: 0px;
-  gap: 8px;
+  gap: 0.8rem;
   width: 100%;
-  height: 230px;
+  height: 23rem;
   background: #353434;
   border-radius: 12px;
 `;
@@ -68,25 +49,23 @@ export const StyleSevenProgress = styled.div`
   align-items: center;
   padding: 0px;
   width: 100%;
-  height: 230px;
+  height: 23rem;
 `;
 export const StyleSevenTitle = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 47px;
-  width: 332px;
-
-  /* background-color: darkblue; */
+  height: 4.7rem;
+  width: 100%;
+  color: #ffffff;
 `;
 export const StyleSevenGoal = styled.span`
-  padding: 12px 14px;
+  padding: 1.2rem 1.4rem;
   font-family: "Noto Sans CJK KR";
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 23px;
+  font-size: 1.6rem;
   text-align: center;
   color: #ffffff;
 `;
@@ -94,67 +73,68 @@ export const StyleGoalDate = styled.span`
   font-family: "Noto Sans CJK KR";
   font-style: normal;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 1.2rem;
   line-height: 17px;
   text-align: center;
-  padding: 12px 14px;
-
-  color: #ffffff;
+  padding: 1.2rem 1.4rem;
 `;
 export const StyleSevenDate = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: flex-start;
-  padding: 10px 14px;
+  padding: 1rem 1.4rem;
   width: 95%;
-  height: 85px;
+  position: relative;
   & > div {
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-around;
     padding: 0px;
-    gap: 5px;
+    font-size: 1rem;
     color: #ffffff;
-    width: 34px;
-    height: 57px;
-    & > span:first-child {
-      font-size: 10px;
-    }
-    & > span:nth-child(2) {
-      font-size: 16px;
-    }
-    & > span:last-child {
-      font-size: 10px;
+    & > span {
+      width: 100%;
+      text-align: center;
     }
   }
 `;
+export const StyleSpanDistance = styled.span`
+  color: ${({ Distance }) => (Distance === 0 ? "#4D4D4D;" : "#ffffff")};
+  font-size: 1.6rem;
+`;
+export const StyleSpanTime = styled.span`
+  color: ${({ Time }) => (Time === 0 ? "#4D4D4D;" : "#ffffff")}; ;
+`;
+
 export const StyleDistanceBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  gap: 22px;
-  /* background-color: aliceblue; */
-  width: 344px;
-  height: 96px;
+  gap: 2.2rem;
+  height: 9.6rem;
   & > div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     color: white;
-    /* padding: 0px 78px 18px; */
-    padding: 0 40px;
+    position: relative;
+    padding: 0 4rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     & > span:first-child {
-      font-size: 36px;
+      font-size: 3.6rem;
+      text-align: center;
+      align-items: center;
+      display: flex;
     }
     & > span:nth-child(2) {
+      width: 120%;
       font-size: 12px;
     }
   }
-=======
-  height: 10rem;
-  display: block;
->>>>>>> d17d200b8c98c1a71a38f714bd93c796ea8c7f25
 `;

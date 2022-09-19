@@ -9,7 +9,7 @@ const useInfinityScroll = (QueryKey, QueryFnc) => {
       refetchOnWindowFocus: false
     }
   );
-  return {data, status, fetchNextPage, isFetchingNextPage, lastPage};
+  return { data, status, fetchNextPage, isFetchingNextPage, lastPage };
 };
 
 export default useInfinityScroll;

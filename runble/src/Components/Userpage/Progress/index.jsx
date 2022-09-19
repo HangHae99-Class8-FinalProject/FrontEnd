@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   StyleProgress,
   StyleProgressBox,
@@ -10,7 +10,9 @@ import {
   StyleSevenGoal,
   StyleGoalDate,
   StyleSevenDate,
-  StyleDistanceBox
+  StyleDistanceBox,
+  StyleSpanDistance,
+  StyleSpanTime
 } from "./style";
 import { CircularProgressbar, buildStyles, CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -26,7 +28,22 @@ const goalDate = nowDate.format("MM월 ") + weekOfMonth(nowDate) + "주차"; // 
 
 const Progress = ({ goalData }) => {
   console.log(goalData.getUserInfo);
-  const percentage = 50;
+  const sevenTime = goalData.getUserInfo.weekOfTime;
+  const result = sevenTime.filter(distance => distance !== 0);
+  console.log(result.length);
+
+  const divideTime = useCallback(time => {
+    let seconds = Math.floor(time % 60);
+    let minute = Math.floor((time / 60) % 60);
+    let hours = Math.floor((time / (60 * 60)) % 24);
+
+    hours = hours < 10 ? "0" + hours : hours;
+    minute = minute < 10 ? "0" + minute : minute;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    return hours + ":" + minute + ":" + seconds;
+  }, []);
+  const percentage = goalData.getUserInfo.percent;
   return (
     <StyleWrap>
       <div>
@@ -76,47 +93,35 @@ const Progress = ({ goalData }) => {
                   <StyleSevenDate>
                     <div>
                       <span>월</span>
-                      <span>k</span>
-                      <span>0:12:23</span>
-                    </div>
-                    <div>
                       <span>화</span>
-                      <span>k</span>
-                      <span>0:12:23</span>
-                    </div>
-                    <div>
                       <span>수</span>
-                      <span>k</span>
-                      <span>0:12:23</span>
-                    </div>
-                    <div>
                       <span>목</span>
-                      <span>k</span>
-                      <span>0:12:23</span>
-                    </div>
-                    <div>
                       <span>금</span>
-                      <span>k</span>
-                      <span>0:12:23</span>
-                    </div>
-                    <div>
                       <span>토</span>
-                      <span>k</span>
-                      <span>0:12:23</span>
+                      <span>일</span>
                     </div>
                     <div>
-                      <span>일</span>
-                      <span>k</span>
-                      <span>0:12:23</span>
+                      {goalData.getUserInfo.weekOfDistance.map((distance, idx) => (
+                        <StyleSpanDistance key={idx} Distance={distance}>
+                          {distance}K
+                        </StyleSpanDistance>
+                      ))}
+                    </div>
+                    <div>
+                      {goalData.getUserInfo.weekOfTime.map((time, idx) => (
+                        <StyleSpanTime Time={time} key={idx}>
+                          {divideTime(time)}
+                        </StyleSpanTime>
+                      ))}
                     </div>
                   </StyleSevenDate>
                   <StyleDistanceBox>
                     <div>
-                      <span>6.2k</span>
+                      <span>{goalData.getUserInfo.distance}K</span>
                       <span>총거리</span>
                     </div>
                     <div>
-                      <span>5d</span>
+                      <span>{result.length}d</span>
                       <span>총운동일</span>
                     </div>
                   </StyleDistanceBox>

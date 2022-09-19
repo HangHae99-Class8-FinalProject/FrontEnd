@@ -21,7 +21,11 @@ const ProfileSignup = () => {
       if (token) {
         window.localStorage.setItem("token", token);
         window.localStorage.setItem("userData", JSON.stringify(userData));
-        navigate(`/user/${res.data.nickname}`);
+        navigate(`/user/${res.data.nickname}`, {
+          state: {
+            userId: ""
+          }
+        });
       } else {
         navigate("/signup", {
           state: {
@@ -35,7 +39,6 @@ const ProfileSignup = () => {
   };
 
   const userData = JSON.parse(window.localStorage.getItem("userData")) || null;
-  console.log(userData);
 
   useEffect(() => {
     if (userData) {

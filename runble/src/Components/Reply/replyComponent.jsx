@@ -1,10 +1,8 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import styled from "styled-components";
 import { useInView } from "react-intersection-observer";
-import { useMutation, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 
-import { editReply, delReply } from "../../Hooks/useReply";
 import useInfinityScroll from "../../Hooks/useInfinityScroll";
 import { instance } from "../../Utils/Instance";
 import ReplyInput from "./ReplyInput";
@@ -13,33 +11,26 @@ import Nav from "../Common/Nav/index";
 
 function ReplyComponent() {
   const [showInput, setShowInput] = useState(false);
+  const [recommentKey, setRecommentKey] = useState("");
 
-  const queryClient = useQueryClient();
   const { id: postId } = useParams();
 
   //댓글조회
   const getReply = async pageParam => {
-    const res = await instance.get(`http://54.167.169.43/api/comment/${postId}/${pageParam}`);
-    const {Comment, isLast} = res.data;
+    const res = await instance.get(`/api/comment/${postId}/${pageParam}`);
+    const { Comment, isLast } = res.data;
     return { Comment, nextPage: pageParam + 1, isLast };
   };
 
+  const { data, fetchNextPage, isFetchingNextPage, lastPage } = useInfinityScroll("GET_REPLY", getReply);
+
   const [ref, inView] = useInView();
 
-  const {data, status, fetchNextPage, isFetchingNextPage, lastPage} = useInfinityScroll("GET_REPLY", getReply);
-
-  
-
   useEffect(() => {
-    if (inView ) fetchNextPage();
-  }, [inView]);
+    if (inView && lastPage) fetchNextPage();
+  }, [inView, lastPage]);
 
-  //댓글 수정
-  const [editable, setEditable] = useState(false);
-  const [replyValue, setReplyValue] = useState("");
-
-  const [recommentKey, setRecommentKey] = useState("");
-
+  console.log(recommentKey, "key");
 
   const onCloseInput = useCallback(() => {
     setShowInput(false);
@@ -48,10 +39,10 @@ function ReplyComponent() {
   return (
     <>
       <ReplyBox>
-        {data?.pages.map((page, i) => {
+        {data?.pages.map((data, i) => {
           return (
             <React.Fragment key={i}>
-              {page?.Comment?.map((reply, idx) => {
+              {data?.Comment?.map((reply, idx) => {
                 return (
                   <div key={idx}>
                     <CommentList reply={reply} setShowInput={setShowInput} setRecommnetKey={setRecommentKey} />
@@ -72,5 +63,6 @@ function ReplyComponent() {
 export default ReplyComponent;
 
 const ReplyBox = styled.div`
-  height:100rem ;
+  width: 100%;
+  margin-bottom: 2rem;
 `;

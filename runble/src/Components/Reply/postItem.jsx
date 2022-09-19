@@ -3,7 +3,7 @@ import styled from "styled-components";
 import displayedAt from "../../Utils/displayAt";
 import ReplyInput from "./ReplyInput";
 import { useParams } from "react-router-dom";
-import {ReactComponent as MyPageProfile } from "../../Icons/MyPageProfile.svg"
+import {ReactComponent as MyPageProfile } from "../../Icons/myPageProfile.svg"
 
 
 function PostItem({ data }) {
@@ -12,19 +12,21 @@ function PostItem({ data }) {
   const [showProfile, setShowProfile] = useState(data.profile);
   const { id: postId } = useParams();
 
-  const onCloseInput = useCallback(() => {
+  const onCloseInput = useCallback(e => {
     setShowInput(false);
   }, []);
+  console.log(showInput);
 
   return (
     <>
       <PostBox>
 
-        {showProfile === null ? <><MyPageProfile/></> :<div>
+           {showProfile === null ? <><MyPageProfile/></> :<div>
           <img src={data.profile} />
         </div>}
      
           <PostBody>
+            
             <div>{data.nickname}</div>
             <div>{data.content}</div>
           </PostBody>
@@ -39,8 +41,8 @@ function PostItem({ data }) {
           답글달기
         </Write>
           </PostFooter>
+        <ReplyInput showInput={showInput} onCloseInput={onCloseInput} postId={postId} />
       </PostBox>
-      <ReplyInput showInput={showInput} onCloseInput={onCloseInput} postId={postId} />
     </>
   );
 }
@@ -48,7 +50,6 @@ export default PostItem;
 
 const PostBox = styled.div`
 font-size: 1rem;
-display: flex;
 align-items: center;
 padding: 1.5rem 1.6rem;
 gap: 0.8rem;
@@ -63,6 +64,7 @@ border-bottom: 0.1rem solid #e6e6e6;
 
 const PostBody = styled.div`
   align-items: flex-start;
+  display:inline-block;
   gap: 0.2rem;
   height: 4.2rem;
   width: 29.7rem;`
@@ -71,8 +73,8 @@ const PostFooter = styled.div`
   display: flex;
   width:40rem;
   position:relative;
-  right:13rem;
-  top:3rem;
+  right:1rem;
+
   color:#aaa;
 `;
 

@@ -6,6 +6,8 @@ import { ReactComponent as Home } from "../../../Icons/home.svg";
 import { ReactComponent as Search } from "../../../Icons/search.svg";
 import { ReactComponent as Run } from "../../../Icons/run.svg";
 import { ReactComponent as Mypage } from "../../../Icons/mypage.svg";
+import { ReactComponent as RightSearch } from "../../../Icons/searchRight.svg";
+
 import { useUserProfileMutation } from "../../../Hooks/useProfile";
 import S3upload from "react-aws-s3";
 import { instance } from "../../../Utils/Instance";
@@ -35,6 +37,7 @@ const Nav = () => {
   const accessToken = localStorage.getItem("userData");
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
+  const userId = parseData.userId;
   const submitImg = async () => {
     let file = imgVal.current.files[0];
     let newFileName = imgVal.current.files[0].name;
@@ -58,8 +61,8 @@ const Nav = () => {
     submitImg();
   };
 
-  const kakaoLogout = () => {
-    const { data } = instance.get("/api/kakao/logout");
+  const kakaoLogout = async () => {
+    const { data } = await instance.get("/api/kakao/logout");
     return data;
   };
 
@@ -73,9 +76,21 @@ const Nav = () => {
     }
   };
 
+
+  const userDelete = async () => {
+    const { data } = await instance.delete("/api/user").then(() => {
+      localStorage.clear();
+    });
+
+    return data;
+  };
+
   const outConfirm = () => {
     if (confirm("회원탈퇴하시겠습니까")) {
-      return instance.delete("http://54.167.169.43/api/user"), alert("회원탈퇴되었습니다"), navigate("/");
+      userDelete();
+      alert("회원탈퇴되었습니다");
+      navigate("/");
+
     } else {
       return;
     }
@@ -118,6 +133,7 @@ const Nav = () => {
                 <p
                   onClick={() => {
                     setPreview(null);
+                    postProfile({ image: null });
                   }}
                 >
                   기본이미지로변경하기
@@ -161,47 +177,68 @@ const Nav = () => {
         <StyleButton>
           <div>
             {state === "feed" ? (
-              <Home
-                stroke="#D9D9D9"
-                onClick={() => {
-                  navigate("/feed", { state: "feed" });
-                }}
-              />
+              <div>
+                <Home
+                  stroke="white"
+                  onClick={() => {
+                    navigate("/feed", { state: "feed" });
+                  }}
+                />
+              </div>
             ) : (
-              <Home
-                onClick={() => {
-                  navigate("/feed", { state: "feed" });
-                }}
-                stroke="#808080"
-              />
+              <div>
+                <Home
+                  onClick={() => {
+                    navigate("/feed", { state: "feed" });
+                  }}
+                  stroke="#808080"
+                />
+              </div>
             )}
-
-            <Search
-              onClick={() => {
-                navigate("/search");
-              }}
-              stroke="#808080"
-            />
-
-            <Run
-              onClick={() => {
-                navigate("/record");
-              }}
-            />
-            {state === "user" ? (
-              <Mypage
-                stroke="#D9D9D9"
-                onClick={() => {
-                  navigate(`/user/${nickname}`, { state: "user" });
-                }}
-              />
+            {state === "search" ? (
+              <div>
+                <Search
+                  onClick={() => {
+                    navigate("/search", { state: "search" });
+                  }}
+                  stroke="white"
+                />
+              </div>
             ) : (
-              <Mypage
-                stroke="#808080"
+              <div>
+                <Search
+                  onClick={() => {
+                    navigate("/search", { state: "search" });
+                  }}
+                  stroke="#808080"
+                />
+              </div>
+            )}
+            <div>
+              <Run
                 onClick={() => {
-                  navigate(`/user/${nickname}`, { state: "user" });
+                  navigate("/record");
                 }}
               />
+            </div>
+            {state === "user" ? (
+              <div>
+                <Mypage
+                  stroke="#D9D9D9"
+                  onClick={() => {
+                    navigate(`/user/${nickname}`, { state: "user" });
+                  }}
+                />
+              </div>
+            ) : (
+              <div>
+                <Mypage
+                  stroke="#808080"
+                  onClick={() => {
+                    navigate(`/user/${nickname}`, { state: "user" });
+                  }}
+                />
+              </div>
             )}
           </div>
         </StyleButton>
