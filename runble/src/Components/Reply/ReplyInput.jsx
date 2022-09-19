@@ -66,8 +66,6 @@ const ReplyInput = ({ showInput, onCloseInput, postId }) => {
     // e.stopPropagation();
   };
 
-  console.log(showInput);
-
   if (!showInput) {
     return null;
   }

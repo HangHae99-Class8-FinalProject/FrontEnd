@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useRef } from "react";
 import { useMutation, useQueryClient } from "react-query";
 
 import { ReactComponent as ReplyUpdate } from "../../Icons/ReplyUpdate.svg";
@@ -11,7 +11,6 @@ import useInput from "../../Hooks/useInput";
 import { ReactComponent as Profile } from "../../Icons/myPageProfile.svg";
 
 function RecommentItem({ data }) {
-  console.log(data);
   const queryClient = useQueryClient();
 
   //대댓글 삭제
@@ -61,8 +60,31 @@ function RecommentItem({ data }) {
 
   const userData = JSON.parse(window.localStorage.getItem("userData"));
 
+  //슬라이드 만들기
+
+  const slideRef = useRef();
+  const [firstTouchX, setFirstTouchX] = useState("");
+
+  const onTouchStart = e => {
+    setFirstTouchX(e.changedTouches[0].pageX);
+  };
+
+  const onTouchEnd = e => {
+    let totalX = e.changedTouches[0].pageX - firstTouchX;
+    console.log(totalX);
+    if (200 > totalX || 400 > totalX > 300) {
+      slideRef.current.style.transform = "translateX(-35%)";
+      slideRef.current.style.transition = "all 0.5s ease-in-out";
+      return;
+    }
+    if ((totalX < 270 && totalX > 200) || totalX > 400) {
+      slideRef.current.style.transform = "translateX(0%)";
+      slideRef.current.style.transition = "all 0.5s ease-in-out";
+    }
+  };
+
   return (
-    <Body>
+    <Body nTouchStart={onTouchStart} onTouchEnd={onTouchEnd} ref={slideRef}>
       <RecommentBox>
         <div>{data.image ? <img src={data.image} /> : <Profile />}</div>
         <RecommentBody>
@@ -80,7 +102,7 @@ function RecommentItem({ data }) {
         </RecommentBody>
         {data.nickname === userData.nickname ? (
           <ButtonWrap>
-            <button onClick={onShowEdit}>{!editable ? <ReplyUpdate /> : <>&times;</>}</button>
+            <button onClick={onShowEdit}>{!editable ? <ReplyUpdate /> : <CancleButton>&times;</CancleButton>}</button>
             <button onClick={handleDelreply}>
               <ReplyDelete />
             </button>
@@ -96,8 +118,16 @@ export default RecommentItem;
 const Body = styled.div`
   display: flex;
   max-width: 100%;
-  overflow-y: hidden;
   margin-left: 3rem;
+`;
+const CancleButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  font-size: 5.4rem;
 `;
 
 const Nick = styled.div`

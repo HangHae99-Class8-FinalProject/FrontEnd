@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef, useLayoutEffect } from "react";
+import React, { useCallback, useState, useRef, useLayoutEffect, useEffect } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
 
@@ -18,7 +18,6 @@ const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
   const [editValue, onChangeEditValue] = useInput("");
 
   const replyRef = useRef(null);
-  const scrollRef = useRef();
 
   useLayoutEffect(() => {
     if (replyRef.current !== null) replyRef.current.focus();
@@ -70,9 +69,33 @@ const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
     editReplyData.mutate({ comment: editValue, commentId: reply.commentId });
   };
 
+  //슬라이드 만들기
+
+  const slideRef = useRef();
+  const [firstTouchX, setFirstTouchX] = useState("");
+
+  const onTouchStart = e => {
+    setFirstTouchX(e.changedTouches[0].pageX);
+  };
+
+  const onTouchEnd = e => {
+    let totalX = firstTouchX - e.changedTouches[0].pageX;
+    // console.log(totalX);
+    if (totalX > 80) {
+      slideRef.current.style.transform = "translateX(-35%)";
+      slideRef.current.style.transition = "all 0.5s ease-in-out";
+      return;
+    }
+    if (totalX < -10) {
+      slideRef.current.style.transform = "translateX(0%)";
+      slideRef.current.style.transition = "all 0.5s ease-in-out";
+      return;
+    }
+  };
+
   return (
     <>
-      <Body ref={scrollRef}>
+      <Body onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} ref={slideRef}>
         <CommentWrap>
           <div>{reply.image ? <img src={reply.image} /> : <Profile />}</div>
           <CommentBody>
@@ -112,7 +135,6 @@ export default CommentList;
 
 const Body = styled.div`
   display: flex;
-  overflow-y: hidden;
 `;
 
 const ButtonWrap = styled.div`
@@ -133,7 +155,6 @@ const CancleButton = styled.div`
   font-size: 5.4rem;
 `;
 const CommentWrap = styled.div`
-  /* transform: translateX(-25%); */
   font-size: 1rem;
   display: flex;
   align-items: center;

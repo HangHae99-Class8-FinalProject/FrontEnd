@@ -18,7 +18,7 @@ const ReplyCom = () => {
   const navigate = useNavigate();
 
   return (
-    <>
+    <Body>
       {isLoading && <Loading>답글을 작성하고 있어요</Loading>}
       <HeaderWrap>
         <HeaderItems>
@@ -32,16 +32,17 @@ const ReplyCom = () => {
           <div>답글</div>
         </HeaderItems>
       </HeaderWrap>
-      <>
-        <PostItem data={data} />
-        <ReplyComponent />
-      </>
-    </>
+      <PostItem data={data} />
+      <ReplyComponent />
+    </Body>
   );
 };
 
 export default ReplyCom;
 
+const Body = styled.div`
+  overflow-x: hidden;
+`;
 const HeaderWrap = styled.div`
   display: flex;
   align-items: flex-start;
