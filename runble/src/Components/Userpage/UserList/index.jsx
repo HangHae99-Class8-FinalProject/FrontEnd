@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { StyleUserListWrap } from "./style";
+import { StyleUserListWrap, NonePost } from "./style";
 import useInfinityScroll from "../../../Hooks/useInfinityScroll";
 import PostBox from "../../Common/PostBox";
 import { useParams } from "react-router-dom";
@@ -20,6 +20,11 @@ const UserList = () => {
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
+
+  if (!data?.pages?.Post) {
+    return <NonePost>작성한 게시물이 없어요</NonePost>;
+  }
+
   return (
     <>
       <StyleUserListWrap>

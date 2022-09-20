@@ -16,6 +16,8 @@ const CommentList = ({ reply }) => {
   const [showReply, setShowReply] = useState(false);
   const [inputState, setInpuState] = useRecoilState(replyState);
 
+  const userData = JSON.parse(window.localStorage.getItem("userData"));
+
   const replyRef = useRef(null);
 
   useLayoutEffect(() => {
@@ -69,16 +71,15 @@ const CommentList = ({ reply }) => {
   };
 
   const onTouchEnd = e => {
+    if (userData.nickname !== reply.nickname) return;
     let totalX = firstTouchX - e.changedTouches[0].pageX;
 
     if (totalX > 80) {
-      slideRef.current.style.transform = "translateX(-25%)";
-      slideRef.current.style.transition = "all 0.5s ease-in-out";
+      slideRef.current.style.transform = "translateX(-32%)";
       return;
     }
     if (totalX < -10) {
       slideRef.current.style.transform = "translateX(0%)";
-      slideRef.current.style.transition = "all 0.5s ease-in-out";
       return;
     }
   };
@@ -102,6 +103,8 @@ const CommentList = ({ reply }) => {
               {showReply && <div onClick={onShowRecomment}>답글 닫기</div>}
             </CommentFooter>
           </CommentBody>
+        </CommentWrap>
+        {reply.nickname === userData.nickname && (
           <ButtonWrap>
             <button onClick={onShowInputEdit}>
               <ReplyUpdate />
@@ -110,7 +113,7 @@ const CommentList = ({ reply }) => {
               <ReplyDelete />
             </button>
           </ButtonWrap>
-        </CommentWrap>
+        )}
       </Body>
       {showReply && <Recomment id={reply.commentId} />}
     </>
@@ -121,10 +124,11 @@ export default CommentList;
 
 const Body = styled.div`
   display: flex;
+  width: 100%;
+  transition: all 0.5s ease-in-out;
 `;
 
 const ButtonWrap = styled.div`
-  margin-left: 0rem;
   display: flex;
   & button {
     border: none;
@@ -141,6 +145,7 @@ const CommentWrap = styled.div`
   padding: 1.5rem 0rem 1.5rem 1.6rem;
   gap: 0.8rem;
   height: 7rem;
+  min-width: 93vw;
 
   & img {
     width: 4rem;
@@ -167,7 +172,6 @@ const CommentBody = styled.div`
   align-items: flex-start;
   gap: 0.2rem;
   height: 4.2rem;
-  width: 29.7rem;
 `;
 
 const Nick = styled.div`

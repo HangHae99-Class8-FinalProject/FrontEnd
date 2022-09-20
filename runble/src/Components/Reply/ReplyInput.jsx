@@ -113,30 +113,30 @@ export default ReplyInput;
 
 const InputWrap = styled.div`
   position: fixed;
-  bottom: 7.4rem;
+  bottom: 7rem;
   background: #353434;
-
   width: 100%;
-  height: 4rem;
+  height: 5.4rem;
 
   & div {
     display: flex;
-    justify-content: space-between;
     padding: 0.7rem 1.6rem;
   }
   & input {
-    width: 30rem;
-    height: 2.8rem;
+    width: 80%;
+    height: 4rem;
     border-radius: 0.8rem;
     background-color: #d9d9d9;
+    padding: 0 1rem;
     border: none;
     &:focus {
-      border: none;
+      outline: none;
     }
   }
   & span {
+    width: 20%;
     color: white;
-    padding-right: 2rem;
+    text-align: center;
     font-size: 2.6rem;
     line-height: 2.9rem;
   }

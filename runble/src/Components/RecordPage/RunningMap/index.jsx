@@ -40,7 +40,7 @@ const RunningMap = ({ stopInterval, endRun }) => {
         error => {
           console.log(error);
         },
-        { enableHighAccuracy: true }
+        { enableHighAccuracy: true, maximumAge: 0 }
       );
     } else {
       setState(prev => ({
@@ -75,7 +75,7 @@ const RunningMap = ({ stopInterval, endRun }) => {
           error => {
             console.log(error);
           },
-          { enableHighAccuracy: true, timeout: 4000 }
+          { enableHighAccuracy: true, maximumAge: 0 }
         );
       } else {
         setState(prev => ({

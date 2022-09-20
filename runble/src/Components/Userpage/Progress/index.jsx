@@ -14,7 +14,7 @@ import {
   StyleSpanDistance,
   StyleSpanTime
 } from "./style";
-import { CircularProgressbar, buildStyles, CircularProgressbarWithChildren } from "react-circular-progressbar";
+import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import moment from "moment";
 import { Swiper, SwiperSlide } from "swiper/react";

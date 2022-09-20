@@ -52,20 +52,19 @@ function RecommentItem({ data }) {
   };
 
   const onTouchEnd = e => {
+    if (userData.nickname !== data.nickname) return;
     let totalX = e.changedTouches[0].pageX - firstTouchX;
     if (200 > totalX || 400 > totalX > 300) {
-      slideRef.current.style.transform = "translateX(-35%)";
-      slideRef.current.style.transition = "all 0.5s ease-in-out";
+      slideRef.current.style.transform = "translateX(-32%)";
       return;
     }
     if ((totalX < 270 && totalX > 200) || totalX > 400) {
       slideRef.current.style.transform = "translateX(0%)";
-      slideRef.current.style.transition = "all 0.5s ease-in-out";
     }
   };
 
   return (
-    <Body nTouchStart={onTouchStart} onTouchEnd={onTouchEnd} ref={slideRef}>
+    <Body onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} ref={slideRef}>
       <RecommentBox>
         <div>{data.image ? <img src={data.image} /> : <Profile />}</div>
         <RecommentBody>
@@ -75,17 +74,17 @@ function RecommentItem({ data }) {
             <div>{displayedAt(data.createdAt)}</div>
           </RecommentFooter>
         </RecommentBody>
-        {data.nickname === userData.nickname ? (
-          <ButtonWrap>
-            <button onClick={onShowEditInput}>
-              <ReplyUpdate />
-            </button>
-            <button onClick={handleDelreply}>
-              <ReplyDelete />
-            </button>
-          </ButtonWrap>
-        ) : null}
       </RecommentBox>
+      {data.nickname === userData.nickname && (
+        <ButtonWrap>
+          <button onClick={onShowEditInput}>
+            <ReplyUpdate />
+          </button>
+          <button onClick={handleDelreply}>
+            <ReplyDelete />
+          </button>
+        </ButtonWrap>
+      )}
     </Body>
   );
 }
@@ -94,17 +93,9 @@ export default RecommentItem;
 
 const Body = styled.div`
   display: flex;
-  max-width: 100%;
+  width: 100%;
   margin-left: 3rem;
-`;
-const CancleButton = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-  text-align: center;
-  font-size: 5.4rem;
+  transition: all 0.5s ease-in-out;
 `;
 
 const Nick = styled.div`
@@ -113,9 +104,9 @@ const Nick = styled.div`
   font-size: 1.1rem;
   font-weight: 700;
 `;
+
 const ButtonWrap = styled.div`
   display: flex;
-  margin-left: 0.5rem;
   & button {
     border: none;
   }
@@ -131,6 +122,8 @@ const RecommentBox = styled.div`
   padding: 1.5rem 0rem 1.5rem 1.6rem;
   gap: 0.8rem;
   height: 7rem;
+  min-width: 85.4vw;
+
   & img {
     width: 4rem;
     height: 4rem;
@@ -142,7 +135,6 @@ const RecommentBody = styled.div`
   align-items: flex-start;
   gap: 0.2rem;
   height: 4.2rem;
-  width: 26.7rem;
   & div:first-child {
     line-height: 1rem;
   }
