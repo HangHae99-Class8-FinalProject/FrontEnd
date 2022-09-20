@@ -6,11 +6,13 @@ import { ReactComponent as ReplyUpdate } from "../../Icons/ReplyUpdate.svg";
 import { ReactComponent as ReplyDelete } from "../../Icons/ReplyDelete.svg";
 
 import displayedAt from "../../Utils/displayAt";
-import { delRecomment, editRecomment } from "../../Hooks/useRecomment";
-import useInput from "../../Hooks/useInput";
+import { delRecomment } from "../../Hooks/useRecomment";
 import { ReactComponent as Profile } from "../../Icons/myPageProfile.svg";
+import { useRecoilState } from "recoil";
+import { replyState } from "../../Recoil/Atoms/ReplyAtoms";
 
 function RecommentItem({ data }) {
+  const [inputState, setInputState] = useRecoilState(replyState);
   const queryClient = useQueryClient();
 
   //대댓글 삭제
@@ -28,35 +30,15 @@ function RecommentItem({ data }) {
     delRecommentData.mutate();
   };
 
-  //대댓글 수정
-
-  const [editable, setEditable] = useState(false);
-  const [commentValue, setCommentValue] = useState(data.comment);
-  const [editValue, onChangeEditValue, setEditValue] = useInput("");
-
-  const onShowEdit = useCallback(() => {
-    setEditable(prev => !prev);
-  }, []);
-
-  const editRecommentData = useMutation(reply => editRecomment(reply), {
-    onSuccess: data => {
-      console.log(data);
-      setEditable(!editable);
-      queryClient.invalidateQueries("GET_RECOMMENT");
-    },
-    onError: error => {
-      console.log(error);
-    }
-  });
-
-  const handleEditreply = () => {
-    setEditable(false);
-    editRecommentData.mutate({
-      commentId: data.commentId,
+  const onShowEditInput = useCallback(() => {
+    setInputState(prev => ({
+      ...prev,
+      postId: data.commentId,
       recommentId: data.recommentId,
-      comment: commentValue
-    });
-  };
+      showInput: "대댓글수정"
+    }));
+    slideRef.current.style.transform = "translateX(0%)";
+  }, []);
 
   const userData = JSON.parse(window.localStorage.getItem("userData"));
 
@@ -71,7 +53,6 @@ function RecommentItem({ data }) {
 
   const onTouchEnd = e => {
     let totalX = e.changedTouches[0].pageX - firstTouchX;
-    console.log(totalX);
     if (200 > totalX || 400 > totalX > 300) {
       slideRef.current.style.transform = "translateX(-35%)";
       slideRef.current.style.transition = "all 0.5s ease-in-out";
@@ -89,20 +70,16 @@ function RecommentItem({ data }) {
         <div>{data.image ? <img src={data.image} /> : <Profile />}</div>
         <RecommentBody>
           <Nick>{data.nickname}</Nick>
-          {!editable ? (
-            <div>{data.comment}</div>
-          ) : (
-            <form onSubmit={handleEditreply}>
-              <input value={editValue} onChange={onChangeEditValue} />
-            </form>
-          )}
+          <div>{data.comment}</div>
           <RecommentFooter>
             <div>{displayedAt(data.createdAt)}</div>
           </RecommentFooter>
         </RecommentBody>
         {data.nickname === userData.nickname ? (
           <ButtonWrap>
-            <button onClick={onShowEdit}>{!editable ? <ReplyUpdate /> : <CancleButton>&times;</CancleButton>}</button>
+            <button onClick={onShowEditInput}>
+              <ReplyUpdate />
+            </button>
             <button onClick={handleDelreply}>
               <ReplyDelete />
             </button>
@@ -138,9 +115,12 @@ const Nick = styled.div`
 `;
 const ButtonWrap = styled.div`
   display: flex;
-  margin-left: 1.2rem;
+  margin-left: 0.5rem;
   & button {
     border: none;
+  }
+  & button:last-child {
+    background-color: #f03800;
   }
 `;
 

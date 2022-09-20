@@ -7,7 +7,6 @@ import useInfinityScroll from "../../Hooks/useInfinityScroll";
 import { instance } from "../../Utils/Instance";
 import ReplyInput from "./ReplyInput";
 import CommentList from "./CommentList";
-import Loading from "../Common/Loading/Loading";
 import Nav from "../Common/Nav/index";
 
 function ReplyComponent() {
@@ -54,6 +53,7 @@ function ReplyComponent() {
         <ReplyInput onCloseInput={onCloseInput} showInput={showInput} postId={recommentKey} />
       </ReplyBox>
       {isFetchingNextPage ? <></> : <div ref={ref}></div>}
+
       <Nav />
     </>
   );

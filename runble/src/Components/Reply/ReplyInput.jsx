@@ -1,16 +1,21 @@
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useRef, useLayoutEffect, useCallback } from "react";
 import styled from "styled-components";
-import useInput from "../../Hooks/useInput";
 import { useMutation, useQueryClient } from "react-query";
-import { addReply } from "../../Hooks/useReply";
-import { addRecomment } from "../../Hooks/useRecomment";
 import { useRecoilState } from "recoil";
-import { postLoading } from "../../Recoil/Atoms/PostLoading";
 
-const ReplyInput = ({ showInput, onCloseInput, postId }) => {
+import useInput from "../../Hooks/useInput";
+import { replyState } from "../../Recoil/Atoms/ReplyAtoms";
+import { addReply } from "../../Hooks/useReply";
+import { editReply } from "../../Hooks/useReply";
+import { addRecomment } from "../../Hooks/useRecomment";
+import { editRecomment } from "../../Hooks/useRecomment";
+import Recomment from "./Recomment";
+
+const ReplyInput = () => {
   const inputRef = useRef(null);
   const [replyValue, onChangeReplyValue, setReplyValue] = useInput("");
-  const [isLoading, setIsLoading] = useRecoilState(postLoading);
+  const [inputState, setInputState] = useRecoilState(replyState);
+  const { showInput, postId, recommentId } = inputState;
 
   const queryClient = useQueryClient();
 
@@ -22,9 +27,16 @@ const ReplyInput = ({ showInput, onCloseInput, postId }) => {
   const addReplyData = useMutation(reply => addReply(reply), {
     onSuccess: data => {
       queryClient.invalidateQueries("GET_REPLY");
-      setIsLoading({
-        isLoading: false
-      });
+    },
+    onError: error => {
+      console.log(error);
+    }
+  });
+  //댓글 수정
+  const editReplyData = useMutation(reply => editReply(reply), {
+    onSuccess: data => {
+      console.log(data);
+      queryClient.invalidateQueries("GET_REPLY");
     },
     onError: error => {
       console.log(error);
@@ -35,9 +47,17 @@ const ReplyInput = ({ showInput, onCloseInput, postId }) => {
   const addRecommnetData = useMutation(reply => addRecomment(reply), {
     onSuccess: data => {
       queryClient.invalidateQueries("GET_REPLY");
-      setIsLoading({
-        isLoading: false
-      });
+      queryClient.invalidateQueries("GET_RECOMMENT");
+    },
+    onError: error => {
+      console.log(error);
+    }
+  });
+
+  //대댓글 수정
+  const editRecommentData = useMutation(reply => editRecomment(reply), {
+    onSuccess: data => {
+      queryClient.invalidateQueries("GET_RECOMMENT");
     },
     onError: error => {
       console.log(error);
@@ -46,25 +66,32 @@ const ReplyInput = ({ showInput, onCloseInput, postId }) => {
 
   const handleAddreply = e => {
     e.preventDefault();
-    setIsLoading({
-      isLoading: true
-    });
-    if (showInput === "댓글") {
-      addReplyData.mutate({ comment: replyValue, postId });
-    }
-    if (showInput === "대댓글") {
-      addRecommnetData.mutate({
-        commentId: postId,
-        comment: replyValue
-      });
+    switch (showInput) {
+      case "댓글작성":
+        addReplyData.mutate({ comment: replyValue, postId: postId });
+        break;
+      case "댓글수정":
+        editReplyData.mutate({ comment: replyValue, commentId: postId });
+        break;
+      case "대댓글작성":
+        addRecommnetData.mutate({
+          commentId: postId,
+          comment: replyValue
+        });
+        break;
+      case "대댓글수정":
+        editRecommentData.mutate({ comment: replyValue, commentId: postId, recommentId: recommentId });
+        break;
     }
     setReplyValue("");
-    onCloseInput();
   };
 
-  const stopPropagation = e => {
-    // e.stopPropagation();
-  };
+  const onCloseInput = useCallback(e => {
+    setInputState(prev => ({
+      ...prev,
+      showInput: false
+    }));
+  }, []);
 
   if (!showInput) {
     return null;
@@ -72,7 +99,7 @@ const ReplyInput = ({ showInput, onCloseInput, postId }) => {
 
   return (
     <form onSubmit={handleAddreply}>
-      <InputWrap onClick={stopPropagation}>
+      <InputWrap>
         <div>
           <input ref={inputRef} value={replyValue} onChange={onChangeReplyValue} />
           <span onClick={onCloseInput}>&times;</span>

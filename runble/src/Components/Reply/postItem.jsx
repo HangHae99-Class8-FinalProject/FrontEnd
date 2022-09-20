@@ -4,17 +4,21 @@ import displayedAt from "../../Utils/displayAt";
 import ReplyInput from "./ReplyInput";
 import { useParams } from "react-router-dom";
 import { ReactComponent as Profile } from "../../Icons/myPageProfile.svg";
-
-import Loading from "../Common/Loading/Loading";
+import { useRecoilState } from "recoil";
+import { replyState } from "../../Recoil/Atoms/ReplyAtoms";
 
 function PostItem({ data }) {
-  const [showInput, setShowInput] = useState(false);
+  const [inputState, setInputState] = useRecoilState(replyState);
 
   const { id: postId } = useParams();
 
-  const onCloseInput = useCallback(e => {
-    setShowInput(false);
-  }, []);
+  const onShowInput = useCallback(e => {
+    setInputState(prev => ({
+      ...prev,
+      showInput: "댓글작성",
+      postId: postId
+    }));
+  });
 
   return (
     <>
@@ -27,16 +31,10 @@ function PostItem({ data }) {
         <PostFooter>
           <Time>{displayedAt(data.createdAt)}</Time>
           <Like>좋아요{data.like}개</Like>
-          <Write
-            onClick={() => {
-              setShowInput("댓글");
-            }}
-          >
-            답글달기
-          </Write>
+          <Write onClick={onShowInput}>답글달기</Write>
         </PostFooter>
       </PostBox>
-      <ReplyInput showInput={showInput} onCloseInput={onCloseInput} postId={postId} />
+      <ReplyInput />
     </>
   );
 }

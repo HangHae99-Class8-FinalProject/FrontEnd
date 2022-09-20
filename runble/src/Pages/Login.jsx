@@ -1,11 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-import Loading from "../Components/Common/Loading/Loading";
 import { ReactComponent as KakaoLoginIcon } from "../Icons/KakaoLoginIcon.svg";
 import { ReactComponent as Logo } from "../Icons/LoginLogo.svg";
 
-const KAKAO_LOGIN = "http://54.167.169.43/api/kakao/login";
+const KAKAO_LOGIN = "http://3.34.45.149/api/kakao/login";
 
 const Login = () => {
   return (
@@ -16,7 +15,6 @@ const Login = () => {
       <LoginLink href={KAKAO_LOGIN}>
         <KakaoLoginIcon />
       </LoginLink>
-      {/* <Loading>테스트 하고 있어요</Loading> */}
     </>
   );
 };

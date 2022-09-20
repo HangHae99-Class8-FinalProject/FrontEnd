@@ -7,15 +7,14 @@ import { ReactComponent as ReplyDelete } from "../../Icons/ReplyDelete.svg";
 
 import Recomment from "./Recomment";
 import displayedAt from "../../Utils/displayAt";
-import { editReply } from "../../Hooks/useReply";
 import { delReply } from "../../Hooks/useReply";
-import useInput from "../../Hooks/useInput";
 import { ReactComponent as Profile } from "../../Icons/myPageProfile.svg";
+import { useRecoilState } from "recoil";
+import { replyState } from "../../Recoil/Atoms/ReplyAtoms";
 
-const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
+const CommentList = ({ reply }) => {
   const [showReply, setShowReply] = useState(false);
-  const [editable, setEditable] = useState(false);
-  const [editValue, onChangeEditValue] = useInput("");
+  const [inputState, setInpuState] = useRecoilState(replyState);
 
   const replyRef = useRef(null);
 
@@ -25,19 +24,30 @@ const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
 
   const queryClient = useQueryClient();
 
-  const onShowInput = useCallback(() => {
-    setRecommnetKey(reply.commentId);
-    setShowInput("대댓글");
+  const onShowInputRecomment = useCallback(() => {
+    setInpuState(prev => ({
+      ...prev,
+      showInput: "대댓글작성",
+      postId: reply.commentId
+    }));
   }, []);
+
+  const onShowInputEdit = useCallback(() => {
+    setInpuState(prev => ({
+      ...prev,
+      showInput: "댓글수정",
+      postId: reply.commentId
+    }));
+    slideRef.current.style.transform = "translateX(0%)";
+  });
 
   const onShowRecomment = useCallback(() => {
     setShowReply(prev => !prev);
   }, []);
 
-  //댓글 삭제 부분
+  //댓글 삭제
   const delReplyData = useMutation(() => delReply(reply.commentId), {
     onSuccess: data => {
-      console.log("삭제됨");
       queryClient.invalidateQueries("GET_REPLY");
     },
     onError: error => {
@@ -47,26 +57,6 @@ const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
 
   const handleDelreply = () => {
     delReplyData.mutate();
-  };
-
-  //댓글 수정 부분
-  const onShowEdit = useCallback(() => {
-    setEditable(prev => !prev);
-  }, []);
-
-  const editReplyData = useMutation(reply => editReply(reply), {
-    onSuccess: data => {
-      console.log(data);
-      queryClient.invalidateQueries("GET_REPLY");
-    },
-    onError: error => {
-      console.log(error);
-    }
-  });
-
-  const handleEditreply = () => {
-    setEditable(false);
-    editReplyData.mutate({ comment: editValue, commentId: reply.commentId });
   };
 
   //슬라이드 만들기
@@ -80,9 +70,9 @@ const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
 
   const onTouchEnd = e => {
     let totalX = firstTouchX - e.changedTouches[0].pageX;
-    // console.log(totalX);
+
     if (totalX > 80) {
-      slideRef.current.style.transform = "translateX(-35%)";
+      slideRef.current.style.transform = "translateX(-25%)";
       slideRef.current.style.transition = "all 0.5s ease-in-out";
       return;
     }
@@ -100,16 +90,10 @@ const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
           <div>{reply.image ? <img src={reply.image} /> : <Profile />}</div>
           <CommentBody>
             <Nick>{reply.nickname}</Nick>
-            {!editable ? (
-              <div>{reply.comment}</div>
-            ) : (
-              <form onSubmit={handleEditreply}>
-                <input value={editValue} onChange={onChangeEditValue} ref={replyRef} />
-              </form>
-            )}
+            <div>{reply.comment}</div>
             <CommentFooter>
               <Time>{displayedAt(reply.createdAt)}</Time>
-              <Write onClick={onShowInput}>답글달기</Write>
+              <Write onClick={onShowInputRecomment}>답글달기</Write>
               {!showReply && (
                 <div onClick={onShowRecomment}>
                   {reply.recommentNum > 0 ? <>답글 {reply.recommentNum}개 더보기</> : null}
@@ -119,7 +103,9 @@ const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
             </CommentFooter>
           </CommentBody>
           <ButtonWrap>
-            <button onClick={onShowEdit}>{!editable ? <ReplyUpdate /> : <CancleButton>&times;</CancleButton>}</button>
+            <button onClick={onShowInputEdit}>
+              <ReplyUpdate />
+            </button>
             <button onClick={handleDelreply}>
               <ReplyDelete />
             </button>
@@ -138,22 +124,16 @@ const Body = styled.div`
 `;
 
 const ButtonWrap = styled.div`
-  margin-left: 1.2rem;
+  margin-left: 0rem;
   display: flex;
   & button {
     border: none;
   }
+  & button:last-child {
+    background-color: #f03800;
+  }
 `;
 
-const CancleButton = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-  text-align: center;
-  font-size: 5.4rem;
-`;
 const CommentWrap = styled.div`
   font-size: 1rem;
   display: flex;
