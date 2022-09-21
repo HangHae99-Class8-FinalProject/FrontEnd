@@ -17,7 +17,6 @@ const Record = () => {
   const [stopInterval, setStopInterval] = useState(true);
   const [endRun, setEndRun] = useState(false);
   const [showModal, setShowModal] = useState(true);
-  const [showErrorModal, setShowErrorModal] = useState(false);
   const [start, setStart] = useState(false);
   const [noRecord, setNoRecord] = useState(false);
   const [path, setPath] = useRecoilState(runData);
@@ -46,14 +45,14 @@ const Record = () => {
     setStopInterval(prev => !prev);
   }, []);
 
-  const onStart = useCallback(() => {
+  const onStart = useCallback(async () => {
+    const { data } = await instance.get("/api/user/startbtn");
     setShowModal(false);
     setStopInterval(false);
     setStart(true);
   }, []);
 
   const onClickEnd = useCallback(async () => {
-    setShowErrorModal(true);
     setEndRun(true);
     setStopInterval(true);
     if (Number(runLog.distance) <= 0) {
@@ -87,6 +86,7 @@ const Record = () => {
     setEndRun(false);
     setNoRecord(false);
   };
+
   const onClickNo = () => {
     clearPath();
     navigate("/feed");

@@ -11,6 +11,7 @@ import SignUp from "../Pages/SignUp";
 import UserPage from "../Pages/UserPage";
 import ProfileSignup from "../Components/Signup/profileSignup";
 import Rank from "../Pages/Rank";
+import Report from "../Pages/Report";
 
 const Router = () => {
   return (
@@ -29,6 +30,7 @@ const Router = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/user/:nickname" element={<UserPage />} />
         <Route path="/rank" element={<Rank />} />
+        <Route path="/report" element={<Report />} />
       </Routes>
     </BrowserRouter>
   );

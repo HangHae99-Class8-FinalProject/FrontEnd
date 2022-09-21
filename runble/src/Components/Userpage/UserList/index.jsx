@@ -16,12 +16,13 @@ const UserList = () => {
     const { Post, isLast } = res.data;
     return { Post, nextPage: pageParam + 1, isLast };
   };
-  const { data, status, fetchNextPage, isFetchingNextPage } = useInfinityScroll("user", fetchUserList);
-  useEffect(() => {
-    if (inView) fetchNextPage();
-  }, [inView]);
+  const { data, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfinityScroll("user", fetchUserList);
 
-  if (!data?.pages?.Post) {
+  useEffect(() => {
+    if (inView && hasNextPage) fetchNextPage();
+  }, [inView, hasNextPage]);
+
+  if (data?.pages?.Post === []) {
     return <NonePost>작성한 게시물이 없어요</NonePost>;
   }
 

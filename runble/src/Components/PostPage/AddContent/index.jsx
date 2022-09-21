@@ -45,4 +45,7 @@ const Write = styled.textarea`
   gap: 1rem;
   width: 34.3rem;
   height: 18rem;
+  &:focus {
+    outline: none;
+  }
 `;

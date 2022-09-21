@@ -76,7 +76,6 @@ const Nav = () => {
     }
   };
 
-
   const userDelete = async () => {
     const { data } = await instance.delete("/api/user").then(() => {
       localStorage.clear();
@@ -90,7 +89,6 @@ const Nav = () => {
       userDelete();
       alert("회원탈퇴되었습니다");
       navigate("/");
-
     } else {
       return;
     }
@@ -112,6 +110,13 @@ const Nav = () => {
           {
             option: (
               <StyleShow Show={show}>
+                <p
+                  onClick={() => {
+                    navigate("/report");
+                  }}
+                >
+                  문제 신고하기
+                </p>
                 <p
                   onClick={() => {
                     logoutConfirm();
