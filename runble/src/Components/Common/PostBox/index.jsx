@@ -74,7 +74,7 @@ const PostBox = ({ posts, index }) => {
               onClick={() => {
                 setPostData(posts);
                 navigate(`/user/${posts.nickname}`, {
-                  state: posts.userId
+                  state: { userId: posts.userId }
                 });
               }}
               src={posts.profile}

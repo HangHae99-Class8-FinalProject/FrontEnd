@@ -10,23 +10,27 @@ import { instance } from "../../../Utils/Instance";
 
 const UserList = () => {
   const { nickname } = useParams();
-  const { ref, inView } = useInView();
   const fetchUserList = async pageParam => {
     const res = await instance.get(`/api/user/post/${nickname}/${pageParam}`);
     const { Post, isLast } = res.data;
     return { Post, nextPage: pageParam + 1, isLast };
   };
-  const { data, status, fetchNextPage, isFetchingNextPage } = useInfinityScroll("user", fetchUserList);
+
+  const { data, status, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfinityScroll(
+    ["user", nickname],
+    fetchUserList
+  );
+  const [ref, inView] = useInView();
   useEffect(() => {
-    if (inView) fetchNextPage();
-  }, [inView]);
+    if (inView && hasNextPage) fetchNextPage();
+  }, [inView, hasNextPage]);
   return (
     <>
       <StyleUserListWrap>
         <div>
           {data?.pages.map((page, index) => (
             <React.Fragment key={index}>
-              {page.Post.map((posts, index) => (
+              {page?.Post.map((posts, index) => (
                 <PostBox key={index} posts={posts} index={index}></PostBox>
               ))}
             </React.Fragment>

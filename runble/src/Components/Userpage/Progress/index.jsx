@@ -45,7 +45,7 @@ const Progress = ({ goalData, done }) => {
     return hours + ":" + minute + ":" + seconds;
   }, []);
   console.log(goalData.getUserInfo);
-  const percentage = goalData.getUserInfo.percent;
+  const percentage = goalData.getUserInfo.percent.toFixed(1);
   return (
     <StyleWrap>
       {modal ? <Modal done={done} /> : null}
