@@ -2,22 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
 
 import { instance } from "../../../Utils/Instance";
 import PostBox from "../../Common/PostBox";
-import Nav from "../../Common/Nav/index";
 
 const SearchedHashTag = ({ searhValue }) => {
   const [ref, inView] = useInView();
   const [tap, setTap] = useState("최신");
-
-  const { state } = useLocation();
-  console.log(state);
-
-  if (state) {
-    searhValue = state;
-  }
 
   const getSearchHashTagOrder = async pageParam => {
     const { data } = await instance.get(`/api/post/search/popular/${pageParam}?hashtag=${searhValue}`);
@@ -47,7 +38,7 @@ const SearchedHashTag = ({ searhValue }) => {
   console.log("result:", data);
 
   return (
-    <Body>
+    <>
       <ButtonWrap>
         <button
           onClick={() => {
@@ -73,17 +64,12 @@ const SearchedHashTag = ({ searhValue }) => {
           </div>
         ))}
       </div>
-      {isFetchingNextPage ? <span></span> : <div ref={ref}></div>}
-      <Nav />
-    </Body>
+      {isFetchingNextPage ? <span>로딩중입니다</span> : <div ref={ref}></div>}
+    </>
   );
 };
 
 export default SearchedHashTag;
-
-const Body = styled.div`
-  margin-bottom: 7rem;
-`;
 
 const ButtonWrap = styled.div`
   display: flex;

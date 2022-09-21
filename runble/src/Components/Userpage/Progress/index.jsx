@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import {
   StyleProgress,
   StyleProgressBox,
+  StylePutBox,
   StyleWrap,
   StyleProgressGoalData,
   StyleNextProgress,
@@ -17,19 +18,21 @@ import {
 import { CircularProgressbar, buildStyles, CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import moment from "moment";
+import { ModalState } from "../../../Recoil/Atoms/OptionAtoms";
+import { useRecoilState } from "recoil";
 import { Swiper, SwiperSlide } from "swiper/react";
-
+import Modal from "../Modal/index";
 import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 const weekOfMonth = m => m.week() - moment(m).startOf("month").week() + 1;
 const nowDate = moment().utc(true);
 const goalDate = nowDate.format("MM월 ") + weekOfMonth(nowDate) + "주차"; // 현재 날짜
-
-const Progress = ({ goalData }) => {
+const Progress = ({ goalData, done }) => {
+  const [modal, setModal] = useRecoilState(ModalState);
   const sevenTime = goalData.getUserInfo.weekOfTime;
   const result = sevenTime.filter(distance => distance !== 0);
-
+  console.log(modal);
   const divideTime = useCallback(time => {
     let seconds = Math.floor(time % 60);
     let minute = Math.floor((time / 60) % 60);
@@ -41,9 +44,12 @@ const Progress = ({ goalData }) => {
 
     return hours + ":" + minute + ":" + seconds;
   }, []);
+  console.log(goalData.getUserInfo);
   const percentage = goalData.getUserInfo.percent;
   return (
     <StyleWrap>
+      {modal ? <Modal done={done} /> : null}
+
       <div>
         <StyleProgress>
           <Swiper
@@ -55,7 +61,19 @@ const Progress = ({ goalData }) => {
           >
             <SwiperSlide>
               <StyleProgressBox>
-                <StyleProgressGoalData>{goalData.getUserInfo.goal}km 달성까지</StyleProgressGoalData>
+                <StylePutBox>
+                  <div>
+                    <StyleProgressGoalData>{goalData.getUserInfo.goal}km 달성까지</StyleProgressGoalData>
+                  </div>
+                  <span
+                    onClick={() => {
+                      setModal(true);
+                    }}
+                  >
+                    수정
+                  </span>
+                </StylePutBox>
+
                 <div>
                   <CircularProgressbarWithChildren
                     value={percentage}
@@ -101,7 +119,7 @@ const Progress = ({ goalData }) => {
                     <div>
                       {goalData.getUserInfo.weekOfDistance.map((distance, idx) => (
                         <StyleSpanDistance key={idx} Distance={distance}>
-                          {distance}K
+                          {distance.toFixed(1)}K
                         </StyleSpanDistance>
                       ))}
                     </div>

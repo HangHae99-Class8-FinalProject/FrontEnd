@@ -35,7 +35,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { useLikeCheck } from "../../../Hooks/useLikecheck";
 import { useState } from "react";
-
 const PostBox = ({ posts, index }) => {
   const navigate = useNavigate();
   const [show, setShow] = useRecoilState(NavState);
@@ -46,34 +45,16 @@ const PostBox = ({ posts, index }) => {
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
   const [heart, Setheart] = useState(false);
-  console.log(posts);
   const divideTime = useCallback(time => {
-    let seconds = time.seconds;
+    let seconds = time.second;
     let minute = time.minute;
-    let hours = time.hours;
-    
+    let hours = time.hour;
+
     hours = hours < 10 ? "0" + hours : hours;
     minute = minute < 10 ? "0" + minute : minute;
     seconds = seconds < 10 ? "0" + seconds : seconds;
-  }, []);
-  
-  const linkToReply = useCallback(() => {
-    navigate(`/reply/${posts.postId}`, {
-      state: {
-        nickname: posts.nickname,
-        profile: posts.profile,
-        content: posts.content,
-        createdAt: posts.createdAt,
-        like: posts.like
-      }
-    });
-  }, []);
 
-  const linkToSearch = useCallback(hash => {
-    navigate("/search", {
-      state: hash
-    });
-
+    return hours + ":" + minute + ":" + seconds;
   }, []);
   return (
     <StyleFeed key={index}>
@@ -126,8 +107,8 @@ const PostBox = ({ posts, index }) => {
           <SwiperSlide>
             <StyleSpeed>
               <div>
-                <div>2.04k</div>
-                <div>00:12:23</div>
+                <div>{posts.distance}K</div>
+                <div>{divideTime(posts.time)}</div>
               </div>
             </StyleSpeed>
             <KakaoMap path={posts.path}></KakaoMap>
@@ -159,7 +140,19 @@ const PostBox = ({ posts, index }) => {
                 }}
               />
             )}
-            <CommentIcon onClick={linkToReply} />
+            <CommentIcon
+              onClick={() => {
+                navigate(`/reply/${posts.postId}`, {
+                  state: {
+                    nickname: posts.nickname,
+                    profile: posts.profile,
+                    content: posts.content,
+                    createdAt: posts.createdAt,
+                    like: posts.like
+                  }
+                });
+              }}
+            />
           </StyleHeart>
           <StyleView>
             <View />
@@ -169,7 +162,7 @@ const PostBox = ({ posts, index }) => {
         <StyleContent>{posts?.content}</StyleContent>
         <StyleHashBox>
           {posts?.hashtag.map((hash, idx) => (
-            <StyleHash key={idx} onClick={() => linkToSearch(hash)}>
+            <StyleHash key={idx}>
               <span>#{hash}</span>
             </StyleHash>
           ))}
@@ -178,8 +171,20 @@ const PostBox = ({ posts, index }) => {
           좋아요
           {posts.like}개
         </StyleGood>
-        <StyleComment onClick={linkToReply}>
-          {posts.commentNum > 0 && <>댓글{posts.commentNum}개 모두보기</>}
+        <StyleComment
+          onClick={() => {
+            navigate(`/reply/${posts.postId}`, {
+              state: {
+                nickname: posts.nickname,
+                profile: posts.profile,
+                content: posts.content,
+                createdAt: posts.createdAt,
+                like: posts.like
+              }
+            });
+          }}
+        >
+          댓글{posts.commentNum}개 모두보기
         </StyleComment>
         <StyleTime>{displayedAt(posts.createdAt)}</StyleTime>
       </StyleContentBox>

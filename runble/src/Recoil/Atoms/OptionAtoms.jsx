@@ -16,3 +16,7 @@ export const NavPostData = atom({
   key: "NavPostData",
   default: ""
 });
+export const ModalState = atom({
+  key: "ModalState",
+  default: false
+});

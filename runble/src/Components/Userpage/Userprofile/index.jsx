@@ -1,18 +1,16 @@
 import React from "react";
 
-
 import { StyleUserWrap, StyleUser, StyleHeader, StyleUsrBox, RankLink, UserTitle } from "./style";
-
 
 import { useRecoilState } from "recoil";
 import { NavState, NavStates } from "../../../Recoil/Atoms/OptionAtoms";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { ReactComponent as Option } from "../../../Icons/option.svg";
 
 import { ReactComponent as Profile } from "../../../Icons/MyPageProfile.svg";
 import trophy from "../../../Icons/trophy.png";
 
-const Userprofile = ({ userNickname, goalData }) => {
+const Userprofile = ({ userNickname, goalData, userProfile }) => {
   const { nickname } = useParams();
   const [show, setShow] = useRecoilState(NavState);
   const [navState, setNavState] = useRecoilState(NavStates);
@@ -45,7 +43,7 @@ const Userprofile = ({ userNickname, goalData }) => {
                       setShow(prev => !prev);
                     }}
                     style={{ width: "40px", height: "40px", borderRadius: "20px" }}
-                    src={goalData.getUserInfo.profile}
+                    src={goalData?.getUserInfo.profile || userProfile}
                   ></img>
                 ) : (
                   <Profile
@@ -59,6 +57,9 @@ const Userprofile = ({ userNickname, goalData }) => {
 
               <UserTitle>
                 {nickname}님의 주간 목표
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdZDs9en5KjtUB_eSl19kfMrvtTITl31Y57J7au95ZPUkZ2SQ/viewform?usp=sf_link">
+                  설문조사
+                </a>
                 <RankLink to="/rank">
                   <img src={trophy} />
                 </RankLink>

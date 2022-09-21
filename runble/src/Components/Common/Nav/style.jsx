@@ -15,7 +15,7 @@ export const StyleShowBackgroud = styled.div`
 
 export const StyleShow = styled.div`
   width: 100%;
-  height: ${({ Show }) => (Show ? "160px" : "0px")};
+  height: ${({ Show }) => (Show ? "17rem" : "0px")};
   background-color: #ffffff;
   transition: height 200ms ease-in-out;
   align-items: center;
@@ -27,6 +27,7 @@ export const StyleShow = styled.div`
     flex-direction: row;
     align-items: center;
     padding-left: 16px;
+    text-align: center;
   }
   & > div {
     display: flex;

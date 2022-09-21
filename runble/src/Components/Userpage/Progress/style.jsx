@@ -1,17 +1,18 @@
 import styled from "styled-components";
 export const StyleWrap = styled.div`
   width: 100%;
-  & > div {
-    padding: 2.4rem 1.6rem 2rem;
-  }
 `;
 export const StyleProgress = styled.div`
-  width: 100%;
+  width: 90%;
   height: 23rem;
   background-color: rgba(53, 52, 52, 1);
   box-sizing: border-box;
   border-radius: 1.2rem;
   margin: 0 auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   & > div {
     display: flex;
     justify-content: center;
@@ -25,11 +26,35 @@ export const StyleProgressBox = styled.div`
   justify-content: center;
   align-items: center;
   padding-top: 2rem;
+  text-align: center;
 `;
-export const StyleProgressGoalData = styled.div`
+export const StylePutBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
   color: #ffffff;
+  align-items: center;
+  text-align: center;
+  & > span {
+    width: 100%;
+    position: absolute;
+    margin-left: 83%;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-top: -2.5rem;
+  }
+  & > div {
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 2.5rem;
+  }
+`;
+
+export const StyleProgressGoalData = styled.span`
   font-size: 1.6rem;
-  margin-bottom: 2.8rem;
+  text-align: center;
 `;
 export const StyleNextProgress = styled.div`
   display: flex;

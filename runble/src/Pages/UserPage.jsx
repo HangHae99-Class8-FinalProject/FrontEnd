@@ -13,16 +13,20 @@ const UserPage = () => {
   const accessToken = localStorage.getItem("userData");
   const parseData = JSON.parse(accessToken);
   const userNickname = parseData.nickname;
+  const userProfile = parseData.image;
   const userId = parseData.userId;
 
   const [userIds] = useState(state?.userId || userId);
 
   const { data: goalData } = useProgress(userIds); //user 목표보여주기
-
   return (
     <Layout>
-      <Userprofile goalData={goalData} userNickname={userNickname}></Userprofile>
-      {goalData?.result ? <Progress goalData={goalData}></Progress> : <Goal userNickname={userNickname}></Goal>}
+      <Userprofile userProfile={userProfile} goalData={goalData} userNickname={userNickname}></Userprofile>
+      {goalData?.result ? (
+        <Progress done={goalData?.result} goalData={goalData}></Progress>
+      ) : (
+        <Goal done={goalData?.result} userNickname={userNickname}></Goal>
+      )}
       <UserList></UserList>
     </Layout>
   );

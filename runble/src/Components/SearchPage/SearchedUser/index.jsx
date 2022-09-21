@@ -3,7 +3,6 @@ import { instance } from "../../../Utils/Instance";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as Profile } from "../../../Icons/60x60Profile.svg";
 
 const SearchedUser = ({ searhValue }) => {
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ const SearchedUser = ({ searhValue }) => {
       {data?.map(user => {
         return (
           <SearchUserWrap key={user.nickname} onClick={() => navUserPage(user.nickname)}>
-            {user.profile ? <img src={user.profile} /> : <Profile />}
+            <img src={user.profile} />
             <div>{user.nickname}</div>
           </SearchUserWrap>
         );
