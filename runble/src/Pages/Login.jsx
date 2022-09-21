@@ -2,16 +2,20 @@ import React from "react";
 import styled from "styled-components";
 
 import { ReactComponent as KakaoLoginIcon } from "../Icons/KakaoLoginIcon.svg";
+import { ReactComponent as NaverLoginIcon } from "../Icons/NaverLoginIcon.svg";
 
-const KAKAO_LOGIN = "http://54.167.169.43/api/kakao/login";
+import {KAKAO_LOGIN, NAVER_LOGIN} from "../Components/Login/oauth"
 
 const Login = () => {
   return (
     <>
       <LoginLogo>Runble</LoginLogo>
-      <LoginLink href={KAKAO_LOGIN}>
+      <LoginKakaoLink href={KAKAO_LOGIN}>
         <KakaoLoginIcon />
-      </LoginLink>
+      </LoginKakaoLink>
+      <LoginNaverLink href={NAVER_LOGIN}>
+        <NaverLoginIcon />
+      </LoginNaverLink>
     </>
   );
 };
@@ -31,15 +35,26 @@ const LoginLogo = styled.div`
   top: 17.6rem;
 `;
 
-const LoginLink = styled.a`
+const LoginKakaoLink = styled.a`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 0rem;
   gap: 1rem;
-
   position: absolute;
   width: 26rem;
   left: 5.8rem;
   bottom: 8.1rem;
+`;
+
+const LoginNaverLink = styled.a`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0rem;
+  gap: 1rem;
+  position: absolute;
+  width: 26rem;
+  left: 5.8rem;
+  bottom: 14.1rem;
 `;

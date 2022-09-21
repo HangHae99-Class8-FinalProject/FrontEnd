@@ -4,7 +4,7 @@ export const addReply = async ({comment,postId}) => {
   console.log(comment)
   console.log(postId)
   try{
-    const response = await instance.post(`http://54.167.169.43./api/comment/${postId}`,{
+    const response = await instance.post(`/api/comment/${postId}`,{
       comment:comment
     })
     console.log(response)
@@ -18,7 +18,7 @@ export const addReply = async ({comment,postId}) => {
 export const delReply = async (id)=>{
   console.log(id)
   try{
-    const response = await instance.delete(`http://54.167.169.43/api/comment/${id}`)
+    const response = await instance.delete(`/api/comment/${id}`)
     return response.data
   }catch(error){
     console.log(error.code)
@@ -29,7 +29,7 @@ export const delReply = async (id)=>{
 export const editReply = async ({comment,commentId}) =>{
   try{
       console.log(commentId)
-        const response = await instance.put(`http://54.167.169.43/api/comment/${commentId}`,
+        const response = await instance.put(`/api/comment/${commentId}`,
           {comment:comment}
         )
         console.log(response.data)

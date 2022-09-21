@@ -11,6 +11,7 @@ import SignUp from "../Pages/SignUp";
 import UserPage from "../Pages/UserPage";
 import ProfileSignup from "../Components/Signup/profileSignup";
 import Rank from "../Pages/Rank";
+import NaverSignup from "../Components/Signup/naverSignup";
 
 const Router = () => {
   return (
@@ -26,6 +27,7 @@ const Router = () => {
         <Route path="/reply" element={<Reply />} />
         <Route path="/search" element={<Search />} />
         <Route path="/api/kakao/callback" element={<ProfileSignup />} />
+        <Route path="/api/naver/callback" element={<NaverSignup />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/user/:nickname" element={<UserPage />} />
         <Route path="/rank" element={<Rank />} />

@@ -10,7 +10,7 @@ function Recomment({ id }) {
   const [ref, inView] = useInView();
 
   const getRecomment = async pageParam => {
-    const response = await instance.get(`http://54.167.169.43/api/comment/recomment/${id}/${pageParam}`);
+    const response = await instance.get(`/api/comment/recomment/${id}/${pageParam}`);
     const {Recomment, isLast} = response.data;
     console.log("확인",Recomment)
     return { Recomment, nextPage: pageParam + 1, isLast };

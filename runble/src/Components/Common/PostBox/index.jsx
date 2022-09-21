@@ -25,7 +25,7 @@ import { ReactComponent as View } from "../../../Icons/view.svg";
 import { ReactComponent as Heart } from "../../../Icons/heart.svg";
 import { ReactComponent as CommentIcon } from "../../../Icons/comment.svg";
 
-import { ReactComponent as Profile } from "../../../Icons/MyPageProfile.svg";
+import { ReactComponent as Profile } from "../../../Icons/myPageProfile.svg";
 
 import displayedAt from "../../../Utils/displayAt";
 import KakaoMap from "../../Common/KakaoMap/index";
