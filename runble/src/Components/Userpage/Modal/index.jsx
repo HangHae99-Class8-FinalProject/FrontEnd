@@ -29,6 +29,7 @@ const Modal = ({ done }) => {
     setGoal({
       goal: ""
     });
+    setModal(false);
   };
   return (
     <StyleModalBox>

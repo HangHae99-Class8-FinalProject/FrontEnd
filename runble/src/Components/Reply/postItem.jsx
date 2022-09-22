@@ -41,27 +41,31 @@ function PostItem({ data }) {
 export default PostItem;
 
 const PostBox = styled.div`
-font-size: 1rem;
-display: flex;
-align-items: center;
-padding: 1.5rem 1.6rem;
-gap: 0.8rem;
-height: 7rem;
-border-bottom: 0.1rem solid #111;
-& img {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 1.6rem;
+  gap: 0.8rem;
+  height: 7rem;
+  border-bottom: 0.1rem solid #e6e6e6;
+  & img {
     width: 4rem;
     height: 4rem;
     border-radius: 10rem;
   }
 `;
-
 const PostBody = styled.div`
   align-items: flex-start;
-  display:inline-block;
   gap: 0.2rem;
   height: 4.2rem;
-  width: 29.7rem;`
-
+  width: 29.7rem;
+`;
+const Nick = styled.div`
+  line-height: 1rem;
+  font-family: "Anton";
+  font-size: 1.1rem;
+  font-weight: 700;
+`;
 const PostFooter = styled.div`
   display: flex;
   width: 40rem;
@@ -70,21 +74,17 @@ const PostFooter = styled.div`
   top: 3rem;
   color: #aaa;
 `;
-
 const Time = styled.div`
   padding-right: 1rem;
 `;
-
 const Like = styled.div`
   padding-right: 1rem;
 `;
 const Write = styled.button`
-  outline:0;
-  border:0;
-  color:#aaa;
-  background-color:transparent;
-  font-size:1rem;
-  margin-top:0.1rem`
-
-
-
+  outline: 0;
+  border: 0;
+  color: #aaa;
+  background-color: transparent;
+  font-size: 1rem;
+  margin-top: 0.1rem;
+`;

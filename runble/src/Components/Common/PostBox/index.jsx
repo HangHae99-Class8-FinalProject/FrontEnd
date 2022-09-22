@@ -11,7 +11,6 @@ import {
   StyleContentBox,
   StyleIcon,
   StyleHeart,
-  StyleView,
   StyleSpeed,
   StyleGood,
   StyleImg,
@@ -22,7 +21,6 @@ import {
   StyleTime
 } from "./style";
 
-import { ReactComponent as View } from "../../../Icons/view.svg";
 import { ReactComponent as Heart } from "../../../Icons/heart.svg";
 import { ReactComponent as CommentIcon } from "../../../Icons/comment.svg";
 
@@ -55,7 +53,7 @@ const PostBox = ({ posts, index }) => {
     seconds = seconds < 10 ? "0" + seconds : seconds;
 
     return hours + ":" + minute + ":" + seconds;
-}
+  }, []);
 
   const linkToReply = useCallback(() => {
     navigate(`/reply/${posts.postId}`, {
@@ -181,15 +179,11 @@ const PostBox = ({ posts, index }) => {
               }}
             />
           </StyleHeart>
-          <StyleView>
-            <View />
-            <span>{posts?.view}</span>
-          </StyleView>
         </StyleIcon>
         <StyleContent>{posts?.content}</StyleContent>
         <StyleHashBox>
           {posts?.hashtag.map((hash, idx) => (
-            <StyleHash key={idx}>
+            <StyleHash key={idx} onClick={() => linkToSearch(hash)}>
               <span>#{hash}</span>
             </StyleHash>
           ))}

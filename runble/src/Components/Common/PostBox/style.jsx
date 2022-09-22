@@ -88,16 +88,6 @@ export const StyleHeart = styled.div`
   height: 3.555rem;
   justify-content: center;
 `;
-export const StyleView = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0px;
-  gap: 6px;
-  width: 3.8rem;
-  height: 1.7rem;
-  font-size: 1.2rem;
-`;
 export const StyleImg = styled.img`
   width: 34.3rem;
   height: 18rem;

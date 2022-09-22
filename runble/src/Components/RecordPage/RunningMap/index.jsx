@@ -38,7 +38,9 @@ const RunningMap = ({ stopInterval, endRun }) => {
 
   const getDistanceQuery = useMutation(location => getDistance(location), {
     onSuccess: data => {
-      setDistance(prev => prev + data);
+      if (data >= 0) {
+        setDistance(prev => ((prev + data) / 1000)?.toFixed(1));
+      }
     }
   });
 

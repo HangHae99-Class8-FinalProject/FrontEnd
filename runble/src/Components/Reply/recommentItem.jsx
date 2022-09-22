@@ -55,7 +55,7 @@ function RecommentItem({ data }) {
     if (userData.nickname !== data.nickname) return;
     let totalX = e.changedTouches[0].pageX - firstTouchX;
     if (200 > totalX || 400 > totalX > 300) {
-      slideRef.current.style.transform = "translateX(-32%)";
+      slideRef.current.style.transform = "translateX(-16.3rem)";
       return;
     }
     if ((totalX < 270 && totalX > 200) || totalX > 400) {
@@ -93,7 +93,6 @@ function RecommentItem({ data }) {
 
 export default RecommentItem;
 
-
 const Body = styled.div`
   display: flex;
   width: 100%;
@@ -118,9 +117,8 @@ const ButtonWrap = styled.div`
   }
 `;
 
-
 const RecommentBox = styled.div`
-   margin-left:3rem; 
+  margin-left: 3rem;
   font-size: 1rem;
   display: flex;
   align-items: center;
@@ -131,7 +129,6 @@ const RecommentBox = styled.div`
   min-width: 85.4vw;
 
   & img {
-
     width: 4rem;
     height: 4rem;
     border-radius: 10rem;
@@ -139,7 +136,7 @@ const RecommentBox = styled.div`
 `;
 
 const RecommentBody = styled.div`
- align-items: flex-start;
+  align-items: flex-start;
   gap: 0.2rem;
   height: 4.2rem;
 
@@ -148,15 +145,8 @@ const RecommentBody = styled.div`
   }
 `;
 
-
 const RecommentFooter = styled.div`
-  display: flex;
-  width:40rem;
-  position:relative;
-  right:12rem;
-  top:3rem;
-  color:#aaa;
+  position: relative;
+  top: 1.5rem;
+  color: #aaa;
 `;
-
-const Time = styled.div`
- `
