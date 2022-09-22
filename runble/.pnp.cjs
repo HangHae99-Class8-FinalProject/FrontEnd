@@ -33,6 +33,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
+            ["@loadable/component", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:5.15.2"],\
             ["@remix-run/router", "npm:1.0.0"],\
             ["@testing-library/jest-dom", "npm:5.16.5"],\
             ["@testing-library/react", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:13.4.0"],\
@@ -3756,6 +3757,31 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@leichtgewicht-ip-codec-npm-2.0.4-dd4d657af8-468de1f04d.zip/node_modules/@leichtgewicht/ip-codec/",\
           "packageDependencies": [\
             ["@leichtgewicht/ip-codec", "npm:2.0.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@loadable/component", [\
+        ["npm:5.15.2", {\
+          "packageLocation": "./.yarn/cache/@loadable-component-npm-5.15.2-9e852903c2-dd027f3f9f.zip/node_modules/@loadable/component/",\
+          "packageDependencies": [\
+            ["@loadable/component", "npm:5.15.2"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:5.15.2", {\
+          "packageLocation": "./.yarn/__virtual__/@loadable-component-virtual-175c0720f4/0/cache/@loadable-component-npm-5.15.2-9e852903c2-dd027f3f9f.zip/node_modules/@loadable/component/",\
+          "packageDependencies": [\
+            ["@loadable/component", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:5.15.2"],\
+            ["@babel/runtime", "npm:7.19.0"],\
+            ["@types/react", null],\
+            ["hoist-non-react-statics", "npm:3.3.2"],\
+            ["react", "npm:18.2.0"],\
+            ["react-is", "npm:16.13.1"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -16304,6 +16330,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["runble", "workspace:."],\
+            ["@loadable/component", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:5.15.2"],\
             ["@remix-run/router", "npm:1.0.0"],\
             ["@testing-library/jest-dom", "npm:5.16.5"],\
             ["@testing-library/react", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:13.4.0"],\
