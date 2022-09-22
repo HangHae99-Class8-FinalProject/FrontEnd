@@ -12,8 +12,13 @@ const Login = () => {
       <LoginLogo>
         <Logo />
       </LoginLogo>
-      <LoginLink href={KAKAO_LOGIN}>
-        <KakaoLoginIcon />
+      <LoginLink>
+        <a href={KAKAO_LOGIN}>
+          <KakaoLoginIcon />
+        </a>
+        <a href={KAKAO_LOGIN}>
+          <KakaoLoginIcon />
+        </a>
       </LoginLink>
     </>
   );
@@ -25,24 +30,23 @@ const LoginLogo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 auto;
+  margin-top: 10rem;
   padding: 1.2rem 0rem 0rem;
   height: 24.5rem;
-  width: 24.5rem;
-
-  position: absolute;
-  left: 6.5rem;
-  top: 17.6rem;
+  width: 100%;
+  overflow: hidden;
 `;
 
-const LoginLink = styled.a`
+const LoginLink = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   padding: 0rem;
   gap: 1rem;
+  margin: 0 auto;
+  width: 100%;
 
   position: absolute;
-  width: 26rem;
-  left: 5.8rem;
   bottom: 8.1rem;
 `;

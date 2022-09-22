@@ -62,7 +62,7 @@ const PostReport = () => {
           <ReportType onClick={() => setReportNum(1)}>욕설, 비방, 차별, 혐오</ReportType>
           <ReportType onClick={() => setReportNum(2)}>홍보, 영리목적</ReportType>
           <ReportType onClick={() => setReportNum(3)}>불법정보</ReportType>
-          <ReportType onClick={() => setReportNum(4)}>음란, 청소년 유해</ReportType>
+          <ReportType onClick={() => setReportNum(4)}>음란, 청소년 유해물</ReportType>
           <ReportType onClick={() => setReportNum(5)}>개인 정보 노출, 유포, 거래</ReportType>
           <ReportType onClick={() => setReportNum(6)}>도배, 스팸</ReportType>
           <ReportType onClick={() => setReportNum(7)}>기타</ReportType>

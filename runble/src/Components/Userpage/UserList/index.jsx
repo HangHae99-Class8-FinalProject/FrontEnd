@@ -22,7 +22,7 @@ const UserList = () => {
     if (inView && hasNextPage) fetchNextPage();
   }, [inView, hasNextPage]);
 
-  if (data?.pages?.Post === []) {
+  if (data?.pages[0]?.Post?.length < 1) {
     return <NonePost>작성한 게시물이 없어요</NonePost>;
   }
 

@@ -6,7 +6,7 @@ const GlobalStyle = createGlobalStyle`
 
  }
  body{
-  background-color: blue;
+  /* background-color: blue; */
   font-size: 1.6rem;
   margin: 0;
   padding: 0;
@@ -16,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
 	display:none /* Chrome , Safari , Opera */
 }
 
-@media only screen  and (max-width:500px){
+@media only screen  and (max-width:480px){
   body{
     background-color: white;
   }
