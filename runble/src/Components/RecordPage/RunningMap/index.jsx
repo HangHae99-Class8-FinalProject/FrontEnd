@@ -4,16 +4,18 @@ import { useRecoilState, useRecoilValue } from "recoil";
 
 import { runData } from "../../../Recoil/Atoms/RunData";
 import useInterval from "../../../Hooks/useInterval";
-import calcDistance from "../../../Utils/clacDistnace";
 import Marker from "../../../Icons/Map_Marker.svg";
 import Loading from "../../Common/Loading/Loading";
+import { useMutation } from "react-query";
+import { instance } from "../../../Utils/Instance";
+import { useNavigate } from "react-router-dom";
 
 const RunningMap = ({ stopInterval, endRun }) => {
-  const { kakao } = window;
   const [distance, setDistance] = useState(0);
-
   const [path, setPath] = useRecoilState(runData);
   const runLog = useRecoilValue(runData);
+
+  const navigate = useNavigate();
 
   const [state, setState] = useState({
     center: {
@@ -22,6 +24,22 @@ const RunningMap = ({ stopInterval, endRun }) => {
     },
     errMsg: null,
     isLoading: false
+  });
+
+  const getDistance = async location => {
+    try {
+      const res = await instance.post("/api/user/location", location);
+      console.log("res", res.data);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getDistanceQuery = useMutation(location => getDistance(location), {
+    onSuccess: data => {
+      setDistance(prev => prev + data);
+    }
   });
 
   //사용자 첫 위 가져오기
@@ -40,8 +58,9 @@ const RunningMap = ({ stopInterval, endRun }) => {
         error => {
           console.log(error);
         },
-        { enableHighAccuracy: true }
+        { enableHighAccuracy: true, maximumAge: 0 }
       );
+      getDistanceQuery.mutate(state.center);
     } else {
       setState(prev => ({
         ...prev,
@@ -55,7 +74,6 @@ const RunningMap = ({ stopInterval, endRun }) => {
   useInterval(
     () => {
       if (navigator.geolocation) {
-        setDistance(calcDistance(path));
         navigator.geolocation.getCurrentPosition(
           position => {
             setState(prev => ({
@@ -63,19 +81,19 @@ const RunningMap = ({ stopInterval, endRun }) => {
               center: {
                 lat: position.coords.latitude, // 위도
                 lng: position.coords.longitude // 경도
-              },
-              isLoading: true
+              }
             }));
+            getDistanceQuery.mutate(state.center);
             setPath(prev => ({
               ...prev,
               path: prev.path.concat(state.center),
-              distance: distance?.toFixed(1)
+              distance
             }));
           },
           error => {
             console.log(error);
           },
-          { enableHighAccuracy: true, timeout: 4000 }
+          { enableHighAccuracy: true, maximumAge: 0 }
         );
       } else {
         setState(prev => ({
@@ -93,13 +111,11 @@ const RunningMap = ({ stopInterval, endRun }) => {
     if (endRun) {
       setPath(prev => ({
         ...prev,
-        distance: distance?.toFixed(1),
+        distance,
         isFinish: true
       }));
     }
   }, [endRun]);
-
-  let imageSrc = Marker;
 
   //로딩 화면
   if (!state.isLoading) {
@@ -108,6 +124,10 @@ const RunningMap = ({ stopInterval, endRun }) => {
         <div>지도 정보를 가져오고 있어요</div>
       </Loading>
     );
+  }
+
+  if (state.errMsg) {
+    navigate("/error");
   }
 
   return (
@@ -123,7 +143,7 @@ const RunningMap = ({ stopInterval, endRun }) => {
         draggable={false}
       >
         {state.isLoading && (
-          <MapMarker position={state.center} image={{ src: imageSrc, size: { width: 36, height: 36 } }} />
+          <MapMarker position={state.center} image={{ src: Marker, size: { width: 36, height: 36 } }} />
         )}
         <Polyline
           path={runLog.path}

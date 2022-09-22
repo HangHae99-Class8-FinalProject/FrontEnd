@@ -1,16 +1,14 @@
 import React from "react";
 
-
 import { StyleUserWrap, StyleUser, StyleHeader, StyleUsrBox, RankLink, UserTitle } from "./style";
-
 
 import { useRecoilState } from "recoil";
 import { NavState, NavStates } from "../../../Recoil/Atoms/OptionAtoms";
 import { useParams } from "react-router-dom";
 import { ReactComponent as Option } from "../../../Icons/option.svg";
 
-import { ReactComponent as Profile } from "../../../Icons/MyPageProfile.svg";
-import trophy from "../../../Icons/trophy.png";
+import { ReactComponent as Profile } from "../../../Icons/myPageProfile.svg";
+import TrophyIcon from "../../../Icons/trophy.png";
 
 const Userprofile = ({ userNickname, goalData }) => {
   const { nickname } = useParams();
@@ -30,7 +28,7 @@ const Userprofile = ({ userNickname, goalData }) => {
 
                 <Option
                   onClick={() => {
-                    setShow(prev => !prev);
+                    setShow(3);
                     setNaveState("option");
                   }}
                 ></Option>
@@ -38,11 +36,11 @@ const Userprofile = ({ userNickname, goalData }) => {
             </StyleHeader>
             <StyleUsrBox>
               <div>
-                {goalData?.getUserInfo.profile ? (
+                {goalData?.getUserInfo?.profile ? (
                   <img
                     onClick={() => {
                       setNavState("img");
-                      setShow(prev => !prev);
+                      setShow(2);
                     }}
                     style={{ width: "40px", height: "40px", borderRadius: "20px" }}
                     src={goalData.getUserInfo.profile}
@@ -51,7 +49,7 @@ const Userprofile = ({ userNickname, goalData }) => {
                   <Profile
                     onClick={() => {
                       setNavState("img");
-                      setShow(prev => !prev);
+                      setShow(2);
                     }}
                   ></Profile>
                 )}
@@ -60,7 +58,7 @@ const Userprofile = ({ userNickname, goalData }) => {
               <UserTitle>
                 {nickname}님의 주간 목표
                 <RankLink to="/rank">
-                  <img src={trophy} />
+                  <img src={TrophyIcon} />
                 </RankLink>
               </UserTitle>
             </StyleUsrBox>
@@ -69,7 +67,7 @@ const Userprofile = ({ userNickname, goalData }) => {
           <>
             <StyleUsrBox>
               <div>
-                {goalData?.getUserInfo.profile ? (
+                {goalData?.getUserInfo?.profile ? (
                   <img
                     style={{ width: "40px", height: "40px", borderRadius: "20px" }}
                     src={goalData.getUserInfo.profile}
@@ -82,7 +80,7 @@ const Userprofile = ({ userNickname, goalData }) => {
               <UserTitle>
                 {nickname}님의 주간 목표
                 <RankLink to="/rank">
-                  <img src={trophy} />
+                  <img src={TrophyIcon} />
                 </RankLink>
               </UserTitle>
             </StyleUsrBox>

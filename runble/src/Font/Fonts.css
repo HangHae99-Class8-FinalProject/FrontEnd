@@ -2,6 +2,7 @@
   font-family: "Anton";
   font-style: normal;
   font-weight: 400;
+  font-display: swap;
   src: url("./Anton-Regular.ttf");
 }
 
@@ -9,5 +10,6 @@
   font-family: "Noto Sans CJK KR";
   font-style: normal;
   font-weight: 400;
+  font-display: swap;
   src: url("./NotoSansKR-Regular.otf");
 }

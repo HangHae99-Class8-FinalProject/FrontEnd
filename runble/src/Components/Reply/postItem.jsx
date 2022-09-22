@@ -4,15 +4,21 @@ import displayedAt from "../../Utils/displayAt";
 import ReplyInput from "./ReplyInput";
 import { useParams } from "react-router-dom";
 import { ReactComponent as Profile } from "../../Icons/myPageProfile.svg";
+import { useRecoilState } from "recoil";
+import { replyState } from "../../Recoil/Atoms/ReplyAtoms";
 
 function PostItem({ data }) {
-  const [showInput, setShowInput] = useState(false);
+  const [inputState, setInputState] = useRecoilState(replyState);
+
   const { id: postId } = useParams();
 
-  const onCloseInput = useCallback(e => {
-    setShowInput(false);
-  }, []);
-  console.log(showInput);
+  const onShowInput = useCallback(e => {
+    setInputState(prev => ({
+      ...prev,
+      showInput: "댓글작성",
+      postId: postId
+    }));
+  });
 
   return (
     <>
@@ -25,16 +31,10 @@ function PostItem({ data }) {
         <PostFooter>
           <Time>{displayedAt(data.createdAt)}</Time>
           <Like>좋아요{data.like}개</Like>
-          <Write
-            onClick={() => {
-              setShowInput("댓글");
-            }}
-          >
-            답글달기
-          </Write>
+          <Write onClick={onShowInput}>답글달기</Write>
         </PostFooter>
-        <ReplyInput showInput={showInput} onCloseInput={onCloseInput} postId={postId} />
       </PostBox>
+      <ReplyInput />
     </>
   );
 }
@@ -73,7 +73,7 @@ const PostFooter = styled.div`
   display: flex;
   width: 40rem;
   position: relative;
-  right: 13rem;
+  right: 14.6rem;
   top: 3rem;
   color: #aaa;
 `;
@@ -81,9 +81,11 @@ const PostFooter = styled.div`
 const Time = styled.div`
   padding-right: 1rem;
 `;
+
 const Like = styled.div`
   padding-right: 1rem;
 `;
+
 const Write = styled.button`
   outline: 0;
   border: 0;

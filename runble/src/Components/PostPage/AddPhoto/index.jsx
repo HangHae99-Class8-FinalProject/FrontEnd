@@ -46,7 +46,7 @@ const AddPhoto = ({ merge, prevImg }) => {
     let imgUrls = [...previewImages];
     const options = {
       maxSizeMB: 1,
-      maxWidthOrHeight: 1920,
+      maxWidthOrHeight: 720,
       useWebWorker: true
     };
     try {

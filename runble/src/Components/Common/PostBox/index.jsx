@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { NavState, NavStates, NavPostData } from "../../../Recoil/Atoms/OptionAtoms";
@@ -21,11 +21,12 @@ import {
   StyleComment,
   StyleTime
 } from "./style";
+
 import { ReactComponent as View } from "../../../Icons/view.svg";
 import { ReactComponent as Heart } from "../../../Icons/heart.svg";
 import { ReactComponent as CommentIcon } from "../../../Icons/comment.svg";
 
-import { ReactComponent as Profile } from "../../../Icons/MyPageProfile.svg";
+import { ReactComponent as Profile } from "../../../Icons/myPageProfile.svg";
 
 import displayedAt from "../../../Utils/displayAt";
 import KakaoMap from "../../Common/KakaoMap/index";
@@ -34,7 +35,6 @@ import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import { useLikeCheck } from "../../../Hooks/useLikecheck";
-import { useState } from "react";
 
 const PostBox = ({ posts, index }) => {
   const navigate = useNavigate();
@@ -45,18 +45,7 @@ const PostBox = ({ posts, index }) => {
   const accessToken = localStorage.getItem("userData");
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
-  const [heart, Setheart] = useState(false);
-  console.log(posts);
-  const divideTime = useCallback(time => {
-    let seconds = time.seconds;
-    let minute = time.minute;
-    let hours = time.hours;
-    
-    hours = hours < 10 ? "0" + hours : hours;
-    minute = minute < 10 ? "0" + minute : minute;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-  }, []);
-  
+
   const linkToReply = useCallback(() => {
     navigate(`/reply/${posts.postId}`, {
       state: {
@@ -73,8 +62,8 @@ const PostBox = ({ posts, index }) => {
     navigate("/search", {
       state: hash
     });
-
   }, []);
+
   return (
     <StyleFeed key={index}>
       <StyleFrofileBox>
@@ -106,14 +95,24 @@ const PostBox = ({ posts, index }) => {
           {nickname === posts.nickname ? (
             <div
               onClick={() => {
-                setShow(prev => !prev);
+                setShow(2);
                 setNaveState("put");
                 setPostData(posts);
               }}
             >
               ...
             </div>
-          ) : null}
+          ) : (
+            <div
+              onClick={() => {
+                setShow(1);
+                setNaveState("report");
+                setPostData(posts.postId);
+              }}
+            >
+              ...
+            </div>
+          )}
         </div>
       </StyleFrofileBox>
       <StylePath>
@@ -142,20 +141,18 @@ const PostBox = ({ posts, index }) => {
       <StyleContentBox>
         <StyleIcon>
           <StyleHeart>
-            {heart ? (
+            {posts.likeDone ? (
               <Heart
                 fill="red"
-                onClick={() => {
+                onClick={e => {
                   mutate(posts.postId);
-                  Setheart(prev => !prev);
                 }}
               />
             ) : (
               <Heart
                 stroke="black"
-                onClick={() => {
+                onClick={e => {
                   mutate(posts.postId);
-                  Setheart(prev => !prev);
                 }}
               />
             )}
@@ -178,8 +175,8 @@ const PostBox = ({ posts, index }) => {
           좋아요
           {posts.like}개
         </StyleGood>
-        <StyleComment onClick={linkToReply}>
-          {posts.commentNum > 0 && <>댓글{posts.commentNum}개 모두보기</>}
+        <StyleComment>
+          {posts.commentNum > 0 && <div onClick={linkToReply}>댓글{posts.commentNum}개 모두보기</div>}
         </StyleComment>
         <StyleTime>{displayedAt(posts.createdAt)}</StyleTime>
       </StyleContentBox>

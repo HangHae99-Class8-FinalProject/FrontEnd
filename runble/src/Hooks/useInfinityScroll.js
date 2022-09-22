@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "react-query";
 
 const useInfinityScroll = (QueryKey, QueryFnc) => {
-  const { data, status, fetchNextPage, isFetchingNextPage, lastPage } = useInfiniteQuery(
+  const { data, status, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteQuery(
     QueryKey,
     ({ pageParam = 1 }) => QueryFnc(pageParam),
     {
@@ -9,7 +9,7 @@ const useInfinityScroll = (QueryKey, QueryFnc) => {
       refetchOnWindowFocus: false
     }
   );
-  return { data, status, fetchNextPage, isFetchingNextPage, lastPage };
+  return { data, status, fetchNextPage, isFetchingNextPage, hasNextPage };
 };
 
 export default useInfinityScroll;

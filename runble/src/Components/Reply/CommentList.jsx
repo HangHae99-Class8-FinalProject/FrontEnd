@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef, useLayoutEffect } from "react";
+import React, { useCallback, useState, useRef, useLayoutEffect, useEffect } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
 
@@ -7,18 +7,18 @@ import { ReactComponent as ReplyDelete } from "../../Icons/ReplyDelete.svg";
 
 import Recomment from "./Recomment";
 import displayedAt from "../../Utils/displayAt";
-import { editReply } from "../../Hooks/useReply";
 import { delReply } from "../../Hooks/useReply";
-import useInput from "../../Hooks/useInput";
 import { ReactComponent as Profile } from "../../Icons/myPageProfile.svg";
+import { useRecoilState } from "recoil";
+import { replyState } from "../../Recoil/Atoms/ReplyAtoms";
 
-const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
+const CommentList = ({ reply }) => {
   const [showReply, setShowReply] = useState(false);
-  const [editable, setEditable] = useState(false);
-  const [editValue, onChangeEditValue] = useInput("");
+  const [inputState, setInpuState] = useRecoilState(replyState);
+
+  const userData = JSON.parse(window.localStorage.getItem("userData"));
 
   const replyRef = useRef(null);
-  const scrollRef = useRef();
 
   useLayoutEffect(() => {
     if (replyRef.current !== null) replyRef.current.focus();
@@ -26,19 +26,30 @@ const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
 
   const queryClient = useQueryClient();
 
-  const onShowInput = useCallback(() => {
-    setRecommnetKey(reply.commentId);
-    setShowInput("대댓글");
+  const onShowInputRecomment = useCallback(() => {
+    setInpuState(prev => ({
+      ...prev,
+      showInput: "대댓글작성",
+      postId: reply.commentId
+    }));
   }, []);
+
+  const onShowInputEdit = useCallback(() => {
+    setInpuState(prev => ({
+      ...prev,
+      showInput: "댓글수정",
+      postId: reply.commentId
+    }));
+    slideRef.current.style.transform = "translateX(0%)";
+  });
 
   const onShowRecomment = useCallback(() => {
     setShowReply(prev => !prev);
   }, []);
 
-  //댓글 삭제 부분
+  //댓글 삭제
   const delReplyData = useMutation(() => delReply(reply.commentId), {
     onSuccess: data => {
-      console.log("삭제됨");
       queryClient.invalidateQueries("GET_REPLY");
     },
     onError: error => {
@@ -50,70 +61,59 @@ const CommentList = ({ reply, setShowInput, setRecommnetKey }) => {
     delReplyData.mutate();
   };
 
-  //댓글 수정 부분
-  const onShowEdit = useCallback(() => {
-    setEditable(prev => !prev);
-  }, []);
+  //슬라이드 만들기
 
-  const editReplyData = useMutation(reply => editReply(reply), {
-    onSuccess: data => {
-      console.log(data);
-      queryClient.invalidateQueries("GET_REPLY");
-    },
-    onError: error => {
-      console.log(error);
+  const slideRef = useRef();
+  const [firstTouchX, setFirstTouchX] = useState("");
+
+  const onTouchStart = e => {
+    setFirstTouchX(e.changedTouches[0].pageX);
+  };
+
+  const onTouchEnd = e => {
+    if (userData.nickname !== reply.nickname) return;
+    let totalX = firstTouchX - e.changedTouches[0].pageX;
+
+    if (totalX > 80) {
+      slideRef.current.style.transform = "translateX(-32%)";
+      return;
     }
-  });
-
-  const handleEditreply = () => {
-    setEditable(false);
-    editReplyData.mutate({ comment: editValue, commentId: reply.commentId });
+    if (totalX < -10) {
+      slideRef.current.style.transform = "translateX(0%)";
+      return;
+    }
   };
-  const [startMove, setStartMove] = useState("");
-  const [endMove, setEndMove] = useState("");
-
-  const onMouseDown = e => {
-    e.stopPropagation();
-    console.log("start");
-    setStartMove(e.pageX);
-  };
-  const onMouseUP = e => {
-    console.log("end");
-    e.stopPropagation();
-    setEndMove(e.pageX);
-  };
-
-  console.log("start", startMove);
-  console.log("end", endMove);
 
   return (
     <>
-      <Body ref={scrollRef} onMouseDown={onMouseDown} onMouseUp={onMouseUP}>
+      <Body onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} ref={slideRef}>
         <CommentWrap>
           <div>{reply.image ? <img src={reply.image} /> : <Profile />}</div>
           <CommentBody>
             <Nick>{reply.nickname}</Nick>
-            {!editable ? (
-              <div>{reply.comment}</div>
-            ) : (
-              <form onSubmit={handleEditreply}>
-                <input value={editValue} onChange={onChangeEditValue} ref={replyRef} />
-              </form>
-            )}
+            <div>{reply.comment}</div>
             <CommentFooter>
               <Time>{displayedAt(reply.createdAt)}</Time>
-              <Write onClick={onShowInput}>답글달기</Write>
-              {!showReply && <div onClick={onShowRecomment}>답글 {reply.recommentNum}개더보기</div>}
+              <Write onClick={onShowInputRecomment}>답글달기</Write>
+              {!showReply && (
+                <div onClick={onShowRecomment}>
+                  {reply.recommentNum > 0 ? <>답글 {reply.recommentNum}개 더보기</> : null}
+                </div>
+              )}
               {showReply && <div onClick={onShowRecomment}>답글 닫기</div>}
             </CommentFooter>
           </CommentBody>
+        </CommentWrap>
+        {reply.nickname === userData.nickname && (
           <ButtonWrap>
-            <button onClick={onShowEdit}>{!editable ? <ReplyUpdate /> : <CancleButton>&times;</CancleButton>}</button>
+            <button onClick={onShowInputEdit}>
+              <ReplyUpdate />
+            </button>
             <button onClick={handleDelreply}>
               <ReplyDelete />
             </button>
           </ButtonWrap>
-        </CommentWrap>
+        )}
       </Body>
       {showReply && <Recomment id={reply.commentId} />}
     </>
@@ -124,34 +124,28 @@ export default CommentList;
 
 const Body = styled.div`
   display: flex;
-  overflow-y: hidden;
+  width: 100%;
+  transition: all 0.5s ease-in-out;
 `;
 
 const ButtonWrap = styled.div`
-  margin-left: 1.2rem;
   display: flex;
   & button {
     border: none;
   }
+  & button:last-child {
+    background-color: #f03800;
+  }
 `;
 
-const CancleButton = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-  text-align: center;
-  font-size: 5.4rem;
-`;
 const CommentWrap = styled.div`
-  /* transform: translateX(-25%); */
   font-size: 1rem;
   display: flex;
   align-items: center;
   padding: 1.5rem 0rem 1.5rem 1.6rem;
   gap: 0.8rem;
   height: 7rem;
+  min-width: 93vw;
 
   & img {
     width: 4rem;
@@ -178,7 +172,6 @@ const CommentBody = styled.div`
   align-items: flex-start;
   gap: 0.2rem;
   height: 4.2rem;
-  width: 29.7rem;
 `;
 
 const Nick = styled.div`

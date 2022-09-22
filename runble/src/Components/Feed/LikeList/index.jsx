@@ -6,13 +6,13 @@ import PostBox from "../../Common/PostBox";
 
 const LikeList = () => {
   const fetchLikeList = async pageParam => {
-    const { data } = await instance.get(`http://54.167.169.43/api/post/popular/${pageParam}`);
+    const { data } = await instance.get(`/api/post/popular/${pageParam}`);
 
     return data;
   };
   const { ref, inView } = useInView();
 
-  const { data, status, fetchNextPage, isFetchingNextPage } = useInfinityScroll("like", fetchLikeList);
+  const { data, fetchNextPage, isFetchingNextPage } = useInfinityScroll("like", fetchLikeList);
 
   useEffect(() => {
     if (inView) fetchNextPage();

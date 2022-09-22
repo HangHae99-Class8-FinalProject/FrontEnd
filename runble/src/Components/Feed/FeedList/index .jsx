@@ -1,11 +1,6 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import {
-  StyleFeedWrap,
-  StyleFilter,
-  StyleNewSpan,
-  StyleLikeSpan
-} from "./style";
+import { StyleFeedWrap, StyleFilter, StyleNewSpan, StyleLikeSpan } from "./style";
 import LikeList from "../LikeList/index";
 import MainList from "../MainList/index";
 import { useState } from "react";
@@ -14,6 +9,7 @@ const UserfeedList = () => {
   const { state } = useLocation();
   return (
     <StyleFeedWrap>
+      <div>요기에 이벤트 배너 넣기</div>
       <StyleFilter>
         <p>게시글</p>
         <div>
