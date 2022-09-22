@@ -48,7 +48,7 @@ const ProfileSignup = () => {
     }
   }, []);
 
-  return <Loading>로그인 중이에요</Loading>;
+  return <></>
 };
 
 export default ProfileSignup;

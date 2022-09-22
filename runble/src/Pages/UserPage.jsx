@@ -21,7 +21,9 @@ const UserPage = () => {
   const userNickname = parseData.nickname;
   const userProfile = parseData.image;
   const userId = parseData.userId;
+
   const [userIds, SetUserId] = useState(state?.userId || userId);
+
   const { data: goalData } = useProgress(userIds); //user 목표보여주기
 
   useEffect(() => {

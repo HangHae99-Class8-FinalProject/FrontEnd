@@ -10,12 +10,12 @@ import { instance } from "../../../Utils/Instance";
 
 const UserList = () => {
   const { nickname } = useParams();
+
   const fetchUserList = async pageParam => {
     const res = await instance.get(`/api/user/post/${nickname}/${pageParam}`);
     const { Post, isLast } = res.data;
     return { Post, nextPage: pageParam + 1, isLast };
   };
-
 
   const { data, status, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfinityScroll(
     ["user", nickname],

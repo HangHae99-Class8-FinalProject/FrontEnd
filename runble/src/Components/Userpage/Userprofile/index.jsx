@@ -8,6 +8,7 @@ import { useParams, Link } from "react-router-dom";
 import { ReactComponent as Option } from "../../../Icons/option.svg";
 
 import { ReactComponent as Profile } from "../../../Icons/myPageProfile.svg";
+
 import TrophyIcon from "../../../Icons/trophy.png";
 
 const Userprofile = ({ userNickname, goalData, userProfile }) => {
@@ -56,10 +57,8 @@ const Userprofile = ({ userNickname, goalData, userProfile }) => {
               </div>
 
               <UserTitle>
-                {nickname}님의 주간 목표
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdZDs9en5KjtUB_eSl19kfMrvtTITl31Y57J7au95ZPUkZ2SQ/viewform?usp=sf_link">
-                  설문조사
-                </a>
+
+               {nickname}님의 주간 목표
                 <RankLink to="/rank">
                   <img src={TrophyIcon} />
                 </RankLink>
@@ -77,6 +76,7 @@ const Userprofile = ({ userNickname, goalData, userProfile }) => {
                   ></img>
                 ) : (
                   <Profile></Profile>
+            
                 )}
               </div>
 

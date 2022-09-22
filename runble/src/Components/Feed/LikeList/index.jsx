@@ -11,8 +11,7 @@ const LikeList = () => {
 
     return data;
   };
-  const { ref, inView } = useInView();
-
+  const { ref, inView } = useInView()
 
   const { data, fetchNextPage, isFetchingNextPage } = useInfinityScroll("like", fetchLikeList);
 

@@ -57,6 +57,7 @@ border-bottom: 0.1rem solid #111;
 
 const PostBody = styled.div`
   align-items: flex-start;
+  display:inline-block;
   gap: 0.2rem;
   height: 4.2rem;
   width: 29.7rem;`

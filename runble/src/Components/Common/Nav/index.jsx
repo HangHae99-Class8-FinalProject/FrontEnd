@@ -37,6 +37,7 @@ const Nav = () => {
   const accessToken = localStorage.getItem("userData");
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
+  const provider = parseData.provider;
   const userId = parseData.userId;
   const submitImg = async () => {
     let file = imgVal.current.files[0];
@@ -63,12 +64,23 @@ const Nav = () => {
 
   const kakaoLogout = async () => {
     const { data } = await instance.get("/api/kakao/logout");
+    console.log(data)
     return data;
+  };
+
+  const naverLogout = async () => {
+    window.location.href='http://nid.naver.com/nidlogin.logout';
+    window.location.href='http://localhost:3000';
+    console.log('로그아웃')
   };
 
   const logoutConfirm = () => {
     if (confirm("로그아웃하시겠습니까")) {
-      kakaoLogout();
+      if(provider==="kakao"){
+        kakaoLogout();
+      }else if(provider==="naver"){
+        naverLogout();
+      }
       localStorage.clear();
       navigate("/");
     } else {

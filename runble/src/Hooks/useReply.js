@@ -6,7 +6,6 @@ export const addReply = async ({ comment, postId }) => {
     const response = await instance.post(`/api/comment/${postId}`, {
       comment: comment
     });
-    console.log(response);
     return response.data;
   } catch (error) {
     console.log(error.code);
