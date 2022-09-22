@@ -9,7 +9,7 @@ import Hashtag from "../Components/PostPage/Hashtag";
 import AddPhoto from "../Components/PostPage/AddPhoto";
 import AddContent from "../Components/PostPage/AddContent";
 import { instance } from "../Utils/Instance";
-import Modal from "../Components/RecordPage/Modal";
+import Modal from "../Components/Common/Modal/Modal";
 import Loading from "../Components/Common/Loading/Loading";
 
 import { ReactComponent as BackIcon } from "../Icons/BackIcon.svg";

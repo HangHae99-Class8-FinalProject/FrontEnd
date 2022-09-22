@@ -30,8 +30,6 @@ function ReplyComponent() {
     if (inView && hasNextPage) fetchNextPage();
   }, [inView, hasNextPage]);
 
-  console.log(recommentKey, "key");
-
   const onCloseInput = useCallback(() => {
     setShowInput(false);
   }, []);
@@ -55,6 +53,7 @@ function ReplyComponent() {
         <ReplyInput onCloseInput={onCloseInput} showInput={showInput} postId={recommentKey} />
       </ReplyBox>
       {isFetchingNextPage ? <></> : <div ref={ref}></div>}
+
       <Nav />
     </>
   );
@@ -64,5 +63,5 @@ export default ReplyComponent;
 
 const ReplyBox = styled.div`
   width: 100%;
-  margin-bottom: 10rem;
+  margin-bottom: 2rem;
 `;

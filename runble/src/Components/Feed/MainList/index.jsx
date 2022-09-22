@@ -10,7 +10,6 @@ const fetchPostList = async pageParam => {
   const { Post, isLast } = res.data;
   return { Post, nextPage: pageParam + 1, isLast };
 };
-console.log();
 
 const MainList = () => {
   const { ref, inView } = useInView();
@@ -21,6 +20,7 @@ const MainList = () => {
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
+
   return (
     <>
       <div>
@@ -32,7 +32,7 @@ const MainList = () => {
           </React.Fragment>
         ))}
       </div>
-      {isFetchingNextPage ? <span></span> : <div ref={ref}></div>}
+      {isFetchingNextPage ? <span>로딩중입니다</span> : <div ref={ref}></div>}
     </>
   );
 };

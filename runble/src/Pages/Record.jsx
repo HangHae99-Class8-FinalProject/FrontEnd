@@ -1,13 +1,13 @@
 import React, { useState, useCallback } from "react";
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 
 import RunTimer from "../Components/RecordPage/RunTimer";
 import RunningMap from "../Components/RecordPage/RunningMap/index";
 import { instance } from "../Utils/Instance";
 import { runData } from "../Recoil/Atoms/RunData";
 import { useNavigate } from "react-router-dom";
-import Modal from "../Components/RecordPage/Modal";
+import Modal from "../Components/Common/Modal/Modal";
 
 import { ReactComponent as StopIcon } from "../Icons/StopIcon.svg";
 import { ReactComponent as EndIcon } from "../Icons/EndIcon.svg";
@@ -17,13 +17,23 @@ const Record = () => {
   const [stopInterval, setStopInterval] = useState(true);
   const [endRun, setEndRun] = useState(false);
   const [showModal, setShowModal] = useState(true);
-  const [showErrorModal, setShowErrorModal] = useState(false);
   const [start, setStart] = useState(false);
   const [noRecord, setNoRecord] = useState(false);
+  const [path, setPath] = useRecoilState(runData);
   const runLog = useRecoilValue(runData);
 
   const navigate = useNavigate();
   console.log(runLog);
+
+  const clearPath = () => {
+    setPath({
+      path: [],
+      distance: 0,
+      time: "",
+      speed: "",
+      isFinish: false
+    });
+  };
 
   let hour = runLog.time.hour * 60 * 60;
   let minute = runLog.time.minute * 60;
@@ -35,14 +45,14 @@ const Record = () => {
     setStopInterval(prev => !prev);
   }, []);
 
-  const onStart = useCallback(() => {
+  const onStart = useCallback(async () => {
+    const { data } = await instance.get("/api/user/startbtn");
     setShowModal(false);
     setStopInterval(false);
     setStart(true);
   }, []);
 
   const onClickEnd = useCallback(async () => {
-    setShowErrorModal(true);
     setEndRun(true);
     setStopInterval(true);
     if (Number(runLog.distance) <= 0) {
@@ -56,6 +66,7 @@ const Record = () => {
         distance: Number(runLog.distance),
         time: totalTime
       });
+      clearPath();
       navigate("/post", { state: { runLog } });
     }
   };
@@ -66,6 +77,7 @@ const Record = () => {
         distance: Number(runLog.distance),
         time: totalTime
       });
+      clearPath();
       navigate("/feed");
     }
   };
@@ -74,7 +86,9 @@ const Record = () => {
     setEndRun(false);
     setNoRecord(false);
   };
+
   const onClickNo = () => {
+    clearPath();
     navigate("/feed");
   };
 

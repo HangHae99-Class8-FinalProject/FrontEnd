@@ -4,17 +4,21 @@ import displayedAt from "../../Utils/displayAt";
 import ReplyInput from "./ReplyInput";
 import { useParams } from "react-router-dom";
 import { ReactComponent as Profile } from "../../Icons/myPageProfile.svg";
+import { useRecoilState } from "recoil";
+import { replyState } from "../../Recoil/Atoms/ReplyAtoms";
 
 function PostItem({ data }) {
-  console.log(data.profile)
-  const [showInput, setShowInput] = useState(false);
-  const [showProfile, setShowProfile] = useState(data.profile);
+  const [inputState, setInputState] = useRecoilState(replyState);
+
   const { id: postId } = useParams();
 
-  const onCloseInput = useCallback(e => {
-    setShowInput(false);
-  }, []);
-  console.log(showInput);
+  const onShowInput = useCallback(e => {
+    setInputState(prev => ({
+      ...prev,
+      showInput: "댓글작성",
+      postId: postId
+    }));
+  });
 
   return (
     <>
@@ -27,31 +31,24 @@ function PostItem({ data }) {
         <PostFooter>
           <Time>{displayedAt(data.createdAt)}</Time>
           <Like>좋아요{data.like}개</Like>
-          <Write
-            onClick={() => {
-              setShowInput("댓글");
-            }}
-          >
-            답글달기
-          </Write>
+          <Write onClick={onShowInput}>답글달기</Write>
         </PostFooter>
-        <ReplyInput showInput={showInput} onCloseInput={onCloseInput} postId={postId} />
       </PostBox>
+      <ReplyInput />
     </>
   );
 }
 export default PostItem;
 
 const PostBox = styled.div`
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  padding: 1.5rem 1.6rem;
-  gap: 0.8rem;
-  height: 7rem;
-  border-bottom: 0.1rem solid #e6e6e6;
-
-  & img {
+font-size: 1rem;
+display: flex;
+align-items: center;
+padding: 1.5rem 1.6rem;
+gap: 0.8rem;
+height: 7rem;
+border-bottom: 0.1rem solid #111;
+& img {
     width: 4rem;
     height: 4rem;
     border-radius: 10rem;
@@ -63,20 +60,13 @@ const PostBody = styled.div`
   display:inline-block;
   gap: 0.2rem;
   height: 4.2rem;
-  width: 29.7rem;
-`;
+  width: 29.7rem;`
 
-const Nick = styled.div`
-  line-height: 1rem;
-  font-family: "Anton";
-  font-size: 1.1rem;
-  font-weight: 700;
-`;
 const PostFooter = styled.div`
   display: flex;
   width: 40rem;
   position: relative;
-  right: 13rem;
+  right: 14.6rem;
   top: 3rem;
   color: #aaa;
 `;
@@ -84,14 +74,17 @@ const PostFooter = styled.div`
 const Time = styled.div`
   padding-right: 1rem;
 `;
+
 const Like = styled.div`
   padding-right: 1rem;
 `;
 const Write = styled.button`
-  outline: 0;
-  border: 0;
-  color: #aaa;
-  background-color: transparent;
-  font-size: 1rem;
-  margin-top: 0.1rem;
-`;
+  outline:0;
+  border:0;
+  color:#aaa;
+  background-color:transparent;
+  font-size:1rem;
+  margin-top:0.1rem`
+
+
+

@@ -29,7 +29,7 @@ export const StyleFrofileBox = styled.div`
 export const StyleFrofile = styled.div`
   flex-direction: row;
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
   justify-content: center;
   align-items: center;
 `;
@@ -153,10 +153,10 @@ export const StyleComment = styled.div`
   align-items: flex-start;
   padding: 2px 2px 5px;
   gap: 10px;
-  height: 24px;
+  height: 2.4rem;
   font-size: 12px;
 `;
 export const StyleTime = styled.div`
   color: #999999;
-  font-size: 12px;
+  font-size: 1.2rem;
 `;

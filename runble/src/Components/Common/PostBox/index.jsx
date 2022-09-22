@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { NavState, NavStates, NavPostData } from "../../../Recoil/Atoms/OptionAtoms";
@@ -21,6 +21,7 @@ import {
   StyleComment,
   StyleTime
 } from "./style";
+
 import { ReactComponent as View } from "../../../Icons/view.svg";
 import { ReactComponent as Heart } from "../../../Icons/heart.svg";
 import { ReactComponent as CommentIcon } from "../../../Icons/comment.svg";
@@ -34,8 +35,6 @@ import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import { useLikeCheck } from "../../../Hooks/useLikecheck";
-import { useState } from "react";
-
 const PostBox = ({ posts, index }) => {
   const navigate = useNavigate();
   const [show, setShow] = useRecoilState(NavState);
@@ -45,18 +44,19 @@ const PostBox = ({ posts, index }) => {
   const accessToken = localStorage.getItem("userData");
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
-  const [heart, Setheart] = useState(false);
-  console.log(posts);
+
   const divideTime = useCallback(time => {
-    let seconds = time.seconds;
+    let seconds = time.second;
     let minute = time.minute;
-    let hours = time.hours;
-    
+    let hours = time.hour;
+
     hours = hours < 10 ? "0" + hours : hours;
     minute = minute < 10 ? "0" + minute : minute;
     seconds = seconds < 10 ? "0" + seconds : seconds;
-  }, []);
-  
+
+    return hours + ":" + minute + ":" + seconds;
+}
+
   const linkToReply = useCallback(() => {
     navigate(`/reply/${posts.postId}`, {
       state: {
@@ -73,8 +73,8 @@ const PostBox = ({ posts, index }) => {
     navigate("/search", {
       state: hash
     });
-
   }, []);
+
   return (
     <StyleFeed key={index}>
       <StyleFrofileBox>
@@ -93,7 +93,7 @@ const PostBox = ({ posts, index }) => {
               onClick={() => {
                 setPostData(posts);
                 navigate(`/user/${posts.nickname}`, {
-                  state: posts.userId
+                  state: { userId: posts.userId }
                 });
               }}
               src={posts.profile}
@@ -106,14 +106,24 @@ const PostBox = ({ posts, index }) => {
           {nickname === posts.nickname ? (
             <div
               onClick={() => {
-                setShow(prev => !prev);
+                setShow(2);
                 setNaveState("put");
                 setPostData(posts);
               }}
             >
               ...
             </div>
-          ) : null}
+          ) : (
+            <div
+              onClick={() => {
+                setShow(1);
+                setNaveState("report");
+                setPostData(posts.postId);
+              }}
+            >
+              ...
+            </div>
+          )}
         </div>
       </StyleFrofileBox>
       <StylePath>
@@ -126,8 +136,8 @@ const PostBox = ({ posts, index }) => {
           <SwiperSlide>
             <StyleSpeed>
               <div>
-                <div>2.04k</div>
-                <div>00:12:23</div>
+                <div>{posts.distance}K</div>
+                <div>{divideTime(posts.time)}</div>
               </div>
             </StyleSpeed>
             <KakaoMap path={posts.path}></KakaoMap>
@@ -142,24 +152,34 @@ const PostBox = ({ posts, index }) => {
       <StyleContentBox>
         <StyleIcon>
           <StyleHeart>
-            {heart ? (
+            {posts.likeDone ? (
               <Heart
                 fill="red"
-                onClick={() => {
+                onClick={e => {
                   mutate(posts.postId);
-                  Setheart(prev => !prev);
                 }}
               />
             ) : (
               <Heart
                 stroke="black"
-                onClick={() => {
+                onClick={e => {
                   mutate(posts.postId);
-                  Setheart(prev => !prev);
                 }}
               />
             )}
-            <CommentIcon onClick={linkToReply} />
+            <CommentIcon
+              onClick={() => {
+                navigate(`/reply/${posts.postId}`, {
+                  state: {
+                    nickname: posts.nickname,
+                    profile: posts.profile,
+                    content: posts.content,
+                    createdAt: posts.createdAt,
+                    like: posts.like
+                  }
+                });
+              }}
+            />
           </StyleHeart>
           <StyleView>
             <View />
@@ -169,7 +189,7 @@ const PostBox = ({ posts, index }) => {
         <StyleContent>{posts?.content}</StyleContent>
         <StyleHashBox>
           {posts?.hashtag.map((hash, idx) => (
-            <StyleHash key={idx} onClick={() => linkToSearch(hash)}>
+            <StyleHash key={idx}>
               <span>#{hash}</span>
             </StyleHash>
           ))}
@@ -178,8 +198,8 @@ const PostBox = ({ posts, index }) => {
           좋아요
           {posts.like}개
         </StyleGood>
-        <StyleComment onClick={linkToReply}>
-          {posts.commentNum > 0 && <>댓글{posts.commentNum}개 모두보기</>}
+        <StyleComment>
+          {posts.commentNum > 0 && <div onClick={linkToReply}>댓글{posts.commentNum}개 모두보기</div>}
         </StyleComment>
         <StyleTime>{displayedAt(posts.createdAt)}</StyleTime>
       </StyleContentBox>
