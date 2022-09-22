@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
 import styled from "styled-components";
+import { useLocation } from "react-router-dom";
 
 import { instance } from "../../../Utils/Instance";
 import PostBox from "../../Common/PostBox";
@@ -72,12 +73,10 @@ const SearchedHashTag = ({ searhValue }) => {
 
 export default SearchedHashTag;
 
-
 const Body = styled.div`
   margin-bottom: 7rem;
   padding: 2.4rem 1.6rem;
 `;
-
 
 const ButtonWrap = styled.div`
   display: flex;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ReactComponent as BackIcon } from "../../Icons/BackIcon.svg";
@@ -9,10 +9,6 @@ import ReplyComponent from "./replyComponent";
 const ReplyCom = () => {
   const location = useLocation();
   const data = location.state;
-
-  const [display, setDisplay] = useState(false);
-
-
 
   const navigate = useNavigate();
 
@@ -48,25 +44,14 @@ const HeaderWrap = styled.div`
   height: 4.3rem;
 `;
 
-const Head = styled.div`
+const HeaderItems = styled.div`
+  display: flex;
+  padding: 1rem 1.6rem;
   width: 100%;
-  height: 4.3rem;
-  border-bottom: 1px solid #111;
+  border-bottom: 0.1rem solid #e6e6e6;
+  & div {
+    font-size: 1.6rem;
+    line-height: 2.3rem;
+    width: 46.8%;
+  }
 `;
-
-const Back = styled.div`
-  float: left;
-  position:relative;
-  left:1rem;
-  top:1rem
-`;
-
-const ReplyText = styled.div`
-  display: inline-block;
-  font-size: 2rem;
-  margin:0.5rem 16rem;
-`;
-
-const Body = styled.div`
-`
-

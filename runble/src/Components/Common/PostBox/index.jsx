@@ -55,7 +55,7 @@ const PostBox = ({ posts, index }) => {
     seconds = seconds < 10 ? "0" + seconds : seconds;
 
     return hours + ":" + minute + ":" + seconds;
-}
+  }, []);
 
   const linkToReply = useCallback(() => {
     navigate(`/reply/${posts.postId}`, {
@@ -189,7 +189,7 @@ const PostBox = ({ posts, index }) => {
         <StyleContent>{posts?.content}</StyleContent>
         <StyleHashBox>
           {posts?.hashtag.map((hash, idx) => (
-            <StyleHash key={idx}>
+            <StyleHash key={idx} onClick={() => linkToSearch(hash)}>
               <span>#{hash}</span>
             </StyleHash>
           ))}
