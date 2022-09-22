@@ -8,11 +8,14 @@ import Marker from "../../../Icons/Map_Marker.svg";
 import Loading from "../../Common/Loading/Loading";
 import { useMutation } from "react-query";
 import { instance } from "../../../Utils/Instance";
+import { useNavigate } from "react-router-dom";
 
 const RunningMap = ({ stopInterval, endRun }) => {
   const [distance, setDistance] = useState(0);
   const [path, setPath] = useRecoilState(runData);
   const runLog = useRecoilValue(runData);
+
+  const navigate = useNavigate();
 
   const [state, setState] = useState({
     center: {
@@ -78,8 +81,7 @@ const RunningMap = ({ stopInterval, endRun }) => {
               center: {
                 lat: position.coords.latitude, // 위도
                 lng: position.coords.longitude // 경도
-              },
-              isLoading: true
+              }
             }));
             getDistanceQuery.mutate(state.center);
             setPath(prev => ({
@@ -122,6 +124,10 @@ const RunningMap = ({ stopInterval, endRun }) => {
         <div>지도 정보를 가져오고 있어요</div>
       </Loading>
     );
+  }
+
+  if (state.errMsg) {
+    navigate("/error");
   }
 
   return (
