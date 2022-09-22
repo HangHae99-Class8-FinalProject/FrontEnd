@@ -43,7 +43,6 @@ const Nav = () => {
     let file = imgVal.current.files[0];
     let newFileName = imgVal.current.files[0].name;
     const compressedFile = await imageCompression(file, options);
-    console.log(compressedFile.size / 1024 / 1024);
     const ReactS3Client = new S3upload(S3config);
     ReactS3Client.uploadFile(compressedFile, newFileName).then(async data => {
       if (data.status === 204) {
@@ -64,21 +63,19 @@ const Nav = () => {
 
   const kakaoLogout = async () => {
     const { data } = await instance.get("/api/kakao/logout");
-    console.log(data)
     return data;
   };
 
   const naverLogout = async () => {
-    window.location.href='http://nid.naver.com/nidlogin.logout';
-    window.location.href='http://localhost:3000';
-    console.log('로그아웃')
+    window.location.href = "http://nid.naver.com/nidlogin.logout";
+    window.location.href = "http://localhost:3000";
   };
 
   const logoutConfirm = () => {
     if (confirm("로그아웃하시겠습니까")) {
-      if(provider==="kakao"){
+      if (provider === "kakao") {
         kakaoLogout();
-      }else if(provider==="naver"){
+      } else if (provider === "naver") {
         naverLogout();
       }
       localStorage.clear();
@@ -137,6 +134,7 @@ const Nav = () => {
                   로그아웃
                 </p>
                 <p
+                  style={{ color: "red" }}
                   onClick={() => {
                     outConfirm();
                   }}

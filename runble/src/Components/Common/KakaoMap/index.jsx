@@ -12,11 +12,9 @@ const KakaoMap = ({ path }) => {
         center={path[path?.length - 1]}
         zoomable={false}
         draggable={false}
-        level={2}
+        level={4}
       >
-        {path.length > 1 && (
-          <Polyline path={path} strokeWeight={7} strokeColor={"##F03800"} strokeOpacity={0.7} strokeStyle={"solid"} />
-        )}
+        <Polyline path={path} strokeWeight={3} strokeColor={"##F03800"} strokeOpacity={0.7} strokeStyle={"solid"} />
       </Map>
     </>
   );

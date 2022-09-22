@@ -15,8 +15,6 @@ const Hashtag = ({ merge, prevHashtag }) => {
     hashArr.length >= 6 ? setStop(true) : setStop(false);
   }, [hashArr]);
 
-  console.log(hashArr);
-
   const onKeyPress = e => {
     if (e.target.value.length !== 0 && e.key === "Enter") {
       submitTagItem();

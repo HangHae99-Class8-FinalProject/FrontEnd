@@ -40,7 +40,7 @@ const SearchedHashTag = ({ searhValue }) => {
   }, [inView, searhValue]);
 
   return (
-    <>
+    <Body>
       <ButtonWrap>
         <button
           onClick={() => {
@@ -67,7 +67,7 @@ const SearchedHashTag = ({ searhValue }) => {
         ))}
       </div>
       {isFetchingNextPage ? <span>로딩중입니다</span> : <div ref={ref}></div>}
-    </>
+    </Body>
   );
 };
 

@@ -18,13 +18,12 @@ export const delRecomment = async id => {
 };
 
 export const editRecomment = async ({ comment, recommentId, commentId }) => {
-  console.log(comment);
   try {
     const response = await instance.put(`/api/comment/${commentId}/${recommentId}`, {
       comment: comment
     });
     return response.data;
   } catch (error) {
-    console.log(error.code);
+    console.error(error);
   }
 };

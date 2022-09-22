@@ -30,11 +30,9 @@ const Post = () => {
   const addPosts = async () => {
     if (!postId) {
       const { data } = await instance.post("/api/post", post);
-      setPostLoading(false);
       return data;
     } else {
       const { data } = await instance.put(`/api/post/${postId}`, post);
-      setPostLoading(false);
       return data;
     }
   };
@@ -63,6 +61,7 @@ const Post = () => {
     if (!post.isLoading && merge) {
       addPosts();
       const LoadingScreen = setTimeout(() => {
+        setPostLoading(false);
         navigate("/feed");
       }, 2000);
       return () => clearTimeout(LoadingScreen);

@@ -3,11 +3,11 @@ import { instance } from "../../../Utils/Instance";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import Profile from "../../../Icons/myPageProfile.svg";
 
 const SearchedUser = ({ searhValue }) => {
   const navigate = useNavigate();
 
-  console.log(searhValue);
   const getSearchUser = async () => {
     const { data } = await instance.get(`/api/user/search?nickname=${searhValue}`);
     return data;
@@ -26,7 +26,7 @@ const SearchedUser = ({ searhValue }) => {
       {data?.map(user => {
         return (
           <SearchUserWrap key={user.nickname} onClick={() => navUserPage(user.nickname)}>
-            <img src={user.profile} />
+            {user.profile ? <img src={user.profile} /> : <img src={Profile} />}
             <div>{user.nickname}</div>
           </SearchUserWrap>
         );

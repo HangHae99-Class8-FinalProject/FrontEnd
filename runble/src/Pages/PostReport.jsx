@@ -12,10 +12,8 @@ const PostReport = () => {
 
   const { state } = useLocation();
   const postId = state.postId;
-  console.log(postId);
 
   const navigate = useNavigate();
-  console.log(reportNum);
 
   const onSubmit = async () => {
     const res = await instance.post(`/api/user/report/post/${postId}`, { check: reportNum });

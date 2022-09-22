@@ -11,7 +11,6 @@ import {
   StyleContentBox,
   StyleIcon,
   StyleHeart,
-  StyleView,
   StyleSpeed,
   StyleGood,
   StyleImg,
@@ -22,7 +21,6 @@ import {
   StyleTime
 } from "./style";
 
-import { ReactComponent as View } from "../../../Icons/view.svg";
 import { ReactComponent as Heart } from "../../../Icons/heart.svg";
 import { ReactComponent as CommentIcon } from "../../../Icons/comment.svg";
 
@@ -136,7 +134,7 @@ const PostBox = ({ posts, index }) => {
           <SwiperSlide>
             <StyleSpeed>
               <div>
-                <div>{posts.distance}K</div>
+                <div>{posts.distance}Km</div>
                 <div>{divideTime(posts.time)}</div>
               </div>
             </StyleSpeed>
@@ -181,10 +179,6 @@ const PostBox = ({ posts, index }) => {
               }}
             />
           </StyleHeart>
-          <StyleView>
-            <View />
-            <span>{posts?.view}</span>
-          </StyleView>
         </StyleIcon>
         <StyleContent>{posts?.content}</StyleContent>
         <StyleHashBox>

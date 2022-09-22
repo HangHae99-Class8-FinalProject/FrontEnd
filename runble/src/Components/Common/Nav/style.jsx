@@ -42,7 +42,7 @@ export const StyleButton = styled.div`
   bottom: 0;
   background-color: #353434;
   @media only screen and (min-width: 480px) {
-    max-width: 30%;
+    max-width: 40rem;
   }
   & > div {
     width: 100vw;

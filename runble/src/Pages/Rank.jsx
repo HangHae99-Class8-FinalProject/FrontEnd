@@ -12,7 +12,6 @@ const Rank = () => {
 
   const { data } = useQuery("getRank", getRanking);
 
-  console.log(data);
   return (
     <>
       <RankHeader />

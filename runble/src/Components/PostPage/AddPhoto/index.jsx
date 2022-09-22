@@ -16,7 +16,6 @@ const AddPhoto = ({ merge, prevImg }) => {
   const [uploadImages, setUploadImages] = useState(prevImg || []);
   const [post, setPost] = useRecoilState(postData);
   const imgRef = useRef();
-  console.log(uploadImages);
 
   // 이미지 업로드 로직
   const onSubmitImg = async () => {
@@ -89,8 +88,8 @@ const AddPhoto = ({ merge, prevImg }) => {
       {previewImages &&
         previewImages.map((img, idx) => {
           return (
-            <AddButton>
-              <PreviewImges key={idx} src={img} alt="첨부한 이미지" onClick={() => deletePhoto(idx)} />
+            <AddButton key={idx}>
+              <PreviewImges src={img} alt="첨부한 이미지" onClick={() => deletePhoto(idx)} />
             </AddButton>
           );
         })}
