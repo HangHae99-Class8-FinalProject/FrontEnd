@@ -5,7 +5,7 @@ import Progress from "../Components/Userpage/Progress";
 import UserList from "../Components/Userpage/UserList";
 import Goal from "../Components/Userpage/Goal";
 import { useProgress } from "../Hooks/useProgress";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useState } from "react";
 
 const UserPage = () => {
@@ -15,15 +15,28 @@ const UserPage = () => {
   const userNickname = parseData.nickname;
   const userId = parseData.userId;
 
+  const {nickname} = useParams();
+
+console.log(userId)
   const [userIds] = useState(state?.userId || userId);
+  console.log(state?.userId)
+  console.log(userId)
 
   const { data: goalData } = useProgress(userIds); //user 목표보여주기
 
   return (
     <Layout>
       <Userprofile goalData={goalData} userNickname={userNickname}></Userprofile>
-      {goalData?.result ? <Progress goalData={goalData}></Progress> : <Goal userNickname={userNickname}></Goal>}
-      <UserList></UserList>
+      {goalData?.result ? <Progress goalData={goalData}></Progress> :
+      <>
+      <Goal userNickname={userNickname}></Goal>
+      {nickname == userNickname ?    <UserList nickname={userNickname}></UserList> :  <UserList nickname={nickname}></UserList>}
+   
+      </>
+      
+      
+      }
+     
     </Layout>
   );
 };

@@ -16,18 +16,49 @@ console.log(code)
 console.log(state)
 
 const naverLogin = async () => {
-    const res = await instance.get(`/api/naver/callback?code=${code}&state=${state}`).then((res)=>{
+    const res = await instance.get(`/api/naver/callback?code=${code}`).then((res)=>{
+        
+        const token = res.data.token;
+        const userData = {
+            email : res.data.email,
+            image: res.data.image,
+            nickname: res.data.nickname,
+            userId: res.data.userId,
+            provider: res.data.provider
+        }
         console.log(res.data);
-    })
+        if (token) {
+            window.localStorage.setItem("token", token);
+            window.localStorage.setItem("userData", JSON.stringify(userData));
+            navigate(`/user/${res.data.nickname}`, {
+              state: {
+                userId: ""
+              }
+            });
+          } else {
+            navigate("/signup", {
+              state: {
+                email: res.data.email,
+                provider: res.data.provider
+              }
+            });
+          }
+    });
     return res;
 }
 
-useEffect(()=>{
-    naverLogin();
-})
+const userData = JSON.parse(window.localStorage.getItem("userData")) || null;
+
+useEffect(() => {
+    if (userData) {
+      navigate(`/user/${userData.nickname}`);
+    } else {
+        naverLogin();
+    }
+  }, []);
 
     return(
-        <>로그인중입니다.</>
+        <></>
     )
 }
 

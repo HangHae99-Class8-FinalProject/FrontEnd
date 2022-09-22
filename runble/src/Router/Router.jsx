@@ -29,7 +29,7 @@ const Router = () => {
         <Route path="/api/kakao/callback" element={<ProfileSignup />} />
         <Route path="/api/naver/callback" element={<NaverSignup />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/user/:nickname" element={<UserPage />} />
+        <Route path="/user/:nickname" element={<UserPage/>} />
         <Route path="/rank" element={<Rank />} />
       </Routes>
     </BrowserRouter>

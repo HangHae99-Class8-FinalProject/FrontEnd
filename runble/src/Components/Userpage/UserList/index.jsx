@@ -8,18 +8,20 @@ import { useInView } from "react-intersection-observer";
 
 import { instance } from "../../../Utils/Instance";
 
-const UserList = () => {
-  const { nickname } = useParams();
+const UserList = ({nickname}) => {
+  // const { nickname } = useParams();
   const { ref, inView } = useInView();
   const fetchUserList = async pageParam => {
     const res = await instance.get(`/api/user/post/${nickname}/${pageParam}`);
     const { Post, isLast } = res.data;
     return { Post, nextPage: pageParam + 1, isLast };
   };
-  const { data, status, fetchNextPage, isFetchingNextPage } = useInfinityScroll("user", fetchUserList);
+  const { data, status, fetchNextPage, isFetchingNextPage ,hasNextPage} = useInfinityScroll("user", fetchUserList);
+  console.log(data)
+
   useEffect(() => {
-    if (inView) fetchNextPage();
-  }, [inView]);
+    if (inView && hasNextPage) fetchNextPage();
+  }, [inView,hasNextPage]);
 
   
   return (

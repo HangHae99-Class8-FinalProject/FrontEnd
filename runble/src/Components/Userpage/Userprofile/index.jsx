@@ -58,7 +58,7 @@ const Userprofile = ({ userNickname, goalData }) => {
               </div>
 
               <UserTitle>
-                {nickname}님의 주간 목표
+               {nickname}님의 주간 목표
                 <RankLink to="/rank">
                   <img src={trophy} />
                 </RankLink>
@@ -76,6 +76,7 @@ const Userprofile = ({ userNickname, goalData }) => {
                   ></img>
                 ) : (
                   <Profile></Profile>
+            
                 )}
               </div>
 
