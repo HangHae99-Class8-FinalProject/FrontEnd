@@ -8,7 +8,6 @@ import Marker from "../../../Icons/Map_Marker.svg";
 import Loading from "../../Common/Loading/Loading";
 import { useMutation } from "react-query";
 import { instance } from "../../../Utils/Instance";
-import Modal from "../Modal";
 
 const RunningMap = ({ stopInterval, endRun }) => {
   const [distance, setDistance] = useState(0);

@@ -7,7 +7,7 @@ import RunningMap from "../Components/RecordPage/RunningMap/index";
 import { instance } from "../Utils/Instance";
 import { runData } from "../Recoil/Atoms/RunData";
 import { useNavigate } from "react-router-dom";
-import Modal from "../Components/RecordPage/Modal";
+import Modal from "../Components/Common/Modal/Modal";
 
 import { ReactComponent as StopIcon } from "../Icons/StopIcon.svg";
 import { ReactComponent as EndIcon } from "../Icons/EndIcon.svg";

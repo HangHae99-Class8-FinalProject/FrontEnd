@@ -95,14 +95,24 @@ const PostBox = ({ posts, index }) => {
           {nickname === posts.nickname ? (
             <div
               onClick={() => {
-                setShow(prev => !prev);
+                setShow(2);
                 setNaveState("put");
                 setPostData(posts);
               }}
             >
               ...
             </div>
-          ) : null}
+          ) : (
+            <div
+              onClick={() => {
+                setShow(1);
+                setNaveState("report");
+                setPostData(posts.postId);
+              }}
+            >
+              ...
+            </div>
+          )}
         </div>
       </StyleFrofileBox>
       <StylePath>

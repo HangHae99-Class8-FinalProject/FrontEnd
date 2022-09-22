@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
+import React, { useCallback, useLayoutEffect, useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
@@ -6,10 +6,12 @@ import { ReactComponent as BackIcon } from "../Icons/BackIcon.svg";
 import useInput from "../Hooks/useInput";
 import { instance } from "../Utils/Instance";
 import Loading from "../Components/Common/Loading/Loading";
+import Modal from "../Components/Common/Modal/Modal";
 
-const Report = () => {
+const BugReport = () => {
   const [reportContent, onChangeContent] = useInput("");
   const [isLoading, setIsLoading] = useState(false);
+  const [noneContent, setNoneContent] = useState(false);
 
   const textRef = useRef(null);
 
@@ -20,10 +22,21 @@ const Report = () => {
   });
 
   const onClickSubmit = async () => {
-    const res = instance.post("/api/user/report/bug", { content: reportContent });
-    setIsLoading(true);
-    return res;
+    if (reportContent === "" || reportContent.trim() === "") {
+      setNoneContent(true);
+      return;
+    }
+    const { status } = await instance.post("/api/user/report/bug", { content: reportContent });
+    if (status === 200) {
+      setIsLoading(true);
+    } else {
+      navigate("/error");
+    }
   };
+
+  const onClickYes = useCallback(() => {
+    setNoneContent(false);
+  }, []);
 
   useEffect(() => {
     if (isLoading) {
@@ -36,6 +49,14 @@ const Report = () => {
 
   if (isLoading) {
     return <Loading>신고가 접수되었어요</Loading>;
+  }
+
+  if (noneContent) {
+    return (
+      <Modal onClickYes={onClickYes}>
+        <p>내용을 입력해주세요.</p>
+      </Modal>
+    );
   }
 
   return (
@@ -66,7 +87,7 @@ const Report = () => {
   );
 };
 
-export default Report;
+export default BugReport;
 
 const ReportHeader = styled.div`
   display: flex;
@@ -95,7 +116,7 @@ const ReportBody = styled.div`
 
 const BodyTitle = styled.div`
   width: 100%;
-  margin: 10rem 0;
+  margin: 8rem 0;
   height: 20%;
   text-align: center;
   font-size: 2.6rem;
