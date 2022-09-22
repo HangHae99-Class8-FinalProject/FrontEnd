@@ -10,15 +10,15 @@ function Recomment({ id }) {
   const [ref, inView] = useInView();
 
   const getRecomment = async pageParam => {
-    const response = await instance.get(`http://54.167.169.43/api/comment/recomment/${id}/${pageParam}`);
+    const response = await instance.get(`/api/comment/recomment/${id}/${pageParam}`);
     const { Recomment, isLast } = response.data;
     return { Recomment, nextPage: pageParam + 1, isLast };
   };
 
-  const { data, fetchNextPage, isFetchingNextPage, lastPage } = useInfinityScroll("GET_RECOMMENT", getRecomment);
+  const { data, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfinityScroll("GET_RECOMMENT", getRecomment);
   useEffect(() => {
-    if (inView && lastPage) fetchNextPage();
-  }, [inView, lastPage]);
+    if (inView && hasNextPage) fetchNextPage();
+  }, [inView, hasNextPage]);
 
   return (
     <ReplyBox>

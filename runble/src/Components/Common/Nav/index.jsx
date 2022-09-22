@@ -112,6 +112,13 @@ const Nav = () => {
               <StyleShow Show={show}>
                 <p
                   onClick={() => {
+                    navigate("/bugreport");
+                  }}
+                >
+                  문제 신고하기
+                </p>
+                <p
+                  onClick={() => {
                     logoutConfirm();
                   }}
                 >
@@ -166,6 +173,20 @@ const Nav = () => {
                   }}
                 >
                   삭제하기
+                </p>
+              </StyleShow>
+            ),
+            report: (
+              <StyleShow Show={show}>
+                <p
+                  onClick={() => {
+                    navigate("/postreport", {
+                      state: { postId: postData }
+                    });
+                  }}
+                  style={{ color: "red" }}
+                >
+                  신고하기
                 </p>
               </StyleShow>
             )

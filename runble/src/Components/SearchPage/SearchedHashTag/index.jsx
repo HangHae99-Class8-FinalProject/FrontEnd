@@ -10,6 +10,11 @@ const SearchedHashTag = ({ searhValue }) => {
   const [ref, inView] = useInView();
   const [tap, setTap] = useState("최신");
 
+  const { state } = useLocation();
+  if (state !== "search" && searhValue === "") {
+    searhValue = state;
+  }
+
   const getSearchHashTagOrder = async pageParam => {
     const { data } = await instance.get(`/api/post/search/popular/${pageParam}?hashtag=${searhValue}`);
     return data;
@@ -29,13 +34,9 @@ const SearchedHashTag = ({ searhValue }) => {
     }
   );
 
-  console.log(tap);
-
   useEffect(() => {
     if (inView && searhValue) fetchNextPage();
   }, [inView, searhValue]);
-
-  console.log("result:", data);
 
   return (
     <>
@@ -71,15 +72,19 @@ const SearchedHashTag = ({ searhValue }) => {
 
 export default SearchedHashTag;
 
+
+const Body = styled.div`
+  margin-bottom: 7rem;
+  padding: 2.4rem 1.6rem;
+`;
+
+
 const ButtonWrap = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  padding: 2.4rem 1.6rem 0rem;
 
-  width: 34.3rem;
-  height: 1.7rem;
   & button {
     border: none;
     background-color: white;

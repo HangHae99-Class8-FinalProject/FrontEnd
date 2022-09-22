@@ -13,7 +13,9 @@ const LikeList = () => {
   };
   const { ref, inView } = useInView();
 
-  const { data, status, fetchNextPage, isFetchingNextPage } = useInfinityScroll("like", fetchLikeList);
+
+  const { data, fetchNextPage, isFetchingNextPage } = useInfinityScroll("like", fetchLikeList);
+
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);

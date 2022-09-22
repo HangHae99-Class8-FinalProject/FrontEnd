@@ -19,6 +19,7 @@ const MainList = () => {
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
+
   return (
     <>
       <div>

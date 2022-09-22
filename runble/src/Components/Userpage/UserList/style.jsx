@@ -6,3 +6,10 @@ export const StyleUserListWrap = styled.div`
   align-items: flex-start;
   flex-direction: column;
 `;
+
+export const NonePost = styled.div`
+  padding-top: 10rem;
+  text-align: center;
+  font-size: 1.8rem;
+  color: rgba(0, 0, 0, 0.5);
+`;

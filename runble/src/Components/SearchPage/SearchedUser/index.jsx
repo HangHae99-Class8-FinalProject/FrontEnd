@@ -21,7 +21,6 @@ const SearchedUser = ({ searhValue }) => {
     navigate(`/user/${nickname}`);
   };
 
-  console.log("user:", data);
   return (
     <>
       {data?.map(user => {

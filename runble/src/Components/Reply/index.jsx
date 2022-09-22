@@ -17,35 +17,35 @@ const ReplyCom = () => {
   const navigate = useNavigate();
 
   return (
-    <>
-      <Wrap>
-        <Head>
-          <Back
+    <Body>
+      <HeaderWrap>
+        <HeaderItems>
+          <div
             onClick={() => {
               navigate("/feed");
             }}
           >
             <BackIcon />
-          </Back>
-          <ReplyText>
-            <span>댓글</span>
-          </ReplyText>
-        </Head>
-        <Body>
-            <PostItem data={data} />
-            {display == true ? <>댓글이 없습니다.</>: <ReplyComponent />}
-        </Body>
-      </Wrap>
-  
-    
-    </>
+          </div>
+          <div>답글</div>
+        </HeaderItems>
+      </HeaderWrap>
+      <PostItem data={data} />
+      <ReplyComponent />
+    </Body>
   );
 };
 
 export default ReplyCom;
 
-const Wrap = styled.div`
-  height:100%;
+const Body = styled.div`
+  overflow-x: hidden;
+`;
+const HeaderWrap = styled.div`
+  display: flex;
+  align-items: flex-start;
+  padding: 0rem;
+  height: 4.3rem;
 `;
 
 const Head = styled.div`
