@@ -66,7 +66,9 @@ function RecommentItem({ data }) {
   return (
     <Body onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} ref={slideRef}>
       <RecommentBox>
-        <div>{data.image ? <img src={data.image} /> : <Profile />}</div>
+        <div>
+          <img src={data.image} />
+        </div>
         <RecommentBody>
           <Nick>{data.nickname}</Nick>
           <div>{data.comment}</div>
@@ -90,6 +92,7 @@ function RecommentItem({ data }) {
 }
 
 export default RecommentItem;
+
 
 const Body = styled.div`
   display: flex;
@@ -115,16 +118,20 @@ const ButtonWrap = styled.div`
   }
 `;
 
+
 const RecommentBox = styled.div`
+   margin-left:3rem; 
   font-size: 1rem;
   display: flex;
   align-items: center;
+
   padding: 1.5rem 0rem 1.5rem 1.6rem;
   gap: 0.8rem;
   height: 7rem;
   min-width: 85.4vw;
 
   & img {
+
     width: 4rem;
     height: 4rem;
     border-radius: 10rem;
@@ -132,16 +139,24 @@ const RecommentBox = styled.div`
 `;
 
 const RecommentBody = styled.div`
-  align-items: flex-start;
+ align-items: flex-start;
   gap: 0.2rem;
   height: 4.2rem;
+
   & div:first-child {
     line-height: 1rem;
   }
 `;
 
+
 const RecommentFooter = styled.div`
-  position: relative;
-  top: 1.5rem;
-  color: #aaa;
+  display: flex;
+  width:40rem;
+  position:relative;
+  right:12rem;
+  top:3rem;
+  color:#aaa;
 `;
+
+const Time = styled.div`
+ `

@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
 
 import { instance } from "../../../Utils/Instance";
 import PostBox from "../../Common/PostBox";
-import Nav from "../../Common/Nav/index";
 
 const SearchedHashTag = ({ searhValue }) => {
   const [ref, inView] = useInView();
@@ -41,7 +39,7 @@ const SearchedHashTag = ({ searhValue }) => {
   }, [inView, searhValue]);
 
   return (
-    <Body>
+    <>
       <ButtonWrap>
         <button
           onClick={() => {
@@ -67,18 +65,19 @@ const SearchedHashTag = ({ searhValue }) => {
           </div>
         ))}
       </div>
-      {isFetchingNextPage ? <span></span> : <div ref={ref}></div>}
-      <Nav />
-    </Body>
+      {isFetchingNextPage ? <span>로딩중입니다</span> : <div ref={ref}></div>}
+    </>
   );
 };
 
 export default SearchedHashTag;
 
+
 const Body = styled.div`
   margin-bottom: 7rem;
   padding: 2.4rem 1.6rem;
 `;
+
 
 const ButtonWrap = styled.div`
   display: flex;

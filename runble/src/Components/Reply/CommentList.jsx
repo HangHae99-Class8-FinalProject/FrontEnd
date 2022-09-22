@@ -1,3 +1,4 @@
+
 import React, { useCallback, useState, useRef, useLayoutEffect, useEffect } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
@@ -116,11 +117,17 @@ const CommentList = ({ reply }) => {
         )}
       </Body>
       {showReply && <Recomment id={reply.commentId} />}
+
+      <button onClick={onShowEdit}>{!editable ? <ReplyUpdate /> : <>&times;</>}</button>
+      <button onClick={handleDelreply}>
+        <ReplyDelete />
+      </button>
     </>
   );
 };
 
 export default CommentList;
+
 
 const Body = styled.div`
   display: flex;
@@ -138,11 +145,12 @@ const ButtonWrap = styled.div`
   }
 `;
 
+
 const CommentWrap = styled.div`
   font-size: 1rem;
   display: flex;
   align-items: center;
-  padding: 1.5rem 0rem 1.5rem 1.6rem;
+  padding: 1.5rem 1.6rem;
   gap: 0.8rem;
   height: 7rem;
   min-width: 93vw;
@@ -156,27 +164,20 @@ const CommentWrap = styled.div`
 
 const CommentFooter = styled.div`
   display: flex;
-  color: #aaa;
-  position: relative;
-  top: 1.5rem;
+  color:#aaa;
+  position:relative;
+  top:1.5rem ;
+
 `;
 
 const Time = styled.div`
-  padding-right: 1rem;
-`;
+  padding-right:1rem;`
 const Write = styled.div`
-  padding-right: 1rem;
-`;
+  padding-right:1rem;`
+  
 
 const CommentBody = styled.div`
   align-items: flex-start;
   gap: 0.2rem;
   height: 4.2rem;
-`;
-
-const Nick = styled.div`
-  line-height: 1rem;
-  font-family: "Anton";
-  font-size: 1.1rem;
-  font-weight: 700;
 `;

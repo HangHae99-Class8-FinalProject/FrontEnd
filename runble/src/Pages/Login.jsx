@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-
+import { KAKAO_LOGIN } from "../Components/Login/oauth";
 import { ReactComponent as KakaoLoginIcon } from "../Icons/KakaoLoginIcon.svg";
 import { ReactComponent as Logo } from "../Icons/LoginLogo.svg";
+
 
 const KAKAO_LOGIN = "http://3.34.45.149/api/kakao/login";
 

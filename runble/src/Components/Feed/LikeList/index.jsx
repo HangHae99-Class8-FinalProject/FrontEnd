@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
+import { useInfiniteQuery } from "react-query";
 import { instance } from "../../../Utils/Instance";
 import useInfinityScroll from "../../../Hooks/useInfinityScroll";
 import PostBox from "../../Common/PostBox";
@@ -11,6 +12,7 @@ const LikeList = () => {
     return data;
   };
   const { ref, inView } = useInView();
+
 
   const { data, fetchNextPage, isFetchingNextPage } = useInfinityScroll("like", fetchLikeList);
 
@@ -28,7 +30,7 @@ const LikeList = () => {
           </React.Fragment>
         ))}
       </div>
-      {isFetchingNextPage ? <span></span> : <div ref={ref}></div>}
+      {isFetchingNextPage ? <span>로딩중입니다</span> : <div ref={ref}></div>}
     </>
   );
 };

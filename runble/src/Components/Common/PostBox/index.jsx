@@ -35,7 +35,6 @@ import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import { useLikeCheck } from "../../../Hooks/useLikecheck";
-
 const PostBox = ({ posts, index }) => {
   const navigate = useNavigate();
   const [show, setShow] = useRecoilState(NavState);
@@ -45,6 +44,18 @@ const PostBox = ({ posts, index }) => {
   const accessToken = localStorage.getItem("userData");
   const parseData = JSON.parse(accessToken);
   const nickname = parseData.nickname;
+
+  const divideTime = useCallback(time => {
+    let seconds = time.second;
+    let minute = time.minute;
+    let hours = time.hour;
+
+    hours = hours < 10 ? "0" + hours : hours;
+    minute = minute < 10 ? "0" + minute : minute;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    return hours + ":" + minute + ":" + seconds;
+}
 
   const linkToReply = useCallback(() => {
     navigate(`/reply/${posts.postId}`, {
@@ -82,7 +93,7 @@ const PostBox = ({ posts, index }) => {
               onClick={() => {
                 setPostData(posts);
                 navigate(`/user/${posts.nickname}`, {
-                  state: posts.userId
+                  state: { userId: posts.userId }
                 });
               }}
               src={posts.profile}
@@ -125,8 +136,8 @@ const PostBox = ({ posts, index }) => {
           <SwiperSlide>
             <StyleSpeed>
               <div>
-                <div>2.04k</div>
-                <div>00:12:23</div>
+                <div>{posts.distance}K</div>
+                <div>{divideTime(posts.time)}</div>
               </div>
             </StyleSpeed>
             <KakaoMap path={posts.path}></KakaoMap>
@@ -156,7 +167,19 @@ const PostBox = ({ posts, index }) => {
                 }}
               />
             )}
-            <CommentIcon onClick={linkToReply} />
+            <CommentIcon
+              onClick={() => {
+                navigate(`/reply/${posts.postId}`, {
+                  state: {
+                    nickname: posts.nickname,
+                    profile: posts.profile,
+                    content: posts.content,
+                    createdAt: posts.createdAt,
+                    like: posts.like
+                  }
+                });
+              }}
+            />
           </StyleHeart>
           <StyleView>
             <View />
@@ -166,7 +189,7 @@ const PostBox = ({ posts, index }) => {
         <StyleContent>{posts?.content}</StyleContent>
         <StyleHashBox>
           {posts?.hashtag.map((hash, idx) => (
-            <StyleHash key={idx} onClick={() => linkToSearch(hash)}>
+            <StyleHash key={idx}>
               <span>#{hash}</span>
             </StyleHash>
           ))}

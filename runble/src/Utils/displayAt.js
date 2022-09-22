@@ -1,15 +1,11 @@
 function displayedAt(createdAt) {
   const today = new Date(createdAt);
   const milliSeconds = new Date() - new Date(createdAt);
-  // console.log(milliSeconds);
   const seconds = milliSeconds / 1000;
-  // console.log(seconds);
   if (seconds < 60) return `방금 전`;
   const minutes = seconds / 60;
-  // console.log(minutes);
   if (minutes < 60) return `${Math.floor(minutes)}분 전`;
   const hours = minutes / 60;
-
   if (hours < 24) return `${Math.floor(hours)}시간 전`;
   const days = hours / 24;
   if (days < 2) return `${Math.floor(days)}일 전`;

@@ -31,7 +31,7 @@ const MainList = () => {
           </React.Fragment>
         ))}
       </div>
-      {isFetchingNextPage ? <span></span> : <div ref={ref}></div>}
+      {isFetchingNextPage ? <span>로딩중입니다</span> : <div ref={ref}></div>}
     </>
   );
 };

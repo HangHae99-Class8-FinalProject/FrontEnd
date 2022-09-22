@@ -35,7 +35,7 @@ function Recomment({ id }) {
           </React.Fragment>
         );
       })}
-      {isFetchingNextPage ? <></> : <div ref={ref}></div>}
+      {isFetchingNextPage ? <>로딩중</> : <div ref={ref}></div>}
     </ReplyBox>
   );
 }
