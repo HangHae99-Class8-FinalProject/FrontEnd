@@ -224,7 +224,7 @@ const Nav = () => {
                 <Mypage
                   stroke="#D9D9D9"
                   onClick={() => {
-                    navigate(`/user/${nickname}`, { state: { userId: null } });
+                    navigate(`/user/${nickname}`, { state: "user" });
                   }}
                 />
               </div>
@@ -233,7 +233,7 @@ const Nav = () => {
                 <Mypage
                   stroke="#808080"
                   onClick={() => {
-                    navigate(`/user/${nickname}`, { state: { userId: null } });
+                    navigate(`/user/${nickname}`, { state: "user" });
                   }}
                 />
               </div>

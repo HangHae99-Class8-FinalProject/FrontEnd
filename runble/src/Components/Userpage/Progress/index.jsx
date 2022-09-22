@@ -15,7 +15,7 @@ import {
   StyleSpanDistance,
   StyleSpanTime
 } from "./style";
-import { CircularProgressbar, buildStyles, CircularProgressbarWithChildren } from "react-circular-progressbar";
+import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import moment from "moment";
 import { ModalState } from "../../../Recoil/Atoms/OptionAtoms";
@@ -32,7 +32,6 @@ const Progress = ({ goalData, done }) => {
   const [modal, setModal] = useRecoilState(ModalState);
   const sevenTime = goalData.getUserInfo.weekOfTime;
   const result = sevenTime.filter(distance => distance !== 0);
-  console.log(modal);
   const divideTime = useCallback(time => {
     let seconds = Math.floor(time % 60);
     let minute = Math.floor((time / 60) % 60);
@@ -44,7 +43,6 @@ const Progress = ({ goalData, done }) => {
 
     return hours + ":" + minute + ":" + seconds;
   }, []);
-  console.log(goalData.getUserInfo);
   const percentage = goalData.getUserInfo.percent.toFixed(1);
   return (
     <StyleWrap>

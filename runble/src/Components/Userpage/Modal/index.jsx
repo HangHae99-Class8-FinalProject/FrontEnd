@@ -12,7 +12,6 @@ const Modal = ({ done }) => {
   const [goal, setGoal] = useState({
     goal: ""
   });
-  console.log(done);
   const onChangeHandeler = e => {
     const { name, value } = e.target;
     setGoal({ ...goal, [name]: value });

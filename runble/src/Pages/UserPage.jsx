@@ -20,10 +20,10 @@ const UserPage = () => {
   const { data: goalData } = useProgress(userIds); //user 목표보여주기
 
   useEffect(() => {
-    if (state.userId === null) {
+    if (state?.userId === undefined) {
       return SetUserId(userId);
     }
-  }, [state.userId]);
+  }, [state?.userId]);
   return (
     <Layout>
       <Userprofile userProfile={userProfile} goalData={goalData} userNickname={userNickname}></Userprofile>
