@@ -5,8 +5,8 @@ import { ReactComponent as KakaoLoginIcon } from "../Icons/KakaoLoginIcon.svg";
 import { ReactComponent as NaverLoginIcon } from "../Icons/NaverLoginIcon.svg";
 import { ReactComponent as Logo } from "../Icons/LoginLogo.svg";
 
-const KAKAO_LOGIN = "http://3.34.45.149/api/kakao/login";
-const NAVER_LOGIN = "http://3.34.45.149/api/naver/login";
+const KAKAO_LOGIN = "https://yunseong.shop/api/kakao/callback";
+const NAVER_LOGIN = "http://yunseong.shop/api/naver/callback";
 
 const Login = () => {
   return (
