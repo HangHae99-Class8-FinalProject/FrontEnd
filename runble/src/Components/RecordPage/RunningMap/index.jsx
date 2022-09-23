@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Map, MapMarker, Polyline } from "react-kakao-maps-sdk";
 import { useRecoilState, useRecoilValue } from "recoil";
+import styled from "styled-components";
 
 import { runData } from "../../../Recoil/Atoms/RunData";
 import useInterval from "../../../Hooks/useInterval";
@@ -129,20 +130,18 @@ const RunningMap = ({ stopInterval, endRun }) => {
   }
 
   return (
-    <>
+    <Body>
       <Map
         center={state.center}
         style={{
-          width: "100vw",
+          width: "inherit",
           height: "100vh"
         }}
         level={2}
         zoomable={false}
         draggable={false}
       >
-        {state.isLoading && (
-          <MapMarker position={state.center} image={{ src: Marker, size: { width: 36, height: 36 } }} />
-        )}
+        <MapMarker position={state.center} image={{ src: Marker, size: { width: 36, height: 36 } }} />
         <Polyline
           path={runLog.path}
           strokeWeight={7}
@@ -151,8 +150,14 @@ const RunningMap = ({ stopInterval, endRun }) => {
           strokeStyle={"solid"}
         />
       </Map>
-    </>
+    </Body>
   );
 };
 
 export default RunningMap;
+
+const Body = styled.div`
+  @media only screen and (min-width: 480px) {
+    max-width: 40rem;
+  }
+`;

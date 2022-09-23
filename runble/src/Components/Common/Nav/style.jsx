@@ -21,7 +21,7 @@ export const StyleShow = styled.div`
   align-items: center;
   position: absolute;
   bottom: 0;
-  right: 0;
+  left: 0;
   margin-bottom: 7.4rem;
   & > p,
   div {
@@ -31,6 +31,9 @@ export const StyleShow = styled.div`
     padding-left: 1.6rem;
     padding-bottom: 1.6rem;
     border-bottom: 1px solid #e6e6e6;
+  }
+  @media only screen and (min-width: 480px) {
+    max-width: 40rem;
   }
 `;
 export const StyleButton = styled.div`
