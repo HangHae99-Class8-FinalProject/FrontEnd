@@ -1,5 +1,11 @@
 import React from "react";
 
-const Feed = () => {};
+const Feed = () => {
+  return (
+    <Layout feed={true}>
+      <UserfeedList></UserfeedList>
+    </Layout>
+  );
+};
 
 export default Feed;
