@@ -66,7 +66,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-scripts", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:5.0.1"],\
             ["recoil", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:0.7.5"],\
             ["styled-components", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:5.3.5"],\
-            ["swiper", "npm:8.4.0"],\
+            ["swiper", "npm:8.4.2"],\
             ["web-vitals", "npm:2.1.4"],\
             ["workbox-background-sync", "npm:6.5.4"],\
             ["workbox-broadcast-update", "npm:6.5.4"],\
@@ -16363,7 +16363,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-scripts", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:5.0.1"],\
             ["recoil", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:0.7.5"],\
             ["styled-components", "virtual:8a377b9f9ad8733de722459105a6023afff745aaa5a511db28e497f34862c874f027550693709f496f3796d679e9bfb432c6617f6d950e13c65fcb9f77302780#npm:5.3.5"],\
-            ["swiper", "npm:8.4.0"],\
+            ["swiper", "npm:8.4.2"],\
             ["web-vitals", "npm:2.1.4"],\
             ["workbox-background-sync", "npm:6.5.4"],\
             ["workbox-broadcast-update", "npm:6.5.4"],\
@@ -17390,10 +17390,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["swiper", [\
-        ["npm:8.4.0", {\
-          "packageLocation": "./.yarn/unplugged/swiper-npm-8.4.0-a0d22d920d/node_modules/swiper/",\
+        ["npm:8.4.2", {\
+          "packageLocation": "./.yarn/unplugged/swiper-npm-8.4.2-2afbac7692/node_modules/swiper/",\
           "packageDependencies": [\
-            ["swiper", "npm:8.4.0"],\
+            ["swiper", "npm:8.4.2"],\
             ["dom7", "npm:4.0.4"],\
             ["ssr-window", "npm:4.0.2"]\
           ],\
