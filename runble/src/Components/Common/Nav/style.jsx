@@ -32,7 +32,7 @@ export const StyleShow = styled.div`
     padding-bottom: 1.6rem;
     border-bottom: 1px solid #e6e6e6;
   }
-  @media only screen and (min-width: 480px) {
+  @media only screen and (min-width: 880px) {
     max-width: 40rem;
   }
 `;
@@ -44,7 +44,7 @@ export const StyleButton = styled.div`
   position: fixed;
   bottom: 0;
   background-color: #353434;
-  @media only screen and (min-width: 480px) {
+  @media only screen and (min-width: 880px) {
     max-width: 40rem;
   }
   & > div {

@@ -157,7 +157,7 @@ const RunningMap = ({ stopInterval, endRun }) => {
 export default RunningMap;
 
 const Body = styled.div`
-  @media only screen and (min-width: 480px) {
+  @media only screen and (min-width: 880px) {
     max-width: 40rem;
   }
 `;

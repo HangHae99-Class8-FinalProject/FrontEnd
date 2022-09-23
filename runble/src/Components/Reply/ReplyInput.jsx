@@ -158,7 +158,7 @@ const InputWrap = styled.div`
     font-size: 2.6rem;
     line-height: 2.9rem;
   }
-  @media only screen and (min-width: 480px) {
+  @media only screen and (min-width: 880px) {
     max-width: 40rem;
   }
 `;

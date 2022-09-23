@@ -22,7 +22,7 @@ const LottieWrap = styled.div`
   height: 150vh;
   z-index: 500;
   background-color: white;
-  @media only screen and (min-width: 480px) {
+  @media only screen and (min-width: 880px) {
     max-width: 40rem;
   }
 `;
