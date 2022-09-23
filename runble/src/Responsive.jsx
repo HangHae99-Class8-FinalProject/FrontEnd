@@ -15,7 +15,7 @@ const Responsive = ({ children }) => {
               <Logo />
             </div>
             원활한 동작을 위해 <br />
-            모바일 세로모드 에서 사용해 주세요
+            모바일에서 사용해 주세요
           </LeftBox>
           <AppBox>
             <div>{children}</div>
@@ -54,7 +54,7 @@ const AppBox = styled.div`
   min-width: 40rem;
   & > div {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     border: 1px solid rgba(0, 0, 0, 0);
     box-shadow: 0px 5px 10px 1px grey;
   }

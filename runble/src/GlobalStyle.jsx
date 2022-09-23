@@ -16,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
 	display:none /* Chrome , Safari , Opera */
 }
 
-@media only screen  and (max-width:480px){
+@media only screen  and (max-width:880px){
   body{
     background-color: white;
   }

@@ -169,8 +169,11 @@ const RecordHeader = styled.div`
   position: fixed;
   width: 100%;
   top: 0;
-  left: 0;
   background: #333333;
+  @media only screen and (min-width: 880px) {
+    right: 10;
+    max-width: 33.6rem;
+  }
 `;
 
 const RunDistance = styled.div`
