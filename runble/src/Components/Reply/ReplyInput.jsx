@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useCallback } from "react";
+import React, { useState, useRef, useLayoutEffect, useCallback } from "react";
 import styled from "styled-components";
 import { useMutation, useQueryClient } from "react-query";
 import { useRecoilState } from "recoil";
@@ -9,7 +9,7 @@ import { addReply } from "../../Hooks/useReply";
 import { editReply } from "../../Hooks/useReply";
 import { addRecomment } from "../../Hooks/useRecomment";
 import { editRecomment } from "../../Hooks/useRecomment";
-import Recomment from "./Recomment";
+import Modal from "../Common/Modal/Modal";
 
 const ReplyInput = () => {
   const inputRef = useRef(null);
@@ -27,19 +27,27 @@ const ReplyInput = () => {
   const addReplyData = useMutation(reply => addReply(reply), {
     onSuccess: data => {
       queryClient.invalidateQueries("GET_REPLY");
+      queryClient.invalidateQueries("posts");
+      setInputState(prev => ({
+        ...prev,
+        showInput: false
+      }));
     },
     onError: error => {
-      console.log(error);
+      console.error(error);
     }
   });
   //댓글 수정
   const editReplyData = useMutation(reply => editReply(reply), {
     onSuccess: data => {
-      console.log(data);
       queryClient.invalidateQueries("GET_REPLY");
+      setInputState(prev => ({
+        ...prev,
+        showInput: false
+      }));
     },
     onError: error => {
-      console.log(error);
+      console.error(error);
     }
   });
 
@@ -48,9 +56,13 @@ const ReplyInput = () => {
     onSuccess: data => {
       queryClient.invalidateQueries("GET_REPLY");
       queryClient.invalidateQueries("GET_RECOMMENT");
+      setInputState(prev => ({
+        ...prev,
+        showInput: false
+      }));
     },
     onError: error => {
-      console.log(error);
+      console.error(error);
     }
   });
 
@@ -58,9 +70,13 @@ const ReplyInput = () => {
   const editRecommentData = useMutation(reply => editRecomment(reply), {
     onSuccess: data => {
       queryClient.invalidateQueries("GET_RECOMMENT");
+      setInputState(prev => ({
+        ...prev,
+        showInput: false
+      }));
     },
     onError: error => {
-      console.log(error);
+      console.error(error);
     }
   });
 
@@ -98,14 +114,16 @@ const ReplyInput = () => {
   }
 
   return (
-    <form onSubmit={handleAddreply}>
-      <InputWrap>
-        <div>
-          <input ref={inputRef} value={replyValue} onChange={onChangeReplyValue} />
-          <span onClick={onCloseInput}>&times;</span>
-        </div>
-      </InputWrap>
-    </form>
+    <>
+      <form onSubmit={handleAddreply}>
+        <InputWrap>
+          <div>
+            <input ref={inputRef} value={replyValue} onChange={onChangeReplyValue} />
+            <span onClick={onCloseInput}>&times;</span>
+          </div>
+        </InputWrap>
+      </form>
+    </>
   );
 };
 

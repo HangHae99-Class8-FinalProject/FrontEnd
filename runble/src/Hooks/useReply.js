@@ -8,7 +8,7 @@ export const addReply = async ({ comment, postId }) => {
     });
     return response.data;
   } catch (error) {
-    console.log(error.code);
+    console.error(error);
   }
 };
 
@@ -17,16 +17,16 @@ export const delReply = async id => {
     const response = await instance.delete(`/api/comment/${id}`);
     return response.data;
   } catch (error) {
-    console.log(error.code);
+    console.error(error);
   }
 };
 
 export const editReply = async ({ comment, commentId }) => {
   try {
     const response = await instance.put(`/api/comment/${commentId}`, { comment: comment });
-    console.log(response.data);
+
     return response.data;
   } catch (error) {
-    console.log(error.code);
+    console.error(error);
   }
 };

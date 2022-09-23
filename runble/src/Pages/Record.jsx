@@ -23,7 +23,6 @@ const Record = () => {
   const runLog = useRecoilValue(runData);
 
   const navigate = useNavigate();
-  console.log(runLog);
 
   const clearPath = () => {
     setPath({

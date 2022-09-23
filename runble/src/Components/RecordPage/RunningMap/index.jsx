@@ -29,7 +29,7 @@ const RunningMap = ({ stopInterval, endRun }) => {
   const getDistance = async location => {
     try {
       const res = await instance.post("/api/user/location", location);
-      console.log("res", res.data);
+
       return res.data;
     } catch (error) {
       console.error(error);
@@ -38,7 +38,9 @@ const RunningMap = ({ stopInterval, endRun }) => {
 
   const getDistanceQuery = useMutation(location => getDistance(location), {
     onSuccess: data => {
-      setDistance(prev => prev + data);
+      if (data >= 0) {
+        setDistance(prev => ((prev + data) / 1000)?.toFixed(1));
+      }
     }
   });
 
@@ -55,9 +57,7 @@ const RunningMap = ({ stopInterval, endRun }) => {
             isLoading: true
           });
         },
-        error => {
-          console.log(error);
-        },
+        error => {},
         { enableHighAccuracy: true, maximumAge: 0 }
       );
       getDistanceQuery.mutate(state.center);
@@ -90,9 +90,7 @@ const RunningMap = ({ stopInterval, endRun }) => {
               distance
             }));
           },
-          error => {
-            console.log(error);
-          },
+          error => {},
           { enableHighAccuracy: true, maximumAge: 0 }
         );
       } else {

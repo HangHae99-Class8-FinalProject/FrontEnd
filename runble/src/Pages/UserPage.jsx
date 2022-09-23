@@ -12,7 +12,6 @@ import { useState } from "react";
 import { instance } from "../Utils/Instance";
 
 const UserPage = () => {
-
   const { nickname } = useParams();
   const { state } = useLocation();
   const [showEventModal, setShowEventModal] = useState(true);
@@ -31,7 +30,7 @@ const UserPage = () => {
       return SetUserId(userId);
     }
   }, [state?.userId]);
-  
+
   useEffect(() => {
     async function getShowEvent() {
       const res = await instance.get("/api/user/research");
@@ -39,22 +38,20 @@ const UserPage = () => {
     }
     getShowEvent();
   }, []);
-  
-  
-  
+
   return (
-  <>
-    {!showEventModal && <EventModal />}
-    <Layout>
-      <Userprofile userProfile={userProfile} goalData={goalData} userNickname={userNickname}></Userprofile>
-      {goalData?.result ? (
-        <Progress done={goalData?.result} goalData={goalData}></Progress>
-      ) : (
-        <Goal done={goalData?.result} userNickname={userNickname}></Goal>
-      )}
-      <UserList></UserList>
-    </Layout>
-  </>
+    <>
+      {!showEventModal && <EventModal />}
+      <Layout>
+        <Userprofile userProfile={userProfile} goalData={goalData} userNickname={userNickname}></Userprofile>
+        {goalData?.result ? (
+          <Progress done={goalData?.result} goalData={goalData}></Progress>
+        ) : (
+          <Goal done={goalData?.result} userNickname={userNickname}></Goal>
+        )}
+        <UserList></UserList>
+      </Layout>
+    </>
   );
 };
 

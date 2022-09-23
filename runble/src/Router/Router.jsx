@@ -1,21 +1,22 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Login from "../Pages/Login";
-import Feed from "../Pages/Feed";
-import Post from "../Pages/Post";
-import Record from "../Pages/Record";
-import Reply from "../Pages/Reply";
-import Search from "../Pages/Search";
-import SignUp from "../Pages/SignUp";
-import UserPage from "../Pages/UserPage";
-import ProfileSignup from "../Components/Signup/profileSignup";
-import Rank from "../Pages/Rank";
-import NaverSignup from "../Components/Signup/naverSignup";
-import BugReport from "../Pages/BugReport";
-import PostReport from "../Pages/PostReport";
-import ErrorPage from "../Pages/ErrorPage";
+import loadable from "@loadable/component";
 
+const Login = loadable(() => import("../Pages/Login"));
+const Feed = loadable(() => import("../Pages/Feed"));
+const Post = loadable(() => import("../Pages/Post"));
+const Record = loadable(() => import("../Pages/Record"));
+const Reply = loadable(() => import("../Pages/Reply"));
+const Search = loadable(() => import("../Pages/Search"));
+const SignUp = loadable(() => import("../Pages/SignUp"));
+const UserPage = loadable(() => import("../Pages/UserPage"));
+const ProfileSignup = loadable(() => import("../Components/Signup/profileSignup"));
+const Rank = loadable(() => import("../Pages/Rank"));
+const NaverSignup = loadable(() => import("../Components/Signup/naverSignup"));
+const BugReport = loadable(() => import("../Pages/BugReport"));
+const PostReport = loadable(() => import("../Pages/PostReport"));
+const ErrorPage = loadable(() => import("../Pages/ErrorPage"));
 
 const Router = () => {
   return (
@@ -33,7 +34,7 @@ const Router = () => {
         <Route path="/api/kakao/callback" element={<ProfileSignup />} />
         <Route path="/api/naver/callback" element={<NaverSignup />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/user/:nickname" element={<UserPage/>} />
+        <Route path="/user/:nickname" element={<UserPage />} />
         <Route path="/rank" element={<Rank />} />
         <Route path="/bugreport" element={<BugReport />} />
         <Route path="/postreport" element={<PostReport />} />

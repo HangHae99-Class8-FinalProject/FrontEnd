@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { ReactComponent as Logo } from "./Icons/LoginLogo.svg";
 
 const Responsive = ({ children }) => {
-  console.log(isMobile);
   return (
     <>
       {isMobile ? (

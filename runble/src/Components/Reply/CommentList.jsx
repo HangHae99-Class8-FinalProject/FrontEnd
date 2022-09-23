@@ -1,4 +1,3 @@
-
 import React, { useCallback, useState, useRef, useLayoutEffect, useEffect } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
@@ -12,10 +11,12 @@ import { delReply } from "../../Hooks/useReply";
 import { ReactComponent as Profile } from "../../Icons/myPageProfile.svg";
 import { useRecoilState } from "recoil";
 import { replyState } from "../../Recoil/Atoms/ReplyAtoms";
+import Modal from "../Common/Modal/Modal";
 
 const CommentList = ({ reply }) => {
   const [showReply, setShowReply] = useState(false);
   const [inputState, setInpuState] = useRecoilState(replyState);
+  const [showModal, setShowModal] = useState(false);
 
   const userData = JSON.parse(window.localStorage.getItem("userData"));
 
@@ -52,14 +53,14 @@ const CommentList = ({ reply }) => {
   const delReplyData = useMutation(() => delReply(reply.commentId), {
     onSuccess: data => {
       queryClient.invalidateQueries("GET_REPLY");
+      slideRef.current.style.transform = "translateX(0%)";
     },
-    onError: error => {
-      console.log(error);
-    }
+    onError: error => {}
   });
 
   const handleDelreply = () => {
     delReplyData.mutate();
+    setShowModal(false);
   };
 
   //슬라이드 만들기
@@ -76,7 +77,7 @@ const CommentList = ({ reply }) => {
     let totalX = firstTouchX - e.changedTouches[0].pageX;
 
     if (totalX > 80) {
-      slideRef.current.style.transform = "translateX(-32%)";
+      slideRef.current.style.transform = "translateX(-13rem)";
       return;
     }
     if (totalX < -10) {
@@ -84,6 +85,14 @@ const CommentList = ({ reply }) => {
       return;
     }
   };
+  const onShowModal = useCallback(() => {
+    slideRef.current.style.transform = "translateX(0%)";
+    setShowModal(true);
+  }, []);
+
+  const onCloseModal = useCallback(() => {
+    setShowModal(false);
+  }, []);
 
   return (
     <>
@@ -110,24 +119,23 @@ const CommentList = ({ reply }) => {
             <button onClick={onShowInputEdit}>
               <ReplyUpdate />
             </button>
-            <button onClick={handleDelreply}>
+            <button onClick={onShowModal}>
               <ReplyDelete />
             </button>
           </ButtonWrap>
         )}
       </Body>
       {showReply && <Recomment id={reply.commentId} />}
-
-      <button onClick={onShowEdit}>{!editable ? <ReplyUpdate /> : <>&times;</>}</button>
-      <button onClick={handleDelreply}>
-        <ReplyDelete />
-      </button>
+      {showModal && (
+        <Modal onClickYes={handleDelreply} onClickNo={onCloseModal}>
+          <p>정말로 삭제하시겠습니까?</p>
+        </Modal>
+      )}
     </>
   );
 };
 
 export default CommentList;
-
 
 const Body = styled.div`
   display: flex;
@@ -139,12 +147,12 @@ const ButtonWrap = styled.div`
   display: flex;
   & button {
     border: none;
+    background-color: rgba(0, 0, 0, 0.25);
   }
   & button:last-child {
     background-color: #f03800;
   }
 `;
-
 
 const CommentWrap = styled.div`
   font-size: 1rem;
@@ -153,7 +161,7 @@ const CommentWrap = styled.div`
   padding: 1.5rem 1.6rem;
   gap: 0.8rem;
   height: 7rem;
-  min-width: 93vw;
+  min-width: 90vw;
 
   & img {
     width: 4rem;
@@ -164,20 +172,27 @@ const CommentWrap = styled.div`
 
 const CommentFooter = styled.div`
   display: flex;
-  color:#aaa;
-  position:relative;
-  top:1.5rem ;
-
+  color: #aaa;
+  position: relative;
+  top: 1.5rem;
 `;
 
 const Time = styled.div`
-  padding-right:1rem;`
+  padding-right: 1rem;
+`;
 const Write = styled.div`
-  padding-right:1rem;`
-  
+  padding-right: 1rem;
+`;
 
 const CommentBody = styled.div`
   align-items: flex-start;
   gap: 0.2rem;
   height: 4.2rem;
+`;
+
+const Nick = styled.div`
+  line-height: 1rem;
+  font-family: "Anton";
+  font-size: 1.1rem;
+  font-weight: 700;
 `;
